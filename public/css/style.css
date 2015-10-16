@@ -1,0 +1,44 @@
+body{
+    height: 100%;
+}
+.container{
+    background: #fff;
+    padding:0 30px;
+    /*box-shadow: 0 -5px 5px 0 rgba(0,0,0,0.4);*/
+    box-shadow: 0 0 1em rgba(68,105,213,0.4);
+    -webkit-box-shadow: 0 0 1em rgba(68,105,213,0.4);
+    -moz-box-shadow: 0 0 1em rgba(68,105,213,0.4);
+}
+.logo_princ{
+    top: 10px;
+}
+.menu{
+    top:20px;
+
+}
+
+.lista-menu {
+    color: #337ab7;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 8px;
+
+}
+
+.lista-menu :hover{
+    border-radius: 1%;
+}
+
+.redes{
+    list-style: none;
+    top: 15px;
+}
+/*.lista-menu a{*/
+    /*text-decoration: none;*/
+/*}*/
+
+/*.lista-menu :hover{*/
+    /*text-decoration: none;*/
+    /*color: #ffffff;*/
+    /*background-color: #000000;*/
+/*}*/
