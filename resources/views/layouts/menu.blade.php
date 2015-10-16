@@ -3,9 +3,9 @@
 
     </a>
     <ul class="menu dropdown col-md-8 list-inline text-center">
-        {{--<li>--}}
-            {{--<a href="">Inicio</a>--}}
-        {{--</li>--}}
+        <li>
+            <a class="lista-menu" href="#">Inicio</a>
+        </li>
         <li>
             <a class="dropdown-toggle lista-menu" id="" data-toggle="dropdown">
                 Cursos Disponibles
