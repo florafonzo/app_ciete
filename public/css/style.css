@@ -25,20 +25,42 @@ body{
 
 }
 
-.lista-menu :hover{
-    border-radius: 1%;
+.lista-menu:hover{
+    color: #ffffff;
+    background-color: #005983;
+    font-weight: bold;
 }
 
 .redes{
     list-style: none;
     top: 15px;
 }
-/*.lista-menu a{*/
-    /*text-decoration: none;*/
-/*}*/
 
-/*.lista-menu :hover{*/
-    /*text-decoration: none;*/
-    /*color: #ffffff;*/
-    /*background-color: #000000;*/
-/*}*/
+.pie-pag{
+    background-color: lightslategrey;
+    margin:0 -30px;
+    padding: 36px 30px 0 30px;
+}
+
+.lista_logos li{
+    list-style: none;
+}
+
+.texto{
+    text-align: justify;
+}
+
+.titulo_footer{
+    font-weight: bold;
+}
+
+.correo {
+    text-decoration: none;
+    color: inherit;
+}
+
+.correo:hover{
+    color: #ffffff;
+    text-decoration: solid;
+}
+/*Agregar css para los sub menu*/

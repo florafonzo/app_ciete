@@ -15,6 +15,11 @@ $(document).ready(function() {
 	//    }
 	//});
 
-    $('.dropdown-toggle').dropdown();
+    //$('.dropdown-toggle').dropdown();
+
+    $("#menu-button").on('click', function(e) {
+        e.preventDefault();
+        $('ul.menu').slideToggle();
+    });
 
 });

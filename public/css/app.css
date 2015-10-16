@@ -37,13 +37,13 @@ audio:not([controls]) {
 template {
   display: none;
 }
-a {
-  background-color: transparent;
-}
-a:active,
-a:hover {
-  outline: 0;
-}
+/*a {*/
+  /*background-color: transparent;*/
+/*}*/
+/*a:active,*/
+/*a:hover {*/
+  /*outline: 0;*/
+/*}*/
 abbr[title] {
   border-bottom: 1px dotted;
 }
@@ -187,9 +187,9 @@ th {
     text-shadow: none !important;
   }
   a,
-  a:visited {
-    text-decoration: underline;
-  }
+  /*a:visited {*/
+    /*text-decoration: underline;*/
+  /*}*/
   a[href]:after {
     content: " (" attr(href) ")";
   }

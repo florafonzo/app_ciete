@@ -1,7 +1,5 @@
 <nav class="clearfix row" >
-    <a>
-
-    </a>
+    <a href="" id="menu-button"><i class="fa fa-bars"></i></a>
     <ul class="menu dropdown col-md-8 list-inline text-center">
         <li>
             <a class="lista-menu" href="#">Inicio</a>

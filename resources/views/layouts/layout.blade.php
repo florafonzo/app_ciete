@@ -34,22 +34,9 @@
             @yield('content')
             {{--Fin Contenido Principal--}}
 
+            {{--Footer--}}
+            @include('layouts.footer')
+            {{--Fin Footer--}}
         </div>
-
-
 	</body>
-    {{--<div class="navbar navbar-default navbar-static-top">--}}
-    {{--<ul class="nav navbar-nav navbar-left">--}}
-    {{--<li>--}}
-    {{--<a href="#">Cursos Disponibles</a>--}}
-    {{--</li>--}}
-    {{--<li>--}}
-    {{--<a href="#">Cómo inscribirse</a>--}}
-    {{--</li>--}}
-    {{--<li>--}}
-    {{--<a href="#">Información del Centro</a>--}}
-    {{--</li>--}}
-    {{--</ul>--}}
-    {{--</div>--}}
-
 </html>
