@@ -4,13 +4,13 @@
         <li>
             <a class="lista-menu" href="#">Inicio</a>
         </li>
-        <li>
-            <a class="dropdown-toggle lista-menu" id="" data-toggle="dropdown">
+        <li class="dropdown-submenu">
+            <a class="lista-menu" id="" data-toggle="" href="#">
                 Cursos Disponibles
             </a>
-            <ul class="dropdown-menu " >
-                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Presenciales</a></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">A distancia</a></li>
+            <ul class="dropdown-menu" >
+                <li><a href="#">Presenciales</a></li>
+                <li><a href="#">A distancia</a></li>
             </ul>
         </li>
         <li>

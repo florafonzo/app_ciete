@@ -38,7 +38,7 @@
             <h3 class="titulo_footer">Contacto</h3>
             <p class="texto">
                 <strong>Nuestros teléfonos de contacto:</strong><br>
-                <strong>Fijo:</strong> +58 274-4165221 en horario de oficina (8am a 12m y 2pm a 6pm)
+                <strong>Fijo:</strong> +58 274-4165221 en horario de oficina (8am a 12m y 2pm a 6pm).<br>
                 <strong>Móvil:</strong> +58 412 6834340 (Vía WhatsApp)
             </p>
             <br>

@@ -1,6 +1,11 @@
 body{
     height: 100%;
 }
+
+header .container{
+    height: 300px;
+    text-align: center;
+}
 .container{
     background: #fff;
     padding:0 30px;
@@ -9,9 +14,19 @@ body{
     -webkit-box-shadow: 0 0 1em rgba(68,105,213,0.4);
     -moz-box-shadow: 0 0 1em rgba(68,105,213,0.4);
 }
-.logo_princ{
-    top: 10px;
+.logo_princ img{
+    vertical-align: middle;
+    width: 343px;
+    height: auto;
 }
+
+.logo_princ{
+    position: relative;
+    margin: 0 auto;
+    display: inline-block;
+    top:30px;
+}
+
 .menu{
     top:20px;
 
@@ -29,6 +44,18 @@ body{
     color: #ffffff;
     background-color: #005983;
     font-weight: bold;
+}
+
+.descripcion_princ{
+    background-color:lightslategrey;
+    text-align: center;
+    color: #ffffff;
+}
+
+.descripcion{
+    background-color: #cc006a;
+    opacity: 0.7;
+    /*color: #ffffff;*/
 }
 
 .redes{
@@ -62,5 +89,18 @@ body{
 .correo:hover{
     color: #ffffff;
     text-decoration: solid;
+}
+
+ .carousel-inner > .item > img,
+ .carousel-inner > .item > a > img {
+     margin: auto;
+ }
+
+.carousel-inner{
+    /*background-color: #97a0b3;*/
+}
+
+.flechas a  {
+    color: #cc006a;
 }
 /*Agregar css para los sub menu*/
