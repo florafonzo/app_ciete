@@ -13,7 +13,11 @@
 
 Route::get('/', 'InicioController@index');
 
-//Route::get('','');
+Route::get('Misión-y-Visión','InformacionController@mision_vision');
+Route::get('Estructura','InformacionController@estructura');
+Route::get('Servicios','InformacionController@servicios');
+Route::get('Equipo','InformacionController@equipo');
+Route::get('Contacto','InformacionController@contacto');
 
 //Route::get('/', 'WelcomeController@index');
 

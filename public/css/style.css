@@ -140,3 +140,79 @@ header .container{
     text-decoration: solid;
 }
 /* Fin Pie de página (footer) */
+
+
+/* Misión y Visión */
+
+.parr_mision1{
+    text-align: justify;
+    background-color: #a3c0bd;
+    padding: 15px 15px;
+    border-radius: 11px;
+    text-indent: 20px;
+}
+
+.parr_mision2{
+    text-align: justify;
+    background-color: #c3325f;
+    color: #ffffff;
+    padding: 15px 15px;
+    border-radius: 11px;
+}
+
+.sangria{
+    padding-left: 6%;
+}
+.centro{
+    text-align: center;
+}
+.parr_mision3{
+    text-align: justify;
+    background-color: #005983;
+    color: #ffffff;
+    padding: 15px 15px;
+    border-radius: 11px;
+    text-indent: 20px;
+
+}
+
+.parr_mision4{
+    text-align: justify;
+    background-color: #a3c0bd;
+    padding: 15px 15px;
+    border-radius: 11px;
+    text-indent: 20px;
+}
+
+.parr_mision5{
+    text-align: justify;
+    background-color: #c3325f;
+    color: #ffffff;
+    padding: 15px 15px;
+    border-radius: 11px;
+    text-indent: 20px;
+
+}
+
+.parr_mision6{
+    text-align: justify;
+    background-color: #005983;
+    color: #ffffff;
+    padding: 15px 15px;
+    border-radius: 11px;
+    text-indent: 20px;
+
+}
+
+/* Fin Misión y Visión */
+
+
+/* Estructura */
+.parr_estruct1{
+    text-align: justify;
+    background-color: #a3c0bd;
+    padding: 15px 15px;
+    border-radius: 11px;
+}
+
+/* Fin Estructura */

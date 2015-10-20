@@ -2,7 +2,7 @@
     <a href="" id="menu-button"><i class="fa fa-bars"></i></a>
     <ul class="menu dropdown col-md-8 list-inline text-center">
         <li>
-            <a class="lista-menu" href="#">Inicio</a>
+            <a class="lista-menu" href="/">Inicio</a>
         </li>
         <li class="dropdown-submenu lista-menu">
             Cursos Disponibles
@@ -19,11 +19,11 @@
         <li class="dropdown-submenu lista-menu">
             Información del Centro
             <ul class="dropdown-menu" role="menu">
-                <li><a tabindex="-1" href="#">Misión y Visión</a></li>
-                <li><a tabindex="-1" href="#">Estructura</a></li>
-                <li><a tabindex="-1" href="#">Servicios</a></li>
-                <li><a tabindex="-1" href="#">Equipo</a></li>
-                <li><a tabindex="-1" href="#">Contacto</a></li>
+                <li><a tabindex="-1" href="/Misión-y-Visión">¿Quiénes somos?</a></li>
+                <li><a tabindex="-1" href="/Estructura">Estructura</a></li>
+                <li><a tabindex="-1" href="/Servicios">Servicios</a></li>
+                <li><a tabindex="-1" href="/Equipo">Equipo</a></li>
+                <li><a tabindex="-1" href="Contacto">Contacto</a></li>
             </ul>
         </li>
     </ul>
