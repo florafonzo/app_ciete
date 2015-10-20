@@ -2,18 +2,13 @@ body{
     height: 100%;
 }
 
+
+/*Header*/
 header .container{
     height: 300px;
     text-align: center;
 }
-.container{
-    background: #fff;
-    padding:0 30px;
-    /*box-shadow: 0 -5px 5px 0 rgba(0,0,0,0.4);*/
-    box-shadow: 0 0 1em rgba(68,105,213,0.4);
-    -webkit-box-shadow: 0 0 1em rgba(68,105,213,0.4);
-    -moz-box-shadow: 0 0 1em rgba(68,105,213,0.4);
-}
+
 .logo_princ img{
     vertical-align: middle;
     width: 343px;
@@ -26,43 +21,97 @@ header .container{
     display: inline-block;
     top:30px;
 }
+/* Fin Header*/
 
+
+/*Contenedor principal*/
+.container{
+    background: #fff;
+    padding:0 30px;
+    /*box-shadow: 0 -5px 5px 0 rgba(0,0,0,0.4);*/
+    box-shadow: 0 0 1em rgba(68,105,213,0.4);
+    -webkit-box-shadow: 0 0 1em rgba(68,105,213,0.4);
+    -moz-box-shadow: 0 0 1em rgba(68,105,213,0.4);
+}
+/* Fin Contenedor principal*/
+
+
+/* Menú principal (inicio) */
 .menu{
     top:20px;
-
 }
 
 .lista-menu {
-    color: #337ab7;
+    color: #005983;
     text-decoration: none;
     font-weight: bold;
     padding: 8px;
 
 }
 
-.lista-menu:hover{
-    color: #ffffff;
-    background-color: #005983;
-    font-weight: bold;
-}
+    .lista-menu:hover{
+        color: #ffffff;
+        background-color: #005983;
+        font-weight: bold;
+    }
 
+.dropdown-menu::after {
+    position: absolute;
+    top: -6px;
+    left: 10px;
+    display: inline-block;
+    border-right: 6px solid transparent;
+    border-bottom: 6px solid #a3c0bd;
+    border-left: 6px solid transparent;
+    content: '';
+    color: #a3c0bd;
+}
+/* Fin Menú principal (inicio) */
+
+
+/* Redes Sociales */
+.redes{
+    list-style: none;
+    top: 15px;
+}
+/* Fin Redes Sociales */
+
+
+/*Descripción Principal (inicio)*/
 .descripcion_princ{
     background-color:lightslategrey;
     text-align: center;
     color: #ffffff;
 }
+/* Fin Descripción Principal (inicio)*/
 
+
+/*Descripción imágenes carrusel*/
 .descripcion{
     background-color: #cc006a;
     opacity: 0.7;
     /*color: #ffffff;*/
 }
+/* Fin Descripción imágenes carrusel */
 
-.redes{
-    list-style: none;
-    top: 15px;
+
+/* Carrusel */
+.carousel-inner > .item > img,
+.carousel-inner > .item > a > img {
+    margin: auto;
 }
 
+.carousel-inner{
+    /*background-color: #97a0b3;*/
+}
+
+.flechas a  {
+    color: #cc006a;
+}
+/* Fin Carrusel */
+
+
+/* Pie de página (footer) */
 .pie-pag{
     background-color: lightslategrey;
     margin:0 -30px;
@@ -90,17 +139,4 @@ header .container{
     color: #ffffff;
     text-decoration: solid;
 }
-
- .carousel-inner > .item > img,
- .carousel-inner > .item > a > img {
-     margin: auto;
- }
-
-.carousel-inner{
-    /*background-color: #97a0b3;*/
-}
-
-.flechas a  {
-    color: #cc006a;
-}
-/*Agregar css para los sub menu*/
+/* Fin Pie de página (footer) */

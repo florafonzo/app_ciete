@@ -4,13 +4,11 @@
         <li>
             <a class="lista-menu" href="#">Inicio</a>
         </li>
-        <li class="dropdown-submenu">
-            <a class="lista-menu" id="" data-toggle="" href="#">
-                Cursos Disponibles
-            </a>
-            <ul class="dropdown-menu" >
-                <li><a href="#">Presenciales</a></li>
-                <li><a href="#">A distancia</a></li>
+        <li class="dropdown-submenu lista-menu">
+            Cursos Disponibles
+            <ul class="dropdown-menu" role="menu">
+                <li><a tabindex="-1" href="#">Presenciales</a></li>
+                <li><a tabindex="-1" href="#">A distancia</a></li>
             </ul>
         </li>
         <li>
@@ -18,10 +16,15 @@
                 ¿Cómo inscribirse?
             </a>
         </li>
-        <li>
-            <a class="lista-menu" id="" >
-                Información del Centro
-            </a>
+        <li class="dropdown-submenu lista-menu">
+            Información del Centro
+            <ul class="dropdown-menu" role="menu">
+                <li><a tabindex="-1" href="#">Misión y Visión</a></li>
+                <li><a tabindex="-1" href="#">Estructura</a></li>
+                <li><a tabindex="-1" href="#">Servicios</a></li>
+                <li><a tabindex="-1" href="#">Equipo</a></li>
+                <li><a tabindex="-1" href="#">Contacto</a></li>
+            </ul>
         </li>
     </ul>
     <div class="col-md-4 col-xs-12 text-center redes">
