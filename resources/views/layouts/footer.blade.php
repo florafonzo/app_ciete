@@ -44,7 +44,7 @@
             <br>
             <p>
                 <strong>Nuestro correo: </strong><br>
-                <a class="correo" href="mailto:cieteula@gmail.com?Subject=Pegunta%20CIETE" target="_top">cieteula@gmail.com</a>
+                <a class="correo" href="mailto:cieteula@gmail.com?Subject=Pegunta%20CIETE" target="_top">ciete.ula@gmail.com</a>
             </p>
             <br>
             <p>

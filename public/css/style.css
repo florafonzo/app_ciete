@@ -152,13 +152,13 @@ header .container{
     text-indent: 20px;
 }
 
-.parr_mision2{
-    text-align: justify;
-    background-color: #c3325f;
-    color: #ffffff;
-    padding: 15px 15px;
-    border-radius: 11px;
-}
+/*.parr_mision6{*/
+    /*text-align: justify;*/
+    /*background-color: #c3325f;*/
+    /*color: #ffffff;*/
+    /*padding: 15px 15px;*/
+    /*border-radius: 11px;*/
+/*}*/
 
 .sangria{
     padding-left: 6%;
@@ -166,35 +166,35 @@ header .container{
 .centro{
     text-align: center;
 }
-.parr_mision3{
-    text-align: justify;
-    background-color: #005983;
-    color: #ffffff;
-    padding: 15px 15px;
-    border-radius: 11px;
-    text-indent: 20px;
+/*.parr_mision3{*/
+    /*text-align: justify;*/
+    /*background-color: #005983;*/
+    /*color: #ffffff;*/
+    /*padding: 15px 15px;*/
+    /*border-radius: 11px;*/
+    /*text-indent: 20px;*/
 
-}
+/*}*/
 
-.parr_mision4{
-    text-align: justify;
-    background-color: #a3c0bd;
-    padding: 15px 15px;
-    border-radius: 11px;
-    text-indent: 20px;
-}
+/*.parr_mision4{*/
+    /*text-align: justify;*/
+    /*background-color: #a3c0bd;*/
+    /*padding: 15px 15px;*/
+    /*border-radius: 11px;*/
+    /*text-indent: 20px;*/
+/*}*/
 
-.parr_mision5{
-    text-align: justify;
-    background-color: #c3325f;
-    color: #ffffff;
-    padding: 15px 15px;
-    border-radius: 11px;
-    text-indent: 20px;
+/*.parr_mision5{*/
+    /*text-align: justify;*/
+    /*background-color: #c3325f;*/
+    /*color: #ffffff;*/
+    /*padding: 15px 15px;*/
+    /*border-radius: 11px;*/
+    /*text-indent: 20px;*/
 
-}
+/*}*/
 
-.parr_mision6{
+.parr_mision2{
     text-align: justify;
     background-color: #005983;
     color: #ffffff;
@@ -216,3 +216,14 @@ header .container{
 }
 
 /* Fin Estructura */
+
+/* Contacto */
+.parr_contacto{
+    text-align: justify;
+}
+.tit_contacto{
+    color: #005983;
+    font-weight: bold;
+}
+
+/* Fin COntacto*/
