@@ -19,6 +19,8 @@ Route::get('Servicios','InformacionController@servicios');
 Route::get('Equipo','InformacionController@equipo');
 Route::get('Contacto','InformacionController@contacto');
 
+Route::get('Participante','InformacionController@participante');
+
 //Route::get('/', 'WelcomeController@index');
 
 Route::get('home', 'HomeController@index');

@@ -37,6 +37,12 @@ class InformacionController extends Controller {
 		return view('informacion.contacto');
 	}
 
+
+    public function participante()
+    {
+        return view('usuarios.participante');
+    }
+
 	/**
 	 * Show the form for creating a new resource.
 	 *
