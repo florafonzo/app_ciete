@@ -13,20 +13,20 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li class="active menu_borde">
+                <li class="active menu_borde fondo">
                     <a class="lista-menu" href="/">Inicio</a>
                 </li>
-                <li class="dropdown menu_borde">
+                <li class="dropdown menu_borde fondo">
                     <a class="lista-menu" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Cursos Disponibles <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="#">Presenciales</a></li>
                         <li><a href="#">A Distancia</a></li>
                     </ul>
                 </li>
-                <li class="menu_borde">
+                <li class="menu_borde fondo">
                     <a class="lista-menu" href="#">¿Cómo inscribirse?</a>
                 </li>
-                <li class="dropdown">
+                <li class="dropdown fondo">
                     <a class="lista-menu" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Información del Centro <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="/Misión-y-Visión">¿Quiénes somos?</a></li>
@@ -38,8 +38,21 @@
                     </ul>
                 </li>
             </ul>
+            <ul class="nav navbar-nav navbar-right">    
+                <li class="redes">
+                    <ul class="list-inline">
+                        <li><a href="https://www.facebook.com/ciete.ula"><img class="img-responsive" src="{{URL::to('/')}}/images/logo-facebook.png" alt=""/></a></li>
+                        <li><a href="https://twitter.com/cieteula"><img class="img-responsive" src="{{URL::to('/')}}/images/logo-twitter.png" alt=""/></a></li>
+                        <li><a href="https://www.youtube.com/channel/UCY9f2COL913LKZoxeFcoQPA"><img class="img-responsive" src="{{URL::to('/')}}/images/logo-youtube.png" alt=""/></a></li>
+                        <li><a href="http://instagram.com/ciete.ula"><img class="img-responsive" src="{{URL::to('/')}}/images/logo-instagram.png" alt=""/></a></li>
+                        <li><a href="https://plus.google.com/u/0/+CIETEULA/"><img class="img-responsive" src="{{URL::to('/')}}/images/logo-googleplus.png" alt=""/></a></li>
+                        <li><a href="http://cieteula.tumblr.com/"><img class="img-responsive" src="{{URL::to('/')}}/images/logo-tumblr.png" alt=""/></a></li>
+                        <li><a href="https://www.pinterest.com/raymarq/"><img class="img-responsive" src="{{URL::to('/')}}/images/logo-pinterest.png" alt=""/></a></li>
+                    </ul>
+                </li>  
+            </ul>
         </div>
-        <div class="col-md-4 col-xs-12 text-center redes">
+        <!--<div class="col-md-4 col-xs-12 text-center redes">
             <ul class="list-inline">
                 <li><a href="https://www.facebook.com/ciete.ula"><img class="img-responsive" src="{{URL::to('/')}}/images/logo-facebook.png" alt=""/></a></li>
                 <li><a href="https://twitter.com/cieteula"><img class="img-responsive" src="{{URL::to('/')}}/images/logo-twitter.png" alt=""/></a></li>
@@ -49,7 +62,7 @@
                 <li><a href="http://cieteula.tumblr.com/"><img class="img-responsive" src="{{URL::to('/')}}/images/logo-tumblr.png" alt=""/></a></li>
                 <li><a href="https://www.pinterest.com/raymarq/"><img class="img-responsive" src="{{URL::to('/')}}/images/logo-pinterest.png" alt=""/></a></li>
             </ul>
-        </div>
+        </div>-->
     </div>
 
 </nav>

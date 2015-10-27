@@ -18,10 +18,10 @@
                 <div class="col-md-12 col-sm-12 menu_part">
                     <ul>
                         <li>
-                            Ver Pefil
+                            Ver Perfil
                         </li>
                         <li>
-                            Ver Notas
+                            Historial de cursos
                         </li>
                         <li>
                             Obtener Certificado

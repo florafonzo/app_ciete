@@ -43,6 +43,16 @@ class InformacionController extends Controller {
         return view('usuarios.participante');
     }
 
+    public function profesor()
+    {
+        return view('usuarios.profesor');
+    }
+
+    public function administrador()
+    {
+        return view('usuarios.administrador');
+    }
+
 	/**
 	 * Show the form for creating a new resource.
 	 *

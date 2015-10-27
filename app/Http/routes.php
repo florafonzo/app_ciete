@@ -20,6 +20,8 @@ Route::get('Equipo','InformacionController@equipo');
 Route::get('Contacto','InformacionController@contacto');
 
 Route::get('Participante','InformacionController@participante');
+Route::get('Profesor','InformacionController@profesor');
+Route::get('Administrador','InformacionController@administrador');
 
 //Route::get('/', 'WelcomeController@index');
 

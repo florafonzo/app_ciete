@@ -4423,9 +4423,9 @@ textarea.input-group-sm > .input-group-btn > .btn {
   padding: 9px 10px;
   margin-top: 8px;
   margin-bottom: 8px;
-  background-color: transparent;
+  /*background-color: transparent;*/
   background-image: none;
-  border: 1px solid transparent;
+  /*border: 1px solid transparent;*/
   border-radius: 4px;
 }
 .navbar-toggle .icon-bar {
@@ -4683,7 +4683,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
   background-color: #dddddd;
 }
 .navbar-default .navbar-toggle .icon-bar {
-  background-color: #cccccc;
+  /*background-color: #cccccc;*/
 }
 .navbar-default .navbar-collapse,
 .navbar-default .navbar-form {

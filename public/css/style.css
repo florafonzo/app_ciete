@@ -92,18 +92,43 @@ header .container{
     background-color: #005983;
 }
 
-.navbar-nav{
+.navbar-nav .fondo{
     background-color: #005983;
     padding-left: 0px !important;
     margin-left: 0px !important;
 }
+
+.navbar-toggle .icon-bar{
+    background-color: grey;
+    /*background-color: #ffffff;*/
+}
+
+.navbar-header .navbar-toggle {
+    border-color: #ddd;
+    background-color: #ffffff;
+    /*border-color: rgb(0, 42, 98);*/
+    /*background-color: rgb(0, 42, 98);*/
+}
+
+.navbar-header .navbar-toggle:hover{
+    background-color: #ddd;
+
+}
+
+
+.navbar-header{
+    background-color: #005983;
+}
+
 /* Fin Menú principal (inicio) */
 
 
 /* Redes Sociales */
-.redes{
+.navbar-nav .redes{
     list-style: none;
-    top: 15px;
+    top: 7px;
+    margin-right: 10px;
+    background-color: transparent;
 }
 /* Fin Redes Sociales */
 
