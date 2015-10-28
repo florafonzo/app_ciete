@@ -13,18 +13,8 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li class="active menu_borde fondo">
+                <li class="active fondo">
                     <a class="lista-menu" href="/">Inicio</a>
-                </li>
-                <li class="dropdown menu_borde fondo">
-                    <a class="lista-menu" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Cursos Disponibles <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">Presenciales</a></li>
-                        <li><a href="#">A Distancia</a></li>
-                    </ul>
-                </li>
-                <li class="menu_borde fondo">
-                    <a class="lista-menu" href="#">¿Cómo inscribirse?</a>
                 </li>
                 <li class="dropdown fondo">
                     <a class="lista-menu" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Información del Centro <span class="caret"></span></a>
@@ -32,10 +22,63 @@
                         <li><a href="/Misión-y-Visión">¿Quiénes somos?</a></li>
                         <li><a href="/Estructura">Estructura</a></li>
                         <li><a href="/Servicios">Servicios</a></li>
-                        <!--<li role="separator" class="divider"></li>-->
                         <li><a href="/Equipo">Equipo</a></li>
                         <li><a href="/Contacto">Contacto</a></li>
                     </ul>
+                </li>
+                <li class="dropdown fondo">
+                    <a class="lista-menu dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Diplomados <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="#"> Información General</a>
+                        </li>
+                        <li>
+                            <a href="#"> Gestón Efectiva de Medios Digitales</a>
+                        </li>
+                        <li>
+                            <a href="#">Producción de Contenidos para Radio y Medios Digitales</a>
+                        </li>
+                        <li>
+                            <a href="#"> Diseño y Prudcción de Contenidos Multimedia para la Web</a>
+                        </li>
+                        <li>
+                            <a class="lista-menu" href="#">¿Cómo inscribirse?</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown fondo">
+                    <a class="lista-menu dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Capsulas <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="#"> Información General</a>
+                        </li>
+                        <li>
+                            <a href="#"> Presentación Multimedia para la Web</a>
+                        </li>
+                        <li>
+                            <a href="#"> Mapas Gráficos Interactivos</a>
+                        </li>
+                        <li>
+                            <a href="#"> Portafolios Digitales</a>
+                        </li>
+                        <li>
+                            <a class="lista-menu" href="#">¿Cómo inscribirse?</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="fondo">
+                    <a class="lista-menu dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Aulas Virtuales <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="http://moodle.ula.ve/"> Moodle ULA</a>
+                        </li>
+                        <li>
+                            <a href="http://aulaciete.org.ve/"> Aula CIETE</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="fondo borde_no">
+                    <a class="lista-menu" href="#">Créditos</a>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">    

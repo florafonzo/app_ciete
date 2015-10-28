@@ -4263,7 +4263,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .navbar {
   position: relative;
   min-height: 50px;
-  margin-bottom: 20px;
+  /*margin-bottom: 20px;*/
   border: 1px solid transparent;
 }
 .navbar:before,
@@ -4443,7 +4443,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
   }
 }
 .navbar-nav {
-  margin: 7.5px -15px;
+  margin: 0;
+    /*margin: 7.5px -15px;*/
 }
 .navbar-nav > li > a {
   padding-top: 10px;
@@ -4514,7 +4515,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
     padding-bottom: 15px;
   }
   .navbar-nav.navbar-right:last-child {
-    margin-right: -15px;
+    /*margin-right: -15px;*/
   }
 }
 @media (min-width: 768px) {
@@ -6319,8 +6320,8 @@ button.close {
     font-size: 30px;
   }
   .carousel-caption {
-    left: 20%;
-    right: 20%;
+    /*left: 20%;*/
+    /*right: 20%;*/
     padding-bottom: 0px;
   }
   .carousel-indicators {

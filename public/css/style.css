@@ -65,8 +65,8 @@ header .container{
     font-weight: bold;
 }
 
-.menu_borde{
-    border-right: 2px solid #a3c0bd;
+.borde_no{
+    border-right: none !important;
 }
 
 .dropdown-menu {
@@ -96,6 +96,7 @@ header .container{
     background-color: #005983;
     padding-left: 0px !important;
     margin-left: 0px !important;
+    border-right: 1px solid #a3c0bd;
 }
 
 .navbar-toggle .icon-bar{
@@ -129,6 +130,7 @@ header .container{
     top: 7px;
     margin-right: 10px;
     background-color: transparent;
+    text-align: center;
 }
 /* Fin Redes Sociales */
 
@@ -176,31 +178,51 @@ header .container{
 /* Pie de página (footer) */
 .pie-pag{
     background-color: lightslategrey;
-    margin:0 -30px;
+    /*margin:0 -30px;*/
     padding: 36px 30px 0 30px;
 }
 
-.lista_logos li{
-    list-style: none;
-}
 
 .texto{
     text-align: justify;
+    color: #ffffff;
+    font-size: 12px;
 }
 
-.titulo_footer{
-    font-weight: bold;
+.menu_foot{
+    float: right;
+}
+
+.pie{
+    text-decoration: none;
+    background-color: dimgrey;
+    color: #ffffff;
+}
+
+.pie:hover{
+    color: #333;
+
 }
 
 .correo {
-    text-decoration: none;
-    color: inherit;
+    text-decoration: underline;
+    color: #ffffff;
 }
 
 .correo:hover{
-    color: #ffffff;
+    color: #333;
     text-decoration: solid;
 }
+
+/*.titulo_footer{*/
+/*font-weight: bold;*/
+/*}*/
+
+/*.lista_logos li{*/
+/*list-style: none;*/
+/*}*/
+
+
 /* Fin Pie de página (footer) */
 
 
