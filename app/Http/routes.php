@@ -23,6 +23,11 @@ Route::get('Participante','InformacionController@participante');
 Route::get('Profesor','InformacionController@profesor');
 Route::get('Administrador','InformacionController@administrador');
 
+Route::get('twit', function()
+{
+    return Twitter::getUserTimeline(['screen_name' => 'cieteula', 'count' => 20, 'format' => 'json']);
+});
+
 //Route::get('/', 'WelcomeController@index');
 
 Route::get('home', 'HomeController@index');
