@@ -11,8 +11,8 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-4 col-md-offset-4">
-                    <img src="{{URL::to('/')}}/images/servicios.jpg" class="img-responsive">
+                <div class="">
+                    <img src="{{URL::to('/')}}/images/servicios.jpg" class="img-responsive center-block">
                 </div>
             </div>
             <div class="row">

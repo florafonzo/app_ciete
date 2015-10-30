@@ -13,11 +13,14 @@
 
 Route::get('/', 'InicioController@index');
 
+//---------- Información CIETE y Créditos --------------//
 Route::get('Misión-y-Visión','InformacionController@mision_vision');
 Route::get('Estructura','InformacionController@estructura');
 Route::get('Servicios','InformacionController@servicios');
 Route::get('Equipo','InformacionController@equipo');
 Route::get('Contacto','InformacionController@contacto');
+Route::get('Créditos','InformacionController@creditos');
+//---------- Información CIETE y Créditos --------------//
 
 Route::get('Participante','InformacionController@participante');
 Route::get('Profesor','InformacionController@profesor');

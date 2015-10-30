@@ -37,6 +37,10 @@ class InformacionController extends Controller {
 		return view('informacion.contacto');
 	}
 
+    public function creditos()
+    {
+        return view('informacion.creditos');
+    }
 
     public function participante()
     {

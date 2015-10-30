@@ -76,6 +76,20 @@ header .container{
     background-color: #a3c0bd;
 }
 
+.menu_bajo > li{
+    background-color: #a3c0bd;
+}
+
+
+@media (max-width: 767px) {
+    .menu_bajo > li:hover{
+        background-color: #5d716e !important;
+    }
+    .menu_bajo > li > a:hover{
+        background-color: #5d716e !important;
+    }
+}
+
 .dropdown-menu::after {
     position: absolute;
     top: -6px;
@@ -116,10 +130,17 @@ header .container{
 
 }
 
-
 .navbar-header{
     background-color: #005983;
 }
+
+
+.navbar-collapse.in {
+    /*max-height: inherit !important;*/
+    /*overflow-x: visible !important;*/
+    /*overflow-y: visible !important;*/
+}
+
 
 /* Fin Menú principal (inicio) */
 
@@ -131,6 +152,7 @@ header .container{
     margin-right: 10px;
     background-color: transparent;
     text-align: center;
+    padding-bottom: 10px;
 }
 /* Fin Redes Sociales */
 
@@ -140,6 +162,8 @@ header .container{
     background-color:lightslategrey;
     text-align: center;
     color: #ffffff;
+    padding-top: 15px;
+    padding-bottom: 15px;
 }
 /* Fin Descripción Principal (inicio)*/
 
@@ -163,6 +187,14 @@ header .container{
     /*background-color: #97a0b3;*/
 }
 
+#myCarousel{
+    height: 300px;
+}
+
+#myCarousel img{
+    height: 300px;
+}
+
 .flechas a  {
     color: #cc006a;
 }
@@ -174,12 +206,23 @@ header .container{
 }*/
 /* Fin Carrusel */
 
+/*Twitter*/
+@media (max-width: 767px) {
+    .twit {
+        padding-top: 15px;
+        width: 90%;
+        margin-right: 30px;
+        margin-left: 30px;
+    }
+}
+
+/* Fin Twitter*/
 
 /* Pie de página (footer) */
 .pie-pag{
     background-color: lightslategrey;
     /*margin:0 -30px;*/
-    padding: 36px 30px 0 30px;
+    padding: 36px 30px 15px 30px;
 }
 
 
@@ -213,15 +256,6 @@ header .container{
     color: #333;
     text-decoration: solid;
 }
-
-/*.titulo_footer{*/
-/*font-weight: bold;*/
-/*}*/
-
-/*.lista_logos li{*/
-/*list-style: none;*/
-/*}*/
-
 
 /* Fin Pie de página (footer) */
 
@@ -332,7 +366,34 @@ header .container{
 
 /* Fin Participante */
 
+/* Créditos */
 
+.titulo{
+    text-align: center;
+    padding: 0 0 15px 0;
+}
+
+.logos .thumbnail{
+    border: 0px;
+}
+
+.nombre{
+    font-weight: bold;
+}
+
+.oficio {
+    text-align: right;
+    line-height: 1.5;
+    color: #75918e;
+    font-weight: bold;
+}
+
+/*.alto{*/
+    /*height: 167px;*/
+    /*vertical-align: middle !important;*/
+/*}*/
+
+/* Fin Créditos */
 
 /*----------------------------------------------------------------------------------*/
 /*body{*/
