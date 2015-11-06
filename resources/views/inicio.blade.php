@@ -80,47 +80,7 @@
                 {{--<h4>Twitter</h4>--}}
                 <a class="twitter-timeline" href="https://twitter.com/cieteula" data-widget-id="660117846270337024">Tweets por el @cieteula.</a>
                 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-                {{--<div class="container-fluid">--}}
-                    {{--<div class="row">--}}
-                        {{--<div class="panel panel-default">--}}
-                            {{--<div class="panel-heading">Ingresar</div>--}}
-                            {{--<div class="panel-body">--}}
-                                {{--@if (count($errors) > 0)--}}
-                                    {{--<div class="alert alert-danger">--}}
-                                        {{--<strong>Whoops!</strong> Hubo errores en sus datos.<br><br>--}}
-                                        {{--<ul>--}}
-                                            {{--@foreach ($errors->all() as $error)--}}
-                                              {{--<li>{{ $error }}</li>--}}
-                                            {{--@endforeach--}}
-                                        {{--</ul>--}}
-                                    {{--</div>--}}
-                                {{--@endif--}}
-                                {{--<form>--}}
-                                    {{--<div class="form-group">--}}
-                                      {{--<label class="col-xs-3 control-label">Email</label>--}}
-                                      {{--<div class="col-xs-12">--}}
-                                          {{--<input type="email" class="form-control" name="email" value="{{ old('email') }}">--}}
-                                      {{--</div>--}}
-                                    {{--</div>--}}
-                                    {{--<div class="form-group">--}}
-                                        {{--<label class="col-xs-4 control-label">Contraseña</label>--}}
-                                        {{--<div class="col-xs-12">--}}
-                                            {{--<input type="password" class="form-control" name="password">--}}
-                                        {{--</div>--}}
-                                    {{--</div>--}}
-                                    {{--<div class="form-group">--}}
-                                        {{--<div class="col-xs-9">--}}
-                                            {{--<button type="submit" class="btn btn-primary">--}}
-                                              {{--Ingresar--}}
-                                            {{--</button>--}}
-                                            {{--<a style="float: left" href="/password/email">¿Olvidaste de tu contraseña?</a>--}}
-                                        {{--</div>--}}
-                                    {{--</div>--}}
-                                {{--</form>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                    {{--</div>  --}}
-                {{--</div>--}}
+
             </aside>
         </div>
       </div>

@@ -147,6 +147,8 @@ return [
 
         /*Twitter provider:*/
         'Thujohn\Twitter\TwitterServiceProvider',
+        'Rappasoft\Vault\VaultServiceProvider',
+        'Illuminate\Html\HtmlServiceProvider',
 
 	],
 
@@ -196,6 +198,8 @@ return [
 		'Validator' => 'Illuminate\Support\Facades\Validator',
 		'View'      => 'Illuminate\Support\Facades\View',
         'Twitter'   => 'Thujohn\Twitter\Facades\Twitter',
+        'Form'      => 'Illuminate\Html\FormFacade',
+        'HTML'      => 'Illuminate\Html\HtmlFacade',
 
 	],
 

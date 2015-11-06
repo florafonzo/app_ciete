@@ -66,10 +66,10 @@ return [
 
 		'pgsql' => [
 			'driver'   => 'pgsql',
-			'host'     => env('DB_HOST', '127.0.0.1'),
-			'database' => env('DB_DATABASE', 'ciete'),
+			'host'     => env('DB_HOST', 'localhost'),
+			'database' => env('DB_DATABASE', 'ciete_bd'),
 			'username' => env('DB_USERNAME', 'postgres'),
-			'password' => env('DB_PASSWORD', '123456'),
+			'password' => env('DB_PASSWORD', ''),
 			'charset'  => 'utf8',
 			'prefix'   => '',
 			'schema'   => 'public',

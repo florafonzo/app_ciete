@@ -81,7 +81,7 @@
                     <a class="lista-menu" href="/Créditos">Créditos</a>
                 </li>
             </ul>
-            <ul class="nav navbar-nav navbar-right">    
+            <ul class="nav navbar-nav navbar-right">
                 <li class="redes">
                     <ul class="list-inline">
                         <li><a href="https://www.facebook.com/ciete.ula"><img class="img-responsive" src="{{URL::to('/')}}/images/logo-facebook.png" alt=""/></a></li>
@@ -92,7 +92,7 @@
                         <li><a href="http://cieteula.tumblr.com/"><img class="img-responsive" src="{{URL::to('/')}}/images/logo-tumblr.png" alt=""/></a></li>
                         <li><a href="https://www.pinterest.com/raymarq/"><img class="img-responsive" src="{{URL::to('/')}}/images/logo-pinterest.png" alt=""/></a></li>
                     </ul>
-                </li>  
+                </li>
             </ul>
         </div>
         <!--<div class="col-md-4 col-xs-12 text-center redes">

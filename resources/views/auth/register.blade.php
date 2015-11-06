@@ -1,11 +1,11 @@
-@extends('app')
+@extends('layouts.layout')
 
 @section('content')
 <div class="container-fluid">
-	<div class="row">
+	<div class="row paneles">
 		<div class="col-md-8 col-md-offset-2">
-			<div class="panel panel-default">
-				<div class="panel-heading">Register</div>
+			<div class="panel panel_login">
+				<div class="panel-heading">Registro</div>
 				<div class="panel-body">
 					@if (count($errors) > 0)
 						<div class="alert alert-danger">
@@ -66,7 +66,7 @@
 						<div class="form-group">
 							<label class="col-md-4 control-label">Confirme su clave</label>
 							<div class="col-md-6">
-								<input type="password" id="clave2" class="form-control" name="confirmacion_clave" required>
+								<input type="password" id="clave2" class="form-control" name="clave_confirmation" required>
 							</div>
 						</div>
 
@@ -83,4 +83,4 @@
 		</div>
 	</div>
 </div>
-@endsection
+@stop

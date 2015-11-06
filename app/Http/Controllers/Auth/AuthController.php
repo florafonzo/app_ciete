@@ -35,4 +35,12 @@ class AuthController extends Controller {
 		$this->middleware('guest', ['except' => 'getLogout']);
 	}
 
+//    public function getRegister(){
+//        return redirect('/')->with('error','No esta autorizado para ingresar a este sitio');
+//    }
+//
+//    public function postRegister(){
+//        return redirect('/')->with('error','No esta autorizado para ingresar a este sitio');
+//    }
+
 }

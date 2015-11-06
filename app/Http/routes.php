@@ -20,16 +20,16 @@ Route::get('Servicios','InformacionController@servicios');
 Route::get('Equipo','InformacionController@equipo');
 Route::get('Contacto','InformacionController@contacto');
 Route::get('Créditos','InformacionController@creditos');
-//---------- Información CIETE y Créditos --------------//
+//* ---------- Información CIETE y Créditos --------------//
 
 Route::get('Participante','InformacionController@participante');
 Route::get('Profesor','InformacionController@profesor');
 Route::get('Administrador','InformacionController@administrador');
 
-Route::get('twit', function()
-{
-    return Twitter::getUserTimeline(['screen_name' => 'cieteula', 'count' => 20, 'format' => 'json']);
-});
+//Route::get('twit', function()
+//{
+//    return Twitter::getUserTimeline(['screen_name' => 'cieteula', 'count' => 20, 'format' => 'json']);
+//});
 
 //Route::get('/', 'WelcomeController@index');
 

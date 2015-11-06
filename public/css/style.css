@@ -6,22 +6,49 @@ body{
 /*Header*/
 header .container{
     height: 200px !important;
-    text-align: center;
 }
 
 .logo_princ img{
     vertical-align: middle;
-    width: 250px;
+    width: 180px;
     height: auto;
 }
 
 .logo_princ{
     position: relative;
-    margin: 0 auto;
+    /*margin: 0 auto;*/
     display: inline-block;
     top:10px;
-
 }
+
+.derecha{
+    text-align: right;
+    padding: 5px 15px 5px 0;
+    background-color: lightslategrey;
+    color: #ffffff;
+    list-style: none;
+    /*height: 44px;*/
+    /*vertical-align: middle !important;*/
+}
+
+.derecha_li{
+    text-align: center !important;
+    left: auto !important;
+    right: 0% !important;
+    margin: 5px 0 !important;
+}
+
+.derecha_li::after{
+    right: 15px !important;
+    left: auto !important;
+}
+
+.nombre_salir{
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: bold;
+}
+
 /* Fin Header*/
 
 
@@ -258,6 +285,35 @@ header .container{
 }
 
 /* Fin Pie de página (footer) */
+
+/*Errores*/
+.lista_errores {
+    background-color: #a94442;
+    color: #ffffff;
+}
+
+.lista_errores>ul{
+    list-style: none;
+}
+
+/*Fin Errores*/
+
+/*Ingreso al sistema (login)*/
+.paneles{
+    margin-top: 40px;
+}
+
+.panel_login{
+    border-color: lightslategrey;
+}
+
+.panel-heading{
+    background-color: lightslategrey;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+/* Fin Ingreso al sistema (login)*/
 
 
 /* Misión y Visión */

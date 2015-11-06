@@ -20,9 +20,10 @@ class CreateUsersTable extends Migration {
 			$table->string('documento_identidad')->unique();
 			$table->string('telefono');
 			$table->string('email')->unique();
-			$table->string('clave', 60);
+			$table->string('password', 60);
 			$table->rememberToken();
 			$table->timestamps();
+//            $table->softDeletes();
 		});
 	}
 
