@@ -27,8 +27,12 @@ header .container{
     background-color: lightslategrey;
     color: #ffffff;
     list-style: none;
-    /*height: 44px;*/
+    height: 44px;
     /*vertical-align: middle !important;*/
+}
+
+.logeado{
+    padding-top: 12px !important;
 }
 
 .derecha_li{

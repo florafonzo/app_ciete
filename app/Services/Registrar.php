@@ -20,7 +20,7 @@ class Registrar implements RegistrarContract {
 			'di' => 'required|max:50',
 			'telefono' => 'required|max:20	',
 			'email' => 'required|email|max:255|unique:users',
-			'clave' => 'required|confirmed|min:6',
+			'password' => 'required|confirmed|min:6',
 		]);
 	}
 
@@ -38,7 +38,7 @@ class Registrar implements RegistrarContract {
 			'documento_identidad' => $data['di'],
 			'telefono' => $data['telefono'],
 			'email' => $data['email'],
-			'password' => bcrypt($data['clave']),
+			'password' => bcrypt($data['password']),
 		]);
 	}
 

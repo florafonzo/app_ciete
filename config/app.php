@@ -147,8 +147,9 @@ return [
 
         /*Twitter provider:*/
         'Thujohn\Twitter\TwitterServiceProvider',
-        'Rappasoft\Vault\VaultServiceProvider',
-        'Illuminate\Html\HtmlServiceProvider',
+
+//        Entrust
+        'Zizaco\Entrust\EntrustServiceProvider',
 
 	],
 
@@ -198,8 +199,7 @@ return [
 		'Validator' => 'Illuminate\Support\Facades\Validator',
 		'View'      => 'Illuminate\Support\Facades\View',
         'Twitter'   => 'Thujohn\Twitter\Facades\Twitter',
-        'Form'      => 'Illuminate\Html\FormFacade',
-        'HTML'      => 'Illuminate\Html\HtmlFacade',
+        'Entrust' => 'Zizaco\Entrust\EntrustFacade',
 
 	],
 

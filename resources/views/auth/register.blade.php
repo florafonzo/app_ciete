@@ -59,14 +59,14 @@
 						<div class="form-group">
 							<label class="col-md-4 control-label">Clave</label>
 							<div class="col-md-6">
-								<input type="password" id="clave" class="form-control" name="clave" required>
+								<input type="password" id="password" class="form-control" name="password" required>
 							</div>
 						</div>
 
 						<div class="form-group">
 							<label class="col-md-4 control-label">Confirme su clave</label>
 							<div class="col-md-6">
-								<input type="password" id="clave2" class="form-control" name="clave_confirmation" required>
+								<input type="password" id="password_confirmation" class="form-control" name="password_confirmation" required>
 							</div>
 						</div>
 
