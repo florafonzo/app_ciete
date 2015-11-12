@@ -3,6 +3,7 @@
 use App\User;
 use Validator;
 use Illuminate\Contracts\Auth\Registrar as RegistrarContract;
+use App\Models\Role;
 
 class Registrar implements RegistrarContract {
 
@@ -32,7 +33,7 @@ class Registrar implements RegistrarContract {
 	 */
 	public function create(array $data)
 	{
-		return User::create([
+		$create = User::create([
 			'nombre' => $data['nombre'],
 			'apellido' => $data['apellido'],
 			'documento_identidad' => $data['di'],
@@ -40,6 +41,14 @@ class Registrar implements RegistrarContract {
 			'email' => $data['email'],
 			'password' => bcrypt($data['password']),
 		]);
+
+		$user = User::find($create->id);
+
+		$role = Role::where('name', '=', 'participante')->firstOrFail();
+
+		$user->roles()->attach($role->id);
+
+		return $create;
 	}
 
 }

@@ -92,7 +92,7 @@ header .container{
 .nav .open > a:hover,
 .nav .open > a:focus{
     color: #ffffff;
-    background-color: #005983;
+    background-color: #1968b3;
     font-weight: bold;
 }
 
@@ -134,11 +134,11 @@ header .container{
 }
 
 .dropdown-menu > li:hover{
-    background-color: #005983;
+    background-color: #1968b3 /*005983*/;
 }
 
 .navbar-nav .fondo{
-    background-color: #005983;
+    background-color: #1968b3;
     padding-left: 0px !important;
     margin-left: 0px !important;
     border-right: 1px solid #a3c0bd;
@@ -162,7 +162,7 @@ header .container{
 }
 
 .navbar-header{
-    background-color: #005983;
+    background-color: #1968b3;
 }
 
 
@@ -401,7 +401,7 @@ header .container{
     text-align: justify;
 }
 .tit_contacto{
-    color: #005983;
+    color: #1968b3;
     font-weight: bold;
 }
 
