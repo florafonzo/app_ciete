@@ -96,9 +96,16 @@ class UsuariosController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function edit($id)
-	{
-		//
+	public function edit($id) {
+
+        $user = User::find($id);
+        $userRole = $user->roles()->first();
+        $user['rol'] = $userRole;
+        $data[roles] = Role::all()->lists('display_name','id');
+
+        return view ('usuarios.editar',$user, $data);
+
+
 	}
 
 	/**

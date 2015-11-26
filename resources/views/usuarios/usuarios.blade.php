@@ -42,6 +42,7 @@
                         <th>Email</th>
                         <th>Rol</th>
                         <th>Acciones</th>
+                        <th></th>
                     </tr>
                     </thead>
                     @if($usuarios->count())
@@ -54,10 +55,16 @@
                                 <td>{{ $user->rol->display_name }}</td>
                                 <td>
                                 @if(Entrust::can('editar_usuarios'))
-                                        <button type="button" class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="Editar"> <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> </button>
+                                    {!! Form::open(array('method' => 'GET','route' => array('usuarios.edit', $user->id))) !!}
+                                        {!! Form::button('<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>', array('type' => 'submit', 'data-toggle' => 'tooltip', 'data-placement' => 'bottom','title' => "Editar", 'class' => 'btn btn-info'))!!}
+                                    {!! Form::close() !!}
                                 @endif
+                                </td>
+                                <td>
                                 @if(Entrust::can('eliminar_usuarios'))
-                                        <button type="button" class="btn btn-danger" data-toggle="tooltip" data-placement="bottom" title="Eliminar"> <span class="glyphicon glyphicon-trash  " aria-hidden="true"></span> </button>
+                                    {!! Form::open(array('method' => 'GET', 'action' => 'UsuariosController@edit', 'class' => 'form-horizontal')) !!}
+                                        {!! Form::button('<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>', array('type' => 'submit', 'data-toggle' => 'tooltip', 'data-placement' => 'bottom','title' => "Eliminar",'class' => 'btn btn-danger'))!!}
+                                    {!! Form::close() !!}
                                 @endif
                                 </td>
                             </tr>
