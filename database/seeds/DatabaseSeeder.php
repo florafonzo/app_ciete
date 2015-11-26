@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
+use database\seeds\PermisionsSeeder;
 
 class DatabaseSeeder extends Seeder {
 
@@ -15,10 +16,9 @@ class DatabaseSeeder extends Seeder {
 		Model::unguard();
 
 //		Eloquent::unguard();
-
-		$this->call('PermissionsSeeder');
-		$this->call('RolesSeeder');
-		$this->call('UserSeeder');
+		$this->call(PermisionsSeeder::class);
+		$this->call(RolesSeeder::class);
+		$this->call(UserSeeder::class);
 		$this->command->info('Datos insertados!');
 
 //		 $this->call('UserTableSeeder');

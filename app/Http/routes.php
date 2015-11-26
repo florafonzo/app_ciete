@@ -26,6 +26,9 @@ Route::get('Participante','InformacionController@participante');
 Route::get('Profesor','InformacionController@profesor');
 Route::get('Administrador','InformacionController@administrador');
 
+Route::resource('/usuarios','UsuariosController');
+
+//Route::get('/usuarios','UsuariosController@index');
 //Route::get('twit', function()
 //{
 //    return Twitter::getUserTimeline(['screen_name' => 'cieteula', 'count' => 20, 'format' => 'json']);
@@ -39,3 +42,5 @@ Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
+
+

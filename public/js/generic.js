@@ -17,9 +17,11 @@ $(document).ready(function() {
 
     //$('.dropdown-toggle').dropdown();
 
-    $("#menu-button").on('click', function(e) {
-        e.preventDefault();
-        $('ul.menu').slideToggle();
-    });
+    //$("#menu-button").on('click', function(e) {
+    //    e.preventDefault();
+    //    $('ul.menu').slideToggle();
+    //});
+
+    $("[data-toggle=tooltip]").tooltip();
 
 });

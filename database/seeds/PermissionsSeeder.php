@@ -1,4 +1,9 @@
-<?php
+<?php namespace database\seeds;
+
+use Illuminate\Database\Seeder;
+use App\Models\Permission;
+
+
 class PermisionsSeeder extends Seeder {
 
     public function run()

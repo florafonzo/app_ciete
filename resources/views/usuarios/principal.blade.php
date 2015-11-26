@@ -4,11 +4,11 @@
     <div class="row">
         <div class="col-md-12 col-sm-12 bienvenida">
             <h3>
-                Bienvenid@ Nombre Apellido
+                Bienvenido {{Auth::user()->nombre}} {{ Auth::user()->apellido }}
             </h3>
         </div>
 
-        @if(Auth::user()->hasRole('administrador'))
+        @if(Auth::user()->hasRole('admin'))
             <div class="col-md-4 col-sm-4 opciones_part">
                 <div class="row">
                     <div class="col-md-6 col-sm-6 col-md-offset-3">
@@ -20,7 +20,7 @@
                     <div class="col-md-12 col-sm-12 menu_part">
                         <ul>
                             <li>
-                                <a href="#"> Usuarios </a>
+                                <a href="{{URL::to('/usuarios')}}"> Usuarios </a>
                             </li>
                             <li>
                                 <a href="#"> Lista de cursos </a>
@@ -60,7 +60,7 @@
                     </div>
                 </div>
             </div>
-        @else
+        @elseif(Auth::user()->hasRole('participante'))
             <div class="col-md-4 col-sm-4 opciones_part">
                 <div class="row">
                     <div class="col-md-6 col-sm-6 col-md-offset-3">
@@ -83,6 +83,12 @@
                         </ul>
                     </div>
                 </div>
+            </div>
+        @else
+            <div class="col-md-12 col-sm-12 bienvenida">
+                <h3>
+                    No tiene los perrmisos apropiados
+                </h3>
             </div>
         @endif
 

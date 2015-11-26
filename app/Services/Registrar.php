@@ -44,7 +44,7 @@ class Registrar implements RegistrarContract {
 
 		$user = User::find($create->id);
 
-		$role = Role::where('name', '=', 'participante')->firstOrFail();
+		$role = Role::where('name', '=', 'participante')->first();
 
 		$user->roles()->attach($role->id);
 

@@ -135,6 +135,7 @@ return [
 		'Illuminate\Translation\TranslationServiceProvider',
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
+		'Illuminate\Html\HtmlServiceProvider',
 
 		/*
 		 * Application Service Providers...
@@ -200,6 +201,8 @@ return [
 		'View'      => 'Illuminate\Support\Facades\View',
         'Twitter'   => 'Thujohn\Twitter\Facades\Twitter',
         'Entrust' => 'Zizaco\Entrust\EntrustFacade',
+		'Form'=> 'Illuminate\Html\FormFacade',
+		'HTML'=> 'Illuminate\Html\HtmlFacade',
 
 	],
 

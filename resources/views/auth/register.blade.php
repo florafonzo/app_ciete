@@ -57,14 +57,14 @@
 						</div>
 
 						<div class="form-group">
-							<label class="col-md-4 control-label">Clave</label>
+							<label class="col-md-4 control-label">Contraseña</label>
 							<div class="col-md-6">
 								<input type="password" id="password" class="form-control" name="password" required>
 							</div>
 						</div>
 
 						<div class="form-group">
-							<label class="col-md-4 control-label">Confirme su clave</label>
+							<label class="col-md-4 control-label">Confirme su contraseña</label>
 							<div class="col-md-6">
 								<input type="password" id="password_confirmation" class="form-control" name="password_confirmation" required>
 							</div>

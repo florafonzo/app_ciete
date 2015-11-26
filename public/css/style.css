@@ -291,13 +291,17 @@ header .container{
 /* Fin Pie de página (footer) */
 
 /*Errores*/
-.lista_errores {
-    background-color: #a94442;
-    color: #ffffff;
+.errores {
+    background-color: #7D3865;
+    border-radius: 10px;
+    border: solid 2px;
+    color: white;
+    padding: 3%;
+    /*border-color: #a94442;*/
 }
 
-.lista_errores>ul{
-    list-style: none;
+.lista_errores {
+    padding-left: 6%;
 }
 
 /*Fin Errores*/
@@ -414,8 +418,12 @@ header .container{
 }
 
 /* Participante */
-.opciones_part{
-    border-right: 2px solid #a3c0bd;
+/*.opciones_part{*/
+    /*border-right: 2px solid #a3c0bd;*/
+/*}*/
+
+.opciones_part2{
+    border-left: 2px solid #a3c0bd;
 }
 
 .menu_part ul{

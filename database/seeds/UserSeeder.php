@@ -1,4 +1,9 @@
 <?php
+
+use Illuminate\Database\Seeder;
+use App\User;
+use App\Models\Role;
+
 class UserSeeder extends Seeder {
 
     public function run()
