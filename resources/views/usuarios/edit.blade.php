@@ -46,7 +46,62 @@
                     </div>
                 @endif
 
-                {{--{!! Form::Model($user, array('method' => 'PUT', 'route' => array('usuarios.edit', $user->id), 'class' => 'form-horizontal col-md-10')) !!}--}}
+                    {!! Form::open(array('method' => 'PUT', 'action' => 'UsuariosController@update', 'class' => 'form-horizontal col-md-10')) !!}
+
+                    <div class="form-group">
+                        {!!Form::label('nombre', 'Nombre', array( 'class' => 'col-md-4 control-label')) !!}
+                        <div class="col-sm-8">
+                            {!!Form::text('nombre', $usuarios->nombre ,array('required', 'class' => 'form-control')) !!}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {!!Form::label('apellido', 'Apellido',  array( 'class' => 'col-md-4 control-label'))!!}
+                        <div class="col-sm-8">
+                            {!!Form::text('apellido', $usuarios->apellido ,array('required','class' => 'form-control'))!!}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {!!Form::label('di', 'Documento de Identidad',  array( 'class' => 'col-md-4 control-label'))!!}
+                        <div class="col-sm-8">
+                            {!!Form::text('di', $usuarios->documento_identidad ,array('required','class' => 'form-control'))!!}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {!!Form::label('rol', 'Rol',  array( 'class' => 'col-md-4 control-label'))!!}
+                        <div class="col-sm-8">
+                            {!! Form::select('rol', $roles, $rol->id, array('required','class' => 'form-control')) !!}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {!!Form::label('telefono', 'Telefono de Contacto',  array( 'class' => 'col-md-4 control-label'))!!}
+                        <div class="col-sm-8">
+                            {!!Form::text('telefono', $usuarios->telefono ,array('required','class' => 'form-control'))!!}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {!!Form::label('email', 'Correo electrónico',  array( 'class' => 'col-md-4 control-label'))!!}
+                        <div class="col-sm-8">
+                            {!! Form::email('email', $usuarios->email, array('required','class' => 'form-control'))!!}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {!!Form::label('password', 'Contraseña',  array( 'class' => 'col-md-4 control-label'))!!}
+                        <div class="col-sm-8">
+                            {!! Form::password('password', array('required','class' => 'form-control')) !!}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {!!Form::label('password1', 'Confirme su contraseña',  array( 'class' => 'col-md-4 control-label'))!!}
+                        <div class="col-sm-8">
+                            {!! Form::password('password_confirmation', array('required','class' => 'form-control')) !!}
+                        </div>
+                    </div>
+                    {!! Form::submit('Editar', array('class' => 'btn btn-success')) !!}
+
+                    {!! Form::close() !!}
+
+
+                {{--{!! Form::Model($usuarios, array('method' => 'PUT', 'route' => array('usuarios.update', $usuarios->id), 'class' => 'form-horizontal col-md-10')) !!}--}}
 
                     {{--<div class="form-group">--}}
                         {{--{!!Form::label('nombre', 'Nombre', array( 'class' => 'col-md-4 control-label')) !!}--}}
@@ -69,7 +124,7 @@
                     {{--<div class="form-group">--}}
                         {{--{!!Form::label('rol', 'Rol',  array( 'class' => 'col-md-4 control-label'))!!}--}}
                         {{--<div class="col-sm-8">--}}
-                            {{--{!! Form::select('rol', $roles, null, array('required','class' => 'form-control')) !!}--}}
+                            {{--{!! Form::select('rol', $roles, $usuarios->rol->id, array('required','class' => 'form-control')) !!}--}}
                         {{--</div>--}}
                     {{--</div>--}}
                     {{--<div class="form-group">--}}

@@ -98,12 +98,12 @@ class UsuariosController extends Controller {
 	 */
 	public function edit($id) {
 
-        $user = User::find($id);
-        $userRole = $user->roles()->first();
-        $user['rol'] = $userRole;
-        $data[roles] = Role::all()->lists('display_name','id');
+        $data['usuarios'] = User::find($id);
+        $userRole = $data['usuarios']->roles()->first();
+        $data['rol'] = $userRole;
+        $data['roles'] = Role::all()->lists('display_name','id');
 
-        return view ('usuarios.editar',$user, $data);
+        return view ('usuarios.edit', $data);
 
 
 	}
