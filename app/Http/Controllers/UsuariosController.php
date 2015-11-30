@@ -112,6 +112,7 @@ class UsuariosController extends Controller {
 	 */
 	public function edit($id) {
 		try{
+            dd($id );
 	        $data['usuarios'] = User::find($id);
 	        $userRole = $data['usuarios']->roles()->first();
 	        $data['rol'] = $userRole;
@@ -184,6 +185,15 @@ class UsuariosController extends Controller {
 	 */
 	public function destroy($id) {
 		try{
+
+            $usuario = User::find($id);
+            $roles = $usuario->roles()->first();
+
+//            dd($id );
+            if (($roles->name) == 'admin'){
+                return view ('usuarios.principal');
+            }
+
 			User::destroy($id);
 			/*$affectedRows = User::where('id', '=', $id)->delete();*/
 			$data['usuarios'] = User::all();

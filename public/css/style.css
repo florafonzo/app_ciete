@@ -475,7 +475,7 @@ header .container{
 
 }*/
 
-.menu_usuarios < a{
+.menu_usuarios > a{
     text-decoration: none;
 }
 

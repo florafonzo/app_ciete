@@ -18,14 +18,14 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12 col-sm-12 menu_part">
-                        <ul>
-                            <li>
+                        <ul class="nav nav-pills nav-stacked">
+                            <li class="menu_usuarios">
                                 <a href="{{URL::to('/usuarios')}}"> Usuarios </a>
                             </li>
-                            <li>
+                            <li class="menu_usuarios">
                                 <a href="#"> Lista de cursos </a>
                             </li>
-                            <li>
+                            <li class="menu_usuarios">
                                 <a href="#"> Información </a>
                             </li>
                         </ul>
@@ -92,7 +92,7 @@
             </div>
         @endif
 
-        <div class="col-md-8 col-sm-8">
+        <div class="col-md-8 col-sm-8 opciones_part2">
             <div class="col-md-12">
                 <div id="myCarousel" class="carousel slide" data-ride="carousel">
                     <!-- Indicators -->

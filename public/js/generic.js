@@ -24,4 +24,19 @@ $(document).ready(function() {
 
     $("[data-toggle=tooltip]").tooltip();
 
+    //$("#boton_eliminar").click(function() {
+    //    var id=$(this).data('id');
+    //    alert(id);
+    //    $('#modal_eliminar').modal('show');
+    //});
+
+    $( "#eliminar" ).click(function() {
+        var id=$(this).data('id');
+        alert(id);
+
+        $( "#form_eliminar" ).submit();
+    });
+
+
+
 });
