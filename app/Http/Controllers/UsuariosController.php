@@ -85,7 +85,12 @@ class UsuariosController extends Controller {
             return view('errors.error')->with('error',$e->getMessage());
         }
 
-
+//        $input = Input::all();
+//        $input['password'] = Hash::make($input['password']);
+//
+//        $user = User::create($input);
+//        $user->attachRole(Role::find(Input::get('rol')));
+//        return Redirect::route('users.index');
 	}
 
 	/**
