@@ -6,6 +6,8 @@ use App\User;
 use App\Models\Role;
 use Validator;
 use App\Http\Requests\UsuarioRequest;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Http\RedirectResponse;
 
 use Illuminate\Http\Request;
 
@@ -16,16 +18,22 @@ class UsuariosController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function index()
-	{
-		$data['usuarios'] = User::all();
+	public function index() {
+		try{
+			$data['usuarios'] = User::all();
+			
+			foreach($data['usuarios'] as $usuario){
+				$usuario['rol'] = $usuario->roles()->first();
 
-		foreach($data['usuarios'] as $usuario){
-			$usuario['rol'] = $usuario->roles()->first();
+			}
 
+			return view('usuarios.usuarios', $data);
 		}
+		catch (Exception $e) {
 
-		return view('usuarios.usuarios', $data);
+            return view('errors.error')->with('error',$e->getMessage());
+        }
+			
 	}
 
 	/**
@@ -33,10 +41,16 @@ class UsuariosController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function create()
-	{
-        $data['roles'] = Role::all()->lists('display_name','id');
-        return view ('usuarios.crear', $data);
+	public function create() {
+		try{
+	        $data['roles'] = Role::all()->lists('display_name','id');
+
+	        return view ('usuarios.crear', $data);
+	    }
+        catch (Exception $e) {
+
+            return view('errors.error')->with('error',$e->getMessage());
+        }
 	}
 
 	/**
@@ -71,12 +85,7 @@ class UsuariosController extends Controller {
             return view('errors.error')->with('error',$e->getMessage());
         }
 
-//        $input = Input::all();
-//        $input['password'] = Hash::make($input['password']);
-//
-//        $user = User::create($input);
-//        $user->attachRole(Role::find(Input::get('rol')));
-//        return Redirect::route('users.index');
+
 	}
 
 	/**
@@ -97,13 +106,18 @@ class UsuariosController extends Controller {
 	 * @return Response
 	 */
 	public function edit($id) {
+		try{
+	        $data['usuarios'] = User::find($id);
+	        $userRole = $data['usuarios']->roles()->first();
+	        $data['rol'] = $userRole;
+	        $data['roles'] = Role::all()->lists('display_name','id');
 
-        $data['usuarios'] = User::find($id);
-        $userRole = $data['usuarios']->roles()->first();
-        $data['rol'] = $userRole;
-        $data['roles'] = Role::all()->lists('display_name','id');
+	        return view ('usuarios.edit', $data);
+	    }
+	    catch (Exception $e) {
 
-        return view ('usuarios.edit', $data);
+            return view('errors.error')->with('error',$e->getMessage());
+        }
 
 
 	}
@@ -114,9 +128,47 @@ class UsuariosController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
-	{
-		//
+	public function update(UsuarioRequest $request, $id) {
+
+		try {
+
+			$usuario = User::find($id);
+
+            $nombre = $request -> nombre;
+            $apellido = $request -> apellido;
+            $di = $request -> di;
+            $telefono = $request -> telefono;
+            $email = Input::get('email');
+            
+            if (!($email == $usuario->email)){
+            	$email = $request -> email;
+            }
+            
+            $password = bcrypt($request -> password);
+
+            $usuario->nombre = $nombre;
+            $usuario->apellido = $apellido;
+            $usuario->documento_identidad = $di;
+            $usuario->telefono = $telefono;
+            $usuario->email = $email;
+            $usuario->password = $password;
+
+            $usuario->save();
+
+            if($usuario->save()){
+                $user = User::find($id);
+                $user->roles()->detach();
+                $user->attachRole($request -> rol);
+                return redirect('/usuarios');
+            }else{
+                return view('/usuarios');
+            }
+        }
+        catch (Exception $e) {
+            return view('errors.error')->with('error',$e->getMessage());
+        }        
+    
+   
 	}
 
 	/**
@@ -125,9 +177,24 @@ class UsuariosController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy($id)
-	{
-		//
+	public function destroy($id) {
+		try{
+			User::destroy($id);
+			/*$affectedRows = User::where('id', '=', $id)->delete();*/
+			$data['usuarios'] = User::all();
+			
+			foreach($data['usuarios'] as $usuario){
+				$usuario['rol'] = $usuario->roles()->first();
+
+			}
+
+	        return view ('usuarios.usuarios', $data);
+	    }
+	    catch (Exception $e) {
+
+            return view('errors.error')->with('error',$e->getMessage());
+        } 
+	        
 	}
 
 }

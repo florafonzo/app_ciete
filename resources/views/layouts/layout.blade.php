@@ -17,6 +17,11 @@
       <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
       <script src="{{URL::to('/')}}/js/generic.js"></script>
+      <!--<script>
+      $(document).ready(function(){
+        alert('Holaaaaaaaa');
+      });
+    </script>-->
 
 	</head>
 	<body>

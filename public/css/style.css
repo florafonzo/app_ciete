@@ -456,6 +456,36 @@ header .container{
     font-weight: bold;
 }
 
+/* Fin Creditos */
+
+/* Menu usuarios */
+
+/*.menu_usuario {
+    
+}
+
+.menu_usuario:hover {
+    background-color: white;
+}
+
+.menu_usuario {
+    text-decoration: none;
+    color: #;
+    font-weight: bold;
+
+}*/
+
+.menu_usuarios < a{
+    text-decoration: none;
+}
+
+
+
+
+
+
+/* Fin Menu usuarios */
+
 /*.alto{*/
     /*height: 167px;*/
     /*vertical-align: middle !important;*/

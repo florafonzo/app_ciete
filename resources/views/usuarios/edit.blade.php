@@ -17,15 +17,15 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12 col-sm-12 menu_part">
-                        <ul>
-                            <li>
+                        <ul class="nav nav-pills nav-stacked">
+                            <li class="active menu_usuarios">
                                 <a href="{{URL::to('/usuarios')}}"> Usuarios </a>
                             </li>
-                            <li>
+                            <li class="menu_usuarios">
                                 <a href="#"> Lista de cursos </a>
                             </li>
-                            <li>
-                                <a href="#"> Información </a>
+                            <li class="menu_usuarios">
+                                <a href="#"> Carrusel </a>
                             </li>
                         </ul>
                     </div>
@@ -46,7 +46,7 @@
                     </div>
                 @endif
 
-                    {!! Form::open(array('method' => 'PUT', 'action' => 'UsuariosController@update', 'class' => 'form-horizontal col-md-10')) !!}
+                    {!! Form::open(array('method' => 'PUT', 'route' => array('usuarios.update', $usuarios->id), 'class' => 'form-horizontal col-md-10')) !!}
 
                     <div class="form-group">
                         {!!Form::label('nombre', 'Nombre', array( 'class' => 'col-md-4 control-label')) !!}

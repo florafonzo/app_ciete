@@ -19,15 +19,15 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12 col-sm-12 menu_part">
-                        <ul>
-                            <li>
-                                <a href="{{URL::to('/usuarios')}}"> Usuarios </a>
+                        <ul class="nav nav-pills nav-stacked">
+                            <li class="active menu_usuarios">
+                                <a style="text-decoration:none;" href="{{URL::to('/usuarios')}}"> Usuarios </a>
                             </li>
-                            <li>
-                                <a href="#"> Lista de cursos </a>
+                            <li class="menu_usuarios">
+                                <a style="text-decoration:none;" href="#"> Lista de cursos </a>
                             </li>
-                            <li>
-                                <a href="#"> Información </a>
+                            <li class="menu_usuarios">
+                                <a href="#"> Carrusel </a>
                             </li>
                         </ul>
                     </div>
@@ -62,7 +62,7 @@
                                 </td>
                                 <td>
                                 @if(Entrust::can('eliminar_usuarios'))
-                                    {!! Form::open(array('method' => 'GET', 'action' => 'UsuariosController@edit', 'class' => 'form-horizontal')) !!}
+                                    {!! Form::open(array('method' => 'DELETE', 'route' => array('usuarios.destroy', $user->id))) !!}
                                         {!! Form::button('<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>', array('type' => 'submit', 'data-toggle' => 'tooltip', 'data-placement' => 'bottom','title' => "Eliminar",'class' => 'btn btn-danger'))!!}
                                     {!! Form::close() !!}
                                 @endif

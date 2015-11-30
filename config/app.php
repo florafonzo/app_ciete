@@ -200,9 +200,9 @@ return [
 		'Validator' => 'Illuminate\Support\Facades\Validator',
 		'View'      => 'Illuminate\Support\Facades\View',
         'Twitter'   => 'Thujohn\Twitter\Facades\Twitter',
-        'Entrust' => 'Zizaco\Entrust\EntrustFacade',
-		'Form'=> 'Illuminate\Html\FormFacade',
-		'HTML'=> 'Illuminate\Html\HtmlFacade',
+        'Entrust' 	=> 'Zizaco\Entrust\EntrustFacade',
+		'Form'		=> 'Illuminate\Html\FormFacade',
+		'HTML'		=> 'Illuminate\Html\HtmlFacade',
 
 	],
 
