@@ -31,8 +31,8 @@ $(document).ready(function() {
     //});
 
     $( "#eliminar" ).click(function() {
-        var id=$(this).data('id');
-        alert(id);
+        //var id=$(this).data('id');
+        //alert(id);
 
         $( "#form_eliminar" ).submit();
     });
