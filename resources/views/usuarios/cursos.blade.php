@@ -20,11 +20,11 @@
                 <div class="row">
                     <div class="col-md-12 col-sm-12 menu_part">
                         <ul class="nav nav-pills nav-stacked">
-                            <li class="active menu_usuarios">
+                            <li class="menu_usuarios">
                                 <a style="text-decoration:none;" href="{{URL::to('/usuarios')}}"> Usuarios </a>
                             </li>
-                            <li class="menu_usuarios">
-                                <a style="text-decoration:none;" href="#"> Lista de cursos </a>
+                            <li class="active menu_usuarios">
+                                <a style="text-decoration:none;" href="{{URL::to('/cursos')}}"> Lista de cursos </a>
                             </li>
                             <li class="menu_usuarios">
                                 <a href="#"> Carrusel </a>
@@ -54,25 +54,25 @@
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->rol->display_name }}</td>
                                 <td>
-                                @if(Entrust::can('editar_usuarios'))
-                                    {!! Form::open(array('method' => 'GET','route' => array('usuarios.edit', $user->id))) !!}
+                                    @if(Entrust::can('editar_usuarios'))
+                                        {!! Form::open(array('method' => 'GET','route' => array('usuarios.edit', $user->id))) !!}
                                         {!! Form::button('<span class="glyphicon glyphicon-pencil" data-toggle="tooltip" data-placement="bottom" title="Editar" aria-hidden="true"></span>', array('type' => 'submit', 'class' => 'btn btn-info'))!!}
-                                    {!! Form::close() !!}
-                                @endif
-                                </td>
-                                <td>
-                                @if(Entrust::can('eliminar_usuarios'))
-                                    @if($user->rol->name == 'admin')
-                                        {!! Form::open(array('method' => 'DELETE', 'route' => array('usuarios.destroy', $user->id), 'id' => 'form_eliminar')) !!}
-                                            {!! Form::button('<span class="glyphicon glyphicon-trash" data-toggle="tooltip" data-placement="bottom" title="Eliminar" aria-hidden="true"></span>', array('type' => 'button','class' => 'btn btn-danger', 'disabled'))!!}
-                                        {!! Form::close() !!}
-                                    @else
-                                        {!! Form::open(array('method' => 'DELETE', 'route' => array('usuarios.destroy', $user->id), 'id' => 'form_eliminar')) !!}
-                                            {!! Form::button('<span class="glyphicon glyphicon-trash" id="{{$user->id}}" data-toggle="tooltip" data-placement="bottom" title="Eliminar" aria-hidden="true"></span>', array('type' => 'button', 'data-toggle' => 'modal', 'data-target' => '#modal_eliminar','class' => 'btn btn-danger'))!!}
                                         {!! Form::close() !!}
                                     @endif
+                                </td>
+                                <td>
+                                    @if(Entrust::can('eliminar_usuarios'))
+                                        @if($user->rol->name == 'admin')
+                                            {!! Form::open(array('method' => 'DELETE', 'route' => array('usuarios.destroy', $user->id), 'id' => 'form_eliminar')) !!}
+                                            {!! Form::button('<span class="glyphicon glyphicon-trash" data-toggle="tooltip" data-placement="bottom" title="Eliminar" aria-hidden="true"></span>', array('type' => 'button','class' => 'btn btn-danger', 'disabled'))!!}
+                                            {!! Form::close() !!}
+                                        @else
+                                            {!! Form::open(array('method' => 'DELETE', 'route' => array('usuarios.destroy', $user->id), 'id' => 'form_eliminar')) !!}
+                                            {!! Form::button('<span class="glyphicon glyphicon-trash" id="{{$user->id}}" data-toggle="tooltip" data-placement="bottom" title="Eliminar" aria-hidden="true"></span>', array('type' => 'button', 'data-toggle' => 'modal', 'data-target' => '#modal_eliminar','class' => 'btn btn-danger'))!!}
+                                            {!! Form::close() !!}
+                                        @endif
 
-                                @endif
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach

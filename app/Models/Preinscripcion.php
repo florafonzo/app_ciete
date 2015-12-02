@@ -1,4 +1,4 @@
-<?php namespace App;
+<?php namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -18,5 +18,8 @@ class Preinscripcion extends Model {
      */
     protected $fillable = ['nombre', 'apellido', 'correo', 'curso'];
 
+    public function curso(){
+        return $this->belongsTo('App\Models\Curso','id_curso');
+    }
 
 }

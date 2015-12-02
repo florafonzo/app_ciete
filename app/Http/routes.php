@@ -28,6 +28,8 @@ Route::get('Profesor','InformacionController@profesor');*/
 
 Route::resource('/usuarios','UsuariosController');
 
+Route::resource('/cursos','CursosController');
+
 //Route::get('/usuarios','UsuariosController@index');
 //Route::get('twit', function()
 //{

@@ -63,13 +63,13 @@
                     <div class="form-group">
                         {!!Form::label('di', 'Documento de Identidad',  array( 'class' => 'col-md-4 control-label'))!!}
                         <div class="col-sm-8">
-                            {!!Form::text('di', '',array('required','class' => 'form-control'))!!}
+                            {!!Form::text('documento_identidad', '',array('required','class' => 'form-control'))!!}
                         </div>
                     </div>
                     <div class="form-group">
                         {!!Form::label('rol', 'Rol',  array( 'class' => 'col-md-4 control-label'))!!}
                         <div class="col-sm-8">
-                            {!! Form::select('rol', $roles, null, array('required','class' => 'form-control')) !!}
+                            {!! Form::select('id_rol', $roles, null, array('required','class' => 'form-control')) !!}
                         </div>
                     </div>
                     <div class="form-group">

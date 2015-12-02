@@ -3,59 +3,28 @@
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Models\Curso;
 use Illuminate\Http\Request;
 
-class InformacionController extends Controller {
+class CursosController extends Controller {
 
 	/**
 	 * Display a listing of the resource.
 	 *
 	 * @return Response
 	 */
-	public function mision_vision()
+	public function index()
 	{
-		return view('informacion.mision_vision');
+		try{
+			$data['cursos'] = Curso::all();
+
+			return view('usuarios.cursos', $data);
+		}
+		catch (Exception $e) {
+
+			return view('errors.error')->with('error',$e->getMessage());
+		}
 	}
-
-    public function estructura()
-	{
-		return view('informacion.estructura');
-	}
-
-    public function servicios()
-	{
-		return view('informacion.servicios');
-	}
-
-    public function equipo()
-	{
-		return view('informacion.equipo');
-	}
-
-    public function contacto()
-	{
-		return view('informacion.contacto');
-	}
-
-    public function creditos()
-    {
-        return view('informacion.creditos');
-    }
-
-//    public function participante()
-//    {
-//        return view('usuarios.participante');
-//    }
-//
-//    public function profesor()
-//    {
-//        return view('usuarios.profesor');
-//    }
-//
-//    public function administrador()
-//    {
-//        return view('usuarios.administrador');
-//    }
 
 	/**
 	 * Show the form for creating a new resource.

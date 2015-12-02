@@ -4,6 +4,8 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\User;
 use App\Models\Role;
+use App\Models\Participante;
+use App\Models\Profesor;
 use Validator;
 use App\Http\Requests\UsuarioRequest;
 use Illuminate\Support\Facades\Input;
@@ -21,6 +23,9 @@ class UsuariosController extends Controller {
 	public function index() {
 		try{
 			$data['usuarios'] = User::all();
+			$data['participantes'] = User::all();
+            $data['profes'] = User::all();
+
 			
 			foreach($data['usuarios'] as $usuario){
 				$usuario['rol'] = $usuario->roles()->first();
@@ -59,26 +64,61 @@ class UsuariosController extends Controller {
 	 * @return Response
 	 */
 	public function store(UsuarioRequest $request)	{
-
         try
         {
-
             $create = User::create([
-                'nombre' => $request -> nombre,
-                'apellido' => $request -> apellido,
-                'documento_identidad' => $request -> di,
-                'telefono' => $request -> telefono,
                 'email' => $request -> email,
                 'password' => bcrypt($request -> password),
             ]);
 
-            if($create->save()){
-                $user = User::find($create->id);
-                $user->attachRole($request -> rol);
-                return redirect('/usuarios');
-            }else{
-                return view('/usuarios');
+            $usuario = User::find($create->id);
+
+            if($request->id_rol == '3') {
+                $create2 = Participante::findOrNew($request->id);
+                $create2->id_usuario = $usuario->id;
+                $create2->nombre = $request->nombre;
+                $create2->apellido = $request->apellido;
+                $create2->documento_identidad = $request->documento_identidad;
+                $create2->foto = 'ruta';
+                $create2->telefono = $request->telefono;
+                $create2->celular = $request->telefono;
+                $create2->correo_alternativo = 'correo@mail.com';
+                $create2->twitter = 'twitter';
+                $create2->ocupacion = 'estudiante';
+                $create2->titulo_pregrado = 'licenciado';
+                $create2->universidad = 'UCV';
             }
+
+            if(($request->id_rol == '1') || ($request->id_rol == '2') || ($request->id_rol == '4')) {
+//                dd();
+                $create2 = Profesor::create([
+                    'id_usuario' => $usuario->id,
+                    'nombre' => $request->nombre,
+                    'apellido' => $request->apellido,
+                    'documento_identidad' => $request->documento_identidad,
+                    'telefono' => $request->telefono,
+                    'foto' => 'ruta',
+                    'celular' => '0416'
+
+
+                ]);
+            }
+
+            if($create->save()) {
+                $usuario = User::find($create->id);
+                if ($create2->save()) {
+                    $usuario->attachRole($request->id_rol);
+                    return redirect('/usuarios');
+                }else{
+                    Session::set('error','Ha ocurrido un error inesperado');
+                    DB::table('users')->where('id', '=', $usuario->id)->delete();
+                    return view('usuarios.crear');
+                }
+            }else{
+                Session::set('error','Ha ocurrido un error inesperado');
+                return view('usuarios.crear');
+            }
+
         }
         catch (Exception $e)
         {
@@ -112,7 +152,7 @@ class UsuariosController extends Controller {
 	 */
 	public function edit($id) {
 		try{
-            dd($id );
+//            dd($id );
 	        $data['usuarios'] = User::find($id);
 	        $userRole = $data['usuarios']->roles()->first();
 	        $data['rol'] = $userRole;

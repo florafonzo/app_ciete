@@ -30,8 +30,8 @@ class UsuarioRequest extends Request {
         return [
             'nombre' => 'required|max:255',
             'apellido' => 'required|max:255',
-            'di' => 'required|max:50',
-            'rol' => 'required',
+            'documento_identidad' => 'required|max:50',
+            'id_rol' => 'required',
             'telefono' => 'required|max:20	',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|confirmed|min:6',

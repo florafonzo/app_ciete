@@ -1,4 +1,4 @@
-<?php namespace App;
+<?php namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -28,6 +28,10 @@ class Curso extends Model {
 
     public function profesor() {
         return $this->belongsToMany('App\Models\Profesor', 'profesor_cursos');
+    }
+
+    public function preinscripcion(){
+        return $this->hasMany('App\Models\Preinscripcion','id');
     }
 
 }
