@@ -34,7 +34,7 @@ class CreateCursosTable extends Migration {
 			$table->float('costo');
 			$table->text('modalidades_pago');
 			$table->string('imagen_carrusel');
-			$table->text('descrpcion_carrusel');
+			$table->text('descripcion_carrusel');
 			$table->boolean('activo_carrusel');
 			$table->timestamps();
 

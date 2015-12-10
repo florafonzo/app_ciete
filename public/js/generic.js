@@ -37,6 +37,12 @@ $(document).ready(function() {
         $( "#form_eliminar" ).submit();
     });
 
+    $( "#eliminar_curso" ).click(function() {
+        //var id=$(this).data('id');
+        //alert(id);
+
+        $( "#form_eliminar_cursos" ).submit();
+    });
 
 
 });

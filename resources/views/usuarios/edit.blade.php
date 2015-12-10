@@ -7,30 +7,31 @@
                 Bienvenido {{Auth::user()->nombre}} {{ Auth::user()->apellido }}
             </h3>
         </div>
-        @if(Auth::user()->hasRole('admin'))
-            <div class="col-md-4 col-sm-4 opciones_part">
-                <div class="row">
-                    <div class="col-md-6 col-sm-6 col-md-offset-3">
-                        <img src="{{URL::to('/')}}/images/foto_participante.png">
-                    </div>
+        @if (!(Auth::guest()))
+            @include('layouts.menu_usuarios')
+            {{--<div class="col-md-4 col-sm-4 opciones_part">--}}
+                {{--<div class="row">--}}
+                    {{--<div class="col-md-6 col-sm-6 col-md-offset-3">--}}
+                        {{--<img src="{{URL::to('/')}}/images/foto_participante.png">--}}
+                    {{--</div>--}}
 
-                </div>
-                <div class="row">
-                    <div class="col-md-12 col-sm-12 menu_part">
-                        <ul class="nav nav-pills nav-stacked">
-                            <li class="active menu_usuarios">
-                                <a href="{{URL::to('/usuarios')}}"> Usuarios </a>
-                            </li>
-                            <li class="menu_usuarios">
-                                <a href="#"> Lista de cursos </a>
-                            </li>
-                            <li class="menu_usuarios">
-                                <a href="#"> Carrusel </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+                {{--</div>--}}
+                {{--<div class="row">--}}
+                    {{--<div class="col-md-12 col-sm-12 menu_part">--}}
+                        {{--<ul class="nav nav-pills nav-stacked">--}}
+                            {{--<li class="active menu_usuarios">--}}
+                                {{--<a href="{{URL::to('/usuarios')}}"> Usuarios </a>--}}
+                            {{--</li>--}}
+                            {{--<li class="menu_usuarios">--}}
+                                {{--<a href="#"> Lista de cursos </a>--}}
+                            {{--</li>--}}
+                            {{--<li class="menu_usuarios">--}}
+                                {{--<a href="#"> Carrusel </a>--}}
+                            {{--</li>--}}
+                        {{--</ul>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
+            {{--</div>--}}
             <div class="col-md-8 col-sm-8 opciones_part2">
 
                 @if (count($errors) > 0)
@@ -45,7 +46,7 @@
                         </div>
                     </div>
                 @endif
-
+                @if($usuarios->count())
                     {!! Form::open(array('method' => 'PUT', 'route' => array('usuarios.update', $usuarios->id), 'class' => 'form-horizontal col-md-10')) !!}
 
                     <div class="form-group">
@@ -69,8 +70,14 @@
                     <div class="form-group">
                         {!!Form::label('rol', 'Rol',  array( 'class' => 'col-md-4 control-label'))!!}
                         <div class="col-sm-8">
-                            {!! Form::select('rol', $roles, $rol->id, array('required','class' => 'form-control')) !!}
+                            @foreach($roles as $rol)
+                                {{--{{$rol}}--}}
+                                {!! Form::checkbox('id_rol[]', $rol, false) !!} {{$rol}} <br>
+                            @endforeach
                         </div>
+                        {{--<div class="col-sm-8">--}}
+                            {{--{!! Form::select('rol', $roles, $rol->id, array('required','class' => 'form-control')) !!}--}}
+                        {{--</div>--}}
                     </div>
                     <div class="form-group">
                         {!!Form::label('telefono', 'Telefono de Contacto',  array( 'class' => 'col-md-4 control-label'))!!}
@@ -100,6 +107,7 @@
 
                     {!! Form::close() !!}
 
+                @endif
 
                 {{--{!! Form::Model($usuarios, array('method' => 'PUT', 'route' => array('usuarios.update', $usuarios->id), 'class' => 'form-horizontal col-md-10')) !!}--}}
 

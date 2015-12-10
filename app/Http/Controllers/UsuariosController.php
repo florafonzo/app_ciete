@@ -10,6 +10,7 @@ use Validator;
 use App\Http\Requests\UsuarioRequest;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Http\RedirectResponse;
+use DB;
 
 use Illuminate\Http\Request;
 
@@ -64,58 +65,75 @@ class UsuariosController extends Controller {
 	 * @return Response
 	 */
 	public function store(UsuarioRequest $request)	{
+//
+//        $roles = $request->id_rol;
+//        $rols=0;
+//        foreach($roles as $rol) {
+//            $rols = $rols + 1;
+//        }
+//        dd($rols);
+
         try
         {
             $create = User::create([
+//                'nombre'=>$request->nombre,
+//                'apellido'=>$request->apellido,
                 'email' => $request -> email,
                 'password' => bcrypt($request -> password),
             ]);
 
             $usuario = User::find($create->id);
+            $roles = $request->id_rol;
 
-            if($request->id_rol == '3') {
-                $create2 = Participante::findOrNew($request->id);
-                $create2->id_usuario = $usuario->id;
-                $create2->nombre = $request->nombre;
-                $create2->apellido = $request->apellido;
-                $create2->documento_identidad = $request->documento_identidad;
-                $create2->foto = 'ruta';
-                $create2->telefono = $request->telefono;
-                $create2->celular = $request->telefono;
-                $create2->correo_alternativo = 'correo@mail.com';
-                $create2->twitter = 'twitter';
-                $create2->ocupacion = 'estudiante';
-                $create2->titulo_pregrado = 'licenciado';
-                $create2->universidad = 'UCV';
+            foreach($roles as $rol) {
+//                dd($rol);
+
+                if ($rol == 'Participante') {
+                    $create2 = Participante::findOrNew($request->id);
+                    $create2->id_usuario = $usuario->id;
+                    $create2->nombre = $request->nombre;
+                    $create2->apellido = $request->apellido;
+                    $create2->documento_identidad = $request->documento_identidad;
+                    $create2->foto = 'ruta';
+                    $create2->telefono = $request->telefono;
+                    $create2->celular = $request->telefono;
+                    $create2->correo_alternativo = 'correo@mail.com';
+                    $create2->twitter = 'twitter';
+                    $create2->ocupacion = 'estudiante';
+                    $create2->titulo_pregrado = 'licenciado';
+                    $create2->universidad = 'UCV';
+                }
+
+                if (($rol == 'Administrador') || ($rol == 'Coordinador') || (rol == 'Profesor')) {
+                    $create2 = Profesor::create([
+                        'id_usuario' => $usuario->id,
+                        'nombre' => $request->nombre,
+                        'apellido' => $request->apellido,
+                        'documento_identidad' => $request->documento_identidad,
+                        'telefono' => $request->telefono,
+                        'foto' => 'ruta',
+                        'celular' => '0416'
+                    ]);
+                    break;
+                }
             }
 
-            if(($request->id_rol == '1') || ($request->id_rol == '2') || ($request->id_rol == '4')) {
-//                dd();
-                $create2 = Profesor::create([
-                    'id_usuario' => $usuario->id,
-                    'nombre' => $request->nombre,
-                    'apellido' => $request->apellido,
-                    'documento_identidad' => $request->documento_identidad,
-                    'telefono' => $request->telefono,
-                    'foto' => 'ruta',
-                    'celular' => '0416'
-
-
-                ]);
-            }
-
-            if($create->save()) {
-                $usuario = User::find($create->id);
+            if ($create->save()) {
+//                $usuario = User::find($create->id);
                 if ($create2->save()) {
-                    $usuario->attachRole($request->id_rol);
+                    foreach($roles as $rol) {
+                        $role = DB::table('roles')->where('display_name','=', $rol)->first();
+//                        dd($role->id);
+                        $usuario->attachRole($role->id);
+                    }
                     return redirect('/usuarios');
-                }else{
-                    Session::set('error','Ha ocurrido un error inesperado');
+                } else {
+                    Session::set('error', 'Ha ocurrido un error inesperado');
                     DB::table('users')->where('id', '=', $usuario->id)->delete();
                     return view('usuarios.crear');
                 }
-            }else{
-                Session::set('error','Ha ocurrido un error inesperado');
+            } else {
+                Session::set('error', 'Ha ocurrido un error inesperado');
                 return view('usuarios.crear');
             }
 
@@ -180,10 +198,6 @@ class UsuariosController extends Controller {
 
 			$usuario = User::find($id);
 
-            $nombre = $request -> nombre;
-            $apellido = $request -> apellido;
-            $di = $request -> di;
-            $telefono = $request -> telefono;
             $email = Input::get('email');
             
             if (!($email == $usuario->email)){
@@ -192,22 +206,75 @@ class UsuariosController extends Controller {
             
             $password = bcrypt($request -> password);
 
-            $usuario->nombre = $nombre;
-            $usuario->apellido = $apellido;
-            $usuario->documento_identidad = $di;
-            $usuario->telefono = $telefono;
             $usuario->email = $email;
             $usuario->password = $password;
-
             $usuario->save();
 
-            if($usuario->save()){
-                $user = User::find($id);
-                $user->roles()->detach();
-                $user->attachRole($request -> rol);
-                return redirect('/usuarios');
-            }else{
-                return view('/usuarios');
+            $roles = $request->id_rol;
+
+            foreach($roles as $rol) {
+
+                if ($rol == 'Participante') {
+
+                    $tipo_usuario = DB::table('participantes')->where('id_usuario', '=', $id)->first();
+
+                    $tipo_usuario->nombre = $request->nombre;
+                    $tipo_usuario->apellido = $request->apellido;
+                    $tipo_usuario->documento_identidad = $request->documento_identidad;
+                    $tipo_usuario->telefono = $request->telefono;
+                    $tipo_usuario->foto = $request->foto;
+                    $tipo_usuario->celular = $request->celular;
+                    $tipo_usuario->correo_alternativo = $request->correo_alternativo;
+                    $tipo_usuario->twitter = $request->twitter;
+                    $tipo_usuario->ocupacion = $request->ocupacion;
+                    $tipo_usuario->titulo_pregrado = $request->titulo_pregrado;
+                    $tipo_usuario->universidad = $request->universidad;
+
+                    $tipo_usuario->save();
+
+                }
+
+                if (($rol == 'Administrador') || ($rol == 'Coordinador') || (rol == 'Profesor')) {
+
+                    $tipo_usuario = DB::table('profesores')->where('id_usuario', '=', $id)->first();
+
+                    $tipo_usuario->nombre = $request->nombre;
+                    $tipo_usuario->apellido = $request->apellido;
+                    $tipo_usuario->documento_identidad = $request->documento_identidad;
+                    $tipo_usuario->telefono = $request->telefono;
+                    $tipo_usuario->foto = $request->foto;
+                    $tipo_usuario->celular = $request->celular;
+
+                    $tipo_usuario->save();
+                }
+
+//                if ($usuario->save()) {
+//                    $user = User::find($id);
+//                    $user->roles()->detach();
+//                    $user->attachRole($request->rol);
+//                    return redirect('/usuarios');
+//                } else {
+//                    return view('/usuarios');
+//                }
+
+                if ($usuario->save()) {
+//                $usuario = User::find($create->id);
+                    if ($tipo_usuario->save()) {
+                        foreach($roles as $rol) {
+                            $role = DB::table('roles')->where('display_name','=', $rol)->first();
+//                        dd($role->id);
+                            $usuario->attachRole($role->id);
+                        }
+                        return redirect('/usuarios');
+                    } else {
+                        Session::set('error', 'Ha ocurrido un error inesperado');
+                        DB::table('users')->where('id', '=', $usuario->id)->delete();
+                        return view('usuarios.crear');
+                    }
+                } else {
+                    Session::set('error', 'Ha ocurrido un error inesperado');
+                    return view('usuarios.crear');
+                }
             }
         }
         catch (Exception $e) {

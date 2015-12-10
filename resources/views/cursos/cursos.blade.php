@@ -21,10 +21,10 @@
                 {{--<div class="row">--}}
                     {{--<div class="col-md-12 col-sm-12 menu_part">--}}
                         {{--<ul class="nav nav-pills nav-stacked">--}}
-                            {{--<li class="active menu_usuarios">--}}
+                            {{--<li class="menu_usuarios">--}}
                                 {{--<a style="text-decoration:none;" href="{{URL::to('/usuarios')}}"> Usuarios </a>--}}
                             {{--</li>--}}
-                            {{--<li class="menu_usuarios">--}}
+                            {{--<li class="active menu_usuarios">--}}
                                 {{--<a style="text-decoration:none;" href="{{URL::to('/cursos')}}"> Lista de cursos </a>--}}
                             {{--</li>--}}
                             {{--<li class="menu_usuarios">--}}
@@ -39,65 +39,56 @@
                     <thead>
                     <tr>
                         <th>Nombre</th>
-                        <th>Apellido</th>
-                        <th>Email</th>
-                        <th>Rol</th>
+                        <th>Fecha</th>
                         <th>Acciones</th>
                         <th></th>
                     </tr>
                     </thead>
-                    @if($usuarios->count())
+                    @if($cursos->count())
                         <tbody>
-                        @foreach($usuarios as $key => $user)
+                        @foreach($cursos as $curso)
                             <tr>
-                                <td>{{ $user->nombre }}</td>
-                                <td>{{ $user->apellido  }}</td>
-                                <td>{{ $user->email }}</td>
-                                <td>{{ $user->rol->display_name }}</td>
+                                <td>{{ $curso->nombre }}</td>
+                                <td>{{ $curso->fecha  }}</td>
                                 <td>
-                                @if(Entrust::can('editar_usuarios'))
-                                    {!! Form::open(array('method' => 'GET','route' => array('usuarios.edit', $user->id))) !!}
+                                    @if(Entrust::can('editar_cursos'))
+                                        {!! Form::open(array('method' => 'GET','route' => array('cursos.edit', $curso->id))) !!}
                                         {!! Form::button('<span class="glyphicon glyphicon-pencil" data-toggle="tooltip" data-placement="bottom" title="Editar" aria-hidden="true"></span>', array('type' => 'submit', 'class' => 'btn btn-info'))!!}
-                                    {!! Form::close() !!}
-                                @endif
-                                </td>
-                                <td>
-                                @if(Entrust::can('eliminar_usuarios'))
-                                    @if($user->rol->name == 'admin')
-                                        {!! Form::open(array('method' => 'DELETE', 'route' => array('usuarios.destroy', $user->id), 'id' => 'form_eliminar')) !!}
-                                            {!! Form::button('<span class="glyphicon glyphicon-trash" data-toggle="tooltip" data-placement="bottom" title="Eliminar" aria-hidden="true"></span>', array('type' => 'button','class' => 'btn btn-danger', 'disabled'))!!}
-                                        {!! Form::close() !!}
-                                    @else
-                                        {!! Form::open(array('method' => 'DELETE', 'route' => array('usuarios.destroy', $user->id), 'id' => 'form_eliminar')) !!}
-                                            {!! Form::button('<span class="glyphicon glyphicon-trash" id="{{$user->id}}" data-toggle="tooltip" data-placement="bottom" title="Eliminar" aria-hidden="true"></span>', array('type' => 'button', 'data-toggle' => 'modal', 'data-target' => '#modal_eliminar','class' => 'btn btn-danger'))!!}
                                         {!! Form::close() !!}
                                     @endif
-
-                                @endif
+                                </td>
+                                <td>
+                                    @if(Entrust::can('eliminar_cursos'))
+                                        {!! Form::open(array('method' => 'DELETE', 'route' => array('cursos.destroy', $curso->id), 'id' => 'form_eliminar_cursos')) !!}
+                                        {!! Form::button('<span class="glyphicon glyphicon-trash" id="{{$curso->id}}" data-toggle="tooltip" data-placement="bottom" title="Eliminar" aria-hidden="true"></span>', array('type' => 'button', 'data-toggle' => 'modal', 'data-target' => '#modal_eliminar_cursos','class' => 'btn btn-danger'))!!}
+                                        {!! Form::close() !!}
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach
                         </tbody>
                     @endif
                 </table>
-                <div class="" style="text-align: center;">
-                    <a href="{{URL::to('/')}}/usuarios/create" type="button" class="btn btn-success" >Agregar usuario </a>
-                </div>
+                @if(Entrust::can('crear_cursos'))
+                    <div class="" style="text-align: center;">
+                        <a href="{{URL::to('/')}}/cursos/create" type="button" class="btn btn-success" >Agregar curso </a>
+                    </div>
+                @endif
 
                 {{-- Fin Modal de Eliminar--}}
-                <div class="modal fade" id="modal_eliminar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal fade" id="modal_eliminar_cursos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title" id="myModalLabel">Eliminación de usuario</h4>
+                                <h4 class="modal-title" id="myModalLabel">Eliminación de curso</h4>
                             </div>
                             <div class="modal-body">
-                                <h5>¿ Está usted seguro de que desea eliminar este usuario ?</h5>
+                                <h5>¿ Está usted seguro de que desea eliminar este curso ?</h5>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                                <button id="eliminar" type="button" class="btn btn-danger">Eliminar</button>
+                                <button id="eliminar_curso" type="button" class="btn btn-danger">Eliminar</button>
                             </div>
                         </div>
                     </div>
