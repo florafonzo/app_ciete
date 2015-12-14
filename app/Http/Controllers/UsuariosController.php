@@ -30,8 +30,10 @@ class UsuariosController extends Controller {
 			
 			foreach($data['usuarios'] as $usuario){
 				$usuario['rol'] = $usuario->roles()->first();
-
+//                dd($usuario['rol']);
 			}
+
+
 
 			return view('usuarios.usuarios', $data);
 		}
@@ -76,8 +78,8 @@ class UsuariosController extends Controller {
         try
         {
             $create = User::create([
-//                'nombre'=>$request->nombre,
-//                'apellido'=>$request->apellido,
+                'nombre' => $request->nombre,
+                'apellido' => $request->apellido,
                 'email' => $request -> email,
                 'password' => bcrypt($request -> password),
             ]);
@@ -104,7 +106,7 @@ class UsuariosController extends Controller {
                     $create2->universidad = 'UCV';
                 }
 
-                if (($rol == 'Administrador') || ($rol == 'Coordinador') || (rol == 'Profesor')) {
+                if (($rol == 'Administrador') || ($rol == 'Coordinador') || ($rol == 'Profesor')) {
                     $create2 = Profesor::create([
                         'id_usuario' => $usuario->id,
                         'nombre' => $request->nombre,

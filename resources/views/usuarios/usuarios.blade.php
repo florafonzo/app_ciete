@@ -53,7 +53,7 @@
                                 <td>{{ $user->nombre }}</td>
                                 <td>{{ $user->apellido  }}</td>
                                 <td>{{ $user->email }}</td>
-                                <td>{{ $user->rol->display_name }}</td>
+                                <td></td>
                                 <td>
                                 @if(Entrust::can('editar_usuarios'))
                                     {!! Form::open(array('method' => 'GET','route' => array('usuarios.edit', $user->id))) !!}

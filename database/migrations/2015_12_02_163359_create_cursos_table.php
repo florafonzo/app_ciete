@@ -16,8 +16,12 @@ class CreateCursosTable extends Migration {
 		{
 			$table->increments('id');
 			$table->integer('id_tipo')->unsigned();
+			$table->integer('id_modalidad_pago')->unsigned();
+			$table->integer('id_modalidad_curso')->unsigned();
 			$table->string('nombre')->unique();
-			$table->date('fecha');
+			$table->date('fecha_inicio');
+			$table->date('fecha_fin');
+			$table->integer('duracion');
 			$table->text('lugar');
 			$table->text('descripcion');
 			$table->string('area');
@@ -39,6 +43,12 @@ class CreateCursosTable extends Migration {
 			$table->timestamps();
 
 			$table->foreign('id_tipo')->references('id')->on('tipo_cursos')
+				->onUpdate('cascade')->onDelete('cascade');
+
+			$table->foreign('id_modalidad_pago')->references('id')->on('modalidad_pagos')
+				->onUpdate('cascade')->onDelete('cascade');
+
+			$table->foreign('id_modalidad_curso')->references('id')->on('modalidad_cursos')
 				->onUpdate('cascade')->onDelete('cascade');
 		});
 
