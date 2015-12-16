@@ -48,12 +48,16 @@
                     </thead>
                     @if($usuarios->count())
                         <tbody>
-                        @foreach($usuarios as $key => $user)
+                        @foreach($usuarios as $user)
                             <tr>
                                 <td>{{ $user->nombre }}</td>
                                 <td>{{ $user->apellido  }}</td>
                                 <td>{{ $user->email }}</td>
-                                <td></td>
+                                <td>
+                                    @foreach($user->roles as $rol)
+                                        {{ $rol->display_name }} <br/>
+                                    @endforeach
+                                </td>
                                 <td>
                                 @if(Entrust::can('editar_usuarios'))
                                     {!! Form::open(array('method' => 'GET','route' => array('usuarios.edit', $user->id))) !!}
@@ -63,16 +67,21 @@
                                 </td>
                                 <td>
                                 @if(Entrust::can('eliminar_usuarios'))
-                                    @if($user->rol->name == 'admin')
-                                        {!! Form::open(array('method' => 'DELETE', 'route' => array('usuarios.destroy', $user->id), 'id' => 'form_eliminar')) !!}
-                                            {!! Form::button('<span class="glyphicon glyphicon-trash" data-toggle="tooltip" data-placement="bottom" title="Eliminar" aria-hidden="true"></span>', array('type' => 'button','class' => 'btn btn-danger', 'disabled'))!!}
-                                        {!! Form::close() !!}
-                                    @else
-                                        {!! Form::open(array('method' => 'DELETE', 'route' => array('usuarios.destroy', $user->id), 'id' => 'form_eliminar')) !!}
-                                            {!! Form::button('<span class="glyphicon glyphicon-trash" id="{{$user->id}}" data-toggle="tooltip" data-placement="bottom" title="Eliminar" aria-hidden="true"></span>', array('type' => 'button', 'data-toggle' => 'modal', 'data-target' => '#modal_eliminar','class' => 'btn btn-danger'))!!}
-                                        {!! Form::close() !!}
-                                    @endif
+                                    @foreach($user->roles as $rol)
+                                        {{--{{ $rol->display_name }} <br/>--}}
+                                        @if($rol->name == 'admin')
+                                            {!! Form::open(array('method' => 'DELETE', 'route' => array('usuarios.destroy', $user->id), 'id' => 'form_eliminar')) !!}
+                                                {!! Form::button('<span class="glyphicon glyphicon-trash" data-toggle="tooltip" data-placement="bottom" title="Eliminar" aria-hidden="true"></span>', array('type' => 'button','class' => 'btn btn-danger', 'disabled'))!!}
+                                            {!! Form::close() !!}
+                                        @else
+                                            {!! Form::open(array('method' => 'DELETE', 'route' => array('usuarios.destroy', $user->id), 'id' => 'form_eliminar')) !!}
+                                                {!! Form::button('<span class="glyphicon glyphicon-trash" id="{{$user->id}}" data-toggle="tooltip" data-placement="bottom" title="Eliminar" aria-hidden="true"></span>', array('type' => 'button', 'data-toggle' => 'modal', 'data-target' => '#modal_eliminar','class' => 'btn btn-danger'))!!}
+                                            {!! Form::close() !!}
+                                        @endif
 
+                                        <?php break; ?>
+
+                                    @endforeach
                                 @endif
                                 </td>
                             </tr>

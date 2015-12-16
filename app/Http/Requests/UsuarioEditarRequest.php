@@ -4,7 +4,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use App\Http\Requests\Request;
 use Illuminate\Support\Facades\Auth;
 
-class UsuarioRequest extends Request {
+class UsuarioEditarRequest extends Request {
 
     /**
      * Determine if the user is authorized to make this request.
@@ -28,14 +28,13 @@ class UsuarioRequest extends Request {
     public function rules()
     {
         return [
-            'es_participante' => 'required',
             'nombre' => 'required|max:255',
             'apellido' => 'required|max:255',
             'documento_identidad' => 'required|max:50',
 //            'id_rol' => 'required',
             'telefono' => 'required|max:20',
             'celular' => 'max:20',
-            'email' => 'required|email|max:255|unique:users',
+            'email' => 'required|email|max:255',
             'password' => 'required|confirmed|min:6',
             'email_alternativo' => 'email|max:255|unique:users',
             'imagen' => 'mimes:jpeg,png,jpg|max:1024',

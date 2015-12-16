@@ -45,7 +45,7 @@ class UsuarioRequest extends Request {
             'plan_estudio' => 'required|max:300',
             'costo' => 'required|max:300',
             'modalidades_pago' => 'required|max:300',
-            'imagen_carrusel' => 'required|mimes:jpeg,png|max:1024',
+            'imagen_carrusel' => 'required|mimes:jpeg,png,jpg|max:1024',
             'descripcion_carrusel' => 'required|max:100',
             'activo_carrusel' => 'required',
 

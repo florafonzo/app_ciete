@@ -49,6 +49,17 @@
                 @if($usuarios->count())
                     {!! Form::open(array('method' => 'PUT', 'route' => array('usuarios.update', $usuarios->id), 'class' => 'form-horizontal col-md-10')) !!}
 
+                    @if($es_participante)
+                        <div class="form-group">
+                            {!!Form::label('rol_actual', 'Rol actual: ', array( 'class' => 'col-md-4 control-label')) !!}
+                            <div class="col-sm-8">
+                                {!!Form::text('rol_actual', $rol[0]->name ,array('disabled', 'class' => 'form-control')) !!}
+
+                                {{--{!! Form::radio('es_participante', 'si', false) !!} Si <br/>--}}
+                                {{--{!! Form::radio('es_participante', 'no', true) !!} No--}}
+                            </div>
+                        </div>
+                    @endif
                     <div class="form-group">
                         {!!Form::label('nombre', 'Nombre', array( 'class' => 'col-md-4 control-label')) !!}
                         <div class="col-sm-8">
@@ -62,27 +73,35 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        {!!Form::label('di', 'Documento de Identidad',  array( 'class' => 'col-md-4 control-label'))!!}
+                        {!!Form::label('documento_identidad', 'Documento de Identidad',  array( 'class' => 'col-md-4 control-label'))!!}
                         <div class="col-sm-8">
-                            {!!Form::text('di', $usuarios->documento_identidad ,array('required','class' => 'form-control'))!!}
+                            {!!Form::text('documento_identidad', $datos_usuario->documento_identidad ,array('required','class' => 'form-control'))!!}
+                        </div>
+                    </div>
+                    @if(!($es_participante))
+                        <div class="form-group">
+                            {!!Form::label('rol', 'Rol',  array( 'class' => 'col-md-4 control-label'))!!}
+                            <div class="col-sm-8">
+                                @foreach($roles as $role)
+                                    @if ($rol == "Participante")
+                                        <?php continue; ?>
+                                    @else
+                                        {!! Form::checkbox('id_rol[]', $role, false) !!} {{$role}} <br>
+                                    @endif
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
+                    <div class="form-group">
+                        {!!Form::label('telefono', 'Teléfono de Fijo',  array( 'class' => 'col-md-4 control-label'))!!}
+                        <div class="col-sm-8">
+                            {!!Form::text('telefono', $datos_usuario->telefono ,array('required','class' => 'form-control'))!!}
                         </div>
                     </div>
                     <div class="form-group">
-                        {!!Form::label('rol', 'Rol',  array( 'class' => 'col-md-4 control-label'))!!}
+                        {!!Form::label('celular', 'Teléfono Móvil: ',  array( 'class' => 'col-md-4 control-label'))!!}
                         <div class="col-sm-8">
-                            @foreach($roles as $rol)
-                                {{--{{$rol}}--}}
-                                {!! Form::checkbox('id_rol[]', $rol, false) !!} {{$rol}} <br>
-                            @endforeach
-                        </div>
-                        {{--<div class="col-sm-8">--}}
-                            {{--{!! Form::select('rol', $roles, $rol->id, array('required','class' => 'form-control')) !!}--}}
-                        {{--</div>--}}
-                    </div>
-                    <div class="form-group">
-                        {!!Form::label('telefono', 'Telefono de Contacto',  array( 'class' => 'col-md-4 control-label'))!!}
-                        <div class="col-sm-8">
-                            {!!Form::text('telefono', $usuarios->telefono ,array('required','class' => 'form-control'))!!}
+                            {!!Form::text('celular', $datos_usuario->celular, array('class' => 'form-control'))!!}
                         </div>
                     </div>
                     <div class="form-group">
@@ -103,65 +122,50 @@
                             {!! Form::password('password_confirmation', array('required','class' => 'form-control')) !!}
                         </div>
                     </div>
+                    <div class="form-group">
+                        {!!Form::label('imagen', 'Imagen de perfil: ',  array( 'class' => 'col-md-4 control-label'))!!}
+                        <div class="col-sm-8">
+                            {!!Form::file('imagen', $datos_usuario->foto, array('class' => 'form-control'))!!}
+                        </div>
+                    </div>
+
+                    @if($es_participante)
+                        <div class="form-group">
+                            {!!Form::label('email_alternativo', 'Correo electrónico alternativo: ',  array( 'class' => 'col-md-4 control-label'))!!}
+                            <div class="col-sm-8">
+                                {!! Form::email('email_alternativo', $datos_usuario->correo_alternativo, array('class' => 'form-control'))!!}
+                            </div>
+                        </div>
+                        <div class="form-group" >
+                            {!!Form::label('twitter', 'Usuario twitter: ',  array( 'class' => 'col-md-4 control-label'))!!}
+                            <div class="col-sm-8">
+                                {!! Form::text('twitter', $datos_usuario->twitter, array('class' => 'form-control'))!!}
+                            </div>
+                        </div>
+                        <div class="form-group" >
+                            {!!Form::label('ocupacion', 'Ocupacion: ',  array( 'class' => 'col-md-4 control-label'))!!}
+                            <div class="col-sm-8">
+                                {!! Form::text('ocupacion', $datos_usuario->ocupacion, array('class' => 'form-control'))!!}
+                            </div>
+                        </div>
+                        <div class="form-group" >
+                            {!!Form::label('titulo', 'Titulo de pregrado: ',  array( 'class' => 'col-md-4 control-label'))!!}
+                            <div class="col-sm-8">
+                                {!! Form::text('titulo', $datos_usuario->titulo_pregrado, array('class' => 'form-control'))!!}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {!!Form::label('univ', 'Universidad dónde obtuvo el título: ',  array( 'class' => 'col-md-4 control-label'))!!}
+                            <div class="col-sm-8">
+                                {!! Form::text('univ', $datos_usuario->universidad, array('class' => 'form-control'))!!}
+                            </div>
+                        </div>
+                    @endif
                     {!! Form::submit('Editar', array('class' => 'btn btn-success')) !!}
 
                     {!! Form::close() !!}
 
                 @endif
-
-                {{--{!! Form::Model($usuarios, array('method' => 'PUT', 'route' => array('usuarios.update', $usuarios->id), 'class' => 'form-horizontal col-md-10')) !!}--}}
-
-                    {{--<div class="form-group">--}}
-                        {{--{!!Form::label('nombre', 'Nombre', array( 'class' => 'col-md-4 control-label')) !!}--}}
-                        {{--<div class="col-sm-8">--}}
-                            {{--{!!Form::text('nombre', '' ,array('required', 'class' => 'form-control')) !!}--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                    {{--<div class="form-group">--}}
-                        {{--{!!Form::label('apellido', 'Apellido',  array( 'class' => 'col-md-4 control-label'))!!}--}}
-                        {{--<div class="col-sm-8">--}}
-                            {{--{!!Form::text('apellido', '',array('required','class' => 'form-control'))!!}--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                    {{--<div class="form-group">--}}
-                        {{--{!!Form::label('di', 'Documento de Identidad',  array( 'class' => 'col-md-4 control-label'))!!}--}}
-                        {{--<div class="col-sm-8">--}}
-                            {{--{!!Form::text('di', '',array('required','class' => 'form-control'))!!}--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                    {{--<div class="form-group">--}}
-                        {{--{!!Form::label('rol', 'Rol',  array( 'class' => 'col-md-4 control-label'))!!}--}}
-                        {{--<div class="col-sm-8">--}}
-                            {{--{!! Form::select('rol', $roles, $usuarios->rol->id, array('required','class' => 'form-control')) !!}--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                    {{--<div class="form-group">--}}
-                        {{--{!!Form::label('telefono', 'Telefono de Contacto',  array( 'class' => 'col-md-4 control-label'))!!}--}}
-                        {{--<div class="col-sm-8">--}}
-                            {{--{!!Form::text('telefono', '',array('required','class' => 'form-control'))!!}--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                    {{--<div class="form-group">--}}
-                        {{--{!!Form::label('email', 'Correo electrónico',  array( 'class' => 'col-md-4 control-label'))!!}--}}
-                        {{--<div class="col-sm-8">--}}
-                            {{--{!! Form::email('email', null, array('required','class' => 'form-control'))!!}--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                    {{--<div class="form-group">--}}
-                        {{--{!!Form::label('password', 'Contraseña',  array( 'class' => 'col-md-4 control-label'))!!}--}}
-                        {{--<div class="col-sm-8">--}}
-                            {{--{!! Form::password('password', array('required','class' => 'form-control')) !!}--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                    {{--<div class="form-group">--}}
-                        {{--{!!Form::label('password1', 'Confirme su contraseña',  array( 'class' => 'col-md-4 control-label'))!!}--}}
-                        {{--<div class="col-sm-8">--}}
-                            {{--{!! Form::password('password_confirmation', array('required','class' => 'form-control')) !!}--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                    {{--{!! Form::submit('Editar', array('class' => 'btn btn-success')) !!}--}}
-
-                {{--{!! Form::close() !!}--}}
             </div>
         @endif
     </div>
