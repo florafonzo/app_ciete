@@ -50,52 +50,52 @@ class PermisionsSeeder extends Seeder {
 
         $crear_usuarios = new Permission();
         $crear_usuarios->name = 'ver_lista_cursos';
-        $crear_usuarios->display_name = 'crear usuarios';
+        $crear_usuarios->display_name = 'ver lista cursos';
         $crear_usuarios->save();
 
         $crear_usuarios = new Permission();
         $crear_usuarios->name = 'crear_cursos';
-        $crear_usuarios->display_name = 'crear usuarios';
+        $crear_usuarios->display_name = 'crear cursos';
         $crear_usuarios->save();
 
         $editar_usuarios = new Permission();
         $editar_usuarios->name = 'editar_cursos';
-        $editar_usuarios->display_name = 'editar usuarios';
+        $editar_usuarios->display_name = 'editar cursos';
         $editar_usuarios->save();
 
         $eliminar_roles = new Permission();
         $eliminar_roles->name = 'eliminar_cursos';
-        $eliminar_roles->display_name = 'eliminar roles';
+        $eliminar_roles->display_name = 'eliminar cursos';
         $eliminar_roles->save();
 
         $crear_usuarios = new Permission();
         $crear_usuarios->name = 'ver_notas';
-        $crear_usuarios->display_name = 'crear usuarios';
+        $crear_usuarios->display_name = 'ver notas';
         $crear_usuarios->save();
 
         $crear_usuarios = new Permission();
         $crear_usuarios->name = 'agregar_notas';
-        $crear_usuarios->display_name = 'crear usuarios';
+        $crear_usuarios->display_name = 'agregar notas';
         $crear_usuarios->save();
 
         $editar_usuarios = new Permission();
         $editar_usuarios->name = 'editar_notas';
-        $editar_usuarios->display_name = 'editar usuarios';
+        $editar_usuarios->display_name = 'editar notas';
         $editar_usuarios->save();
 
         $eliminar_roles = new Permission();
         $eliminar_roles->name = 'eliminar_notas';
-        $eliminar_roles->display_name = 'eliminar roles';
+        $eliminar_roles->display_name = 'eliminar notas';
         $eliminar_roles->save();
 
         $eliminar_roles = new Permission();
         $eliminar_roles->name = 'listar_alumnos';
-        $eliminar_roles->display_name = 'eliminar roles';
+        $eliminar_roles->display_name = 'listar alumnos';
         $eliminar_roles->save();
 
         $eliminar_roles = new Permission();
         $eliminar_roles->name = 'obtener_certificado';
-        $eliminar_roles->display_name = 'eliminar roles';
+        $eliminar_roles->display_name = 'obtener  certificado';
         $eliminar_roles->save();
     }
 

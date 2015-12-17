@@ -63,9 +63,15 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        {!!Form::label('fecha', 'Fecha',  array( 'class' => 'col-md-4 control-label'))!!}
+                        {!!Form::label('fecha_inicio', 'Fecha',  array( 'class' => 'col-md-4 control-label'))!!}
                         <div class="col-sm-8">
-                            {!!Form::input('date', 'fecha', null ,array('required','class' => 'form-control'))!!}
+                            {!!Form::input('date', 'fecha_inicio', null ,array('required','class' => 'form-control'))!!}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {!!Form::label('fecha_fin', 'Fecha',  array( 'class' => 'col-md-4 control-label'))!!}
+                        <div class="col-sm-8">
+                            {!!Form::input('date', 'fecha_fin', null ,array('required','class' => 'form-control'))!!}
                         </div>
                     </div>
                     <div class="form-group">

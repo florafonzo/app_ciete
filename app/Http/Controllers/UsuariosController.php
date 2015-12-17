@@ -10,6 +10,7 @@ use App\Models\Profesor;
 use App\Http\Requests\UsuarioRequest;
 use App\Http\Requests\UsuarioEditarRequest;
 use Validator;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Http\RedirectResponse;
 use DB;
@@ -50,7 +51,16 @@ class UsuariosController extends Controller {
 	 */
 	public function create() {
 		try{
-	        $data['roles'] = Role::all()->lists('display_name','id');
+
+            Session::forget('nombre');
+            Session::forget('apellido');
+            Session::forget('email');
+            Session::forget('documento_identidad');
+            Session::forget('telefono');
+            Session::forget('celular');
+
+            $data['roles'] = Role::all()->lists('display_name','id');
+            $data['errores'] = '';
 
 	        return view ('usuarios.crear', $data);
 	    }
@@ -75,7 +85,11 @@ class UsuariosController extends Controller {
 //        dd($rols);
 //        dd($request->es_participante);
 
+
+
         try {
+
+            $data['errores'] = '';
             $create = User::create([
                 'nombre' => $request->nombre,
                 'apellido' => $request->apellido,
@@ -123,10 +137,22 @@ class UsuariosController extends Controller {
                 if ( empty(Input::get( 'id_rol' )) ) {
 //                    dd("fallo roless");
                     DB::table('users')->where('id', '=', $usuario->id)->delete();
-                    $errors = "Debe seleccionar un rol";
+                    $data['errores'] = "Debe seleccionar un rol";
                     $data['roles'] = Role::all()->lists('display_name','id');
 
-                    return view('usuarios.crear', $data)->with('error',$errors);
+                    Session::set('nombre', $request->nombre);
+                    Session::set('apellido', $request->apellido);
+                    Session::set('email', $request->email);
+                    Session::set('documento_identidad', $request->documento_identidad);
+                    Session::set('telefono', $request->telefono);
+                    Session::set('celular', $request->celular);
+
+                    return view('usuarios.crear', $data);
+//                        ->with('nombre', $request->nombre)
+//                        ->with('apellido',$request->apellido)
+//                        ->with('documento_identidad',$request->documento_identidad)
+//                        ->with('telefono',$request->telefono)
+//                        ->with('celular',$request->celular);
                 }else{
 
                     $create2 = Profesor::create([
@@ -196,6 +222,7 @@ class UsuariosController extends Controller {
 	 */
 	public function edit($id) {
 		try{
+            $data['errores'] = '';
             $data['es_participante'] = false;
             $usuario = User::find($id);
 	        $data['usuarios'] = $usuario;
@@ -234,6 +261,7 @@ class UsuariosController extends Controller {
 
 		try {
 
+            $data['errores'] = '';
 			$usuario = User::find($id);
             $userRoles = $usuario->roles()->get();
             $es_participante = false;
@@ -246,11 +274,33 @@ class UsuariosController extends Controller {
             }
 
 
-            $email = Input::get('email');
+            $email = $request->email;
             
             if (!($email == $usuario->email)){
 //                dd("Email No es IGUAL");
-            	$email = $request -> email;
+                $existe = DB::table('users')->where('email', '=', $email)->first();
+
+                if($existe){
+                    $data['errores'] = "El correo ya existe, ingrese uno diferente";
+                    $data['es_participante'] = false;
+                    $usuario = User::find($id);
+                    $data['usuarios'] = $usuario;
+                    $userRoles = $data['usuarios']->roles()->get();
+                    $data['rol'] = $userRoles;
+                    $data['roles'] = Role::all()->lists('display_name','id');
+
+                    foreach($userRoles as $role){
+                        if(($role->name) == 'participante'){
+                            $data['es_participante'] = true;
+                            $data['datos_usuario'] = DB::table('participantes')->where('id_usuario', '=', $usuario->id)->first();
+                        }else{
+                            $data['datos_usuario'] = DB::table('profesores')->where('id_usuario', '=', $usuario->id)->first();
+                        }
+                        break;
+                    }
+
+                    return view('usuarios.edit', $data);
+                }
             }
             
             $password = bcrypt($request -> password);
@@ -272,8 +322,9 @@ class UsuariosController extends Controller {
             if ($es_participante) {
                 $usuario->save();
 
-                $tipo_usuario = DB::table('participantes')->where('id_usuario', '=', $id)->first();
-
+                $tipo_usuario = Participante::find(1)->where('id_usuario', '=', $id)->first();
+//                Post::find(1)->comments()->where('title', '=', 'foo')->first();
+                dd($tipo_usuario);
                 $tipo_usuario->nombre = $request->nombre;
                 $tipo_usuario->apellido = $request->apellido;
                 $tipo_usuario->documento_identidad = $request->documento_identidad;
@@ -304,9 +355,8 @@ class UsuariosController extends Controller {
 //                );
 
                 if ( empty(Input::get('id_rol')) ) {
-//                    dd('Rolesss vacioss');
-                    $errors = "Debe seleccionar un Rol";
 
+                    $data['errores'] = "Debe seleccionar un Rol";
                     $data['es_participante'] = false;
                     $usuario = User::find($id);
                     $data['usuarios'] = $usuario;
@@ -324,12 +374,15 @@ class UsuariosController extends Controller {
                         break;
                     }
 
-                    return view('usuarios.edit', $data)->with('errors',$errors);
+                    return view('usuarios.edit', $data);
+
                 }else {
 
                     $usuario->save();
 
-                    $tipo_usuario = DB::table('profesores')->where('id_usuario', '=', $id)->first();
+//                    $tipo_usuario = DB::table('profesores')->where('id_usuario', '=', $id)->first();
+                    $tipo_usuario = Profesor::find(1)->where('id_usuario', '=', $id)->first();
+
 
                     $tipo_usuario->nombre = $request->nombre;
                     $tipo_usuario->apellido = $request->apellido;
@@ -337,7 +390,7 @@ class UsuariosController extends Controller {
                     $tipo_usuario->telefono = $request->telefono;
                     $tipo_usuario->foto = $imagen;
                     $tipo_usuario->celular = $request->celular;
-
+//                    dd($tipo_usuario);
                     $tipo_usuario->save();
                 }
             }

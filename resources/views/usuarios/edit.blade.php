@@ -46,8 +46,20 @@
                         </div>
                     </div>
                 @endif
+                @if ($errores != '')
+                    <div class="row">
+                        <div class="errores ">
+                            <strong>Whoops!</strong> Hubo ciertos errores con los datos ingresados: <br><br>
+                            <ul class="lista_errores">
+                                {{--@foreach ($errores->all() as $error)--}}
+                                <li>{{ $errores }}</li>
+                                {{--@endforeach--}}
+                            </ul>
+                        </div>
+                    </div>
+                @endif
                 @if($usuarios->count())
-                    {!! Form::open(array('method' => 'PUT', 'route' => array('usuarios.update', $usuarios->id), 'class' => 'form-horizontal col-md-10')) !!}
+                    {!! Form::open(array('method' => 'PUT', 'route' => array('usuarios.update', $usuarios->id), 'class' => 'form-horizontal col-md-10', 'enctype' => "multipart/form-data")) !!}
 
                     @if($es_participante)
                         <div class="form-group">
@@ -83,7 +95,7 @@
                             {!!Form::label('rol', 'Rol',  array( 'class' => 'col-md-4 control-label'))!!}
                             <div class="col-sm-8">
                                 @foreach($roles as $role)
-                                    @if ($rol == "Participante")
+                                    @if ($role == "Participante")
                                         <?php continue; ?>
                                     @else
                                         {!! Form::checkbox('id_rol[]', $role, false) !!} {{$role}} <br>
@@ -131,9 +143,9 @@
 
                     @if($es_participante)
                         <div class="form-group">
-                            {!!Form::label('email_alternativo', 'Correo electrónico alternativo: ',  array( 'class' => 'col-md-4 control-label'))!!}
+                            {!!Form::label('correo_alternativo', 'Correo electrónico alternativo: ',  array( 'class' => 'col-md-4 control-label'))!!}
                             <div class="col-sm-8">
-                                {!! Form::email('email_alternativo', $datos_usuario->correo_alternativo, array('class' => 'form-control'))!!}
+                                {!! Form::email('correo_alternativo', $datos_usuario->correo_alternativo, array('class' => 'form-control'))!!}
                             </div>
                         </div>
                         <div class="form-group" >

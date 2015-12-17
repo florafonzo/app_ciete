@@ -46,6 +46,18 @@
                         </div>
                     </div>
                 @endif
+                @if ($errores != '')
+                    <div class="row">
+                        <div class="errores ">
+                            <strong>Whoops!</strong> Hubo ciertos errores con los datos ingresados: <br><br>
+                            <ul class="lista_errores">
+                                {{--@foreach ($errores->all() as $error)--}}
+                                    <li>{{ $errores }}</li>
+                                {{--@endforeach--}}
+                            </ul>
+                        </div>
+                    </div>
+                @endif
 
                 {!! Form::open(array('method' => 'POST', 'action' => 'UsuariosController@store', 'class' => 'form-horizontal col-md-10', 'enctype' => "multipart/form-data")) !!}
 
@@ -59,19 +71,19 @@
                     <div class="form-group">
                         {!!Form::label('nombre', 'Nombre: ', array( 'class' => 'col-md-4 control-label')) !!}
                         <div class="col-sm-8">
-                            {!!Form::text('nombre', old('nombre') ,['required', 'class' => 'form-control']) !!}
+                            {!!Form::text('nombre',Session::get('nombre') ,array('required', 'class' => 'form-control')) !!}
                         </div>
                     </div>
                     <div class="form-group">
-                        {!!Form::label('apellido', 'Apellido: ',  array( 'class' => 'col-md-4 control-label'))!!}
+                        {!!Form::label('apellido', 'Apellido: ',  array('required', 'class' => 'col-md-4 control-label'))!!}
                         <div class="col-sm-8">
-                            {!!Form::text('apellido', old('apellido'),array('required','class' => 'form-control'))!!}
+                            {!!Form::text('apellido', Session::get('apellido'),array('required','class' => 'form-control'))!!}
                         </div>
                     </div>
                     <div class="form-group">
                         {!!Form::label('di', 'Documento de Identidad: ',  array( 'class' => 'col-md-4 control-label'))!!}
                         <div class="col-sm-8">
-                            {!!Form::text('documento_identidad', '',array('required','class' => 'form-control'))!!}
+                            {!!Form::text('documento_identidad', Session::get('documento_identidad'),array('required','class' => 'form-control'))!!}
                         </div>
                     </div>
                     <div class="form-group" id="ocultar">
@@ -91,19 +103,19 @@
                     <div class="form-group">
                         {!!Form::label('telefono', 'Teléfono de Fijo: ',  array( 'class' => 'col-md-4 control-label'))!!}
                         <div class="col-sm-8">
-                            {!!Form::text('telefono', '',array('required','class' => 'form-control'))!!}
+                            {!!Form::text('telefono', Session::get('telefono'),array('required','class' => 'form-control'))!!}
                         </div>
                     </div>
                     <div class="form-group">
                         {!!Form::label('celular', 'Teléfono Móvil: ',  array( 'class' => 'col-md-4 control-label'))!!}
                         <div class="col-sm-8">
-                            {!!Form::text('celular', '',array('class' => 'form-control'))!!}
+                            {!!Form::text('celular', Session::get('celular'),array('class' => 'form-control'))!!}
                         </div>
                     </div>
                     <div class="form-group">
                         {!!Form::label('email', 'Correo electrónico: ',  array( 'class' => 'col-md-4 control-label'))!!}
                         <div class="col-sm-8">
-                            {!! Form::email('email', null, array('required','class' => 'form-control'))!!}
+                            {!! Form::email('email', Session::get('email'), array('required','class' => 'form-control'))!!}
                         </div>
                     </div>
                     <div class="form-group">
@@ -127,31 +139,31 @@
                     <div class="form-group mostrar">
                         {!!Form::label('email_alternativo', 'Correo electrónico alternativo: ',  array( 'class' => 'col-md-4 control-label'))!!}
                         <div class="col-sm-8">
-                            {!! Form::email('email_alternativo', null, array('class' => 'form-control'))!!}
+                            {!! Form::email('email_alternativo', '', array('class' => 'form-control'))!!}
                         </div>
                     </div>
                     <div class="form-group mostrar" id="mostrar">
                         {!!Form::label('twitter', 'Usuario twitter: ',  array( 'class' => 'col-md-4 control-label'))!!}
                         <div class="col-sm-8">
-                            {!! Form::text('twitter', null, array('class' => 'form-control'))!!}
+                            {!! Form::text('twitter', '', array('class' => 'form-control'))!!}
                         </div>
                     </div>
                     <div class="form-group mostrar" id="mostrar">
                         {!!Form::label('ocupacion', 'Ocupacion: ',  array( 'class' => 'col-md-4 control-label'))!!}
                         <div class="col-sm-8">
-                            {!! Form::text('ocupacion', null, array('class' => 'form-control'))!!}
+                            {!! Form::text('ocupacion','', array('class' => 'form-control'))!!}
                         </div>
                     </div>
                     <div class="form-group mostrar" id="mostrar">
                         {!!Form::label('titulo', 'Titulo de pregrado: ',  array( 'class' => 'col-md-4 control-label'))!!}
                         <div class="col-sm-8">
-                            {!! Form::text('titulo', null, array('class' => 'form-control'))!!}
+                            {!! Form::text('titulo', '', array('class' => 'form-control'))!!}
                         </div>
                     </div>
                     <div class="form-group mostrar" id="mostrar">
                         {!!Form::label('univ', 'Universidad dónde obtuvo el título: ',  array( 'class' => 'col-md-4 control-label'))!!}
                         <div class="col-sm-8">
-                            {!! Form::text('univ', null, array('class' => 'form-control'))!!}
+                            {!! Form::text('univ', '', array('class' => 'form-control'))!!}
                         </div>
                     </div>
 
