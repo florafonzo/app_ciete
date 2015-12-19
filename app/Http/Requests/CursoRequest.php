@@ -28,9 +28,10 @@ class UsuarioRequest extends Request {
     public function rules()
     {
         return [
-            'nombre' => 'required|max:255',
+            'nombre' => 'unique|required|max:255',
             'id_tipo' => 'required',
-            'fecha' => 'required',
+            'fecha_inicio' => 'required',
+            'fecha_fin' => 'required',
             'lugar' => 'required|max:100',
             'descripcion' => 'required|max:300',
             'dirigido_a' => 'required|max:300',
@@ -45,7 +46,7 @@ class UsuarioRequest extends Request {
             'plan_estudio' => 'required|max:300',
             'costo' => 'required|max:300',
             'modalidades_pago' => 'required|max:300',
-            'imagen_carrusel' => 'required|mimes:jpeg,png|max:1024',
+            'imagen_carrusel' => 'required|mimes:jpeg,png,jpg|max:1024',
             'descripcion_carrusel' => 'required|max:100',
             'activo_carrusel' => 'required',
 

@@ -6,8 +6,11 @@ use App\User;
 use App\Models\Role;
 use App\Models\Participante;
 use App\Models\Profesor;
-use Validator;
+//use Illuminate\Validation\Validator;
 use App\Http\Requests\UsuarioRequest;
+use App\Http\Requests\UsuarioEditarRequest;
+use Validator;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Http\RedirectResponse;
 use DB;
@@ -24,16 +27,15 @@ class UsuariosController extends Controller {
 	public function index() {
 		try{
 			$data['usuarios'] = User::all();
-			$data['participantes'] = User::all();
-            $data['profes'] = User::all();
-
+//			$data['participantes'] = User::all();
+//            $data['profes'] = User::all();
 			
 			foreach($data['usuarios'] as $usuario){
-				$usuario['rol'] = $usuario->roles()->first();
-
+				$usuario['roles'] = $usuario->roles()->get();
+//                dd($usuario['rol']);
 			}
-
 			return view('usuarios.usuarios', $data);
+
 		}
 		catch (Exception $e) {
 
@@ -49,7 +51,16 @@ class UsuariosController extends Controller {
 	 */
 	public function create() {
 		try{
-	        $data['roles'] = Role::all()->lists('display_name','id');
+
+            Session::forget('nombre');
+            Session::forget('apellido');
+            Session::forget('email');
+            Session::forget('documento_identidad');
+            Session::forget('telefono');
+            Session::forget('celular');
+
+            $data['roles'] = Role::all()->lists('display_name','id');
+            $data['errores'] = '';
 
 	        return view ('usuarios.crear', $data);
 	    }
@@ -72,59 +83,100 @@ class UsuariosController extends Controller {
 //            $rols = $rols + 1;
 //        }
 //        dd($rols);
+//        dd($request->es_participante);
 
-        try
-        {
+
+
+        try {
+
+            $data['errores'] = '';
             $create = User::create([
-//                'nombre'=>$request->nombre,
-//                'apellido'=>$request->apellido,
-                'email' => $request -> email,
-                'password' => bcrypt($request -> password),
+                'nombre' => $request->nombre,
+                'apellido' => $request->apellido,
+                'email' => $request->email,
+                'password' => bcrypt($request->password),
             ]);
 
             $usuario = User::find($create->id);
             $roles = $request->id_rol;
+            $create2 = 0;
 
-            foreach($roles as $rol) {
-//                dd($rol);
+            if ($request->hasFile('imagen')) {
+                $imagen = $request->file('imagen');
+            }else{
+                $imagen = '';
+            }
 
-                if ($rol == 'Participante') {
-                    $create2 = Participante::findOrNew($request->id);
-                    $create2->id_usuario = $usuario->id;
-                    $create2->nombre = $request->nombre;
-                    $create2->apellido = $request->apellido;
-                    $create2->documento_identidad = $request->documento_identidad;
-                    $create2->foto = 'ruta';
-                    $create2->telefono = $request->telefono;
-                    $create2->celular = $request->telefono;
-                    $create2->correo_alternativo = 'correo@mail.com';
-                    $create2->twitter = 'twitter';
-                    $create2->ocupacion = 'estudiante';
-                    $create2->titulo_pregrado = 'licenciado';
-                    $create2->universidad = 'UCV';
-                }
+            if (($request->es_participante) == 'si') {
 
-                if (($rol == 'Administrador') || ($rol == 'Coordinador') || (rol == 'Profesor')) {
+                $create2 = Participante::findOrNew($request->id);
+                $create2->id_usuario = $usuario->id;
+                $create2->nombre = $request->nombre;
+                $create2->apellido = $request->apellido;
+                $create2->documento_identidad = $request->documento_identidad;
+                $create2->foto = $imagen;
+                $create2->telefono = $request->telefono;
+                $create2->celular = $request->celular;
+                $create2->correo_alternativo = $request->email_alternativo;
+                $create2->twitter = Input::get('twitter');
+                $create2->ocupacion = Input::get('ocupacion');
+                $create2->titulo_pregrado = Input::get('titulo');
+                $create2->universidad = Input::get('univ');
+
+            } elseif (($request->es_participante) == 'no'){
+
+//                $validation = Validator::make(
+//                    array(
+//                        'id_rol' => Input::get( 'id_rol' ),
+//                    ),
+//                    array(
+//                        'id_rol' => array( 'required', 'id_rol' ),
+//                    )
+//                );
+
+                if ( empty(Input::get( 'id_rol' )) ) {
+//                    dd("fallo roless");
+                    DB::table('users')->where('id', '=', $usuario->id)->delete();
+                    $data['errores'] = "Debe seleccionar un rol";
+                    $data['roles'] = Role::all()->lists('display_name','id');
+
+                    Session::set('nombre', $request->nombre);
+                    Session::set('apellido', $request->apellido);
+                    Session::set('email', $request->email);
+                    Session::set('documento_identidad', $request->documento_identidad);
+                    Session::set('telefono', $request->telefono);
+                    Session::set('celular', $request->celular);
+
+                    return view('usuarios.crear', $data);
+//                        ->with('nombre', $request->nombre)
+//                        ->with('apellido',$request->apellido)
+//                        ->with('documento_identidad',$request->documento_identidad)
+//                        ->with('telefono',$request->telefono)
+//                        ->with('celular',$request->celular);
+                }else{
+
                     $create2 = Profesor::create([
                         'id_usuario' => $usuario->id,
                         'nombre' => $request->nombre,
                         'apellido' => $request->apellido,
                         'documento_identidad' => $request->documento_identidad,
+                        'foto' => $imagen,
                         'telefono' => $request->telefono,
-                        'foto' => 'ruta',
-                        'celular' => '0416'
+                        'celular' => $request->celular
                     ]);
-                    break;
                 }
             }
 
             if ($create->save()) {
-//                $usuario = User::find($create->id);
                 if ($create2->save()) {
-                    foreach($roles as $rol) {
-                        $role = DB::table('roles')->where('display_name','=', $rol)->first();
-//                        dd($role->id);
+                    if (($request->es_participante) == 'si') {
+                        $role = DB::table('roles')->where('name','=', 'participante')->first();
                         $usuario->attachRole($role->id);
+                    }elseif (($request->es_participante) == 'no') {
+                        foreach ($roles as $rol) {
+                            $role = DB::table('roles')->where('display_name', '=', $rol)->first();
+                            $usuario->attachRole($role->id);
+                        }
                     }
                     return redirect('/usuarios');
                 } else {
@@ -133,7 +185,7 @@ class UsuariosController extends Controller {
                     return view('usuarios.crear');
                 }
             } else {
-                Session::set('error', 'Ha ocurrido un error inesperado');
+                Session::set('error', 'Ha ocur rido un error inesperado');
                 return view('usuarios.crear');
             }
 
@@ -170,11 +222,24 @@ class UsuariosController extends Controller {
 	 */
 	public function edit($id) {
 		try{
-//            dd($id );
-	        $data['usuarios'] = User::find($id);
-	        $userRole = $data['usuarios']->roles()->first();
-	        $data['rol'] = $userRole;
+            $data['errores'] = '';
+            $data['es_participante'] = false;
+            $usuario = User::find($id);
+	        $data['usuarios'] = $usuario;
+	        $userRoles = $data['usuarios']->roles()->get();
+	        $data['rol'] = $userRoles;
 	        $data['roles'] = Role::all()->lists('display_name','id');
+
+            foreach($userRoles as $role){
+                if(($role->name) == 'participante'){
+                    $data['es_participante'] = true;
+                    $data['datos_usuario'] = DB::table('participantes')->where('id_usuario', '=', $usuario->id)->first();
+                }else{
+                    $data['datos_usuario'] = DB::table('profesores')->where('id_usuario', '=', $usuario->id)->first();
+                }
+//                dd($data['datos_usuario']);
+                break;
+            }
 
 	        return view ('usuarios.edit', $data);
 	    }
@@ -192,61 +257,143 @@ class UsuariosController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update(UsuarioRequest $request, $id) {
+	public function update(UsuarioEditarRequest $request, $id) {
 
 		try {
 
+            $data['errores'] = '';
 			$usuario = User::find($id);
+            $userRoles = $usuario->roles()->get();
+            $es_participante = false;
 
-            $email = Input::get('email');
+            foreach($userRoles as $role){
+                if(($role->name) == 'participante') {
+                    $es_participante = true;
+                }
+                break;
+            }
+
+
+            $email = $request->email;
             
             if (!($email == $usuario->email)){
-            	$email = $request -> email;
+//                dd("Email No es IGUAL");
+                $existe = DB::table('users')->where('email', '=', $email)->first();
+
+                if($existe){
+                    $data['errores'] = "El correo ya existe, ingrese uno diferente";
+                    $data['es_participante'] = false;
+                    $usuario = User::find($id);
+                    $data['usuarios'] = $usuario;
+                    $userRoles = $data['usuarios']->roles()->get();
+                    $data['rol'] = $userRoles;
+                    $data['roles'] = Role::all()->lists('display_name','id');
+
+                    foreach($userRoles as $role){
+                        if(($role->name) == 'participante'){
+                            $data['es_participante'] = true;
+                            $data['datos_usuario'] = DB::table('participantes')->where('id_usuario', '=', $usuario->id)->first();
+                        }else{
+                            $data['datos_usuario'] = DB::table('profesores')->where('id_usuario', '=', $usuario->id)->first();
+                        }
+                        break;
+                    }
+
+                    return view('usuarios.edit', $data);
+                }
             }
             
             $password = bcrypt($request -> password);
 
+            $usuario->nombre = $request->nombre;
+            $usuario->apellido = $request->apellido;
             $usuario->email = $email;
             $usuario->password = $password;
-            $usuario->save();
 
-            $roles = $request->id_rol;
 
-            foreach($roles as $rol) {
+            $roles = Input::get('id_rol');
 
-                if ($rol == 'Participante') {
+            if ($request->hasFile('imagen')) {
+                $imagen = $request->file('imagen');
+            }else{
+                $imagen = '';
+            }
 
-                    $tipo_usuario = DB::table('participantes')->where('id_usuario', '=', $id)->first();
+            if ($es_participante) {
+                $usuario->save();
+
+                $tipo_usuario = Participante::find(1)->where('id_usuario', '=', $id)->first();
+//                Post::find(1)->comments()->where('title', '=', 'foo')->first();
+                dd($tipo_usuario);
+                $tipo_usuario->nombre = $request->nombre;
+                $tipo_usuario->apellido = $request->apellido;
+                $tipo_usuario->documento_identidad = $request->documento_identidad;
+                $tipo_usuario->telefono = $request->telefono;
+                $tipo_usuario->foto = $imagen;
+                $tipo_usuario->celular = $request->celular;
+                $tipo_usuario->correo_alternativo = $request->correo_alternativo;
+                $tipo_usuario->twitter = Input::get('twitter');
+                $tipo_usuario->ocupacion = Input::get('ocupacion');
+                $tipo_usuario->titulo_pregrado = Input::get('titulo');
+                $tipo_usuario->universidad = Input::get('univ');
+
+                $tipo_usuario->save();
+
+            }else{
+
+////                $validator = Validator::make(
+////                    ['name' => 'Dayle'],
+////                    ['name' => 'required|min:5']
+////                );
+//                $validation = Validator::make(
+//                    array(
+//                        'id_rol' => Input::get( 'id_rol' ),
+//                    ),
+//                    array(
+//                        'id_rol' => array( 'required', 'id_rol' ),
+//                    )
+//                );
+
+                if ( empty(Input::get('id_rol')) ) {
+
+                    $data['errores'] = "Debe seleccionar un Rol";
+                    $data['es_participante'] = false;
+                    $usuario = User::find($id);
+                    $data['usuarios'] = $usuario;
+                    $userRoles = $data['usuarios']->roles()->get();
+                    $data['rol'] = $userRoles;
+                    $data['roles'] = Role::all()->lists('display_name','id');
+
+                    foreach($userRoles as $role){
+                        if(($role->name) == 'participante'){
+                            $data['es_participante'] = true;
+                            $data['datos_usuario'] = DB::table('participantes')->where('id_usuario', '=', $usuario->id)->first();
+                        }else{
+                            $data['datos_usuario'] = DB::table('profesores')->where('id_usuario', '=', $usuario->id)->first();
+                        }
+                        break;
+                    }
+
+                    return view('usuarios.edit', $data);
+
+                }else {
+
+                    $usuario->save();
+
+//                    $tipo_usuario = DB::table('profesores')->where('id_usuario', '=', $id)->first();
+                    $tipo_usuario = Profesor::find(1)->where('id_usuario', '=', $id)->first();
+
 
                     $tipo_usuario->nombre = $request->nombre;
                     $tipo_usuario->apellido = $request->apellido;
                     $tipo_usuario->documento_identidad = $request->documento_identidad;
                     $tipo_usuario->telefono = $request->telefono;
-                    $tipo_usuario->foto = $request->foto;
+                    $tipo_usuario->foto = $imagen;
                     $tipo_usuario->celular = $request->celular;
-                    $tipo_usuario->correo_alternativo = $request->correo_alternativo;
-                    $tipo_usuario->twitter = $request->twitter;
-                    $tipo_usuario->ocupacion = $request->ocupacion;
-                    $tipo_usuario->titulo_pregrado = $request->titulo_pregrado;
-                    $tipo_usuario->universidad = $request->universidad;
-
-                    $tipo_usuario->save();
-
-                }
-
-                if (($rol == 'Administrador') || ($rol == 'Coordinador') || (rol == 'Profesor')) {
-
-                    $tipo_usuario = DB::table('profesores')->where('id_usuario', '=', $id)->first();
-
-                    $tipo_usuario->nombre = $request->nombre;
-                    $tipo_usuario->apellido = $request->apellido;
-                    $tipo_usuario->documento_identidad = $request->documento_identidad;
-                    $tipo_usuario->telefono = $request->telefono;
-                    $tipo_usuario->foto = $request->foto;
-                    $tipo_usuario->celular = $request->celular;
-
+//                    dd($tipo_usuario);
                     $tipo_usuario->save();
                 }
+            }
 
 //                if ($usuario->save()) {
 //                    $user = User::find($id);
@@ -257,24 +404,25 @@ class UsuariosController extends Controller {
 //                    return view('/usuarios');
 //                }
 
-                if ($usuario->save()) {
+            if ($usuario->save()) {
 //                $usuario = User::find($create->id);
-                    if ($tipo_usuario->save()) {
-                        foreach($roles as $rol) {
-                            $role = DB::table('roles')->where('display_name','=', $rol)->first();
-//                        dd($role->id);
+                if ($tipo_usuario->save()) {
+                    if (!$es_participante) {
+                        DB::table('role_user')->where('user_id', '=', $id)->delete();
+                        foreach ($roles as $rol) {
+                            $role = DB::table('roles')->where('display_name', '=', $rol)->first();
                             $usuario->attachRole($role->id);
                         }
-                        return redirect('/usuarios');
-                    } else {
-                        Session::set('error', 'Ha ocurrido un error inesperado');
-                        DB::table('users')->where('id', '=', $usuario->id)->delete();
-                        return view('usuarios.crear');
                     }
+                    return redirect('/usuarios');
                 } else {
                     Session::set('error', 'Ha ocurrido un error inesperado');
-                    return view('usuarios.crear');
+                    DB::table('users')->where('id', '=', $usuario->id)->delete();
+                    return view('usuarios.edit');
                 }
+            } else {
+                Session::set('error', 'Ha ocurrido un error inesperado');
+                return view('usuarios.edit');
             }
         }
         catch (Exception $e) {
@@ -294,9 +442,9 @@ class UsuariosController extends Controller {
 		try{
 
             $usuario = User::find($id);
-            $roles = $usuario->roles()->first();
+            $roles = $usuario->roles()->get();
 
-//            dd($id );
+//            dd($id );foreach
             if (($roles->name) == 'admin'){
                 return view ('usuarios.principal');
             }

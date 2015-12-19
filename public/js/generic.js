@@ -1,28 +1,8 @@
 $(document).ready(function() {
-	//alert('Heyyyyyyyyy');
-	//$( "#boton" ).click(function() {
-	//    var cl1 = $('#clave').val();
-	//    var cl2 = $('#clave2').val();
-	//    var ok = true;
-	//    if (cl1 != cl2) {
-	//        alert("Passwords Do not match");
-	//        $('clave').val().style.borderColor = "#E34234";
-	//        $('clave2').val().style.borderColor = "#E34234";
-	//        ok = false;
-	//    }
-	//    else {
-	//        alert("Passwords Match!!!");
-	//    }
-	//});
-
-    //$('.dropdown-toggle').dropdown();
-
-    //$("#menu-button").on('click', function(e) {
-    //    e.preventDefault();
-    //    $('ul.menu').slideToggle();
-    //});
 
     $("[data-toggle=tooltip]").tooltip();
+
+//    ------- Modal Eliminar Usuario ----------  ////
 
     //$("#boton_eliminar").click(function() {
     //    var id=$(this).data('id');
@@ -43,6 +23,48 @@ $(document).ready(function() {
 
         $( "#form_eliminar_cursos" ).submit();
     });
+//  --------  Fin Modal Eliminar Usuario -------- ///
+
+
+//  --------  Validar si el usuario Nuevo a crear será Participante o no ---------- ///
+
+    var es_participante = $('input[name=es_participante]:checked').val();
+    var mostrar = document.getElementsByClassName('mostrar');
+
+    //alert("mostrar: " + mostrar.length);
+
+    if(es_participante == 'si'){
+        for(var i=0; i<mostrar.length; i++) {
+            $('.mostrar').show();
+        }
+        $('#ocultar').hide();
+    }else{
+        for(var i = 0; i < mostrar.length; i++) {
+            $('.mostrar').hide();
+        }
+        $('#ocultar').show();
+    }
+    $( 'input[name=es_participante]:radio' ).change(
+        function() {
+            var es_part = $('input[name=es_participante]:checked').val();
+            //alert("Cambiooo");
+            if (es_part == 'si') {
+                for (var i = 0; i < mostrar.length; i++) {
+                    $('.mostrar').show();
+                }
+                $('#ocultar').hide();
+            } else {
+                for (var i = 0; i < mostrar.length; i++) {
+                    $('.mostrar').hide();
+                }
+                $('#ocultar').show();
+            }
+        }
+    );
+
+//  --------  Fin Validar si el usuario Nuevo a crear será Participante o no ---------- ///
+
+
 
 
 });
