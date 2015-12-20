@@ -7,8 +7,10 @@
 			<div class="panel panel-login">
 				<div class="panel-heading">Cambiar Contraseña</div>
 				<div class="panel-body">
+
+
 					@if (session('status'))
-						<div class="alert alert-success">
+						<div class="alert alert-success" id="flash_success">
 							{{ session('status') }}
 						</div>
 					@endif

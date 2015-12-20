@@ -66,5 +66,5 @@ $(document).ready(function() {
 
 // ------ FadeOut para desaparecer notificaciones en un tiempo estimado ------ //
 
-    $('#flash').fadeOut(5000);
+    $('#flash_success').fadeOut(5000);
 });

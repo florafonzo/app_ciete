@@ -11,7 +11,7 @@
                 </div>
             </div>
             @if($show=='true')
-                <div class="alert alert-success" id="flash">
+                <div class="alert alert-success" id="flash_success">
                     <strong>¡Genial!</strong> Su mensaje ha sido enviado con satisfactoriamente.
                 </div>
             @endif
