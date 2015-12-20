@@ -17,9 +17,9 @@ Route::get('/', 'InicioController@index');
 Route::get('Misión-y-Visión','InformacionController@mision_vision');
 Route::get('Estructura','InformacionController@estructura');
 Route::get('Servicios','InformacionController@servicios');
-Route::get('Equipo','InformacionController@equipo');
-Route::get('Contacto','InformacionController@contacto');	
+Route::get('Equipo','InformacionController@equipo');	
 Route::get('Créditos','InformacionController@creditos');
+
 //* ---------- Información CIETE y Créditos --------------//
 
 /*Route::get('Participante','InformacionController@participante');
@@ -45,4 +45,12 @@ Route::controllers([
 	'password' => 'Auth\PasswordController',
 ]);
 
+//Rutas de correo
 
+Route::post('/password/email', 'Auth\PasswordController@postEmail');
+Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
+Route::post('/password/reset', 'Auth\PasswordController@postReset');
+
+//Ruta de contacto
+Route::get('Contacto','InformacionController@getcontacto');
+Route::post('Contacto','InformacionController@postContacto');

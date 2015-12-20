@@ -28,17 +28,11 @@ class UsuarioRequest extends Request {
     public function rules()
     {
         return [
-            'es_participante' => 'required',
-            'nombre' => 'required|max:255',
-            'apellido' => 'required|max:255',
-            'documento_identidad' => 'required|max:50',
-//            'id_rol' => 'required',
-            'telefono' => 'required|max:20',
-            'celular' => 'max:20',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|confirmed|min:6',
-            'email_alternativo' => 'email|max:255|unique:users',
-            'imagen' => 'mimes:jpeg,png,jpg|max:1024',
+            'nombre_contacto' => 'required|max:255',
+            'apellido_contacto' => 'required|max:255',
+            'lugar_contacto' => 'required|max:255',
+            'correo_contacto' => 'required|email|max:255',
+            'duda_contacto' => 'required|max:255'
         ];
     }
 

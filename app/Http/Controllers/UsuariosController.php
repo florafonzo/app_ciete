@@ -6,10 +6,10 @@ use App\User;
 use App\Models\Role;
 use App\Models\Participante;
 use App\Models\Profesor;
-//use Illuminate\Validation\Validator;
+use Illuminate\Validation\Validator;
 use App\Http\Requests\UsuarioRequest;
 use App\Http\Requests\UsuarioEditarRequest;
-use Validator;
+//use Validator;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Http\RedirectResponse;
@@ -185,7 +185,7 @@ class UsuariosController extends Controller {
                     return view('usuarios.crear');
                 }
             } else {
-                Session::set('error', 'Ha ocur rido un error inesperado');
+                Session::set('error', 'Ha ocurrido un error inesperado');
                 return view('usuarios.crear');
             }
 
