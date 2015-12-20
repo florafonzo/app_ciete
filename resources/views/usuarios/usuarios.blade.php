@@ -74,8 +74,8 @@
                                                 {!! Form::button('<span class="glyphicon glyphicon-trash" data-toggle="tooltip" data-placement="bottom" title="Eliminar" aria-hidden="true"></span>', array('type' => 'button','class' => 'btn btn-danger', 'disabled'))!!}
                                             {!! Form::close() !!}
                                         @else
-                                            {!! Form::open(array('method' => 'DELETE', 'route' => array('usuarios.destroy', $user->id), 'id' => 'form_eliminar')) !!}
-                                                {!! Form::button('<span class="glyphicon glyphicon-trash" id="{{$user->id}}" data-toggle="tooltip" data-placement="bottom" title="Eliminar" aria-hidden="true"></span>', array('type' => 'button', 'data-toggle' => 'modal', 'data-target' => '#modal_eliminar','class' => 'btn btn-danger'))!!}
+                                            {!! Form::open(array('method' => 'DELETE', 'route' => array('usuarios.destroy', $user->id))) !!}
+                                                {!! Form::button('<span class="glyphicon glyphicon-trash" id="{{$user->id}}" data-toggle="tooltip" data-placement="bottom" title="Eliminar" aria-hidden="true"></span>', array('type' => 'button','class' => 'btn btn-danger'))!!}
                                             {!! Form::close() !!}
                                         @endif
 

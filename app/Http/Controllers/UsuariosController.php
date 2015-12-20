@@ -228,6 +228,7 @@ class UsuariosController extends Controller {
 	        $data['usuarios'] = $usuario;
 	        $userRoles = $data['usuarios']->roles()->get();
 	        $data['rol'] = $userRoles;
+            //dd($data['rol'][0]->name);
 	        $data['roles'] = Role::all()->lists('display_name','id');
 
             foreach($userRoles as $role){
@@ -442,23 +443,61 @@ class UsuariosController extends Controller {
 		try{
 
             $usuario = User::find($id);
-            $roles = $usuario->roles()->get();
+            $usuario->destroy($id);
+
+            $data['usuarios'] = User::all();
+//          $data['participantes'] = User::all();
+//            $data['profes'] = User::all();
+            
+            foreach($data['usuarios'] as $usuario){
+                $usuario['roles'] = $usuario->roles()->get();
+//                dd($usuario['rol']);
+            }
+
+            return view ('usuarios.usuarios', $data);
+                
+            /*$usuario = new User();
+            //$roles = $usuario->roles()->get();
+
+            $res = $usuario->checkUser($id);
+
+            if($res){
+                
+                return view('/errors/503');
+
+            }else{
+                
+                $usuario->destroy($id);
+                \DB::table('role_user')->where('user_id', '=', $id)->delete();
+
+                $data['usuarios'] = User::all();
+    //          $data['participantes'] = User::all();
+    //            $data['profes'] = User::all();
+                
+                foreach($data['usuarios'] as $usuario){
+                    $usuario['roles'] = $usuario->roles()->get();
+    //                dd($usuario['rol']);
+                }
+
+                return view ('usuarios.usuarios', $data);
+            }
+        
 
 //            dd($id );foreach
-            if (($roles->name) == 'admin'){
+            /*if (($roles->name) == 'admin'){
                 return view ('usuarios.principal');
             }
 
 			User::destroy($id);
 			/*$affectedRows = User::where('id', '=', $id)->delete();*/
-			$data['usuarios'] = User::all();
+			/*$data['usuarios'] = User::all();
 			
 			foreach($data['usuarios'] as $usuario){
 				$usuario['rol'] = $usuario->roles()->first();
 
 			}
-
-	        return view ('usuarios.usuarios', $data);
+*/
+	        //return view ('usuarios.usuarios', $data);
 	    }
 	    catch (Exception $e) {
 
@@ -466,5 +505,6 @@ class UsuariosController extends Controller {
         } 
 	        
 	}
+
 
 }

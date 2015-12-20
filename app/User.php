@@ -40,4 +40,41 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function profesor(){
         return $this->hasOne('App\Models\Profesor','id');
     }
+
+    public function checkUser($id) {
+
+        $result = \DB::select('select users.id, permissions.name
+                                from users, roles, role_user, permissions, permission_role
+                                where users.id = ? and 
+                                users.id=role_user.user_id and 
+                                role_user.role_id=roles.id and 
+                                roles.id=permission_role.role_id and 
+                                permission_role.permission_id=permissions.id and 
+                                permissions.name= ?', array($id,'eliminar_usuarios')); 
+
+        
+        //$user = $this->where('id','=', $id)->first();
+        $cont= $this->count();
+        //dd($cont);
+
+        if( $cont == 1 ){
+        	if(($result->id == $id) && ($result->name =="eliminar_usuarios")){
+        		return true;
+        	}
+        }else{
+        	return false;
+        }
+
+        
+        /*foreach ($result as $value) {
+            $idd= $value->id;
+            $permiso=$value->name;
+            
+            if($idd==$id && $permiso=="eliminar_usuarios" && $cont==1 )
+            {
+                return true;
+            }
+		
+        }*/
+    }
 }
