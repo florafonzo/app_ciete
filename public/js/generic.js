@@ -64,7 +64,7 @@ $(document).ready(function() {
 
 //  --------  Fin Validar si el usuario Nuevo a crear será Participante o no ---------- ///
 
+// ------ FadeOut para desaparecer notificaciones en un tiempo estimado ------ //
 
-
-
+    $('#flash').fadeOut(5000);
 });

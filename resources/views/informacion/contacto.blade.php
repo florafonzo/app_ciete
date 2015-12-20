@@ -10,11 +10,18 @@
                     </h3>
                 </div>
             </div>
+            @if($show=='true')
+                <div class="alert alert-success" id="flash">
+                    <strong>¡Genial!</strong> Su mensaje ha sido enviado con satisfactoriamente.
+                </div>
+            @endif
             <div class="row">
                 <div class="">
                     <img src="{{URL::to('/')}}/images/equipo.png" class="img-responsive center-block">
                 </div>
             </div>
+
+
             <div class="row">
                 <div class="col-md-6 col-md-offset-1 ">
                     <h4 class="tit"> Dirección del CIETE: </h4>
@@ -51,8 +58,10 @@
                         <p class="parr">
                             Utilice este formulario para comunicarse con el personal del Centro. No olvide escribir su comentario, duda o
                             inquietud en forma clara. Escriba correctamente su dirección de correo electrónico para poder dar respuesta
-                            a la mayor brevedad posible
+                            a la mayor brevedad posible.
+                            <br>
                         </p>
+
                          @if (count($errors) > 0)
                             <div class="alert errores">
                                 <strong>Whoops!</strong> Hubo ciertos errores con los datos ingresados:<br><br>

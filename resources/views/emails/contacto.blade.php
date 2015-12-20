@@ -1,8 +1,8 @@
 <p>
-  You have received a new message from your website contact form.
+  Has recibido un nuevo mensaje desde tu formulario de contacto.
 </p>
 <p>
-  Here are the details:
+  Aquí los detalles:
 </p>
 <ul>
   <li>Nombre: <strong>{{ $nombre }}</strong></li>

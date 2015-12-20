@@ -38,7 +38,8 @@ class InformacionController extends Controller {
 
     public function getcontacto()
 	{
-		return view('informacion.contacto');
+		$show = 'false';
+		return \View::make('informacion.contacto', compact('show'));
 	}
 
     public function creditos()
@@ -63,9 +64,10 @@ class InformacionController extends Controller {
 
     public function postContacto(ContactoRequest $request)
     {
+    	$show = 'true';
 
     	$data = $request->only('nombre', 'apellido', 'lugar', 'correo' , 'comentario');
-    	
+
     	$data['messageLines'] = explode("\n", $request->get('comentario'));
 
 	    Mail::send('emails.contacto', $data, function ($message) use ($data) {
@@ -74,7 +76,9 @@ class InformacionController extends Controller {
 	              ->replyTo($data['correo']);
 	    });
 
-    	return back()->withSuccess("Gracias por tu mensaje. Ha sido enviado");
+	    return \View::make('informacion.contacto', compact('show'));
+
+    	//return back()->withSuccess("Gracias por tu mensaje. Ha sido enviado");
   	}
 
 	/**
