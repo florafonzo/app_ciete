@@ -63,7 +63,25 @@
                     <div class="form-group">
                         {!!Form::label('fecha', 'Fecha',  array( 'class' => 'col-md-4 control-label'))!!}
                         <div class="col-sm-8">
-                            {!!Form::input('date', 'fecha', $cursos->fecha ,array('required','class' => 'form-control'))!!}
+                            {!!Form::input('date', 'fecha_inicio', $cursos->fecha_inicio ,array('required','class' => 'form-control'))!!}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {!!Form::label('fecha', 'Fecha',  array( 'class' => 'col-md-4 control-label'))!!}
+                        <div class="col-sm-8">
+                            {!!Form::input('date', 'fecha_fin', $cursos->fecha_fin ,array('required','class' => 'form-control'))!!}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {!!Form::label('duracion', 'Duracion del curso en horas: ', array( 'class' => 'col-md-4 control-label')) !!}
+                        <div class="col-sm-8">
+                            {!!Form::text('duracion',$cursos->duracion ,array('required', 'class' => 'form-control')) !!}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {!!Form::label('id_modalidad_curso', 'Modalidad del curso',  array( 'class' => 'col-md-4 control-label'))!!}
+                        <div class="col-sm-8">
+                            {!! Form::select('id_modalidad_curso', $modalidad_curso, null, array('required','class' => 'form-control')) !!}
                         </div>
                     </div>
                     <div class="form-group">
@@ -144,10 +162,24 @@
                             {!! Form::text('costo', $cursos->costo, array('required','class' => 'form-control'))!!}
                         </div>
                     </div>
+                    {{--<div class="form-group">--}}
+                        {{--{!!Form::label('modalidades_pago', 'Modalidades de pago',  array( 'class' => 'col-md-4 control-label'))!!}--}}
+                        {{--<div class="col-sm-8">--}}
+                            {{--{!! Form::textarea('modalidades_pago', $cursos->modalidades_pago, array('required','class' => 'form-control'))!!}--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
                     <div class="form-group">
                         {!!Form::label('modalidades_pago', 'Modalidades de pago',  array( 'class' => 'col-md-4 control-label'))!!}
                         <div class="col-sm-8">
-                            {!! Form::textarea('modalidades_pago', $cursos->modalidades_pago, array('required','class' => 'form-control'))!!}
+                            @foreach($modalidad_pago as $modalidad)
+                                {!! Form::checkbox('modalidades_pago[]', $modalidad, false) !!} {{$modalidad}} <br>
+                            @endforeach
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {!!Form::label('activo_carrusel', 'Curso activo en el carrusel?',  array( 'class' => 'col-md-4 control-label'))!!}
+                        <div class="col-sm-8">
+                            {!! Form::checkbox('activo_carrusel', $cursos->activo_carrusel, array('required','class' => 'form-control'))!!}
                         </div>
                     </div>
                     <div class="form-group">
@@ -160,12 +192,6 @@
                         {!!Form::label('desc_carrusel', 'Titulo de la imagen en el carrusel',  array( 'class' => 'col-md-4 control-label'))!!}
                         <div class="col-sm-8">
                             {!! Form::text('descripcion_carrusel', $cursos->descrpcion_carrusel, array('required','class' => 'form-control'))!!}
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        {!!Form::label('activo_carrusel', 'Curso activo en el carrusel?',  array( 'class' => 'col-md-4 control-label'))!!}
-                        <div class="col-sm-8">
-                            {!! Form::checkbox('activo_carrusel', $cursos->activo_carrusel, array('required','class' => 'form-control'))!!}
                         </div>
                     </div>
 

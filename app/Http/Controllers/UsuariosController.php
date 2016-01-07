@@ -89,6 +89,13 @@ class UsuariosController extends Controller {
 
         try {
 
+//            Session::forget('nombre');
+//            Session::forget('apellido');
+//            Session::forget('email');
+//            Session::forget('documento_identidad');
+//            Session::forget('telefono');
+//            Session::forget('celular');
+
             $data['errores'] = '';
             $create = User::create([
                 'nombre' => $request->nombre,
@@ -99,6 +106,7 @@ class UsuariosController extends Controller {
 
             $usuario = User::find($create->id);
             $roles = $request->id_rol;
+            dd($roles);
             $create2 = 0;
 
             if ($request->hasFile('imagen')) {
@@ -236,6 +244,7 @@ class UsuariosController extends Controller {
                     $data['datos_usuario'] = DB::table('participantes')->where('id_usuario', '=', $usuario->id)->first();
                 }else{
                     $data['datos_usuario'] = DB::table('profesores')->where('id_usuario', '=', $usuario->id)->first();
+//                    dd($data['datos_usuario']);
                 }
 //                dd($data['datos_usuario']);
                 break;

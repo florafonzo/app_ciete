@@ -65,7 +65,7 @@
                         <div class="form-group">
                             {!!Form::label('rol_actual', 'Rol actual: ', array( 'class' => 'col-md-4 control-label')) !!}
                             <div class="col-sm-8">
-                                {!!Form::text('rol_actual', $rol[0]->name ,array('disabled', 'class' => 'form-control')) !!}
+                                {!!Form::text('rol_actual', null ,array('disabled', 'class' => 'form-control')) !!}
 
                                 {{--{!! Form::radio('es_participante', 'si', false) !!} Si <br/>--}}
                                 {{--{!! Form::radio('es_participante', 'no', true) !!} No--}}
