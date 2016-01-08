@@ -336,7 +336,7 @@ class UsuariosController extends Controller {
                     $imagen =  $tipo_usuario->foto;
                 }
 
-                dd($tipo_usuario);
+//                dd($tipo_usuario);
                 $tipo_usuario->nombre = $request->nombre;
                 $tipo_usuario->apellido = $request->apellido;
                 $tipo_usuario->documento_identidad = $request->documento_identidad;
@@ -461,9 +461,10 @@ class UsuariosController extends Controller {
             $usuario = User::find($id);
             $roles = $usuario->roles()->get();
 
-//            dd($id );foreach
-            if (($roles->name) == 'admin'){
-                return view ('usuarios.principal');
+//           dd($roles[0]->name );
+            if (($roles[0]->name) == 'admin'){
+                $data['errores'] = "El usuario Administrador no puede ser eliminado";
+                return view ('usuarios.usuarios', $data);
             }
 
 			User::destroy($id);

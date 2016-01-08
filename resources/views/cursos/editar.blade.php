@@ -45,6 +45,18 @@
                         </div>
                     </div>
                 @endif
+                @if ($errores != '')
+                    <div class="row">
+                        <div class="errores ">
+                            <strong>Whoops!</strong> Hubo ciertos errores con los datos ingresados: <br><br>
+                            <ul class="lista_errores">
+                                {{--@foreach ($errores->all() as $error)--}}
+                                <li>{{ $errores }}</li>
+                                {{--@endforeach--}}
+                            </ul>
+                        </div>
+                    </div>
+                @endif
                 @if($cursos->count())
                     {!! Form::open(array('method' => 'PUT', 'route' => array('cursos.update', $cursos->id),'files' => true, 'class' => 'form-horizontal col-md-12')) !!}
 
@@ -103,9 +115,9 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        {!!Form::label('propositos', 'Propósitos',  array( 'class' => 'col-md-4 control-label'))!!}
+                        {!!Form::label('proposito', 'Propósitos',  array( 'class' => 'col-md-4 control-label'))!!}
                         <div class="col-sm-8">
-                            {!! Form::textarea('propositos', $cursos->propositos, array('required','class' => 'form-control'))!!}
+                            {!! Form::textarea('proposito', $cursos->propositos, array('required','class' => 'form-control'))!!}
                         </div>
                     </div>
                     <div class="form-group">
@@ -179,19 +191,19 @@
                     <div class="form-group">
                         {!!Form::label('activo_carrusel', 'Curso activo en el carrusel?',  array( 'class' => 'col-md-4 control-label'))!!}
                         <div class="col-sm-8">
-                            {!! Form::checkbox('activo_carrusel', $cursos->activo_carrusel, array('required','class' => 'form-control'))!!}
+                            {!! Form::checkbox('activo_carrusel', $cursos->activo_carrusel, array('class' => 'form-control'))!!}
                         </div>
                     </div>
                     <div class="form-group">
                         {!!Form::label('imagen_carrusel', 'Imagen carrusel',  array( 'class' => 'col-md-4 control-label'))!!}
                         <div class="col-sm-8">
-                            {!! Form::file('imagen_carrusel', $cursos->imagen_carrusel, array('required','class' => 'form-control'))!!}
+                            {!! Form::file('imagen_carrusel', $cursos->imagen_carrusel, array('class' => 'form-control'))!!}
                         </div>
                     </div>
                     <div class="form-group">
                         {!!Form::label('desc_carrusel', 'Titulo de la imagen en el carrusel',  array( 'class' => 'col-md-4 control-label'))!!}
                         <div class="col-sm-8">
-                            {!! Form::text('descripcion_carrusel', $cursos->descrpcion_carrusel, array('required','class' => 'form-control'))!!}
+                            {!! Form::text('descripcion_carrusel', $cursos->descrpcion_carrusel, array('class' => 'form-control'))!!}
                         </div>
                     </div>
 

@@ -106,7 +106,12 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                                <button id="eliminar" type="button" class="btn btn-danger">Eliminar</button>
+
+                                {!! Form::open(array('method' => 'DELETE', 'route' => array('usuarios.destroy', $user->id), 'id' => 'form_eliminar')) !!}
+                                    {!! Form::button('Eliminar', array('type' => 'submit', 'class' => 'btn btn-danger'))!!}
+                                {!! Form::close() !!}
+
+                                {{--<button id="eliminar" type="button" class="btn btn-danger">Eliminar</button>--}}
                             </div>
                         </div>
                     </div>

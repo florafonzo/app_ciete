@@ -25,6 +25,7 @@ class CursosController extends Controller {
 	public function index()
 	{
 		try{
+            $data['errores'] = '';
 			$data['cursos'] = Curso::all();
             foreach($data['cursos'] as $curso){
 //                dd($curso->id_tipo);
@@ -221,6 +222,7 @@ class CursosController extends Controller {
 	{
 		try{
 //            dd($id );
+            $data['errores'] = '';
 			$data['cursos'] = Curso::find($id);
 			$data['tipo'] = $data['cursos']->id_tipo;
             $data['modalidad_pago'] = ModalidadPago::all()->lists('nombre','id');
@@ -258,9 +260,11 @@ class CursosController extends Controller {
             if ( empty(Input::get( 'modalidades_pago' )) ) {
 //                    dd("fallo modalidad");
                 $data['cursos'] = Curso::find($id);
+                $data['errores'] = "Debe seleccionar una modalidad de pago";
                 $data['tipo'] = $data['cursos']->id_tipo;
                 $data['modalidad_pago'] = ModalidadPago::all()->lists('nombre','id');
-                $data['modalidad_curso'] = ModalidadCurso::all()->lists('nombre','id');
+                $data['modalidades_curso'] = ModalidadCurso::all()->lists('nombre','id');
+                $data['modalidad_curso'] = $data['cursos']->id_modalidad_curso;
                 $data['tipos'] = TipoCurso::all()->lists('nombre','id');
 //
 //                Session::set('nombre', $request->nombre);
@@ -317,7 +321,7 @@ class CursosController extends Controller {
                 $cursos->costo = $request->costo;
                 $cursos->imagen_carrusel = $imagen;
                 $cursos->descripcion_carrusel = $request->descripcion_carrusel;
-                $cursos->activo_carrusel = $request->activo_carrusel;
+                $cursos->activo_carrusel = 'false';
             }
 
 
@@ -347,7 +351,28 @@ class CursosController extends Controller {
 	 */
 	public function destroy($id)
 	{
-		//
-	}
+        try{
+
+//            $cursos = User::find($id);
+
+            Curso::destroy($id);
+            /*$affectedRows = User::where('id', '=', $id)->delete();*/
+            $data['errores'] = '';
+            $data['cursos'] = Curso::all();
+            foreach($data['cursos'] as $curso){
+//                dd($curso->id_tipo);
+                $tipo = TipoCurso::where('id', '=', $curso->id_tipo)->get();
+//                $tipo = DB::table('tipo_cursos')->where('id', '=', $curso->id_tipo)->get();
+//                dd($tipo[0]->nombre);
+                $curso['tipo_curso'] =  $tipo[0]->nombre;
+            }
+
+            return view ('cursos.cursos', $data);
+        }
+        catch (Exception $e) {
+
+            return view('errors.error')->with('error',$e->getMessage());
+        }
+    }
 
 }
