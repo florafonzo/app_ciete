@@ -39,7 +39,9 @@
                     <thead>
                     <tr>
                         <th>Nombre</th>
-                        <th>Fecha</th>
+                        <th>Tipo</th>
+                        <th>Fecha Inicio</th>
+                        <th>Fecha Fin</th>
                         <th>Acciones</th>
                         <th></th>
                     </tr>
@@ -49,7 +51,10 @@
                         @foreach($cursos as $curso)
                             <tr>
                                 <td>{{ $curso->nombre }}</td>
-                                <td>{{ $curso->fecha  }}</td>
+                                <td>{{ $curso->tipo_curso  }}</td>
+                                <td>{{ $curso->fecha_inicio  }}</td>
+                                <td>{{ $curso->fecha_fin  }}</td>
+
                                 <td>
                                     @if(Entrust::can('editar_cursos'))
                                         {!! Form::open(array('method' => 'GET','route' => array('cursos.edit', $curso->id))) !!}

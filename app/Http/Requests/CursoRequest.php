@@ -4,7 +4,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use App\Http\Requests\Request;
 use Illuminate\Support\Facades\Auth;
 
-class UsuarioRequest extends Request {
+class CursoRequest extends Request {
 
     /**
      * Determine if the user is authorized to make this request.
@@ -28,27 +28,29 @@ class UsuarioRequest extends Request {
     public function rules()
     {
         return [
-            'nombre' => 'unique|required|max:255',
+            'nombre' => 'required|max:255',
             'id_tipo' => 'required',
-            'fecha_inicio' => 'required',
-            'fecha_fin' => 'required',
+            'id_modalidad_curso' => 'required',
+            'fecha_inicio' => 'required|date',
+            'fecha_fin' => 'required|date|after:fecha_inicio',
+            'duracion' => 'required|integer',
             'lugar' => 'required|max:100',
-            'descripcion' => 'required|max:300',
-            'dirigido_a' => 'required|max:300',
-            'proposito' => 'required|max:300',
-            'modalidad_estrategias' => 'required|max:300',
-            'acreditacion' => 'required|max:300',
-            'perfil' => 'required|max:300',
-            'requerimientos_tec' => 'required|max:300',
-            'perfil_egresado' => 'required|max:300',
-            'instituciones_aval' => 'required|max:300',
-            'aliados' => 'required|max:300',
-            'plan_estudio' => 'required|max:300',
+            'descripcion' => 'required|max:1000',
+            'dirigido_a' => 'required|max:1000',
+            'proposito' => 'required|max:1000',
+            'modalidad_estrategias' => 'required|max:1000',
+            'acreditacion' => 'required|max:1000',
+            'perfil' => 'required|max:1000',
+            'requerimientos_tec' => 'required|max:1000',
+            'perfil_egresado' => 'required|max:1000',
+            'instituciones_aval' => 'required|max:1000',
+            'aliados' => 'required|max:1000',
+            'plan_estudio' => 'required|max:1000',
             'costo' => 'required|max:300',
-            'modalidades_pago' => 'required|max:300',
-            'imagen_carrusel' => 'required|mimes:jpeg,png,jpg|max:1024',
-            'descripcion_carrusel' => 'required|max:100',
-            'activo_carrusel' => 'required',
+//            'modalidades_pago' => 'required|max:1000',
+            'imagen_carrusel' => 'mimes:jpeg,png,jpg|max:1024',
+            'descripcion_carrusel' => 'max:100',
+//            'activo_carrusel' => 'required',
 
         ];
     }
