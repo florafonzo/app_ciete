@@ -10,7 +10,7 @@ $(document).ready(function() {
     //    $('#modal_eliminar').modal('show');
     //});
 
-    $( "#eliminar" ).click(function() {
+   /* $( "#eliminar" ).click(function() {
         //var id=$(this).data('id');
         //alert(id);
 
@@ -22,7 +22,7 @@ $(document).ready(function() {
         //alert(id);
 
         $( "#form_eliminar_cursos" ).submit();
-    });
+    });*/
 //  --------  Fin Modal Eliminar Usuario -------- ///
 
 
@@ -64,6 +64,31 @@ $(document).ready(function() {
 
 //  --------  Fin Validar si el usuario Nuevo a crear será Participante o no ---------- ///
 
+
+//  --------  Validar si el Curso Estara en el carrusel ---------- ///
+   // $('#descripcion_carrusel').hide();
+    //$('#imagen_carrusel').hide();
+    if ($('#activo_carrusel:checkbox:checked').length <= 0) {
+        //alert("dgwxfgwxf");
+        $('#descripcion_carrusel').hide();
+        $('#imagen_carrusel').hide();
+    }else{
+        $('#descripcion_carrusel').show();
+        $('#imagen_carrusel').show();
+    }
+
+    $( '#activo_carrusel' ).change(function() {
+       if($(this).is(":checked")) {
+            $('#descripcion_carrusel').show();
+            $('#imagen_carrusel').show();
+            return;
+       }
+        $('#descripcion_carrusel').hide();
+        $('#imagen_carrusel').hide();
+    });
+
+
+//  --------  Fin Validar si el Curso Estara en el carrusel ---------- ///
 
 
 

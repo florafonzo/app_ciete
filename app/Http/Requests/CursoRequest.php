@@ -50,7 +50,7 @@ class CursoRequest extends Request {
 //            'modalidades_pago' => 'required|max:1000',
             'imagen_carrusel' => 'mimes:jpeg,png,jpg|max:1024',
             'descripcion_carrusel' => 'max:100',
-//            'activo_carrusel' => 'required',
+            'activo_carrusel' => '',
 
         ];
     }
