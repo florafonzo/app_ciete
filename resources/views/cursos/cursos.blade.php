@@ -73,27 +73,31 @@
                     @if($cursos->count())
                         <tbody>
                         @foreach($cursos as $curso)
-                            <tr>
-                                <td>{{ $curso->nombre }}</td>
-                                <td>{{ $curso->tipo_curso  }}</td>
-                                <td>{{ $curso->fecha_inicio  }}</td>
-                                <td>{{ $curso->fecha_fin  }}</td>
+                            @if($curso->curso_activo)
+                                <tr>
+                                    <td>{{ $curso->nombre }}</td>
+                                    <td>{{ $curso->tipo_curso  }}</td>
+                                    <td>{{ $curso->fecha_inicio  }}</td>
+                                    <td>{{ $curso->fecha_fin  }}</td>
 
-                                <td>
-                                    @if(Entrust::can('editar_cursos'))
-                                        {!! Form::open(array('method' => 'GET','route' => array('cursos.edit', $curso->id))) !!}
-                                        {!! Form::button('<span class="glyphicon glyphicon-pencil" data-toggle="tooltip" data-placement="bottom" title="Editar" aria-hidden="true"></span>', array('type' => 'submit', 'class' => 'btn btn-info'))!!}
-                                        {!! Form::close() !!}
-                                    @endif
-                                </td>
-                                <td>
-                                    @if(Entrust::can('eliminar_cursos'))
-                                        {!! Form::open(array('method' => 'DELETE', 'route' => array('cursos.destroy', $curso->id), 'id' => 'form_eliminar_cursos')) !!}
-                                            {!! Form::button('<span class="glyphicon glyphicon-trash" id="{{$curso->id}}" data-toggle="tooltip" data-placement="bottom" title="Eliminar" aria-hidden="true"></span>', array('type' => 'button', 'data-toggle' => 'modal', 'data-target' => '#modal_eliminar_cursos','class' => 'btn btn-danger'))!!}
-                                        {!! Form::close() !!}
-                                    @endif
-                                </td>
-                            </tr>
+                                    <td>
+                                        @if(Entrust::can('editar_cursos'))
+                                            {!! Form::open(array('method' => 'GET','route' => array('cursos.edit', $curso->id))) !!}
+                                            {!! Form::button('<span class="glyphicon glyphicon-pencil" data-toggle="tooltip" data-placement="bottom" title="Editar" aria-hidden="true"></span>', array('type' => 'submit', 'class' => 'btn btn-info'))!!}
+                                            {!! Form::close() !!}
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if(Entrust::can('eliminar_cursos'))
+                                            {!! Form::open(array('method' => 'DELETE', 'route' => array('cursos.destroy', $curso->id), 'id' => 'form_eliminar_cursos')) !!}
+                                                {!! Form::button('<span class="glyphicon glyphicon-trash" id="{{$curso->id}}" data-toggle="tooltip" data-placement="bottom" title="Eliminar" aria-hidden="true"></span>', array('type' => 'button', 'data-toggle' => 'modal', 'data-target' => '#modal_eliminar_cursos','class' => 'btn btn-danger'))!!}
+                                            {!! Form::close() !!}
+                                        @endif
+                                    </td>
+                                </tr>
+                            @else
+                                <?php continue; ?>
+                            @endif
                         @endforeach
                         </tbody>
                     @endif

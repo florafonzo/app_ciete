@@ -37,7 +37,7 @@ class CreateCursosTable extends Migration {
 			$table->text('aliados');
 			$table->text('plan_estudio');
 			$table->float('costo');
-			$table->text('modalidades_pago');
+//			$table->text('modalidades_pago');
 			$table->string('imagen_carrusel');
 			$table->text('descripcion_carrusel');
 			$table->boolean('activo_carrusel');

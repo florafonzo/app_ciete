@@ -16,7 +16,7 @@ class Curso extends Model {
      *
      * @var array
      */
-    protected $fillable = ['id_tipo','id_modalidad_pago','id_modalidad_curso','curso_activo','nombre','fecha_inicio','fecha_fin','duracion', 'lugar', 'descripcion', 'area', 'dirigido_a', 'propositos', 'modalidad_estrategias', 'acreditacion', 'perfil','requerimientos_tec', 'perfil_egresado', 'instituciones_aval', 'aliados', 'plan_estudio','costo', 'modalidades_pago', 'imagen_carrusel', 'descripcion_carrusel', 'activo_carrusel'];
+    protected $fillable = ['id_tipo','id_modalidad_pago','id_modalidad_curso','curso_activo','nombre','fecha_inicio','fecha_fin','duracion', 'lugar', 'descripcion', 'area', 'dirigido_a', 'propositos', 'modalidad_estrategias', 'acreditacion', 'perfil','requerimientos_tec', 'perfil_egresado', 'instituciones_aval', 'aliados', 'plan_estudio','costo' , 'imagen_carrusel', 'descripcion_carrusel', 'activo_carrusel'];
 
     public function tipo_curso(){
         return $this->belongsTo('App\Models\TipoCurso','id_tipo');
@@ -39,7 +39,7 @@ class Curso extends Model {
     }
 
     public function modalidad_pago(){
-        return $this->belongsTo('App\Models\ModalidadPago','id_modalidad_pago');
+        return $this->belongsToMany('App\Models\ModalidadPago','curso_modalidad_pago');
     }
 
 
