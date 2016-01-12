@@ -191,16 +191,16 @@
                     <div class="form-group">
                         {!!Form::label('activo_carrusel', 'Curso activo en el carrusel?',  array( 'class' => 'col-md-4 control-label'))!!}
                         <div class="col-sm-8">
-                            {!! Form::checkbox('activo_carrusel', $cursos->activo_carrusel, array('class' => 'form-control'))!!}
+                            {!! Form::checkbox('activo_carrusel',null, $cursos->activo_carrusel)!!}
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" id="imagen_carrusel">
                         {!!Form::label('imagen_carrusel', 'Imagen carrusel',  array( 'class' => 'col-md-4 control-label'))!!}
                         <div class="col-sm-8">
                             {!! Form::file('imagen_carrusel', $cursos->imagen_carrusel, array('class' => 'form-control'))!!}
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" id="descripcion_carrusel">
                         {!!Form::label('desc_carrusel', 'Titulo de la imagen en el carrusel',  array( 'class' => 'col-md-4 control-label'))!!}
                         <div class="col-sm-8">
                             {!! Form::text('descripcion_carrusel', $cursos->descrpcion_carrusel, array('class' => 'form-control'))!!}
