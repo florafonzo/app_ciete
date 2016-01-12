@@ -103,31 +103,32 @@
                         <a href="{{URL::to('/')}}/cursos/create" type="button" class="btn btn-success" >Agregar curso </a>
                     </div>
                 @endif
+                @if($cursos->count())
+                    {{-- Fin Modal de Eliminar--}}
+                    <div class="modal fade" id="modal_eliminar_cursos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="myModalLabel">Eliminación de curso</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <h5>¿ Está usted seguro de que desea eliminar este curso ?</h5>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
 
-                {{-- Fin Modal de Eliminar--}}
-                <div class="modal fade" id="modal_eliminar_cursos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title" id="myModalLabel">Eliminación de curso</h4>
-                            </div>
-                            <div class="modal-body">
-                                <h5>¿ Está usted seguro de que desea eliminar este curso ?</h5>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                    {!! Form::open(array('method' => 'DELETE', 'route' => array('cursos.destroy', $curso->id), 'id' => 'form_eliminar_cursos')) !!}
+                                        {!! Form::button('Eliminar', array('type' => 'submit','class' => 'btn btn-danger'))!!}
+                                    {!! Form::close() !!}
 
-                                {!! Form::open(array('method' => 'DELETE', 'route' => array('cursos.destroy', $curso->id), 'id' => 'form_eliminar_cursos')) !!}
-                                    {!! Form::button('Eliminar', array('type' => 'submit','class' => 'btn btn-danger'))!!}
-                                {!! Form::close() !!}
-
-                                {{--<button id="eliminar_curso" type="button" class="btn btn-danger">Eliminar</button>--}}
+                                    {{--<button id="eliminar_curso" type="button" class="btn btn-danger">Eliminar</button>--}}
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                {{-- Fin Modal de Eliminar--}}
+                    {{-- Fin Modal de Eliminar--}}
+                @endif
 
             </div>
         @endif

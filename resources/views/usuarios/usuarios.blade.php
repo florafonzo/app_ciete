@@ -11,29 +11,6 @@
 
         @if (!(Auth::guest()))
             @include('layouts.menu_usuarios')
-            {{--<div class="col-md-4 col-sm-4 opciones_part">--}}
-                {{--<div class="row">--}}
-                    {{--<div class="col-md-6 col-sm-6 col-md-offset-3">--}}
-                        {{--<img src="{{URL::to('/')}}/images/foto_participante.png">--}}
-                    {{--</div>--}}
-
-                {{--</div>--}}
-                {{--<div class="row">--}}
-                    {{--<div class="col-md-12 col-sm-12 menu_part">--}}
-                        {{--<ul class="nav nav-pills nav-stacked">--}}
-                            {{--<li class="active menu_usuarios">--}}
-                                {{--<a style="text-decoration:none;" href="{{URL::to('/usuarios')}}"> Usuarios </a>--}}
-                            {{--</li>--}}
-                            {{--<li class="menu_usuarios">--}}
-                                {{--<a style="text-decoration:none;" href="{{URL::to('/cursos')}}"> Lista de cursos </a>--}}
-                            {{--</li>--}}
-                            {{--<li class="menu_usuarios">--}}
-                                {{--<a href="#"> Carrusel </a>--}}
-                            {{--</li>--}}
-                        {{--</ul>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-            {{--</div>--}}
             <div class="col-md-8 col-sm-8 opciones_part2">
                 <table class="table table-hover">
                     <thead>

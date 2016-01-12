@@ -30,6 +30,8 @@ Route::resource('/usuarios','UsuariosController');
 
 Route::resource('/cursos','CursosController');
 
+Route::resource('/roles','RolesController');
+
 //Route::get('/usuarios','UsuariosController@index');
 //Route::get('twit', function()
 //{

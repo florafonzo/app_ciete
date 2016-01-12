@@ -28,7 +28,7 @@ class CursoRequest extends Request {
     public function rules()
     {
         return [
-            'nombre' => 'required|max:255',
+            'nombre' => 'required|max:255|unique:cursos',
             'id_tipo' => 'required',
             'id_modalidad_curso' => 'required',
             'fecha_inicio' => 'required|date',
