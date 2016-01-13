@@ -7,7 +7,7 @@ use App\Http\Requests\CursoRequest;
 use App\Models\CursoModalidadPago;
 use App\Models\ModalidadCurso;
 use App\Models\Permission;
-use App\Models\RoleUser;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -48,12 +48,10 @@ class CursosController extends Controller {
             if($si_puede) {// Si el usuario posee los permisos necesarios continua con la acción
 
                 $data['errores'] = '';
-                $data['cursos'] = Curso::all();
-                foreach ($data['cursos'] as $curso) {
-                    //                dd($curso->id_tipo);
+                $data['cursos'] = Curso::all(); // Se obtienen todos los cursos con sus datos
+
+                foreach ($data['cursos'] as $curso) {   // Se asocia el tipo a cada curso (Cápsulo o Diplomado)
                     $tipo = TipoCurso::where('id', '=', $curso->id_tipo)->get();
-                    //                $tipo = DB::table('tipo_cursos')->where('id', '=', $curso->id_tipo)->get();
-                    //                dd($tipo[0]->nombre);
                     $curso['tipo_curso'] = $tipo[0]->nombre;
                 }
 
@@ -95,6 +93,7 @@ class CursosController extends Controller {
 
             if($si_puede) {
 
+                // Se eliminan los datos guardados en sesion anteriormente
                 Session::forget('nombre');
                 Session::forget('id_tipo');
                 Session::forget('fecha_inicio');
@@ -115,7 +114,7 @@ class CursosController extends Controller {
                 Session::forget('costo');
                 Session::forget('descripcion_carrusel');
 
-
+                //Se obtienen todos los tipos de cursos, modalidades de pago y modalidades de curso.
                 $data['tipos'] = TipoCurso::all()->lists('nombre', 'id');
                 $data['modalidad_pago'] = ModalidadPago::all()->lists('nombre', 'id');
                 $data['modalidad_curso'] = ModalidadCurso::all()->lists('nombre', 'id');
@@ -161,13 +160,16 @@ class CursosController extends Controller {
 
             if($si_puede) { // Si el usuario posee los permisos necesarios continua con la acción
                 $data['errores'] = '';
-//                dd($request->hasFile('imagen_carrusel'));
+
+                //  Se verifica si el usuario colocó una imagen en el formulario
                 if ($request->hasFile('imagen_carrusel')) {
                     $imagen = $request->file('imagen_carrusel');
                 } else {
                     $imagen = '';
                 }
 
+                // Se guardan los datos ingresados por el usuario en sesion pra utilizarlos en caso de que se redirija
+                // al usuari al formulario por algún error y no se pierdan los datos ingresados
                 Session::set('nombre', $request->nombre);
                 Session::set('id_tipo', $request->id_tipo);
                 Session::set('fecha_inicio', $request->fecha_inicio);
@@ -189,15 +191,15 @@ class CursosController extends Controller {
                 Session::set('descripcion_carrusel', $request->descripcion_carrusel);
 
                 $activo_carrusel = false;
+                // Se verifica si el usuario elijió que el curso este activo en el carrusel o no
                 if (Input::get('activo_carrusel') == "on") {
-                    //                dd("ON");
                     $activo_carrusel = true;
                 } elseif (Input::get('activo_carrusel') == null) {
-                    //                dd("Null");
                     $activo_carrusel = false;
                 }
 
-                if (empty(Input::get('modalidades_pago'))) {
+                // Se verifica que el usuario haya seleccionado por lo menos una modalidad de pago
+                if (empty(Input::get('modalidades_pago'))) {    // Si no ha seleccionado ningúna modalidad, se redirige al formulario
                     //                    dd("fallo modalidad");
                     $data['errores'] = "Debe seleccionar una modalidad de pago.";
                     $data['tipos'] = TipoCurso::all()->lists('nombre', 'id');
@@ -209,8 +211,11 @@ class CursosController extends Controller {
 
                 }
 
+                //Se verifica si el usuario seleccionó que el curso esté activo en el carrusel
                 if (Input::get('activo_carrusel') == "on") {
-                    if ((empty(Input::get('descripcion_carrusel'))) or !($request->hasFile('imagen_carrusel'))) {
+                    // Luego se verifica si los campos referente al carrusel estén completos
+                    if ((empty(Input::get('descripcion_carrusel'))) or !($request->hasFile('imagen_carrusel'))) {   // Si no están completos se
+                                                                                                    // redirige al usuario indicandole el error
                         $data['errores'] = $data['errores'] . "  Debe completar los campos de descripcion y imagen del Carrusel";
                         $data['tipos'] = TipoCurso::all()->lists('nombre', 'id');
                         $data['modalidad_pago'] = ModalidadPago::all()->lists('nombre', 'id');
@@ -220,9 +225,9 @@ class CursosController extends Controller {
                     }
                 }
 
-                $modalidades = Input::get('modalidades_pago');
-                //            dd($modalidades);
+                $modalidades = Input::get('modalidades_pago');  // Se obtienen las modalidades de pago seleccionadas
 
+                // Se crea el nuevo curso con los datos ingresados
                 $create2 = Curso::findOrNew($request->id);
                 $create2->id_tipo = $request->id_tipo;
                 $create2->curso_activo = "true";
@@ -251,9 +256,9 @@ class CursosController extends Controller {
                 $create2->descripcion_carrusel = $request->descripcion_carrusel;
                 $create2->activo_carrusel = $activo_carrusel;
 
-
+                // Se verifica que se haya creado el el curso de forma correcta
                 if ($create2->save()) {
-                    foreach ($modalidades as $modalidad) {
+                    foreach ($modalidades as $modalidad) {      // Se asocian las modalidades de pago al curso
                         $pago = ModalidadPago::where('nombre', '=', $modalidad)->get();
                         CursoModalidadPago::create([
                             'id_curso' => $create2->id,
@@ -261,7 +266,7 @@ class CursosController extends Controller {
                         ]);
                     }
                     return redirect('/cursos');
-                } else {
+                } else {    // Si el curso no se ha creado bien se redirige al formulario de creación y se le indica al usuario el error
                     Session::set('error', 'Ha ocurrido un error inesperado');
                     return view('cursos.crear');
                 }
@@ -302,7 +307,8 @@ class CursosController extends Controller {
             if($si_puede) { // Si el usuario posee los permisos necesarios continua con la acción
 
                 $data['errores'] = '';
-                $data['cursos'] = Curso::find($id);
+                $data['cursos'] = Curso::find($id); // Se obtiene la información del curso seleccionado
+                //Se obtienen todos los tipos de cursos, modalidades de pago y modalidades de curso.
                 $data['tipo'] = $data['cursos']->id_tipo;
                 $data['modalidad_pago'] = ModalidadPago::all()->lists('nombre', 'id');
                 $data['modalidades_curso'] = ModalidadCurso::all()->lists('nombre', 'id');
@@ -351,8 +357,8 @@ class CursosController extends Controller {
                 $data['errores'] = '';
                 $cursos = Curso::find($id);
 
-                if (empty(Input::get('modalidades_pago'))) {
-                    //                    dd("fallo modalidad");
+                // Se verifica que el usuario haya seleccionado por lo menos una modalidad de pago
+                if (empty(Input::get('modalidades_pago'))) {    // Si no ha seleccionado ningúna modalidad, se redirige al formulario
                     $data['cursos'] = Curso::find($id);
                     $data['errores'] = "Debe seleccionar una modalidad de pago.";
                     $data['tipo'] = $data['cursos']->id_tipo;
@@ -365,8 +371,11 @@ class CursosController extends Controller {
 
                 }
 
+                //Se verifica si el usuario seleccionó que el curso esté activo en el carrusel
                 if (($request->activo_carrusel) == true) {
-                    if ((empty(Input::get('descripcion_carrusel'))) or (empty(Input::get('imagen_carrusel')))) {
+                    // Luego se verifica si los campos referente al carrusel estén completos
+                    if ((empty(Input::get('descripcion_carrusel'))) or (empty(Input::get('imagen_carrusel')))) {// Si los campos no están completos se
+                                                                                                     // redirige al usuario indicandole el error
                         $data['errores'] = $data['errores'] . "  Debe completar los campos de descripcion y imagen del Carrusel";
                         $data['cursos'] = Curso::find($id);
                         $data['tipo'] = $data['cursos']->id_tipo;
@@ -379,12 +388,14 @@ class CursosController extends Controller {
                     }
                 }
 
+                //  Se verifica si el usuario colocó una imagen en el formulario
                 if ($request->hasFile('imagen_carrusel')) {
                     $imagen = $request->file('imagen_carrusel');
                 } else {
                     $imagen = $cursos->imagen_carrusel;
                 }
 
+                // Se actualizan los datos del curso seleccionado
                 $cursos->id_tipo = $request->id_tipo;
                 $cursos->nombre = $request->nombre;
                 $cursos->fecha_inicio = $request->fecha_inicio;
@@ -411,10 +422,10 @@ class CursosController extends Controller {
                 $cursos->descripcion_carrusel = $request->descripcion_carrusel;
                 $cursos->activo_carrusel = 'false';
 
-
+                // Se verifica que se haya creado el curso de forma correcta
                 if ($cursos->save()) {
                     return redirect('/cursos');
-                } else {
+                } else {    // Si el curso no se ha creado bien se redirige al formulario de creación y se le indica al usuario el error
                     Session::set('error', 'Ha ocurrido un error inesperado');
                     return view('cursos.editar');
                 }
@@ -455,12 +466,13 @@ class CursosController extends Controller {
             }
 
             if($si_puede) { // Si el usuario posee los permisos necesarios continua con la acción
-
+                // Se obtienen los datos del curso que se desea eliminar
                 $curso = Curso::find($id);
-                //            Curso::destroy($id);
+                //Se desactiva el curso
                 $curso->curso_activo = false;
-                $curso->save();
+                $curso->save(); // se guarda
 
+                // Se redirige al usuario a la lista de cursos actualizada
                 $data['errores'] = '';
                 $data['cursos'] = Curso::all();
                 foreach ($data['cursos'] as $curso) {

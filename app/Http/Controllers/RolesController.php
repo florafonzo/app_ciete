@@ -1,10 +1,12 @@
 <?php namespace App\Http\Controllers;
 
 use App\Http\Requests;
+use App\Http\Requests\RolRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Auth;
 
 use App\Models\Permission;
 use App\Models\Role;
@@ -13,21 +15,42 @@ use Illuminate\Http\Request;
 class RolesController extends Controller {
 
 	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
+     * Muestra la vista de la lista de roles si posee los permisos necesarios.
+     *
+     * @return Retorna la vista de la lista de roles.
+     */
 	public function index()
 	{
 		try{
-            $data['errores'] = '';
-			$data['roles'] = Role::all();
+            //Verificación de los permisos del usuario para poder realizar esta acción
+            $permisos = [];
+            $usuario_actual = Auth::user();
+            $roles = $usuario_actual->roles()->get();
+            foreach($roles as $rol){
+                $permisos = $rol->perms()->get();
+            }
+            $si_puede = false;
+            foreach($permisos as $permiso){
+                if(($permiso->name) == 'ver_roles'){
+                    $si_puede = true;
+                }
+            }
 
-			foreach($data['roles'] as $rol){
-                $rol['permisos'] = $rol->perms()->get();
-			}
+            if($si_puede) {// Si el usuario posee los permisos necesarios continua con la acción
+                $data['errores'] = '';
+                $data['roles'] = Role::all();   // Se obtienen todos los roles
 
-			return view('roles.roles', $data);
+                foreach ($data['roles'] as $rol) {
+                    $rol['permisos'] = $rol->perms()->get();    //Se obtienen los permisos asociados a cada rol
+                }
+
+                return view('roles.roles', $data);  // Se muestra la lista de roles
+
+            }else{  // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
+
+                return view('errors.sin_permiso');
+
+            }
 
 		}
 		catch (Exception $e) {
@@ -36,23 +59,46 @@ class RolesController extends Controller {
 		}
 	}
 
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
+    /**
+     * Muestra el formulario para crear un nuevo rol si posee los permisos necesarios.
+     *
+     * @return Retorna la vista del formulario vacío.
+     */
 	public function create()
 	{
         try{
 
-            Session::forget('nombre');
-            Session::forget('permisos');
-//            Session::forget('fecha_inicio');
+            //Verificación de los permisos del usuario para poder realizar esta acción
+            $permisos = [];
+            $usuario_actual = Auth::user();
+            $roles = $usuario_actual->roles()->get();
+            foreach($roles as $rol){
+                $permisos = $rol->perms()->get();
+            }
+            $si_puede = false;
+            foreach($permisos as $permiso){
+                if(($permiso->name) == 'crear_roles'){
+                    $si_puede = true;
+                }
+            }
 
-            $data['permisos'] = Permission::all()->lists('display_name','id');
-            $data['errores'] = '';
+            if($si_puede) {// Si el usuario posee los permisos necesarios continua con la acción
 
-            return view ('roles.crear', $data);
+                // Se eliminan los datos guardados en sesion anteriormente
+                Session::forget('nombre');
+                Session::forget('permisos');
+
+                // Se obtienen todos los permisos guardados en la base datos
+                $data['permisos'] = Permission::all()->lists('display_name','id');
+                $data['errores'] = '';
+
+                return view ('roles.crear', $data); // Se muestra el formulario
+
+            }else{  // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
+
+                return view('errors.sin_permiso');
+
+            }
         }
         catch (Exception $e) {
 
@@ -60,55 +106,78 @@ class RolesController extends Controller {
         }
 	}
 
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
-	public function store(Request $request)
+    /**
+     * Guarda el nuevo rol si el usuario posee los permisos necesarios.
+     *
+     * @param   RolRequest    $request (Se validan los campos ingresados por el usuario mediante el Request antes guardarlos )
+     *
+     * @return Retorna la vista de la lista de roles con el nuevo rol agregado.
+     */
+	public function store(RolRequest $request)
 	{
         try
         {
-
-            $data['errores'] = '';
-            $permisos = $request->permisos;
-//            dd($permisos);
-
-            if ( empty(Input::get( 'permisos' )) ) {
-//                    dd("fallo modalidad");
-                $data['errores'] = "Debe seleccionar al menos un (1) permiso";
-                $data['permisos'] = Permission::all()->lists('display_name','id');
-
-                Session::set('nombre', $request->nombre);
-                Session::set('descripcion', $request->descripcion);
-
-                return view('roles.crear', $data);
-
-            }else{
-
-                $create = Role::findOrNew($request->id);
-                $create->name = $request->nombre;
-                $create->display_name = $request->nombre;
-                $create->description = $request->descripcion;
+            //Verificación de los permisos del usuario para poder realizar esta acción
+            $permisos = [];
+            $usuario_actual = Auth::user();
+            $roles = $usuario_actual->roles()->get();
+            foreach($roles as $rol){
+                $permisos = $rol->perms()->get();
             }
-//            attachPermission
-
-            if($create->save()) {
-                foreach ($permisos as $permiso) {
-                    $role = Role::where('name', '=', $create->name)->first();
-//                    dd($role);
-                    $perms = Permission::where('display_name', '=', $permiso)->first();
-//                    DB::table('permissions')->where('display_name', '=', $permiso)->first();
-
-//                    dd($role);
-                    $role->attachPermission($perms);
+            $si_puede = false;
+            foreach($permisos as $permiso){
+                if(($permiso->name) == 'crear_roles'){
+                    $si_puede = true;
                 }
-                return redirect('/roles');
-            }else{
-                Session::set('error','Ha ocurrido un error inesperado');
-                return view('roles.crear');
             }
 
+            if($si_puede) {// Si el usuario posee los permisos necesarios continua con la acción
+                $data['errores'] = '';
+                $permisos = $request->permisos; // Permisos seleccionados en el formulario
+    //            dd($permisos);
+
+                // Se verifica si el usuario selecciono por lo menos un permiso que será asociado al nuevo rol
+                if ( empty(Input::get( 'permisos' )) ) {    //Si no selccionó ninguno, se redirige al formulario indicandole el error
+    //                    dd("fallo modalidad");
+                    $data['errores'] = "Debe seleccionar al menos un (1) permiso";
+                    $data['permisos'] = Permission::all()->lists('display_name','id');
+
+                    Session::set('nombre', $request->nombre);
+                    Session::set('descripcion', $request->descripcion);
+
+                    return view('roles.crear', $data);
+
+                }else{  //Si todos los campos están completos se crea el nuevo rol
+
+                    $create = Role::findOrNew($request->id);
+                    $create->name = $request->nombre;
+                    $create->display_name = $request->nombre;
+                    $create->description = $request->descripcion;
+                }
+    //            attachPermission
+
+                // Se verifica que se haya creado el rol correctamente
+                if($create->save()) {
+                    foreach ($permisos as $permiso) {   // Se asignan los permisos al nuevo rol
+                        $role = Role::where('name', '=', $create->name)->first();
+    //                    dd($role);
+                        $perms = Permission::where('display_name', '=', $permiso)->first();
+    //                    DB::table('permissions')->where('display_name', '=', $permiso)->first();
+
+    //                    dd($role);
+                        $role->attachPermission($perms);
+                    }
+                    return redirect('/roles');
+
+                }else{  // Si el rol no se ha creado bien se redirige al formulario de creación y se le indica al usuario
+                    Session::set('error','Ha ocurrido un error inesperado');
+                    return view('roles.crear');
+                }
+            }else{  // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
+
+                return view('errors.sin_permiso');
+
+            }
         }
         catch (Exception $e)
         {
@@ -116,32 +185,45 @@ class RolesController extends Controller {
         }
 	}
 
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		//
-	}
 
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
+    /**
+     * Se muestra el formulario de edicion de rol si posee los permisos necesarios.
+     *
+     * @param  int  $id (id del rol seleccionado)
+     *
+     * @return Retorna vista del formulario para el editar el rol deseado.
+     */
 	public function edit($id)
 	{
         try{
-//            dd($id );
-            $data['errores'] = '';
-            $data['roles'] = Role::find($id);
-            $data['permisos'] = Permission::all()->lists('display_name','id');
 
-            return view ('roles.editar', $data);
+            //Verificación de los permisos del usuario para poder realizar esta acción
+            $permisos = [];
+            $usuario_actual = Auth::user();
+            $roles = $usuario_actual->roles()->get();
+            foreach($roles as $rol){
+                $permisos = $rol->perms()->get();
+            }
+            $si_puede = false;
+            foreach($permisos as $permiso){
+                if(($permiso->name) == 'crear_roles'){
+                    $si_puede = true;
+                }
+            }
+
+            if($si_puede) {// Si el usuario posee los permisos necesarios continua con la acción
+    //            dd($id );
+                $data['errores'] = '';
+                $data['roles'] = Role::find($id);   // Se ontienen los datos del rol que se desea editar
+                $data['permisos'] = Permission::all()->lists('display_name','id');  // Se obtienen todos los permisos guardados en base de datos
+
+                return view ('roles.editar', $data);
+
+            }else{  // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
+
+                return view('errors.sin_permiso');
+
+            }
         }
         catch (Exception $e) {
 
@@ -149,50 +231,73 @@ class RolesController extends Controller {
         }
 	}
 
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
+    /**
+     * Actualiza los datos del rol seleccionado si posee los permisos necesarios
+     *
+     * @param  int  $id (id del rol seleccionado)
+     * @param  RolRequest  $request (Se validan los campos ingresados por el usuario mediante el Request antes guardarlos)
+     *
+     * @return Retorna la lista de roles con los datos actualizados.
+     */
 	public function update(Request $request, $id)
 	{
         try{
 
-            $data['errores'] = '';
-            $roles = Role::find($id);
-            $permisos = $request->permisos;
-
-            if ( empty(Input::get( 'permisos' )) ) {
-//                    dd("fallo modalidad");
-                $data['errores'] = "Debe seleccionar al menos un (1) permiso";
-                $data['permisos'] = Permission::all()->lists('display_name','id');
-
-                return view('roles.crear', $data);
-
-            }else{
-
-                $roles->name = $request->nombre;
-                $roles->display_name = $request->nombre;
-                $roles->description = $request->descripcion;
-
+            //Verificación de los permisos del usuario para poder realizar esta acción
+            $permisos = [];
+            $usuario_actual = Auth::user();
+            $roles = $usuario_actual->roles()->get();
+            foreach($roles as $rol){
+                $permisos = $rol->perms()->get();
+            }
+            $si_puede = false;
+            foreach($permisos as $permiso){
+                if(($permiso->name) == 'crear_roles'){
+                    $si_puede = true;
+                }
             }
 
-            if($roles->save()) {
-                DB::table('permission_role')->where('role_id', '=', $id)->delete();
-                foreach ($permisos as $permiso) {
-                    $role = Role::where('name', '=', $roles->name)->first();
-                    $perms = Permission::where('display_name', '=', $permiso)->first();
-                    $role->attachPermission($perms);
+            if($si_puede) {// Si el usuario posee los permisos necesarios continua con la acción
+                $data['errores'] = '';
+                $roles = Role::find($id);   // Se obtienen los datos del rol seleccionado
+                $permisos = $request->permisos;     // Se obtienen los permisos seleccionados por el usuario en el formulario
+
+                // Se verifica si el usuario selecciono por lo menos un permiso que será asociado al rol
+                if ( empty(Input::get( 'permisos' )) ) {   //Si no selccionó ninguno, se redirige al formulario indicandole el error
+    //                    dd("fallo modalidad");
+                    $data['errores'] = "Debe seleccionar al menos un (1) permiso";
+                    $data['permisos'] = Permission::all()->lists('display_name','id');
+
+                    return view('roles.crear', $data);
+
+                }else{      //Si todos los campos están completos se crea el nuevo rol
+
+                    $roles->name = $request->nombre;
+                    $roles->display_name = $request->nombre;
+                    $roles->description = $request->descripcion;
+
                 }
 
-                return redirect('/roles');
+                // Se verifica que se haya creado el rol correctamente
+                if($roles->save()) {
+                    DB::table('permission_role')->where('role_id', '=', $id)->delete(); //Se borren los roles anteriores y a continuación se guardan los nuevos
+                    foreach ($permisos as $permiso) {
+                        $role = Role::where('name', '=', $roles->name)->first();
+                        $perms = Permission::where('display_name', '=', $permiso)->first();
+                        $role->attachPermission($perms);
+                    }
 
-            }else{
-                Session::set('error','Ha ocurrido un error inesperado');
-                return view('roles.editar');
+                    return redirect('/roles');
+
+                }else{      // Si el rol no se ha creado bien se redirige al formulario de creación y se le indica al usuario el error
+                    Session::set('error','Ha ocurrido un error inesperado');
+                    return view('roles.editar');
+                }
+            }else{  // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
+
+                return view('errors.sin_permiso');
+
             }
-
         }
         catch (Exception $e) {
 

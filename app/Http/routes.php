@@ -32,6 +32,8 @@ Route::resource('/cursos','CursosController');
 
 Route::resource('/roles','RolesController');
 
+Route::resource('/webinars','WebinarsController');
+
 //Route::get('/usuarios','UsuariosController@index');
 //Route::get('twit', function()
 //{
