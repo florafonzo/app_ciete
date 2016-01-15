@@ -82,9 +82,10 @@
                                 <h5>¿ Está usted seguro de que desea eliminar este usuario ?</h5>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                {{--<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>--}}
 
                                 {!! Form::open(array('method' => 'DELETE', 'route' => array('usuarios.destroy', $user->id), 'id' => 'form_eliminar')) !!}
+                                    {!! Form::button('Cancelar', array('type' => 'button','data-dismiss' => 'modal','class' => 'btn btn-default'))!!}
                                     {!! Form::button('Eliminar', array('type' => 'submit', 'class' => 'btn btn-danger'))!!}
                                 {!! Form::close() !!}
 

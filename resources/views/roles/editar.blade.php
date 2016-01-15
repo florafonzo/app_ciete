@@ -35,12 +35,12 @@
                     </div>
                 @endif
                 @if($roles->count())
-                    {!! Form::open(array('method' => 'PUT', 'route' => array('roles.update', $roles->id),'files' => true, 'class' => 'form-horizontal col-md-12')) !!}
+                    {!! Form::open(array('method' => 'PUT', 'route' => array('roles.update', $roles->id), 'class' => 'form-horizontal col-md-12')) !!}
 
                     <div class="form-group">
                         {!!Form::label('nombre', 'Nombre', array( 'class' => 'col-md-4 control-label')) !!}
                         <div class="col-sm-8">
-                            {!!Form::text('nombre', $roles->name ,array('required', 'class' => 'form-control')) !!}
+                            {!!Form::text('name', $roles->name ,array('required', 'class' => 'form-control')) !!}
                         </div>
                     </div>
                     <div class="form-group">

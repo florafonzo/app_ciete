@@ -86,7 +86,7 @@ class RolesController extends Controller {
 
                 // Se eliminan los datos guardados en sesion anteriormente
                 Session::forget('nombre');
-                Session::forget('permisos');
+                Session::forget('descripcion');
 
                 // Se obtienen todos los permisos guardados en la base datos
                 $data['permisos'] = Permission::all()->lists('display_name','id');
@@ -115,8 +115,10 @@ class RolesController extends Controller {
      */
 	public function store(RolRequest $request)
 	{
+        dd('HOLAAAAAA de primero');
         try
         {
+            dd('ñhdusghduisg');
             //Verificación de los permisos del usuario para poder realizar esta acción
             $permisos = [];
             $usuario_actual = Auth::user();
@@ -142,19 +144,20 @@ class RolesController extends Controller {
                     $data['errores'] = "Debe seleccionar al menos un (1) permiso";
                     $data['permisos'] = Permission::all()->lists('display_name','id');
 
-                    Session::set('nombre', $request->nombre);
+                    Session::set('nombre', $request->name);
                     Session::set('descripcion', $request->descripcion);
 
                     return view('roles.crear', $data);
 
                 }else{  //Si todos los campos están completos se crea el nuevo rol
 
-                    $create = Role::findOrNew($request->id);
-                    $create->name = $request->nombre;
-                    $create->display_name = $request->nombre;
+                    $create = new Role();//::findOrNew($request->id);
+                    $create->name = $request->name;
+                    $create->display_name = $request->name;
                     $create->description = $request->descripcion;
+                    $create->save();
                 }
-    //            attachPermission
+
 
                 // Se verifica que se haya creado el rol correctamente
                 if($create->save()) {
@@ -206,7 +209,7 @@ class RolesController extends Controller {
             }
             $si_puede = false;
             foreach($permisos as $permiso){
-                if(($permiso->name) == 'crear_roles'){
+                if(($permiso->name) == 'editar_roles'){
                     $si_puede = true;
                 }
             }
@@ -239,7 +242,7 @@ class RolesController extends Controller {
      *
      * @return Retorna la lista de roles con los datos actualizados.
      */
-	public function update(Request $request, $id)
+	public function update(RolRequest $request, $id)
 	{
         try{
 
@@ -252,14 +255,14 @@ class RolesController extends Controller {
             }
             $si_puede = false;
             foreach($permisos as $permiso){
-                if(($permiso->name) == 'crear_roles'){
+                if(($permiso->name) == 'editar_roles'){
                     $si_puede = true;
                 }
             }
 
             if($si_puede) {// Si el usuario posee los permisos necesarios continua con la acción
                 $data['errores'] = '';
-                $roles = Role::find($id);   // Se obtienen los datos del rol seleccionado
+                $roles = Role::findOrFail($id);   // Se obtienen los datos del rol seleccionado
                 $permisos = $request->permisos;     // Se obtienen los permisos seleccionados por el usuario en el formulario
 
                 // Se verifica si el usuario selecciono por lo menos un permiso que será asociado al rol
@@ -267,14 +270,16 @@ class RolesController extends Controller {
     //                    dd("fallo modalidad");
                     $data['errores'] = "Debe seleccionar al menos un (1) permiso";
                     $data['permisos'] = Permission::all()->lists('display_name','id');
+                    $data['roles'] = Role::findOrFail($id);
 
-                    return view('roles.crear', $data);
+                    return view('roles.editar', $data);
 
                 }else{      //Si todos los campos están completos se crea el nuevo rol
 
-                    $roles->name = $request->nombre;
-                    $roles->display_name = $request->nombre;
+                    $roles->name = $request->name;
+                    $roles->display_name = $request->name;
                     $roles->description = $request->descripcion;
+
 
                 }
 

@@ -35,12 +35,12 @@
                         </div>
                     </div>
                 @endif
-                {!! Form::open(array('method' => 'POST', 'action' => 'RolesController@store', 'files' => true,'class' => 'form-horizontal col-md-10')) !!}
+                {!! Form::open(array('method' => 'POST', 'action' => 'RolesController@store', 'class' => 'form-horizontal col-md-10')) !!}
 
                 <div class="form-group">
                     {!!Form::label('nombre', 'Nombre', array( 'class' => 'col-md-4 control-label')) !!}
                     <div class="col-sm-8">
-                        {!!Form::text('nombre', Session::get('nombre') ,array('required', 'class' => 'form-control')) !!}
+                        {!!Form::text('name', Session::get('nombre') ,array('required', 'class' => 'form-control')) !!}
                     </div>
                 </div>
                 <div class="form-group">

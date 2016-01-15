@@ -64,12 +64,24 @@
                                     @endif
                                 </td>
                                 <td>
-                                    @if(Entrust::can('eliminar_roles'))
-                                        {{--<button><span class="glyphicon glyphicon-trash" data-toggle="tooltip" data-placement="bottom" title="Eliminar" aria-hidden="true"></span></button>--}}
+
+                                    {{--{{ $rol->display_name }} <br/>--}}
+                                    @if(($rol->name == 'admin') or ($rol->name == 'coordinador') or ($rol->name == 'participante') or ($rol->name == 'profesor'))
+                                        {!! Form::open(array('')) !!}
+                                        {!! Form::button('<span class="glyphicon glyphicon-trash" data-toggle="tooltip" data-placement="bottom" title="Eliminar" aria-hidden="true"></span>', array('type' => 'button','class' => 'btn btn-danger', 'disabled'))!!}
+                                        {!! Form::close() !!}
+                                    @else
                                         {!! Form::open(array('method' => 'DELETE', 'route' => array('roles.destroy', $rol->id))) !!}
-                                        {!! Form::button('<span class="glyphicon glyphicon-trash" id="{{$curso->id}}" data-toggle="tooltip" data-placement="bottom" title="Eliminar" aria-hidden="true"></span>', array('type' => 'button', 'data-toggle' => 'modal', 'data-target' => '#modal_eliminar_rol','class' => 'btn btn-danger'))!!}
+                                        {!! Form::button('<span class="glyphicon glyphicon-trash" id="{{$rol->id}}" data-toggle="tooltip" data-placement="bottom" title="Eliminar" aria-hidden="true"></span>', array('type' => 'button', 'data-toggle' => 'modal', 'data-target' => '#modal_eliminar_rol','class' => 'btn btn-danger'))!!}
                                         {!! Form::close() !!}
                                     @endif
+
+                                    {{--@if(Entrust::can('eliminar_roles'))--}}
+
+                                        {{--{!! Form::open(array('method' => 'DELETE', 'route' => array('roles.destroy', $rol->id))) !!}--}}
+                                        {{--{!! Form::button('<span class="glyphicon glyphicon-trash" id="{{$curso->id}}" data-toggle="tooltip" data-placement="bottom" title="Eliminar" aria-hidden="true"></span>', array('type' => 'button', 'data-toggle' => 'modal', 'data-target' => '#modal_eliminar_rol','class' => 'btn btn-danger'))!!}--}}
+                                        {{--{!! Form::close() !!}--}}
+                                    {{--@endif--}}
                                 </td>
                             </tr>
                         @endforeach
@@ -88,16 +100,17 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title" id="myModalLabel">Eliminación de curso</h4>
+                                    <h4 class="modal-title" id="myModalLabel">Eliminación de rol</h4>
                                 </div>
                                 <div class="modal-body">
-                                    <h5>¿ Está usted seguro de que desea eliminar este curso ?</h5>
+                                    <h5>¿ Está usted seguro de que desea eliminar este rol: {{$rol->display_name}} ?</h5>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                    {{--<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>--}}
 
                                     {!! Form::open(array('method' => 'DELETE', 'route' => array('roles.destroy', $rol->id))) !!}
-                                    {!! Form::button('Eliminar', array('type' => 'submit','class' => 'btn btn-danger'))!!}
+                                        {!! Form::button('Cancelar', array('type' => 'button','data-dismiss' => 'modal','class' => 'btn btn-default'))!!}
+                                        {!! Form::button('Eliminar', array('type' => 'submit','class' => 'btn btn-danger'))!!}
                                     {!! Form::close() !!}
 
                                     {{--<button id="eliminar_curso" type="button" class="btn btn-danger">Eliminar</button>--}}

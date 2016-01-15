@@ -17,6 +17,12 @@
                             <a style="text-decoration:none;" href="{{URL::to('/cursos')}}"> Lista de cursos </a>
                         </li>
                         <li class="menu_usuarios">
+                            <a style="text-decoration:none;" href="{{URL::to('/roles')}}"> Roles </a>
+                        </li>
+                        <li class="menu_usuarios">
+                            <a style="text-decoration:none;" href="{{URL::to('/webinars')}}"> Webinars </a>
+                        </li>
+                        <li class="menu_usuarios">
                             <a href="#"> Carrusel </a>
                         </li>
 

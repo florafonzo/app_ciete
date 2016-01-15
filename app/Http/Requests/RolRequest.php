@@ -28,7 +28,7 @@ class RolRequest extends Request {
     public function rules()
     {
         return [
-            'nombre' => 'required|max:50|unique:roles',
+            'name' => 'required|max:50|unique:roles',
             'permisos' => 'required',
             'descripcion' => 'max:250',
         ];

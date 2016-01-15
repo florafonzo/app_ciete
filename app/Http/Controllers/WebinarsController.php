@@ -37,7 +37,7 @@ class WebinarsController extends Controller {
 
 			if($si_puede) {// Si el usuario posee los permisos necesarios continua con la acción
 				$data['errores'] = '';
-				$data['roles'] = Webinar::all();   // Se obtienen todos los webinars
+				$data['webinars'] = Webinar::all();   // Se obtienen todos los webinars
 
 
 				return view('webinars.webinars', $data);  // Se muestra la lista de webinars
