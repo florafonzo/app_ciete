@@ -2,6 +2,7 @@
 
 use App\Http\Requests;
 use App\Http\Requests\RolRequest;
+use App\Http\Requests\RolEditarRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -115,10 +116,10 @@ class RolesController extends Controller {
      */
 	public function store(RolRequest $request)
 	{
-        dd('HOLAAAAAA de primero');
+        //dd('HOLAAAAAA de primero');
         try
         {
-            dd('ñhdusghduisg');
+            //dd('ñhdusghduisg');
             //Verificación de los permisos del usuario para poder realizar esta acción
             $permisos = [];
             $usuario_actual = Auth::user();
@@ -242,7 +243,7 @@ class RolesController extends Controller {
      *
      * @return Retorna la lista de roles con los datos actualizados.
      */
-	public function update(RolRequest $request, $id)
+	public function update(RolEditarRequest $request, $id)
 	{
         try{
 
@@ -265,6 +266,19 @@ class RolesController extends Controller {
                 $roles = Role::findOrFail($id);   // Se obtienen los datos del rol seleccionado
                 $permisos = $request->permisos;     // Se obtienen los permisos seleccionados por el usuario en el formulario
 
+                $rol = $request->name;
+                if (!($rol == $roles->name)) {
+
+                    $existe = DB::table('users')->where('name', '=', $rol)->first();
+
+                    if ($existe) {
+                        $data['errores'] = "Ya existe un Rol con ese nombre, ingrese uno diferente";
+                        $data['permisos'] = Permission::all()->lists('display_name','id');
+                        $data['roles'] = Role::findOrFail($id);
+
+                        return view('roles.editar', $data);
+                    }
+                }
                 // Se verifica si el usuario selecciono por lo menos un permiso que será asociado al rol
                 if ( empty(Input::get( 'permisos' )) ) {   //Si no selccionó ninguno, se redirige al formulario indicandole el error
     //                    dd("fallo modalidad");

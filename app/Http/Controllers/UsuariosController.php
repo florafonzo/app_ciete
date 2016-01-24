@@ -262,7 +262,7 @@ class UsuariosController extends Controller {
             }
             $si_puede = false;
             foreach($permisos as $permiso){
-                if(($permiso->name) == 'ver_usuarios'){
+                if(($permiso->name) == 'editar_usuarios'){
                     $si_puede = true;
                 }
             }
@@ -324,7 +324,7 @@ class UsuariosController extends Controller {
             }
             $si_puede = false;
             foreach($permisos as $permiso){
-                if(($permiso->name) == 'ver_usuarios'){
+                if(($permiso->name) == 'editar_usuarios'){
                     $si_puede = true;
                 }
             }
