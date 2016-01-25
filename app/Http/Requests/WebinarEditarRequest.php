@@ -4,7 +4,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use App\Http\Requests\Request;
 use Illuminate\Support\Facades\Auth;
 
-class RolEditarRequest extends Request {
+class WebinarEditarRequest extends Request {
 
     /**
      * Determine if the user is authorized to make this request.
@@ -27,10 +27,20 @@ class RolEditarRequest extends Request {
      */
     public function rules()
     {
+//        dd();
         return [
-            'name' => 'required|max:50',
-            'permisos' => 'required',
-            'descripcion' => 'max:250',
+            'nombre' => 'required|max:255',
+            'cupos' => 'required|integer|min:1',
+            'fecha_inicio' => 'required|date',
+            'fecha_fin' => 'required|date',
+            'duracion' => 'required|integer',
+            'lugar' => 'required|max:100',
+            'descripcion' => 'required|max:1000',
+            'link' => 'required',
+//            'imagen_carrusel' => 'mimes:jpeg,png,jpg|max:1024',
+//            'descripcion_carrusel' => 'max:100',
+//            'activo_carrusel' => '',
+
         ];
     }
 

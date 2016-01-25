@@ -109,12 +109,12 @@ class PermisionsSeeder extends Seeder {
         $editar_usuarios->save();
 
         $eliminar_roles = new Permission();
-        $eliminar_roles->name = 'eliminar_webinar';
+        $eliminar_roles->name = 'eliminar_webinars';
         $eliminar_roles->display_name = 'eliminar webinar';
         $eliminar_roles->save();
 
         $crear_usuarios = new Permission();
-        $crear_usuarios->name = 'ver_webinar';
+        $crear_usuarios->name = 'ver_webinars';
         $crear_usuarios->display_name = 'ver webinar';
         $crear_usuarios->save();
 

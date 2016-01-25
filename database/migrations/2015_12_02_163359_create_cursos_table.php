@@ -19,6 +19,7 @@ class CreateCursosTable extends Migration {
 //			$table->integer('id_modalidad_pago')->unsigned();
 			$table->integer('id_modalidad_curso')->unsigned();
 			$table->boolean('curso_activo');
+			$table->integer('cupos');
 			$table->string('nombre')->unique();
 			$table->date('fecha_inicio');
 			$table->date('fecha_fin');

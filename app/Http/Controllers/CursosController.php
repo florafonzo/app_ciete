@@ -95,6 +95,7 @@ class CursosController extends Controller {
 
                 // Se eliminan los datos guardados en sesion anteriormente
                 Session::forget('nombre');
+                Session::forget('cupos');
                 Session::forget('id_tipo');
                 Session::forget('fecha_inicio');
                 Session::forget('fecha_fin');
@@ -171,6 +172,7 @@ class CursosController extends Controller {
                 // Se guardan los datos ingresados por el usuario en sesion pra utilizarlos en caso de que se redirija
                 // al usuari al formulario por algún error y no se pierdan los datos ingresados
                 Session::set('nombre', $request->nombre);
+                Session::set('cupos', $request->cupos);
                 Session::set('id_tipo', $request->id_tipo);
                 Session::set('fecha_inicio', $request->fecha_inicio);
                 Session::set('fecha_fin', $request->fecha_fin);
@@ -231,6 +233,7 @@ class CursosController extends Controller {
                 $create2 = Curso::findOrNew($request->id);
                 $create2->id_tipo = $request->id_tipo;
                 $create2->curso_activo = "true";
+                $create2->cupos = $request->cupos;
                 $create2->nombre = $request->nombre;
                 $create2->fecha_inicio = $request->fecha_inicio;
                 $create2->fecha_fin = $request->fecha_fin;
@@ -284,7 +287,7 @@ class CursosController extends Controller {
 	/**
 	 * Se muestra el formulario de edicion de cursos si posee los permisos necesarios.
 	 *
-	 * @param  int  $id (id del curso que se desa editar)
+	 * @param  int  $id (id del curso que se desea editar)
      *
 	 * @return Retorna vista del formulario para el editar el curso deseado.
 	 */
@@ -331,7 +334,7 @@ class CursosController extends Controller {
 	/**
 	 * Actualiza los datos del curso seleccionado si posee los permisos necesarios
 	 *
-	 * @param  int  $id (id del curso que se desa editar)
+	 * @param  int  $id (id del curso que se desea editar)
      * @param  CursoRequest  $request (Se validan los campos ingresados por el usuario antes guardarlos mediante el Request)
      *
 	 * @return Retorna la lista de cursos con los datos actualizados.
@@ -394,9 +397,11 @@ class CursosController extends Controller {
                 } else {
                     $imagen = $cursos->imagen_carrusel;
                 }
+                $modalidades = Input::get('modalidades_pago');  // Se obtienen las modalidades de pago seleccionadas
 
                 // Se actualizan los datos del curso seleccionado
                 $cursos->id_tipo = $request->id_tipo;
+                $cursos->cupos = $request->cupos;
                 $cursos->nombre = $request->nombre;
                 $cursos->fecha_inicio = $request->fecha_inicio;
                 $cursos->fecha_fin = $request->fecha_fin;
@@ -424,6 +429,14 @@ class CursosController extends Controller {
 
                 // Se verifica que se haya creado el curso de forma correcta
                 if ($cursos->save()) {
+                    DB::table('curso_modalidad_pagos')->where('id_curso', '=', $cursos->id)->delete();
+                    foreach ($modalidades as $modalidad) {      // Se asocian las nuevas modalidades de pago al curso
+                        $pago = ModalidadPago::where('nombre', '=', $modalidad)->get();
+                        CursoModalidadPago::create([
+                            'id_curso' => $cursos->id,
+                            'id_modalidad_pago' => $pago[0]->id,
+                        ]);
+                    }
                     return redirect('/cursos');
                 } else {    // Si el curso no se ha creado bien se redirige al formulario de creación y se le indica al usuario el error
                     Session::set('error', 'Ha ocurrido un error inesperado');

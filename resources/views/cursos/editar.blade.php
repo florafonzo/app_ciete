@@ -97,6 +97,12 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        {!!Form::label('cupos', 'Cantidad de cupos',  array( 'class' => 'col-md-4 control-label'))!!}
+                        <div class="col-sm-8">
+                            {!!Form::text('cupos', $cursos->cupos ,array('required','class' => 'form-control'))!!}
+                        </div>
+                    </div>
+                    <div class="form-group">
                         {!!Form::label('lugar', 'Lugar',  array( 'class' => 'col-md-4 control-label'))!!}
                         <div class="col-sm-8">
                             {!!Form::text('lugar', $cursos->lugar ,array('required','class' => 'form-control'))!!}
