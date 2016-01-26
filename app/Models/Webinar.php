@@ -17,7 +17,7 @@ class Webinar extends Model {
      *
      * @var array
      */
-    protected $fillable = ['nombre','fecha_inicio','fecha_fin','duracion', 'lugar', 'descripcion','link'];
+    protected $fillable = ['cupos','webinar_activo','nombre','fecha_inicio','fecha_fin','duracion', 'lugar', 'descripcion','link'];
 
 
     public function participante() {

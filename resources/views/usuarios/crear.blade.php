@@ -60,7 +60,7 @@
                 @endif
 
                 {!! Form::open(array('method' => 'POST', 'action' => 'UsuariosController@store', 'class' => 'form-horizontal col-md-10', 'enctype' => "multipart/form-data")) !!}
-
+                    
                     <div class="form-group">
                         {!!Form::label('nombre', '¿El nuevo usuario es Participante? ', array( 'class' => 'col-md-4 control-label')) !!}
                         <div class="col-sm-8">

@@ -10,13 +10,19 @@
             <div class="col-md-12 col-sm-12 menu_part">
                 <ul class="nav nav-pills nav-stacked">
                     @if(Auth::user()->hasRole('admin'))
-                        <li class=" menu_usuarios">
+                        <li class=" menu_usuarios @if(Request::is('usuarios*')) active @endif">
                             <a href="{{URL::to('/usuarios')}}"> Usuarios </a>
                         </li>
-                        <li class="menu_usuarios">
+                        <li class="menu_usuarios @if(Request::is('cursos*')) active @endif">
                             <a style="text-decoration:none;" href="{{URL::to('/cursos')}}"> Lista de cursos </a>
                         </li>
-                        <li class="menu_usuarios">
+                        <li class="menu_usuarios @if(Request::is('roles*')) active @endif">
+                            <a style="text-decoration:none;" href="{{URL::to('/roles')}}"> Roles </a>
+                        </li>
+                        <li class="menu_usuarios @if(Request::is('webinars*')) active @endif">
+                            <a style="text-decoration:none;" href="{{URL::to('/webinars')}}"> Webinars </a>
+                        </li>
+                        <li class="menu_usuarios @if(Request::is('carrusel*')) active @endif">
                             <a href="#"> Carrusel </a>
                         </li>
 

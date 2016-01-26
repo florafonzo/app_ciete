@@ -14,13 +14,13 @@ class CreateParroquiasTable extends Migration {
 	{
 		Schema::create('parroquias', function(Blueprint $table)
 		{
-			$table->increments('id');
+			$table->increments('id_parroquia');
 			$table->integer('id_municipio')->unsigned();
 			$table->string('parroquia');
-			$table->timestamps();
+			$table->nullableTimestamps();
 
 
-			$table->foreign('id_municipio')->references('id')->on('parroquias')
+			$table->foreign('id_municipio')->references('id_municipio')->on('municipios')
 				->onUpdate('cascade')->onDelete('cascade');
 
 		});
