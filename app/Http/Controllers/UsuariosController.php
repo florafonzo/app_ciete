@@ -14,6 +14,11 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Http\RedirectResponse;
 use DB;
+use App\Pais;
+use App\Estado;
+use App\Municipio;
+use App\Ciudad;
+use App\Parroquia;
 
 use Illuminate\Http\Request;
 
@@ -30,11 +35,13 @@ class UsuariosController extends Controller {
 //			$data['participantes'] = User::all();
 //            $data['profes'] = User::all();
 			
+            $pag['users'] = User::orderBy('created_at')->paginate(5);
+            
 			foreach($data['usuarios'] as $usuario){
 				$usuario['roles'] = $usuario->roles()->get();
 //                dd($usuario['rol']);
 			}
-			return view('usuarios.usuarios', $data);
+			return view('usuarios.usuarios', $data, $pag);
 
 		}
 		catch (Exception $e) {
@@ -61,7 +68,11 @@ class UsuariosController extends Controller {
 
             $data['roles'] = Role::all()->lists('display_name','id');
             $data['errores'] = '';
-
+            $data['pais'] = Pais::all()->lists('pais', 'id');
+            $data['estados'] = Estado::all()->lists('estado','id_estado');
+            //$data['municipio'] = Municipio::all()->lists('municipio', 'id_municipio');
+            //$data['parroquia'] = Parroquia::all()->lists('parroquia', 'id_parroquia');
+            //$data['ciudad'] = Ciudad::all()->lists('ciudad', 'id_ciudad');
 	        return view ('usuarios.crear', $data);
 	    }
         catch (Exception $e) {
@@ -209,9 +220,11 @@ class UsuariosController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($id)
+	
+    public function show($id)
 	{
 		//
+
 	}
 
 	/**

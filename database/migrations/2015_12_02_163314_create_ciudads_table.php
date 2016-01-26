@@ -14,14 +14,14 @@ class CreateCiudadsTable extends Migration {
 	{
 		Schema::create('ciudades', function(Blueprint $table)
 		{
-			$table->increments('id');
+			$table->increments('id_ciudad');
 			$table->integer('id_estado')->unsigned();
 			$table->string('ciudad');
 			$table->string('capital');
-			$table->timestamps();
+			$table->nullableTimestamps();
 
 
-			$table->foreign('id_estado')->references('id')->on('estados')
+			$table->foreign('id_estado')->references('id_estado')->on('estados')
 				->onUpdate('cascade')->onDelete('cascade');
 
 		});

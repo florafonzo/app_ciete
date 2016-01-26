@@ -89,7 +89,7 @@
                     <div class="form-group" id="ocultar">
                         {!!Form::label('rol', 'Rol(es): ',  array( 'class' => 'col-md-4 control-label'))!!}
 
-{{--                            {{$rol}}--}}
+                        {{--{{$rol}}--}}
                             <div class="col-sm-8">
                                 @foreach($roles as $rol)
                                     @if ($rol == "Participante")
@@ -112,6 +112,22 @@
                             {!!Form::text('celular', Session::get('celular'),array('class' => 'form-control'))!!}
                         </div>
                     </div>
+                    <div class="form-group">
+                        {!!Form::label('pais', 'Pais: ', array('class' => 'col-md-4 control-label'))!!}
+                        <div class="col-sm-8">
+                            {!! Form::select('id_pais', $pais, null, array('required', 'class' => 'form-control', 'id'=>'id_pais'))!!}
+                        </div>
+                    </div>
+                    
+                    <div class="localidad">
+                        <div class="form-group">
+                            {!!Form::label('estado', 'Estado:', array('class' => 'col-md-4 control-label'))!!}
+                            <div class="col-sm-8">
+                                {!! Form::select('id_est', $estados, null, array('required', 'class' => 'form-control', 'id'=>'id_est'))!!}
+                            </div>
+                        </div>
+                    </div>    
+
                     <div class="form-group">
                         {!!Form::label('email', 'Correo electrónico: ',  array( 'class' => 'col-md-4 control-label'))!!}
                         <div class="col-sm-8">

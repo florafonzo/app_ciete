@@ -89,8 +89,13 @@
                         </tbody>
                     @endif
                 </table>
+              
                 <div class="" style="text-align: center;">
                     <a href="{{URL::to('/')}}/usuarios/create" type="button" class="btn btn-success" >Agregar usuario </a>
+                </div>
+
+                <div class="col-sm-8">
+                    <?php echo $users->render(); ?>
                 </div>
 
                 {{-- Fin Modal de Eliminar--}}
@@ -116,7 +121,4 @@
             </div>
         @endif
     </div>
-
-
-
 @stop

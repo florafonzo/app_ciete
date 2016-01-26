@@ -12,11 +12,16 @@ class UserSeeder extends Seeder {
         $user = User::create(array(
             'nombre' => 'Admin',
             'apellido' => 'Administrador',
+            'documento_identidad' => '19659153',
             'email' => 'admin@admin.com',
+            'telefono' => '0212-7139231',
+            'movil' => '0416-1392312',
+            'localidad' => 'Venezuela',
             'password' => Hash::make('123456'),
             'created_at' => new DateTime,
             'updated_at' => new DateTime
         ));
+
         $role = Role::where('name', '=', 'admin')->get()->first();
         $user->attachRole( $role );
 
