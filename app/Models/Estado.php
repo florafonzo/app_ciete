@@ -11,15 +11,15 @@ class Estado extends Model {
      *
      * @var array
      */
-    protected $fillable = ['estado', 'iso-3166-2I', 'estadoscol'];
+    protected $fillable = ['estado', 'iso_31662'];
 
 
-    public function ciudad(){
-        return $this->hasMany('App\Models\Ciudad','id');
-    }
-
-    public function municipio(){
-        return $this->hasMany('App\Models\Municipio','id');
-    }
+//    public function ciudad(){
+//        return $this->hasMany('App\Models\Ciudad','id');
+//    }
+//
+//    public function municipio(){
+//        return $this->hasMany('App\Models\Municipio','id');
+//    }
 }
 

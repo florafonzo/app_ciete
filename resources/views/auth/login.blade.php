@@ -9,7 +9,7 @@
                     <div class="panel-body">
                         @if (count($errors) > 0)
                             <div class="alert lista_errores">
-                                <strong>Whoops!</strong> Hubo errores en sus datos.<br><br>
+                                <strong>Whoops!</strong> Hubo ciertos errores con los datos ingresados:<br><br>
                                 <ul class="">
                                     @foreach ($errors->all() as $error)
                                         <li>{{ $error }}</li>
@@ -49,7 +49,7 @@
                                 <div class="col-md-6 col-md-offset-4">
                                     <button type="submit" class="btn btn-primary">Entrar</button>
 
-                                    <a class="btn btn-link" href="{{ url('/password/email') }}">Olvidó su contraseña?</a>
+                                    <a class="btn btn-link" href="{{ url('/password/email') }}">¿Olvidó su contraseña?</a>
                                 </div>
                             </div>
                         </form>

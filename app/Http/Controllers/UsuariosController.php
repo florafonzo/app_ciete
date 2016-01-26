@@ -6,11 +6,18 @@ use App\User;
 use App\Models\Role;
 use App\Models\Participante;
 use App\Models\Profesor;
-//use Illuminate\Validation\Validator;
+use App\Models\Pais;
+use App\Models\Estado;
+use App\Models\Municipio;
+use App\Models\Ciudad;
+use App\Models\Parroquia;
+use Illuminate\Validation\Validator;
 use App\Http\Requests\UsuarioRequest;
 use App\Http\Requests\UsuarioEditarRequest;
-use Validator;
+
 use Illuminate\Support\Facades\Auth;
+//use Validator;
+
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Http\RedirectResponse;
@@ -237,8 +244,7 @@ class UsuariosController extends Controller {
             }
 
         }
-        catch (Exception $e)
-        {
+        catch (Exception $e) {
             return view('errors.error')->with('error',$e->getMessage());
         }
 

@@ -13,8 +13,8 @@ class Ciudad extends Model {
      */
     protected $fillable = ['id_estado', 'ciudad', 'capital'];
 
-    public function estado(){
-        return $this->belongsTo('App\Models\Estado','id_estado');
-    }
+//    public function estado(){
+//        return $this->belongsTo('App\Models\Estado','id_estado');
+//    }
 
 }
