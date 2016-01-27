@@ -8,6 +8,7 @@
 		"laravel/framework": "5.0.*",
         "thujohn/twitter": "~2.0",
         "zizaco/entrust": "dev-laravel-5",
+        "guzzlehttp/guzzle": "~4.0",
         "illuminate/html":"~5.0"
 	},
 	"require-dev": {

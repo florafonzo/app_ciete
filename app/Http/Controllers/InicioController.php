@@ -14,7 +14,14 @@ class InicioController extends Controller {
 	 */
 	public function index()
 	{
-		return view('inicio');
+		try {
+			$data['errores'] = '';
+			return view('inicio', $data);
+		}
+		catch (Exception $e) {
+
+				return view('errors.error')->with('error',$e->getMessage());
+		}
 	}
 
 	/**

@@ -13,12 +13,12 @@ class Municipio extends Model {
      */
     protected $fillable = ['id_estado', 'municipio'];
 
-    public function estado(){
-        return $this->belongsTo('App\Models\Estado','id_estado');
-    }
-
-    public function parroquia(){
-        return $this->hasMany('App\Models\Parroquia','id');
-    }
+//    public function estado(){
+//        return $this->belongsTo('App\Models\Estado','id_estado');
+//    }
+//
+//    public function parroquia(){
+//        return $this->hasMany('App\Models\Parroquia','id');
+//    }
 
 }

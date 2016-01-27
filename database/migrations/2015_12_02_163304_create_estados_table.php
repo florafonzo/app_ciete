@@ -14,11 +14,10 @@ class CreateEstadosTable extends Migration {
 	{
 		Schema::create('estados', function(Blueprint $table)
 		{
-			$table->increments('id');
+			$table->increments('id_estado');
 			$table->string('estado');
-			$table->string('iso_3166-2I');
-			$table->string('estadoscol');
-			$table->timestamps();
+			$table->string('iso_31662');
+			$table->nullableTimestamps();
 		});
 	}
 

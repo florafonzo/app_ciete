@@ -97,6 +97,29 @@ class PermisionsSeeder extends Seeder {
         $eliminar_roles->name = 'obtener_certificado';
         $eliminar_roles->display_name = 'obtener  certificado';
         $eliminar_roles->save();
+
+        $crear_usuarios = new Permission();
+        $crear_usuarios->name = 'crear_webinars';
+        $crear_usuarios->display_name = 'crear webinar';
+        $crear_usuarios->save();
+
+        $editar_usuarios = new Permission();
+        $editar_usuarios->name = 'editar_webinars';
+        $editar_usuarios->display_name = 'editar webinar';
+        $editar_usuarios->save();
+
+        $eliminar_roles = new Permission();
+        $eliminar_roles->name = 'eliminar_webinars';
+        $eliminar_roles->display_name = 'eliminar webinar';
+        $eliminar_roles->save();
+
+        $crear_usuarios = new Permission();
+        $crear_usuarios->name = 'ver_webinars';
+        $crear_usuarios->display_name = 'ver webinar';
+        $crear_usuarios->save();
+
     }
+
+
 
 }

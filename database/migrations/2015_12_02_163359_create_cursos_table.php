@@ -16,8 +16,10 @@ class CreateCursosTable extends Migration {
 		{
 			$table->increments('id');
 			$table->integer('id_tipo')->unsigned();
-			$table->integer('id_modalidad_pago')->unsigned();
+//			$table->integer('id_modalidad_pago')->unsigned();
 			$table->integer('id_modalidad_curso')->unsigned();
+			$table->boolean('curso_activo');
+			$table->integer('cupos');
 			$table->string('nombre')->unique();
 			$table->date('fecha_inicio');
 			$table->date('fecha_fin');
@@ -36,7 +38,7 @@ class CreateCursosTable extends Migration {
 			$table->text('aliados');
 			$table->text('plan_estudio');
 			$table->float('costo');
-			$table->text('modalidades_pago');
+//			$table->text('modalidades_pago');
 			$table->string('imagen_carrusel');
 			$table->text('descripcion_carrusel');
 			$table->boolean('activo_carrusel');
@@ -45,8 +47,8 @@ class CreateCursosTable extends Migration {
 			$table->foreign('id_tipo')->references('id')->on('tipo_cursos')
 				->onUpdate('cascade')->onDelete('cascade');
 
-			$table->foreign('id_modalidad_pago')->references('id')->on('modalidad_pagos')
-				->onUpdate('cascade')->onDelete('cascade');
+//			$table->foreign('id_modalidad_pago')->references('id')->on('modalidad_pagos')
+//				->onUpdate('cascade')->onDelete('cascade');
 
 			$table->foreign('id_modalidad_curso')->references('id')->on('modalidad_cursos')
 				->onUpdate('cascade')->onDelete('cascade');

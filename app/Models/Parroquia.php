@@ -11,10 +11,10 @@ class Parroquia extends Model {
      *
      * @var array
      */
-    protected $fillable = ['id_municipio', 'parroquia'];
+    protected $fillable = ['parroquia'];
 
-    public function municipio(){
-        return $this->belongsTo('App\Models\Municipio','id_municipio');
-    }
+//    public function municipio(){
+//        return $this->belongsTo('App\Models\Municipio','id_municipio');
+//    }
 
 }

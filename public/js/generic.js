@@ -10,20 +10,20 @@ $(document).ready(function() {
     //    $('#modal_eliminar').modal('show');
     //});
 
-    $( "#eliminar" ).click(function() {
-        //var id=$(this).data('id');
-        //alert(id);
+    /* $( "#eliminar" ).click(function() {
+     //var id=$(this).data('id');
+     //alert(id);
 
-        $( "#form_eliminar" ).submit();
-    });
+     $( "#form_eliminar" ).submit();
+     });
 
-    $( "#eliminar_curso" ).click(function() {
-        //var id=$(this).data('id');
-        //alert(id);
+     $( "#eliminar_curso" ).click(function() {
+     //var id=$(this).data('id');
+     //alert(id);
 
-        $( "#form_eliminar_cursos" ).submit();
-    });
-//  --------  Fin Modal Eliminar Usuario -------- ///
+     $( "#form_eliminar_cursos" ).submit();
+     });*/
+//-------------------------------------------------------------------------------//
 
 
 //  --------  Validar si el usuario Nuevo a crear será Participante o no ---------- ///
@@ -62,9 +62,65 @@ $(document).ready(function() {
         }
     );
 
-//  --------  Fin Validar si el usuario Nuevo a crear será Participante o no ---------- ///
+//-------------------------------------------------------------------------//
 
 
+//  --------  Validar si el Curso Estara en el carrusel ---------- ///
+    // $('#descripcion_carrusel').hide();
+    //$('#imagen_carrusel').hide();
+    if ($('#activo_carrusel:checkbox:checked').length <= 0) {
+        //alert("dgwxfgwxf");
+        $('#descripcion_carrusel').hide();
+        $('#imagen_carrusel').hide();
+    }else{
+        $('#descripcion_carrusel').show();
+        $('#imagen_carrusel').show();
+    }
 
+    $( '#activo_carrusel' ).change(function() {
+        if($(this).is(":checked")) {
+            $('#descripcion_carrusel').show();
+            $('#imagen_carrusel').show();
+            return;
+        }
+        $('#descripcion_carrusel').hide();
+        $('#imagen_carrusel').hide();
+    });
+
+
+//-------------------------------------------------------------------------//
+
+// ------ FadeOut para desaparecer notificaciones en un tiempo estimado ------ //
+    $('#flash_success').fadeOut(5000);
+//--------------------------------------------
+
+
+// ------ Mostrar estado, ciudad, municipio y parroquia si el País es igual a Venezuela ------//
+
+    $(".localidad").hide();
+
+    $("#id_pais" ).change(function() {
+        var pais = $("#id_pais :selected").text();
+
+        if( pais == 'Venezuela'){
+            $(".localidad").show();
+        }else{
+            $(".localidad").hide()
+        }
+    });
+
+    $("#id_est").change(function(){
+        var est= $("#id_est :selected").text();
+        $.ajax({
+            type: 'POST',
+            url: "usuarios.show",
+            data: est,
+            success: function(data) {
+                alert(data);
+            }
+        })
+    });
+
+//------------------------------------------------------------------------------//
 
 });

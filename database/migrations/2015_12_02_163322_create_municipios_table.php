@@ -14,13 +14,13 @@ class CreateMunicipiosTable extends Migration {
 	{
 		Schema::create('municipios', function(Blueprint $table)
 		{
-			$table->increments('id');
+			$table->increments('id_municipio');
 			$table->integer('id_estado')->unsigned();
 			$table->string('municipio');
-			$table->timestamps();
+			$table->nullableTimestamps();
 
 
-			$table->foreign('id_estado')->references('id')->on('estados')
+			$table->foreign('id_estado')->references('id_estado')->on('estados')
 				->onUpdate('cascade')->onDelete('cascade');
 
 		});

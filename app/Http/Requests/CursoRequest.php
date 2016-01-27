@@ -28,7 +28,8 @@ class CursoRequest extends Request {
     public function rules()
     {
         return [
-            'nombre' => 'required|max:255',
+            'nombre' => 'required|max:255|unique:cursos',
+            'cupos' => 'required|integer|min:1',
             'id_tipo' => 'required',
             'id_modalidad_curso' => 'required',
             'fecha_inicio' => 'required|date',
@@ -50,7 +51,7 @@ class CursoRequest extends Request {
 //            'modalidades_pago' => 'required|max:1000',
             'imagen_carrusel' => 'mimes:jpeg,png,jpg|max:1024',
             'descripcion_carrusel' => 'max:100',
-//            'activo_carrusel' => 'required',
+            'activo_carrusel' => '',
 
         ];
     }

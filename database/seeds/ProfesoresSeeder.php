@@ -19,7 +19,7 @@ class ProfesoresSeeder extends Seeder {
             'nombre' => 'Admin',
             'apellido' => 'Administrador',
             'documento_identidad' => '5222688',
-            'foto' => 'ruta',
+            'foto' => '',
             'telefono' => '02125558899',
             'celular' => '04168559966',
             'created_at' => new DateTime,
