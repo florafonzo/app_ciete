@@ -16,6 +16,6 @@ class Pais extends Model {
      *
      * @var array
      */
-    protected $fillable = ['pais'];
+    protected $fillable = ['iniciales','nombre','iso3','numcode'];
 
 }

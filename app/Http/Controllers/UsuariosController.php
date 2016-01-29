@@ -105,7 +105,7 @@ class UsuariosController extends Controller {
                 Session::forget('celular');
 
                 $data['roles'] = Role::all()->lists('display_name', 'id');
-                $data['pais'] = Pais::all()->lists('pais', 'id');
+                $data['pais'] = Pais::all()->lists('nombre_mostrar', 'id');
                 $data['estados'] = Estado::all()->lists('estado','id_estado');
                 $data['errores'] = '';
 

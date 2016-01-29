@@ -119,11 +119,22 @@
                         </div>
                     </div>
 
-                    <div class="localidad">
+                    <div class="form-group localidad">
                         <div class="form-group">
                             {!!Form::label('estado', 'Estado:', array('class' => 'col-md-4 control-label'))!!}
                             <div class="col-sm-8">
                                 {!! Form::select('id_est', $estados, null, array('required', 'class' => 'form-control', 'id'=>'id_est'))!!}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group localidad1">
+                        <div class="form-group">
+                            {!!Form::label('ciudad', 'Ciudad:', array('class' => 'col-md-4 control-label'))!!}
+                            <div class="col-sm-8">
+                                <select class="form-control" id="ciudad">
+
+                                </select>
+                                {{--{!! Form::select('id_ciudad', 'Ciudad', null, array('required', 'class' => 'form-control', 'id'=>'id_ciudad'))!!}--}}
                             </div>
                         </div>
                     </div>
@@ -190,5 +201,10 @@
             </div>
         @endif
     </div>
+
+    <script>
+//        alert('holaaaas');
+
+    </script>
 
 @stop

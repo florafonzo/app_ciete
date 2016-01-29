@@ -58,3 +58,12 @@ Route::post('/password/reset', 'Auth\PasswordController@postReset');
 //Ruta de contacto
 Route::get('Contacto','InformacionController@getcontacto');
 Route::post('Contacto','InformacionController@postContacto');
+
+//Ruta dirección usuarios
+Route::get('/direccion', function(){
+
+    $id = Input::get('id_est');
+    $ciudades = App\Models\Ciudad::where('id_estado', '=', '1' )->get();
+
+    return Response::json($ciudades);
+});

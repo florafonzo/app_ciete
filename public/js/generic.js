@@ -43,6 +43,7 @@ $(document).ready(function() {
             $('.mostrar').hide();
         }
         $('#ocultar').show();
+
     }
     $( 'input[name=es_participante]:radio' ).change(
         function() {
@@ -109,18 +110,39 @@ $(document).ready(function() {
         }
     });
 
-    $("#id_est").change(function(){
-        var est= $("#id_est :selected").text();
-        $.ajax({
-            type: 'POST',
-            url: "usuarios.show",
-            data: est,
-            success: function(data) {
-                alert(data);
-            }
-        })
-    });
+    //$("#id_est").change(function(){
+    //    var est= $("#id_est :selected").text();
+    //    $.ajax({
+    //        type: 'POST',
+    //        url: "usuarios.show",
+    //        data: est,
+    //        success: function(data) {
+    //            alert(data);
+    //        }
+    //    })
+    //});
 
+    $('#id_est').on('change', function(e) {
+
+//            alert('holaaaas');
+        //console.log(e);
+        var estado_id = e.target.value;
+            //alert(estado_id);
+        $.ajax({
+            url:        "/direccion?estado_id="+estado_id,
+            dataType:   "json",
+            success:    function(data){
+                console.log(data);
+                $('#ciudad').empty();
+                $.each(data, function(index, ciudadObj){
+                    $('#ciudad').append('<option value="'+ciudadObj.capital+'">'+ciudadObj.capital+'</option>');
+                    $(".localidad1").show();
+                    //$('#ciudad').append("{!! Form::select('id_ciudad',"+ ciudadObj.capital+", null, array('required', 'class' => 'form-control', 'id'=>'id_ciudad'))!!}");
+                });
+            }
+        });
+
+    });
 //------------------------------------------------------------------------------//
 
 });
