@@ -42,8 +42,11 @@
                                     <td>
                                         @if(Entrust::can('eliminar_webinars'))
                                             {{--<button><span class="glyphicon glyphicon-trash" data-toggle="tooltip" data-placement="bottom" title="Eliminar" aria-hidden="true"></span></button>--}}
-                                            {!! Form::open(array('method' => 'DELETE', 'route' => array('webinars.destroy', $webinar->id))) !!}
-                                            {!! Form::button('<span class="glyphicon glyphicon-trash" id="{{$curso->id}}" data-toggle="tooltip" data-placement="bottom" title="Eliminar" aria-hidden="true"></span>', array('type' => 'button', 'data-toggle' => 'modal', 'data-target' => '#modal_eliminar_webinar','class' => 'btn btn-danger'))!!}
+                                            {!! Form::open(array('method' => 'DELETE', 'route' => array('webinars.destroy', $webinar->id), 'id' => 'form_eliminar'.$webinar->id)) !!}
+                                                {{--{!! Form::button('<span class="glyphicon glyphicon-trash" id="{{$curso->id}}" data-toggle="tooltip" data-placement="bottom" title="Eliminar" aria-hidden="true"></span>', array('type' => 'button', 'data-toggle' => 'modal', 'data-target' => '#modal_eliminar_webinar','class' => 'btn btn-danger'))!!}--}}
+                                                <button type="button" onclick="mostrarModal('{{$webinar->id}}')" class='btn btn-danger' data-toggle='tooltip' data-placement="bottom" title="Eliminar" aria-hidden="true">
+                                                    <span class="glyphicon glyphicon-trash" ></span>
+                                                </button>
                                             {!! Form::close() !!}
                                         @endif
                                     </td>
@@ -58,33 +61,6 @@
                         <a href="{{URL::to('/')}}/webinars/create" type="button" class="btn btn-success" >Crear Webinar </a>
                     </div>
                 @endif
-                @if($webinars->count())
-                    {{-- Modal de Eliminar Webinar--}}
-                    <div class="modal fade" id="modal_eliminar_webinar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title" id="myModalLabel">Eliminación de Webinar</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <h5>¿ Está usted seguro de que desea eliminar este Webinar: {{$webinar->nombre}}  ?</h5>
-                                </div>
-                                <div class="modal-footer">
-                                    {{--<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>--}}
-                                    {!! Form::open(array('method' => 'DELETE', 'route' => array('webinars.destroy', $webinar->id))) !!}
-                                        {!! Form::button('Cancelar', array('type' => 'button','data-dismiss' => 'modal','class' => 'btn btn-default'))!!}
-                                        {!! Form::button('Eliminar', array('type' => 'submit','class' => 'btn btn-danger'))!!}
-                                    {!! Form::close() !!}
-
-                                    {{--<button id="eliminar_curso" type="button" class="btn btn-danger">Eliminar</button>--}}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {{--Fin Modal de Eliminar Webinar--}}
-                @endif
-
             </div>
         @endif
     </div>

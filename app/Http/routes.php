@@ -28,6 +28,8 @@ Route::get('Profesor','InformacionController@profesor');*/
 
 Route::resource('/usuarios','UsuariosController');
 
+Route::get('cursos-desactivados', 'CursosController@indexDesactivados');
+Route::get('cursos-desactivados/activar/{id}', 'CursosController@activar');
 Route::resource('/cursos','CursosController');
 
 Route::resource('/roles','RolesController');

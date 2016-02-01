@@ -39,7 +39,7 @@ class WebinarsController extends Controller {
 
 			if($si_puede) {// Si el usuario posee los permisos necesarios continua con la acción
 				$data['errores'] = '';
-				$data['webinars'] = Webinar::all();   // Se obtienen todos los webinars
+				$data['webinars'] = Webinar::orderBy('created_at')->get();   // Se obtienen todos los webinars
 
 				return view('webinars.webinars', $data);  // Se muestra la lista de webinars
 
@@ -146,13 +146,17 @@ class WebinarsController extends Controller {
                 Session::set('link', $request->link);
 
                 $fecha_actual = date('Y-m-d');// Se obtiene la fecha actual para validar las fechas de inicio y fin del Webinar
-                if(($request->fecha_inicio) < $fecha_actual) {
-                    Session::set('error', 'La fecha de inicio debe ser igual o mayor a la fecha actual');
+                if(($request->fecha_inicio) <= $fecha_actual) {
+                    Session::set('error', 'La fecha de inicio debe ser mayor a la fecha actual');
+                    $data['errores'] = '';
+                    $data['webinars'] = Webinar::all();   // Se obtienen todos los webinars
                     return view('webinars.crear', $data);
 
                 }else{
                     if (($request->fecha_inicio) > ($request->fecha_fin)) {
                         Session::set('error', 'La fecha de inicio debe ser igual o menor a la fecha fin');
+                        $data['errores'] = '';
+                        $data['webinars'] = Webinar::all();   // Se obtienen todos los webinars
                         return view('webinars.crear', $data);
                     }
                 }
@@ -298,8 +302,8 @@ class WebinarsController extends Controller {
                 $webinar = Webinar::find($id);
 
                 $fecha_actual = date('Y-m-d');// Se obtiene la fecha actual para validar las fechas de inicio y fin del Webinar
-                if(($request->fecha_inicio) < $fecha_actual) {
-                    Session::set('error', 'La fecha de inicio debe ser igual o mayor a la fecha actual');
+                if(($request->fecha_inicio) <= $fecha_actual) {
+                    Session::set('error', 'La fecha de inicio debe ser mayor a la fecha actual');
                     return view('webinars.crear', $data);
 
                 }else{

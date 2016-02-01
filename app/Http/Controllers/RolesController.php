@@ -39,7 +39,7 @@ class RolesController extends Controller {
 
             if($si_puede) {// Si el usuario posee los permisos necesarios continua con la acción
                 $data['errores'] = '';
-                $data['roles'] = Role::all();   // Se obtienen todos los roles
+                $data['roles'] = Role::orderBy('name')->get();   // Se obtienen todos los roles
 
                 foreach ($data['roles'] as $rol) {
                     $rol['permisos'] = $rol->perms()->get();    //Se obtienen los permisos asociados a cada rol

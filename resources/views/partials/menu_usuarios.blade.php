@@ -15,8 +15,8 @@
                     </li>
                 @endif
                 @if(Entrust::can('ver_lista_cursos'))
-                    <li class="menu_usuarios @if(Request::is('cursos*')) active @endif">
-                        <a style="text-decoration:none;" href="{{URL::to('/cursos')}}"> Lista de cursos </a>
+                    <li class="menu_usuarios @if(Request::is('cursos') or Request::is('cursos/*')) active @endif">
+                        <a style="text-decoration:none;" href="{{URL::to('/cursos')}}"> Cursos </a>
                     </li>
                 @endif
                 @if(Entrust::can('ver_roles'))
@@ -32,7 +32,11 @@
                     {{--<li class="menu_usuarios @if(Request::is('carrusel*')) active @endif">--}}
                         {{--<a href="#"> Carrusel </a>--}}
                     {{--</li>--}}
-
+                @if(Entrust::can('ver_lista_cursos'))
+                    <li class="menu_usuarios @if(Request::is('cursos-desactivados*')) active @endif">
+                        <a style="text-decoration:none;" href="{{URL::to('/cursos-desactivados')}}"> Cursos desactivados </a>
+                    </li>
+                @endif
                 @if(Entrust::can('ver_perfil'))
                     <li>
                         Ver Pefil
