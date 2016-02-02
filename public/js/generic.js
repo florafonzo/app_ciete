@@ -99,6 +99,7 @@ $(document).ready(function() {
 // ------ Mostrar estado, ciudad, municipio y parroquia si el País es igual a Venezuela ------//
 
     $(".localidad").hide();
+    $(".localidad1").hide();
 
     $("#id_pais" ).change(function() {
         var pais = $("#id_pais :selected").text();
