@@ -115,7 +115,7 @@
                     <div class="form-group mostrar">
                         {!!Form::label('pais', 'Pais: ', array('class' => 'col-md-4 control-label'))!!}
                         <div class="col-sm-8">
-                            {!! Form::select('id_pais', $pais, null, array('required', 'class' => 'form-control', 'id'=>'id_pais'))!!}
+                            {!! Form::select('id_pais', $pais, null, array( 'class' => 'form-control', 'id'=>'id_pais'))!!}
                         </div>
                     </div>
 
@@ -123,7 +123,7 @@
                         <div class="form-group">
                             {!!Form::label('estado', 'Estado:', array('class' => 'col-md-4 control-label'))!!}
                             <div class="col-sm-8">
-                                {!! Form::select('id_est', $estados, null, array('required', 'class' => 'form-control', 'id'=>'id_est'))!!}
+                                {!! Form::select('id_est', $estados, null, array( 'class' => 'form-control', 'id'=>'id_est'))!!}
                             </div>
                         </div>
                     </div>

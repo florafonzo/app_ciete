@@ -31,7 +31,7 @@ class UsuarioRequest extends Request {
             'es_participante' => 'required',
             'nombre' => 'required|max:255',
             'apellido' => 'required|max:255',
-            'documento_identidad' => 'required|max:50',
+            'documento_identidad' => 'required|max:50|unique:profesores|unique:participantes',
 //            'id_rol' => 'required',
             'telefono' => 'required|max:20',
             'celular' => 'max:20',

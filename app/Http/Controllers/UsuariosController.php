@@ -52,7 +52,7 @@ class UsuariosController extends Controller {
 
             if($si_puede){  // Si el usuario posee los permisos necesarios continua con la acción
 
-                $data['usuarios'] = User::all();
+                $data['usuarios'] = User::orderBy('id')->get();
                 $data['errores'] = '';
 
                 foreach ($data['usuarios'] as $usuario) { //se asocian los roles a cada usuario
@@ -532,24 +532,32 @@ class UsuariosController extends Controller {
 
                 // Se obtienen los datos del usuario que se desea eliminar al igual que los roles que posee
                 $usuario = User::find($id);
+//                dd($usuario->id);
                 $roles = $usuario->roles()->get();
 
                 // Se verifica los roles que posee el usuario que se desea eliminar
                 foreach ($roles as $role) {
                     // Si el usuario que se desea eliminar es Administrador, no se puede eliminar
-                    if (($roles->name) == 'admin') {
+                    if (($role->name) == 'admin') {
                         $data['errores'] = "El usuario Administrador no puede ser eliminado";
+                        $data['usuarios'] = User::all();
+                        foreach ($data['usuarios'] as $usuario) {
+                            $usuario['rol'] = $usuario->roles()->first();
+
+                        }
                         return view('usuarios.usuarios', $data);
                     }elseif (($role->name) == 'participante') { // Si el usuario que se desea eliminar es Participante, se elimina y todas sus referencias
-                        $participante =DB::table('participantes')->where('id_usuario', '=', $usuario->id)->get();
+//                        $participante =DB::table('participantes')->where('id_usuario', '=', $usuario->id)->get();
+                        $participante = Participante::find(1)->where('id_usuario', '=', $usuario->id)->first();
                         DB::table('participante_cursos')->where('id_participante', '=', $participante->id)->delete();
                         DB::table('participante_webinars')->where('id_participante', '=', $participante->id)->delete();
                         DB::table('participantes')->where('id_usuario', '=', $usuario->id)->delete();
                         User::destroy($id);
                     } else {     // Si el usuario que se desea eliminar es Profesor o Coordinador, se elimina y todas sus referencias
-                        $profesor = DB::table('profesores')->where('id_usuario', '=', $usuario->id)->get();
+//                        $profesor = DB::table('profesores')->where('id_usuario', '=', $usuario->id)->get();
+                        $profesor = Profesor::find(1)->where('id_usuario', '=', $usuario->id)->first();
                         DB::table('profesor_cursos')->where('id_profesor', '=', $profesor->id)->delete();
-                        DB::table('profesor_webinars')->where('is_profesor', '=', $profesor->id)->delete();
+                        DB::table('profesor_webinars')->where('id_profesor', '=', $profesor->id)->delete();
                         DB::table('profesores')->where('id_usuario', '=', $usuario->id)->delete();
                         User::destroy($id);
                     }
@@ -560,6 +568,7 @@ class UsuariosController extends Controller {
 
                 // Se redirige al usuario a la lista de usuarios actualizada
                 $data['usuarios'] = User::all();
+                $data['errores'] = "";
                 foreach ($data['usuarios'] as $usuario) {
                     $usuario['rol'] = $usuario->roles()->first();
 

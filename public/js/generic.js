@@ -96,6 +96,7 @@ $(document).ready(function() {
 // ------ Mostrar estado, ciudad, municipio y parroquia si el País es igual a Venezuela ------//
 
     $(".localidad").hide();
+    $(".localidad1").hide();
 
     $("#id_pais" ).change(function() {
         var pais = $("#id_pais :selected").text();
@@ -187,4 +188,7 @@ function activarCurso(id) {
             $('#form_activar'+id).submit();
         })
 
+
+
 }
+>>>>>>> 0a179000f9f5bdcb958759160c84312dc472e82e

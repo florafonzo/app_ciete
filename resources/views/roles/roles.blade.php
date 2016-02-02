@@ -72,8 +72,11 @@
                                         {!! Form::button('<span class="glyphicon glyphicon-trash" data-toggle="tooltip" data-placement="bottom" title="Eliminar" aria-hidden="true"></span>', array('type' => 'button','class' => 'btn btn-danger', 'disabled'))!!}
                                         {!! Form::close() !!}
                                     @else
-                                        {!! Form::open(array('method' => 'DELETE', 'route' => array('roles.destroy', $rol->id))) !!}
-                                        {!! Form::button('<span class="glyphicon glyphicon-trash" id="{{$rol->id}}" data-toggle="tooltip" data-placement="bottom" title="Eliminar" aria-hidden="true"></span>', array('type' => 'button', 'data-toggle' => 'modal', 'data-target' => '#modal_eliminar_rol','class' => 'btn btn-danger'))!!}
+                                        {!! Form::open(array('method' => 'DELETE', 'route' => array('roles.destroy', $rol->id), 'id' => 'form_eliminar'.$rol->id)) !!}
+                                            {{--{!! Form::button('<span class="glyphicon glyphicon-trash" id="{{$rol->id}}" data-toggle="tooltip" data-placement="bottom" title="Eliminar" aria-hidden="true"></span>', array('type' => 'button', 'data-toggle' => 'modal', 'data-target' => '#modal_eliminar_rol','class' => 'btn btn-danger'))!!}--}}
+                                            <button type="button" onclick="mostrarModal('{{$rol->id}}')" class='btn btn-danger' data-toggle='tooltip' data-placement="bottom" title="Eliminar" aria-hidden="true">
+                                                <span class="glyphicon glyphicon-trash" ></span>
+                                            </button>
                                         {!! Form::close() !!}
                                     @endif
 
@@ -94,34 +97,6 @@
                         <a href="{{URL::to('/')}}/roles/create" type="button" class="btn btn-success" >Crear Rol </a>
                     </div>
                 @endif
-                @if($roles->count())
-                     {{-- Modal de Eliminar Rol--}}
-                    <div class="modal fade" id="modal_eliminar_rol" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title" id="myModalLabel">Eliminación de rol</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <h5>¿ Está usted seguro de que desea eliminar este rol: {{$rol->display_name}} ?</h5>
-                                </div>
-                                <div class="modal-footer">
-                                    {{--<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>--}}
-
-                                    {!! Form::open(array('method' => 'DELETE', 'route' => array('roles.destroy', $rol->id))) !!}
-                                        {!! Form::button('Cancelar', array('type' => 'button','data-dismiss' => 'modal','class' => 'btn btn-default'))!!}
-                                        {!! Form::button('Eliminar', array('type' => 'submit','class' => 'btn btn-danger'))!!}
-                                    {!! Form::close() !!}
-
-                                    {{--<button id="eliminar_curso" type="button" class="btn btn-danger">Eliminar</button>--}}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                     {{--Fin Modal de Eliminar Rol--}}
-                @endif
-
             </div>
         @endif
     </div>

@@ -50,7 +50,7 @@ class CursosController extends Controller {
             if($si_puede) {// Si el usuario posee los permisos necesarios continua con la acción
 
                 $data['errores'] = '';
-                $data['cursos'] = Curso::all(); // Se obtienen todos los cursos con sus datos
+                $data['cursos'] = Curso::orderBy('created_at')->get(); // Se obtienen todos los cursos con sus datos
 
                 foreach ($data['cursos'] as $curso) {   // Se asocia el tipo a cada curso (Cápsulo o Diplomado)
                     $tipo = TipoCurso::where('id', '=', $curso->id_tipo)->get();
@@ -194,6 +194,26 @@ class CursosController extends Controller {
                 Session::set('costo', $request->costo);
                 Session::set('descripcion_carrusel', $request->descripcion_carrusel);
 
+                $fecha_actual = date('Y-m-d');// Se obtiene la fecha actual para validar las fechas de inicio y fin del curso
+                if(($request->fecha_inicio) <= $fecha_actual) {
+                    Session::set('error', 'La fecha de inicio debe ser mayor a la fecha actual');
+                    $data['tipos'] = TipoCurso::all()->lists('nombre', 'id');
+                    $data['modalidad_pago'] = ModalidadPago::all()->lists('nombre', 'id');
+                    $data['modalidad_curso'] = ModalidadCurso::all()->lists('nombre', 'id');
+
+                    return view('cursos.crear', $data);
+
+                }else{
+                    if (($request->fecha_inicio) > ($request->fecha_fin)) {
+                        Session::set('error', 'La fecha de inicio debe ser igual o menor a la fecha fin');
+                        $data['tipos'] = TipoCurso::all()->lists('nombre', 'id');
+                        $data['modalidad_pago'] = ModalidadPago::all()->lists('nombre', 'id');
+                        $data['modalidad_curso'] = ModalidadCurso::all()->lists('nombre', 'id');
+
+                        return view('cursos.crear', $data);
+                    }
+                }
+
                 $activo_carrusel = false;
                 // Se verifica si el usuario elijió que el curso este activo en el carrusel o no
                 if (Input::get('activo_carrusel') == "on") {
@@ -216,7 +236,7 @@ class CursosController extends Controller {
                 }
 
                 //Se verifica si el usuario seleccionó que el curso esté activo en el carrusel
-                if (Input::get('activo_carrusel') == "on") {
+                if ($activo_carrusel) {
                     // Luego se verifica si los campos referente al carrusel estén completos
                     if ((empty(Input::get('descripcion_carrusel'))) or !($request->hasFile('imagen_carrusel'))) {   // Si no están completos se
                                                                                                     // redirige al usuario indicandole el error
@@ -363,6 +383,33 @@ class CursosController extends Controller {
                 $data['errores'] = '';
                 $cursos = Curso::find($id);
 
+
+                $fecha_actual = date('Y-m-d');// Se obtiene la fecha actual para validar las fechas de inicio y fin del curso
+                if(($request->fecha_inicio) <= $fecha_actual) {
+                    Session::set('error', 'La fecha de inicio debe ser mayor a la fecha actual');
+                    $data['cursos'] = Curso::find($id);
+                    $data['tipo'] = $data['cursos']->id_tipo;
+                    $data['modalidad_pago'] = ModalidadPago::all()->lists('nombre', 'id');
+                    $data['modalidades_curso'] = ModalidadCurso::all()->lists('nombre', 'id');
+                    $data['modalidad_curso'] = $data['cursos']->id_modalidad_curso;
+                    $data['tipos'] = TipoCurso::all()->lists('nombre', 'id');
+
+                    return view('cursos.crear', $data);
+
+                }else{
+                    if (($request->fecha_inicio) > ($request->fecha_fin)) {
+                        Session::set('error', 'La fecha de inicio debe ser igual o menor a la fecha fin');
+                        $data['cursos'] = Curso::find($id);
+                        $data['tipo'] = $data['cursos']->id_tipo;
+                        $data['modalidad_pago'] = ModalidadPago::all()->lists('nombre', 'id');
+                        $data['modalidades_curso'] = ModalidadCurso::all()->lists('nombre', 'id');
+                        $data['modalidad_curso'] = $data['cursos']->id_modalidad_curso;
+                        $data['tipos'] = TipoCurso::all()->lists('nombre', 'id');
+
+                        return view('cursos.crear', $data);
+                    }
+                }
+
                 // Se verifica que el usuario haya seleccionado por lo menos una modalidad de pago
                 if (empty(Input::get('modalidades_pago'))) {    // Si no ha seleccionado ningúna modalidad, se redirige al formulario
                     $data['cursos'] = Curso::find($id);
@@ -380,7 +427,7 @@ class CursosController extends Controller {
                 //Se verifica si el usuario seleccionó que el curso esté activo en el carrusel
                 if (($request->activo_carrusel) == true) {
                     // Luego se verifica si los campos referente al carrusel estén completos
-                    if ((empty(Input::get('descripcion_carrusel'))) or (empty(Input::get('imagen_carrusel')))) {// Si los campos no están completos se
+                    if ((empty(Input::get('descripcion_carrusel'))) or !($request->hasFile('imagen_carrusel'))) {// Si los campos no están completos se
                                                                                                      // redirige al usuario indicandole el error
                         $data['errores'] = $data['errores'] . "  Debe completar los campos de descripcion y imagen del Carrusel";
                         $data['cursos'] = Curso::find($id);
@@ -490,7 +537,7 @@ class CursosController extends Controller {
 
                 // Se redirige al usuario a la lista de cursos actualizada
                 $data['errores'] = '';
-                $data['cursos'] = Curso::all();
+                $data['cursos'] = Curso::orderBy('created_at')->get();
                 foreach ($data['cursos'] as $curso) {
                     $tipo = TipoCurso::where('id', '=', $curso->id_tipo)->get();
                     $curso['tipo_curso'] = $tipo[0]->nombre;
@@ -508,4 +555,88 @@ class CursosController extends Controller {
         }
     }
 
+
+    public function indexDesactivados()
+    {
+        try{
+
+            //Verificación de los permisos del usuario para poder realizar esta acción
+            $permisos = [];
+            $usuario_actual = Auth::user();
+            $roles = $usuario_actual->roles()->get();
+            foreach($roles as $rol){
+                $permisos = $rol->perms()->get();
+            }
+            $si_puede = false;
+            foreach($permisos as $permiso){
+                if(($permiso->name) == 'ver_lista_cursos'){
+                    $si_puede = true;
+                }
+            }
+
+            if($si_puede) {// Si el usuario posee los permisos necesarios continua con la acción
+
+                $data['errores'] = '';
+                $data['cursos'] = Curso::orderBy('created_at')->get(); // Se obtienen todos los cursos con sus datos
+
+                foreach ($data['cursos'] as $curso) {   // Se asocia el tipo a cada curso (Cápsulo o Diplomado)
+                    $tipo = TipoCurso::where('id', '=', $curso->id_tipo)->get();
+                    $curso['tipo_curso'] = $tipo[0]->nombre;
+                }
+
+                return view('cursos.desactivados', $data);
+
+            }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
+
+                return view('errors.sin_permiso');
+            }
+        }
+        catch (Exception $e) {
+
+            return view('errors.error')->with('error',$e->getMessage());
+        }
+    }
+
+    public function activar($id) {
+        try{
+            //Verificación de los permisos del usuario para poder realizar esta acción
+            $usuario_actual = Auth::user();
+            $roles = $usuario_actual->roles()->get();
+            $permisos = [];
+            foreach($roles as $rol){
+                $permisos = $rol->perms()->get();
+            }
+            $si_puede = false;
+            foreach($permisos as $permiso){
+                if(($permiso->name) == 'activar_cursos'){
+                    $si_puede = true;
+                }
+            }
+
+            if($si_puede) { // Si el usuario posee los permisos necesarios continua con la acción
+                // Se obtienen los datos del curso que se desea eliminar
+                $curso = Curso::find($id);
+                //Se activa el curso
+                $curso->curso_activo = true;
+                $curso->save(); // se guarda
+
+                // Se redirige al usuario a la lista de cursos actualizada
+                $data['errores'] = '';
+                $data['cursos'] = Curso::orderBy('created_at')->get();
+                foreach ($data['cursos'] as $curso) {
+                    $tipo = TipoCurso::where('id', '=', $curso->id_tipo)->get();
+                    $curso['tipo_curso'] = $tipo[0]->nombre;
+                }
+
+                return view('cursos.desactivados', $data);
+            }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
+
+                return view('errors.sin_permiso');
+            }
+        }
+        catch (Exception $e) {
+
+            return view('errors.error')->with('error',$e->getMessage());
+        }
+    }
 }

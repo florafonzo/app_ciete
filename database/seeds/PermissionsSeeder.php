@@ -68,6 +68,11 @@ class PermisionsSeeder extends Seeder {
         $eliminar_roles->display_name = 'eliminar cursos';
         $eliminar_roles->save();
 
+        $activar_curso = new Permission();
+        $activar_curso->name = 'activar_cursos';
+        $activar_curso->display_name = 'activar cursos';
+        $activar_curso->save();
+
         $crear_usuarios = new Permission();
         $crear_usuarios->name = 'ver_notas';
         $crear_usuarios->display_name = 'ver notas';
