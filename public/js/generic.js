@@ -13,14 +13,11 @@ $(document).ready(function() {
     /* $( "#eliminar" ).click(function() {
      //var id=$(this).data('id');
      //alert(id);
-
      $( "#form_eliminar" ).submit();
      });
-
      $( "#eliminar_curso" ).click(function() {
      //var id=$(this).data('id');
      //alert(id);
-
      $( "#form_eliminar_cursos" ).submit();
      });*/
 //-------------------------------------------------------------------------------//
@@ -99,7 +96,6 @@ $(document).ready(function() {
 // ------ Mostrar estado, ciudad, municipio y parroquia si el País es igual a Venezuela ------//
 
     $(".localidad").hide();
-    $(".localidad1").hide();
 
     $("#id_pais" ).change(function() {
         var pais = $("#id_pais :selected").text();
@@ -146,4 +142,49 @@ $(document).ready(function() {
     });
 //------------------------------------------------------------------------------//
 
+
+
+
+
+
+
+
+
+
+
+
 });
+//------------------------Función para eliminar --------------------------------------------//
+function mostrarModal(id) {
+    swal({
+            title: "¿Está seguro que desea eliminar?",
+            text: "Si lo elimina no podrá recuperarlo nuevamente!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#DD6B55',
+            confirmButtonText: "Eliminar",
+            closeOnConfirm: false
+        },
+        function(){
+            $('#form_eliminar'+id).submit();
+        })
+
+}
+//------------------------------------------------------------------------------//
+//------------------------Función para activar curso --------------------------------------------//
+
+function activarCurso(id) {
+    swal({
+            title: "¿Está seguro que desea activarlo?",
+            text: "Si lo activa, aparecera en los cursos disponibles",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: 'green',
+            confirmButtonText: "Activar",
+            closeOnConfirm: false
+        },
+        function(){
+            $('#form_activar'+id).submit();
+        })
+
+}
