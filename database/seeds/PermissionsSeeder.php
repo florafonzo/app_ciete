@@ -123,6 +123,16 @@ class PermisionsSeeder extends Seeder {
         $crear_usuarios->display_name = 'ver webinar';
         $crear_usuarios->save();
 
+        $ver_perfil = new Permission();
+        $ver_perfil->name = 'ver_perfil';
+        $ver_perfil->display_name = 'ver perfil';
+        $ver_perfil->save();
+
+        $editar_perfil = new Permission();
+        $editar_perfil->name = 'editar_perfil';
+        $editar_perfil->display_name = 'editar perfil';
+        $editar_perfil->save();
+
     }
 
 

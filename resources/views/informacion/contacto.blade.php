@@ -10,7 +10,7 @@
                     </h3>
                 </div>
             </div>
-            @if($show=='true')
+            @if($show == 'true')
                 <div class="alert alert-success" id="flash_success">
                     <strong>¡Genial!</strong> Su mensaje ha sido enviado con satisfactoriamente.
                 </div>

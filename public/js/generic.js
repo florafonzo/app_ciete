@@ -89,7 +89,8 @@ $(document).ready(function() {
 //-------------------------------------------------------------------------//
 
 // ------ FadeOut para desaparecer notificaciones en un tiempo estimado ------ //
-    $('#flash_success').fadeOut(5000);
+    $('#flash_success').fadeToggle(500);
+
 //--------------------------------------------
 
 
@@ -146,14 +147,6 @@ $(document).ready(function() {
 
 
 
-
-
-
-
-
-
-
-
 });
 //------------------------Función para eliminar --------------------------------------------//
 function mostrarModal(id) {
@@ -172,12 +165,31 @@ function mostrarModal(id) {
 
 }
 //------------------------------------------------------------------------------//
+
+//------------------------Función para desactivar curso --------------------------------------------//
+
+function desactivarCurso(id) {
+    swal({
+            title: "¿Está seguro que desea desactivar el curso?",
+            text: "Si lo desactiva, se eliminará de la lista de cursos disponibles",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#DD6B55',
+            confirmButtonText: "Desactivar",
+            closeOnConfirm: false
+        },
+        function(){
+            $('#form_desactivar'+id).submit();
+        })
+}
+//------------------------------------------------------------------------------//
+
 //------------------------Función para activar curso --------------------------------------------//
 
 function activarCurso(id) {
     swal({
             title: "¿Está seguro que desea activarlo?",
-            text: "Si lo activa, aparecera en los cursos disponibles",
+            text: "Si lo activa, aparecera en la lista de cursos disponibles",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: 'green',
@@ -187,8 +199,6 @@ function activarCurso(id) {
         function(){
             $('#form_activar'+id).submit();
         })
-
-
-
 }
->>>>>>> 0a179000f9f5bdcb958759160c84312dc472e82e
+//------------------------------------------------------------------------------//
+

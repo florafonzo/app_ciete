@@ -358,12 +358,14 @@ class UsuariosController extends Controller {
 
 
                 $email = $request->email;
-                // Se verifica si el correo ingresado es igual al anterior y si no lo es se verifica que no conicida con los de las base de datos ya que debe ser único
+                // Se verifica si el correo ingresado es igual al anterior y si no lo es se verifica que no
+                // conicida con los de las base de datos ya que debe ser único
                 if (!($email == $usuario->email)) {
 
                     $existe = DB::table('users')->where('email', '=', $email)->first();
 
-                    // Si el correo conicide con alguno de la base de datos se redirige al usuario al formulario de edición indicandole el error
+                    // Si el correo conicide con alguno de la base de datos se redirige al usuario al formulario de
+                    // edición indicandole el error
                     if ($existe) {
                         $data['errores'] = "El correo ya existe, ingrese uno diferente";
                         $data['es_participante'] = false;
@@ -425,7 +427,8 @@ class UsuariosController extends Controller {
 
                 } else {    // Si el usuario a editar no es Participante
 
-                    // Se verifica que el usuario haya seleccionado algún rol, si no seleccionó ninguno se redirige al formulario indicandole el error
+                    // Se verifica que el usuario haya seleccionado algún rol, si no seleccionó ninguno
+                    // se redirige al formulario indicandole el error
                     if (empty(Input::get('id_rol'))) {
 
                         $data['errores'] = "Debe seleccionar un Rol";
@@ -481,12 +484,14 @@ class UsuariosController extends Controller {
                             }
                         }
                         return redirect('/usuarios');
-                    } else {    // Si el usuario no se ha actualizo con exito en la tabla Users se redirige al formulario de creación y se le indica al usuario el error
+                    } else {    // Si el usuario no se ha actualizo con exito en la tabla Participantes o Profesores se
+                    // redirige al formulario  y se le indica al usuario el error
                         Session::set('error', 'Ha ocurrido un error inesperado');
                         DB::table('users')->where('id', '=', $usuario->id)->delete();
                         return view('usuarios.edit');
                     }
-                // Si el usuario no se ha actualizo con exito en la tabla Participantes o Profesores se redirige al formulario de creación y se le indica al usuario el error
+                // Si el usuario no se ha actualizo con exito en la tabla Users se redirige al
+                // formulario y se le indica al usuario el error
                 } else {
                     Session::set('error', 'Ha ocurrido un error inesperado');
                     return view('usuarios.edit');
@@ -546,7 +551,8 @@ class UsuariosController extends Controller {
 
                         }
                         return view('usuarios.usuarios', $data);
-                    }elseif (($role->name) == 'participante') { // Si el usuario que se desea eliminar es Participante, se elimina y todas sus referencias
+                    }elseif (($role->name) == 'participante') { // Si el usuario que se desea eliminar es Participante,
+                    // se elimina y todas sus referencias
 //                        $participante =DB::table('participantes')->where('id_usuario', '=', $usuario->id)->get();
                         $participante = Participante::find(1)->where('id_usuario', '=', $usuario->id)->first();
                         DB::table('participante_cursos')->where('id_participante', '=', $participante->id)->delete();

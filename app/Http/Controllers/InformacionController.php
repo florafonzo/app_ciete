@@ -47,21 +47,6 @@ class InformacionController extends Controller {
         return view('informacion.creditos');
     }
 
-//    public function participante()
-//    {
-//        return view('usuarios.participante');
-//    }
-//
-//    public function profesor()
-//    {
-//        return view('usuarios.profesor');
-//    }
-//
-//    public function administrador()
-//    {
-//        return view('usuarios.administrador');
-//    }
-
     public function postContacto(ContactoRequest $request)
     {
     	$show = 'true';

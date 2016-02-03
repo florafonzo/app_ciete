@@ -22,6 +22,11 @@
         </div>
     </div>
 @endif
+@if(Session::has('mensaje'))
+    <div id="flash_success" class='alert alert-success'>
+        {{ Session::pull('mensaje') }}
+    </div>
+@endif
 @if(Session::has('error'))
     <div class='alert alert-danger'>
         {{ Session::pull('error') }}

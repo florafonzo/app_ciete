@@ -13,46 +13,34 @@
 
 Route::get('/', 'InicioController@index');
 
-//---------- Información CIETE y Créditos --------------//
+//Rutas Información CIETE y Créditos
 Route::get('Misión-y-Visión','InformacionController@mision_vision');
 Route::get('Estructura','InformacionController@estructura');
 Route::get('Servicios','InformacionController@servicios');
 Route::get('Equipo','InformacionController@equipo');	
 Route::get('Créditos','InformacionController@creditos');
 
-//* ---------- Información CIETE y Créditos --------------//
-
-/*Route::get('Participante','InformacionController@participante');
-Route::get('Profesor','InformacionController@profesor');*/
-//Route::get('/usuarios','UsuariosController@index');
-
+//Rutas manejo de usuarios//
 Route::resource('/usuarios','UsuariosController');
 
+//Rutas manejo de cursos
 Route::get('cursos-desactivados', 'CursosController@indexDesactivados');
 Route::get('cursos-desactivados/activar/{id}', 'CursosController@activar');
 Route::resource('/cursos','CursosController');
 
+//Rutas manejo de roles
 Route::resource('/roles','RolesController');
 
+//Rutas manejo de webinars
 Route::resource('/webinars','WebinarsController');
 
-//Route::get('/usuarios','UsuariosController@index');
-//Route::get('twit', function()
-//{
-//    return Twitter::getUserTimeline(['screen_name' => 'cieteula', 'count' => 20, 'format' => 'json']);
-//});
-
-//Route::get('/', 'WelcomeController@index');
-
-//Route::get('home', 'HomeController@index');
-
+//Rutas Loggin y recuperación de contraseñas
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
 
 //Rutas de correo
-
 Route::post('/password/email', 'Auth\PasswordController@postEmail');
 Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
 Route::post('/password/reset', 'Auth\PasswordController@postReset');
@@ -61,7 +49,7 @@ Route::post('/password/reset', 'Auth\PasswordController@postReset');
 Route::get('Contacto','InformacionController@getcontacto');
 Route::post('Contacto','InformacionController@postContacto');
 
-//Ruta dirección usuarios
+//Ruta dirección participantes
 Route::get('/direccion', function(){
 
     $id = Input::get('id_est');
@@ -69,3 +57,13 @@ Route::get('/direccion', function(){
 
     return Response::json($ciudades);
 });
+
+//Rutas participante
+Route::get('/participante/perfil','ParticipantesController@verPerfil');
+Route::get('/participante/perfil/editar','ParticipantesController@editarPerfil');
+//Route::get('/participante','ParticipantesController@update');
+Route::resource('/participante','ParticipantesController');
+
+//Route::get('/', 'WelcomeController@index');
+
+//Route::get('home', 'HomeController@index');

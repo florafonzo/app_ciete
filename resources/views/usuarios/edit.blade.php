@@ -9,55 +9,10 @@
         </div>
         @if (!(Auth::guest()))
             @include('partials.menu_usuarios')
-            {{--<div class="col-md-4 col-sm-4 opciones_part">--}}
-                {{--<div class="row">--}}
-                    {{--<div class="col-md-6 col-sm-6 col-md-offset-3">--}}
-                        {{--<img src="{{URL::to('/')}}/images/foto_participante.png">--}}
-                    {{--</div>--}}
 
-                {{--</div>--}}
-                {{--<div class="row">--}}
-                    {{--<div class="col-md-12 col-sm-12 menu_part">--}}
-                        {{--<ul class="nav nav-pills nav-stacked">--}}
-                            {{--<li class="active menu_usuarios">--}}
-                                {{--<a href="{{URL::to('/usuarios')}}"> Usuarios </a>--}}
-                            {{--</li>--}}
-                            {{--<li class="menu_usuarios">--}}
-                                {{--<a href="#"> Lista de cursos </a>--}}
-                            {{--</li>--}}
-                            {{--<li class="menu_usuarios">--}}
-                                {{--<a href="#"> Carrusel </a>--}}
-                            {{--</li>--}}
-                        {{--</ul>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-            {{--</div>--}}
             <div class="col-md-8 col-sm-8 opciones_part2">
-                @include('partials.mensajes')
-                {{--@if (count($errors) > 0)--}}
-                    {{--<div class="row">--}}
-                        {{--<div class="errores ">--}}
-                            {{--<strong>Whoops!</strong> Hubo ciertos errores con los datos ingresados: <br><br>--}}
-                            {{--<ul class="lista_errores">--}}
-                                {{--@foreach ($errors->all() as $error)--}}
-                                    {{--<li>{{ $error }}</li>--}}
-                                {{--@endforeach--}}
-                            {{--</ul>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                {{--@endif--}}
-                {{--@if ($errores != '')--}}
-                    {{--<div class="row">--}}
-                        {{--<div class="errores ">--}}
-                            {{--<strong>Whoops!</strong> Hubo ciertos errores con los datos ingresados: <br><br>--}}
-                            {{--<ul class="lista_errores">--}}
-                                {{--@foreach ($errores->all() as $error)--}}
-                                {{--<li>{{ $errores }}</li>--}}
-                                {{--@endforeach--}}
-                            {{--</ul>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                {{--@endif--}}
+                @include('partials.mensajes'){{--Errores--}}
+
                 @if($usuarios->count())
                     {!! Form::open(array('method' => 'PUT', 'route' => array('usuarios.update', $usuarios->id), 'class' => 'form-horizontal col-md-10', 'enctype' => "multipart/form-data")) !!}
 
