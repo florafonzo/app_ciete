@@ -31,7 +31,6 @@ class ParticipanteRequest extends Request {
             'nombre' => 'required|max:255',
             'apellido' => 'required|max:255',
             'documento_identidad' => 'required|max:50',
-//            'id_rol' => 'required',
             'telefono' => 'required|max:20',
             'celular' => 'max:20',
             'email' => 'required|email|max:255',

@@ -23,7 +23,14 @@ class ParticipantesController extends Controller {
 	 */
 	public function index()
 	{
-		//
+        try {
+            $data['errores'] = '';
+            return view('inicio', $data);
+        }
+        catch (Exception $e) {
+
+            return view('errors.error')->with('error',$e->getMessage());
+        }
 	}
 
 	/**
@@ -229,6 +236,8 @@ class ParticipantesController extends Controller {
         }
 
 	}
+
+    
 
 
 }
