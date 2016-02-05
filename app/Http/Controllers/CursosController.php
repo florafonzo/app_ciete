@@ -34,20 +34,9 @@ class CursosController extends Controller {
 		try{
 
             //Verificación de los permisos del usuario para poder realizar esta acción
-            $permisos = [];
             $usuario_actual = Auth::user();
-            $roles = $usuario_actual->roles()->get();
-            foreach($roles as $rol){
-                $permisos = $rol->perms()->get();
-            }
-            $si_puede = false;
-            foreach($permisos as $permiso){
-                if(($permiso->name) == 'ver_lista_cursos'){
-                    $si_puede = true;
-                }
-            }
 
-            if($si_puede) {// Si el usuario posee los permisos necesarios continua con la acción
+            if($usuario_actual->can('ver_lista_cursos')) {    // Si el usuario posee los permisos necesarios continua con la acción
 
                 $data['errores'] = '';
                 $data['cursos'] = Curso::orderBy('created_at')->get(); // Se obtienen todos los cursos con sus datos
@@ -80,20 +69,9 @@ class CursosController extends Controller {
 		try{
 
             //Verificación de los permisos del usuario para poder realizar esta acción
-            $permisos = [];
             $usuario_actual = Auth::user();
-            $roles = $usuario_actual->roles()->get();
-            foreach($roles as $rol){
-                $permisos = $rol->perms()->get();
-            }
-            $si_puede = false;
-            foreach($permisos as $permiso){
-                if(($permiso->name) == 'crear_cursos'){
-                    $si_puede = true;
-                }
-            }
 
-            if($si_puede) {
+            if($usuario_actual->can('crear_cursos')) {    // Si el usuario posee los permisos necesarios continua con la acción
 
                 // Se eliminan los datos guardados en sesion anteriormente
                 Session::forget('nombre');
@@ -148,20 +126,9 @@ class CursosController extends Controller {
 		try
 		{
             //Verificación de los permisos del usuario para poder realizar esta acción
-            $permisos = [];
             $usuario_actual = Auth::user();
-            $roles = $usuario_actual->roles()->get();
-            foreach($roles as $rol){
-                $permisos = $rol->perms()->get();
-            }
-            $si_puede = false;
-            foreach($permisos as $permiso){
-                if(($permiso->name) == 'crear_cursos'){
-                    $si_puede = true;
-                }
-            }
 
-            if($si_puede) { // Si el usuario posee los permisos necesarios continua con la acción
+            if($usuario_actual->can('crear_cursos')) {  // Si el usuario posee los permisos necesarios continua con la acción
                 $data['errores'] = '';
 
                 //  Se verifica si el usuario colocó una imagen en el formulario
@@ -318,19 +285,9 @@ class CursosController extends Controller {
 		try{
 
             //Verificación de los permisos del usuario para poder realizar esta acción
-            $permisos = [];
             $usuario_actual = Auth::user();
-            $roles = $usuario_actual->roles()->get();
-            foreach($roles as $rol){
-                $permisos = $rol->perms()->get();
-            }
-            $si_puede = false;
-            foreach($permisos as $permiso){
-                if(($permiso->name) == 'editar_cursos'){
-                    $si_puede = true;
-                }
-            }
-            if($si_puede) { // Si el usuario posee los permisos necesarios continua con la acción
+
+            if($usuario_actual->can('editar_cursos')) {   // Si el usuario posee los permisos necesarios continua con la acción
 
                 $data['errores'] = '';
                 $data['cursos'] = Curso::find($id); // Se obtiene la información del curso seleccionado
@@ -367,19 +324,8 @@ class CursosController extends Controller {
         try{
             //Verificación de los permisos del usuario para poder realizar esta acción
             $usuario_actual = Auth::user();
-            $roles = $usuario_actual->roles()->get();
-            $permisos = [];
-            foreach($roles as $rol){
-                $permisos = $rol->perms()->get();
-            }
 
-            $si_puede = false;
-            foreach($permisos as $permiso){
-                if(($permiso->name) == 'editar_cursos'){
-                    $si_puede = true;
-                }
-            }
-            if($si_puede) { // Si el usuario posee los permisos necesarios continua con la acción
+            if($usuario_actual->can('editar_cursos')) {    // Si el usuario posee los permisos necesarios continua con la acción
                 $data['errores'] = '';
                 $cursos = Curso::find($id);
 
@@ -516,19 +462,8 @@ class CursosController extends Controller {
         try{
             //Verificación de los permisos del usuario para poder realizar esta acción
             $usuario_actual = Auth::user();
-            $roles = $usuario_actual->roles()->get();
-            $permisos = [];
-            foreach($roles as $rol){
-                $permisos = $rol->perms()->get();
-            }
-            $si_puede = false;
-            foreach($permisos as $permiso){
-                if(($permiso->name) == 'eliminar_cursos'){
-                    $si_puede = true;
-                }
-            }
 
-            if($si_puede) { // Si el usuario posee los permisos necesarios continua con la acción
+            if($usuario_actual->can('eliminar_cursos')) {  // Si el usuario posee los permisos necesarios continua con la acción
                 // Se obtienen los datos del curso que se desea eliminar
                 $curso = Curso::find($id);
                 //Se desactiva el curso
@@ -561,20 +496,9 @@ class CursosController extends Controller {
         try{
 
             //Verificación de los permisos del usuario para poder realizar esta acción
-            $permisos = [];
             $usuario_actual = Auth::user();
-            $roles = $usuario_actual->roles()->get();
-            foreach($roles as $rol){
-                $permisos = $rol->perms()->get();
-            }
-            $si_puede = false;
-            foreach($permisos as $permiso){
-                if(($permiso->name) == 'ver_lista_cursos'){
-                    $si_puede = true;
-                }
-            }
 
-            if($si_puede) {// Si el usuario posee los permisos necesarios continua con la acción
+            if($usuario_actual->can('ver_lista_cursos')) {   // Si el usuario posee los permisos necesarios continua con la acción
 
                 $data['errores'] = '';
                 $data['cursos'] = Curso::orderBy('created_at')->get(); // Se obtienen todos los cursos con sus datos
@@ -601,19 +525,8 @@ class CursosController extends Controller {
         try{
             //Verificación de los permisos del usuario para poder realizar esta acción
             $usuario_actual = Auth::user();
-            $roles = $usuario_actual->roles()->get();
-            $permisos = [];
-            foreach($roles as $rol){
-                $permisos = $rol->perms()->get();
-            }
-            $si_puede = false;
-            foreach($permisos as $permiso){
-                if(($permiso->name) == 'activar_cursos'){
-                    $si_puede = true;
-                }
-            }
 
-            if($si_puede) { // Si el usuario posee los permisos necesarios continua con la acción
+            if($usuario_actual->can('activar_cursos')) {  // Si el usuario posee los permisos necesarios continua con la acción
                 // Se obtienen los datos del curso que se desea eliminar
                 $curso = Curso::find($id);
                 //Se activa el curso

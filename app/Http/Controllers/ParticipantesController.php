@@ -2,6 +2,9 @@
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Models\Curso;
+use App\Models\ParticipanteCurso;
+use App\Models\TipoCurso;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Auth;
@@ -24,8 +27,18 @@ class ParticipantesController extends Controller {
 	public function index()
 	{
         try {
-            $data['errores'] = '';
-            return view('inicio', $data);
+            //Verificación de los permisos del usuario para poder realizar esta acción
+            $usuario_actual = Auth::user();
+
+            if($usuario_actual->can('ver_perfil')) { // Si el usuario posee los permisos necesarios continua con la acción
+                $data['errores'] = '';
+                return view('inicio', $data);
+
+            }else{      // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
+
+                return view('errors.sin_permiso');
+            }
+
         }
         catch (Exception $e) {
 
@@ -42,20 +55,8 @@ class ParticipantesController extends Controller {
 	{
         try{
             //Verificación de los permisos del usuario para poder realizar esta acción
-            $permisos = [];
             $usuario_actual = Auth::user();
-            $roles = $usuario_actual->roles()->get();
-            foreach($roles as $rol){
-                $permisos = $rol->perms()->get();
-            }
-            $si_puede = false;
-            foreach($permisos as $permiso){
-                if(($permiso->name) == 'ver_perfil'){
-                    $si_puede = true;
-                }
-            }
-
-            if($si_puede) {// Si el usuario posee los permisos necesarios continua con la acción
+            if($usuario_actual->can('ver_perfil')) {     // Si el usuario posee los permisos necesarios continua con la acción
 
                 $data['errores'] = '';
                 $data['datos'] = Participante::where('id_usuario', '=', $usuario_actual->id)->get(); // Se obtienen los datos del participante
@@ -85,20 +86,8 @@ class ParticipantesController extends Controller {
     {
         try{
             //Verificación de los permisos del usuario para poder realizar esta acción
-            $permisos = [];
             $usuario_actual = Auth::user();
-            $roles = $usuario_actual->roles()->get();
-            foreach($roles as $rol){
-                $permisos = $rol->perms()->get();
-            }
-            $si_puede = false;
-            foreach($permisos as $permiso){
-                if(($permiso->name) == 'editar_perfil'){
-                    $si_puede = true;
-                }
-            }
-
-            if($si_puede) {// Si el usuario posee los permisos necesarios continua con la acción
+            if($usuario_actual->can('editar_perfil')) { // Si el usuario posee los permisos necesarios continua con la acción
 
                 $data['errores'] = '';
                 $data['datos'] = Participante::where('id_usuario', '=', $usuario_actual->id)->get(); // Se obtienen los datos del participante
@@ -119,7 +108,10 @@ class ParticipantesController extends Controller {
     }
 
 	/**
-	 * Store a newly created resource in storage.
+	 * Actualiza los datos de perfil del participante.
+     *
+     * @param   int     $id                     //id del participante
+     * @param   ParticipanteRequest $request    // Se validan los campos ingresados por el usuario antes guardarlos mediante el Request
 	 *
 	 * @return Response
 	 */
@@ -128,20 +120,8 @@ class ParticipantesController extends Controller {
         try {
 
             //Verificación de los permisos del usuario para poder realizar esta acción
-            $permisos = [];
             $usuario_actual = Auth::user();
-            $roles = $usuario_actual->roles()->get();
-            foreach($roles as $rol){
-                $permisos = $rol->perms()->get();
-            }
-            $si_puede = false;
-            foreach($permisos as $permiso){
-                if(($permiso->name) == 'editar_perfil'){
-                    $si_puede = true;
-                }
-            }
-
-            if($si_puede) {  // Si el usuario posee los permisos necesarios continua con la acción
+            if($usuario_actual->can('editar_perfil')) {  // Si el usuario posee los permisos necesarios continua con la acción
 
                 $data['errores'] = '';
                 $usuario = User::find($id); // Se obtienen los datos del participante que se desea editar
@@ -237,7 +217,78 @@ class ParticipantesController extends Controller {
 
 	}
 
-    
+    public function verCursos()
+    {
+        try{
+            //Verificación de los permisos del usuario para poder realizar esta acción
+            $usuario_actual = Auth::user();
+            if($usuario_actual->can('ver_cursos')) {// Si el usuario posee los permisos necesarios continua con la acción
 
+                $data['errores'] = '';
+                $data['cursos'] = [];
+                $data['fechas'] = [];
+                $participante = Participante::where('id_usuario', '=', $usuario_actual->id)->get(); //
+                $data['cursos_'] = ParticipanteCurso::where('id_participante', '=', $participante[0]->id)->get();
+                if ($data['cursos_']->count()) {
+                    foreach ($data['cursos_'] as $index => $curso) {
+                        $cursos  = Curso::where('id', '=', $curso->id_curso)->get();
+                        $data['cursos'][$index] = $cursos;
+                        $data['fechas'][$index] = $curso->created_at;
+                        $tipos = TipoCurso::where('id', '=', $cursos[0]->id_tipo)->get();
+                        $data['tipo_curso'][$index] = $tipos[0]->nombre;
+                    }
+                }
+
+                return view('participantes.ver-cursos', $data);
+
+            }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
+
+                return view('errors.sin_permiso');
+            }
+        }
+        catch (Exception $e) {
+
+            return view('errors.error')->with('error',$e->getMessage());
+        }
+    }
+
+    public function verNotasCurso($id)
+    {
+        try{
+            //Verificación de los permisos del usuario para poder realizar esta acción
+            $usuario_actual = Auth::user();
+            if($usuario_actual->can('ver_notas')) {// Si el usuario posee los permisos necesarios continua con la acción
+
+                $data['errores'] = '';
+//                $data['cursos'] = [];
+//                $data['fechas'] = [];
+//                $participante = Participante::where('id_usuario', '=', $usuario_actual->id)->get(); //
+//                $data['cursos_'] = ParticipanteCurso::where('id_participante', '=', $participante[0]->id)->get();
+//
+//                if ($data['cursos_']->count()) {
+//                    foreach ($data['cursos_'] as $index => $curso) {
+//                        $cursos  = Curso::where('id', '=', $curso->id_curso)->get();
+//                        $data['cursos'][$index] = $cursos;
+//                        $data['fechas'][$index] = $curso->created_at;
+//                        $tipos = TipoCurso::where('id', '=', $cursos[0]->id_tipo)->get();
+//                        $data['tipo_curso'][$index] = $tipos[0]->nombre;
+//                    }
+////                    dd($data['fechas']);
+//                }
+
+
+
+                return view('participantes.notas', $data);
+
+            }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
+
+                return view('errors.sin_permiso');
+            }
+        }
+        catch (Exception $e) {
+
+            return view('errors.error')->with('error',$e->getMessage());
+        }
+    }
 
 }

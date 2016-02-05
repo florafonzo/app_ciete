@@ -37,20 +37,9 @@ class UsuariosController extends Controller {
 		try{
 
             //Verificación de los permisos del usuario para poder realizar esta acción
-            $permisos = [];
             $usuario_actual = Auth::user();
-            $roles = $usuario_actual->roles()->get();
-            foreach($roles as $rol){
-                $permisos = $rol->perms()->get();
-            }
-            $si_puede = false;
-            foreach($permisos as $permiso){
-                if(($permiso->name) == 'ver_usuarios'){
-                    $si_puede = true;
-                }
-            }
 
-            if($si_puede){  // Si el usuario posee los permisos necesarios continua con la acción
+            if($usuario_actual->can('ver_usuarios')) {   // Si el usuario posee los permisos necesarios continua con la acción
 
                 $data['usuarios'] = User::orderBy('id')->get();
                 $data['errores'] = '';
@@ -81,20 +70,9 @@ class UsuariosController extends Controller {
 		try{
 
             //Verificación de los permisos del usuario para poder realizar esta acción
-            $permisos = [];
             $usuario_actual = Auth::user();
-            $roles = $usuario_actual->roles()->get();
-            foreach($roles as $rol){
-                $permisos = $rol->perms()->get();
-            }
-            $si_puede = false;
-            foreach($permisos as $permiso){
-                if(($permiso->name) == 'ver_usuarios'){
-                    $si_puede = true;
-                }
-            }
 
-            if($si_puede){  // Si el usuario posee los permisos necesarios continua con la acción
+            if($usuario_actual->can('crear_usuarios')) {   // Si el usuario posee los permisos necesarios continua con la acción
 
                 //se eliminan los datos guardados en sesion anteriormente
                 Session::forget('nombre');
@@ -135,20 +113,9 @@ class UsuariosController extends Controller {
         try {
 
             //Verificación de los permisos del usuario para poder realizar esta acción
-            $permisos = [];
             $usuario_actual = Auth::user();
-            $roles = $usuario_actual->roles()->get();
-            foreach($roles as $rol){
-                $permisos = $rol->perms()->get();
-            }
-            $si_puede = false;
-            foreach($permisos as $permiso){
-                if(($permiso->name) == 'ver_usuarios'){
-                    $si_puede = true;
-                }
-            }
 
-            if($si_puede){  // Si el usuario posee los permisos necesarios continua con la acción
+            if($usuario_actual->can('crear_usuarios')) {   // Si el usuario posee los permisos necesarios continua con la acción
 
                 $data['errores'] = '';
                 $create = User::create([ //  Se crea el usuario en la tabla Users
@@ -264,20 +231,9 @@ class UsuariosController extends Controller {
 		try{
 
             //Verificación de los permisos del usuario para poder realizar esta acción
-            $permisos = [];
             $usuario_actual = Auth::user();
-            $roles = $usuario_actual->roles()->get();
-            foreach($roles as $rol){
-                $permisos = $rol->perms()->get();
-            }
-            $si_puede = false;
-            foreach($permisos as $permiso){
-                if(($permiso->name) == 'editar_usuarios'){
-                    $si_puede = true;
-                }
-            }
 
-            if($si_puede){  // Si el usuario posee los permisos necesarios continua con la acción
+            if($usuario_actual->can('editar_usuarios')) {  // Si el usuario posee los permisos necesarios continua con la acción
 
                 $data['errores'] = '';
                 $data['es_participante'] = false;
@@ -329,20 +285,9 @@ class UsuariosController extends Controller {
 		try {
 
             //Verificación de los permisos del usuario para poder realizar esta acción
-            $permisos = [];
             $usuario_actual = Auth::user();
-            $roles = $usuario_actual->roles()->get();
-            foreach($roles as $rol){
-                $permisos = $rol->perms()->get();
-            }
-            $si_puede = false;
-            foreach($permisos as $permiso){
-                if(($permiso->name) == 'editar_usuarios'){
-                    $si_puede = true;
-                }
-            }
 
-            if($si_puede) {  // Si el usuario posee los permisos necesarios continua con la acción
+            if($usuario_actual->can('editar_usuarios')) {   // Si el usuario posee los permisos necesarios continua con la acción
 
                 $data['errores'] = '';
                 $usuario = User::find($id); // Se obtienen los datos del usuario que se desea editar
@@ -355,7 +300,6 @@ class UsuariosController extends Controller {
                     }
                     break;
                 }
-
 
                 $email = $request->email;
                 // Se verifica si el correo ingresado es igual al anterior y si no lo es se verifica que no
@@ -520,20 +464,9 @@ class UsuariosController extends Controller {
 		try{
 
             //Verificación de los permisos del usuario para poder realizar esta acción
-            $permisos = [];
             $usuario_actual = Auth::user();
-            $roles = $usuario_actual->roles()->get();
-            foreach($roles as $rol){
-                $permisos = $rol->perms()->get();
-            }
-            $si_puede = false;
-            foreach($permisos as $permiso){
-                if(($permiso->name) == 'ver_usuarios'){
-                    $si_puede = true;
-                }
-            }
 
-            if($si_puede) {  // Si el usuario posee los permisos necesarios continua con la acción
+            if($usuario_actual->can('eliminar_usuarios')) {   // Si el usuario posee los permisos necesarios continua con la acción
 
                 // Se obtienen los datos del usuario que se desea eliminar al igual que los roles que posee
                 $usuario = User::find($id);

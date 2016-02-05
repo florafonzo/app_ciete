@@ -16,7 +16,6 @@
                 <table class="table table-hover">
                     <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Nombre</th>
                         <th>Apellido</th>
                         <th>Email</th>
@@ -29,7 +28,6 @@
                         <tbody>
                         @foreach($usuarios as $user)
                             <tr>
-                                <td>{{ $user->id }}</td>
                                 <td>{{ $user->nombre }}</td>
                                 <td>{{ $user->apellido  }}</td>
                                 <td>{{ $user->email }}</td>
@@ -72,9 +70,11 @@
                         </tbody>
                     @endif
                 </table>
-                <div class="" style="text-align: center;">
-                    <a href="{{URL::to('/')}}/usuarios/create" type="button" class="btn btn-success" >Agregar usuario </a>
-                </div>
+                @if(Entrust::can('crear_uauarios'))
+                    <div class="" style="text-align: center;">
+                        <a href="{{URL::to('/')}}/usuarios/create" type="button" class="btn btn-success" >Agregar usuario </a>
+                    </div>
+                @endif
             </div>
         @endif
     </div>

@@ -61,7 +61,8 @@ Route::get('/direccion', function(){
 //Rutas participante
 Route::get('/participante/perfil','ParticipantesController@verPerfil');
 Route::get('/participante/perfil/editar','ParticipantesController@editarPerfil');
-//Route::get('/participante','ParticipantesController@update');
+Route::get('/participante/cursos','ParticipantesController@verCursos');
+Route::get('/participante/cursos/{id}/notas','ParticipantesController@verNotasCurso');
 Route::resource('/participante','ParticipantesController');
 
 //Route::get('/', 'WelcomeController@index');

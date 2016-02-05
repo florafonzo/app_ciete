@@ -23,21 +23,9 @@ class WebinarsController extends Controller {
 	{
 		try{
 			//Verificación de los permisos del usuario para poder realizar esta acción
-			$permisos = [];
-			$usuario_actual = Auth::user();
-//			dd($usuario_actual);
-			$roles = $usuario_actual->roles()->get();
-			foreach($roles as $rol){
-				$permisos = $rol->perms()->get();
-			}
-			$si_puede = false;
-			foreach($permisos as $permiso){
-				if(($permiso->name) == 'ver_webinars'){
-					$si_puede = true;
-				}
-			}
+            $usuario_actual = Auth::user();
 
-			if($si_puede) {// Si el usuario posee los permisos necesarios continua con la acción
+            if($usuario_actual->can('ver_webinar')) {  // Si el usuario posee los permisos necesarios continua con la acción
 				$data['errores'] = '';
 				$data['webinars'] = Webinar::orderBy('created_at')->get();   // Se obtienen todos los webinars
 
@@ -66,20 +54,9 @@ class WebinarsController extends Controller {
 		try{
 
 			//Verificación de los permisos del usuario para poder realizar esta acción
-			$permisos = [];
-			$usuario_actual = Auth::user();
-			$roles = $usuario_actual->roles()->get();
-			foreach($roles as $rol){
-				$permisos = $rol->perms()->get();
-			}
-			$si_puede = false;
-			foreach($permisos as $permiso){
-				if(($permiso->name) == 'crear_webinars'){
-					$si_puede = true;
-				}
-			}
+            $usuario_actual = Auth::user();
 
-			if($si_puede) {
+            if($usuario_actual->can('crear_webinar')) {  // Si el usuario posee los permisos necesarios continua con la acción
 
 				// Se eliminan los datos guardados en sesion anteriormente
 				Session::forget('nombre');
@@ -118,20 +95,9 @@ class WebinarsController extends Controller {
         try
         {
             //Verificación de los permisos del usuario para poder realizar esta acción
-            $permisos = [];
             $usuario_actual = Auth::user();
-            $roles = $usuario_actual->roles()->get();
-            foreach($roles as $rol){
-                $permisos = $rol->perms()->get();
-            }
-            $si_puede = false;
-            foreach($permisos as $permiso){
-                if(($permiso->name) == 'crear_webinars'){
-                    $si_puede = true;
-                }
-            }
 
-            if($si_puede) { // Si el usuario posee los permisos necesarios continua con la acción
+            if($usuario_actual->can('crear_webinar')) {  // Si el usuario posee los permisos necesarios continua con la acción
                 $data['errores'] = '';
 
                 // Se guardan los datos ingresados por el usuario en sesion pra utilizarlos en caso de que se redirija
@@ -240,19 +206,9 @@ class WebinarsController extends Controller {
 	{
         try{
             //Verificación de los permisos del usuario para poder realizar esta acción
-            $permisos = [];
             $usuario_actual = Auth::user();
-            $roles = $usuario_actual->roles()->get();
-            foreach($roles as $rol){
-                $permisos = $rol->perms()->get();
-            }
-            $si_puede = false;
-            foreach($permisos as $permiso){
-                if(($permiso->name) == 'editar_webinars'){
-                    $si_puede = true;
-                }
-            }
-            if($si_puede) { // Si el usuario posee los permisos necesarios continua con la acción
+
+            if($usuario_actual->can('editar_webinar')) {  // Si el usuario posee los permisos necesarios continua con la acción // Si el usuario posee los permisos necesarios continua con la acción
 
                 $data['errores'] = '';
                 $data['webinars'] = Webinar::find($id); // Se obtiene la información del webinar seleccionado
@@ -285,19 +241,8 @@ class WebinarsController extends Controller {
 //            dd($id);
             //Verificación de los permisos del usuario para poder realizar esta acción
             $usuario_actual = Auth::user();
-            $roles = $usuario_actual->roles()->get();
-            $permisos = [];
-            foreach($roles as $rol){
-                $permisos = $rol->perms()->get();
-            }
 
-            $si_puede = false;
-            foreach($permisos as $permiso){
-                if(($permiso->name) == 'editar_webinars'){
-                    $si_puede = true;
-                }
-            }
-            if($si_puede) { // Si el usuario posee los permisos necesarios continua con la acción
+            if($usuario_actual->can('editar_webinar')) {  // Si el usuario posee los permisos necesarios continua con la acción
                 $data['errores'] = '';
                 $webinar = Webinar::find($id);
 
@@ -377,19 +322,8 @@ class WebinarsController extends Controller {
         try{
             //Verificación de los permisos del usuario para poder realizar esta acción
             $usuario_actual = Auth::user();
-            $roles = $usuario_actual->roles()->get();
-            $permisos = [];
-            foreach($roles as $rol){
-                $permisos = $rol->perms()->get();
-            }
-            $si_puede = false;
-            foreach($permisos as $permiso){
-                if(($permiso->name) == 'eliminar_webinars'){
-                    $si_puede = true;
-                }
-            }
 
-            if($si_puede) { // Si el usuario posee los permisos necesarios continua con la acción
+            if($usuario_actual->can('eliminar_webinar')) {  // Si el usuario posee los permisos necesarios continua con la acción
                 // Se obtienen los datos del webinar que se desea eliminar
                 $webinar = Webinar::find($id);
                 //Se desactiva el webinar

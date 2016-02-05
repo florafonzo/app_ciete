@@ -24,20 +24,9 @@ class RolesController extends Controller {
 	{
 		try{
             //Verificación de los permisos del usuario para poder realizar esta acción
-            $permisos = [];
             $usuario_actual = Auth::user();
-            $roles = $usuario_actual->roles()->get();
-            foreach($roles as $rol){
-                $permisos = $rol->perms()->get();
-            }
-            $si_puede = false;
-            foreach($permisos as $permiso){
-                if(($permiso->name) == 'ver_roles'){
-                    $si_puede = true;
-                }
-            }
 
-            if($si_puede) {// Si el usuario posee los permisos necesarios continua con la acción
+            if($usuario_actual->can('ver_roles')) {    // Si el usuario posee los permisos necesarios continua con la acción
                 $data['errores'] = '';
                 $data['roles'] = Role::orderBy('name')->get();   // Se obtienen todos los roles
 
@@ -70,20 +59,9 @@ class RolesController extends Controller {
         try{
 
             //Verificación de los permisos del usuario para poder realizar esta acción
-            $permisos = [];
             $usuario_actual = Auth::user();
-            $roles = $usuario_actual->roles()->get();
-            foreach($roles as $rol){
-                $permisos = $rol->perms()->get();
-            }
-            $si_puede = false;
-            foreach($permisos as $permiso){
-                if(($permiso->name) == 'crear_roles'){
-                    $si_puede = true;
-                }
-            }
 
-            if($si_puede) {// Si el usuario posee los permisos necesarios continua con la acción
+            if($usuario_actual->can('crear_roles')) { // Si el usuario posee los permisos necesarios continua con la acción
 
                 // Se eliminan los datos guardados en sesion anteriormente
                 Session::forget('nombre');
@@ -116,25 +94,12 @@ class RolesController extends Controller {
      */
 	public function store(RolRequest $request)
 	{
-        //dd('HOLAAAAAA de primero');
         try
         {
-            //dd('ñhdusghduisg');
             //Verificación de los permisos del usuario para poder realizar esta acción
-            $permisos = [];
             $usuario_actual = Auth::user();
-            $roles = $usuario_actual->roles()->get();
-            foreach($roles as $rol){
-                $permisos = $rol->perms()->get();
-            }
-            $si_puede = false;
-            foreach($permisos as $permiso){
-                if(($permiso->name) == 'crear_roles'){
-                    $si_puede = true;
-                }
-            }
 
-            if($si_puede) {// Si el usuario posee los permisos necesarios continua con la acción
+            if($usuario_actual->can('crear_roles')) {   // Si el usuario posee los permisos necesarios continua con la acción
                 $data['errores'] = '';
                 $permisos = $request->permisos; // Permisos seleccionados en el formulario
     //            dd($permisos);
@@ -202,21 +167,9 @@ class RolesController extends Controller {
         try{
 
             //Verificación de los permisos del usuario para poder realizar esta acción
-            $permisos = [];
             $usuario_actual = Auth::user();
-            $roles = $usuario_actual->roles()->get();
-            foreach($roles as $rol){
-                $permisos = $rol->perms()->get();
-            }
-            $si_puede = false;
-            foreach($permisos as $permiso){
-                if(($permiso->name) == 'editar_roles'){
-                    $si_puede = true;
-                }
-            }
 
-            if($si_puede) {// Si el usuario posee los permisos necesarios continua con la acción
-    //            dd($id );
+            if($usuario_actual->can('editar_roles')) {   // Si el usuario posee los permisos necesarios continua con la acción
                 $data['errores'] = '';
                 $data['roles'] = Role::find($id);   // Se ontienen los datos del rol que se desea editar
                 $data['permisos'] = Permission::all()->lists('display_name','id');  // Se obtienen todos los permisos guardados en base de datos
@@ -248,20 +201,9 @@ class RolesController extends Controller {
         try{
 
             //Verificación de los permisos del usuario para poder realizar esta acción
-            $permisos = [];
             $usuario_actual = Auth::user();
-            $roles = $usuario_actual->roles()->get();
-            foreach($roles as $rol){
-                $permisos = $rol->perms()->get();
-            }
-            $si_puede = false;
-            foreach($permisos as $permiso){
-                if(($permiso->name) == 'editar_roles'){
-                    $si_puede = true;
-                }
-            }
 
-            if($si_puede) {// Si el usuario posee los permisos necesarios continua con la acción
+            if($usuario_actual->can('editar_roles')) {  // Si el usuario posee los permisos necesarios continua con la acción
                 $data['errores'] = '';
                 $roles = Role::findOrFail($id);   // Se obtienen los datos del rol seleccionado
                 $permisos = $request->permisos;     // Se obtienen los permisos seleccionados por el usuario en el formulario
@@ -333,43 +275,51 @@ class RolesController extends Controller {
 	public function destroy($id)
 	{
         try{
+            //Verificación de los permisos del usuario para poder realizar esta acción
+            $usuario_actual = Auth::user();
 
-            $rol = Role::find($id);
-            $permisos = $rol->perms()->get();
+            if($usuario_actual->can('eliminar_roles')) {    // Si el usuario posee los permisos necesarios continua con la acción
+                $rol = Role::find($id);
+                $permisos = $rol->perms()->get();
 
-//           dd($roles[0]->name );
-            if (($rol->name) == 'admin'){
-                $data['errores'] = "El rol Administrador no puede ser eliminado";
+                if (($rol->name) == 'admin') {
+                    $data['errores'] = "El rol Administrador no puede ser eliminado";
 
-                return view ('roles.roles', $data);
+                    return view('roles.roles', $data);
 
-            }elseif(($rol->name) == 'coordinador'){
-                $data['errores'] = "El rol Coordinador no puede ser eliminado";
+                } elseif (($rol->name) == 'coordinador') {
+                    $data['errores'] = "El rol Coordinador no puede ser eliminado";
 
-                return view ('roles.roles', $data);
+                    return view('roles.roles', $data);
 
-            }elseif(($rol->name) == 'participante') {
-                $data['errores'] = "El rol Participante no puede ser eliminado";
+                } elseif (($rol->name) == 'participante') {
+                    $data['errores'] = "El rol Participante no puede ser eliminado";
+
+                    return view('roles.roles', $data);
+
+                } elseif (($rol->name) == 'profesor') {
+                    $data['errores'] = "El rol Profesor no puede ser eliminado";
+
+                    return view('roles.roles', $data);
+                }
+
+                DB::table('permission_role')->where('role_id', '=', $id)->delete();
+                Role::destroy($id);
+
+                $data['roles'] = Role::all();
+                $data['errores'] = '';
+
+                foreach ($data['roles'] as $rol) {
+                    $rol['permisos'] = $rol->perms()->get();
+                }
 
                 return view('roles.roles', $data);
 
-            }elseif(($rol->name) == 'profesor') {
-                $data['errores'] = "El rol Profesor no puede ser eliminado";
+            }else{  // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
 
-                return view('roles.roles', $data);
+                return view('errors.sin_permiso');
+
             }
-
-            DB::table('permission_role')->where('role_id', '=', $id)->delete();
-            Role::destroy($id);
-
-            $data['roles'] = Role::all();
-            $data['errores']='';
-
-            foreach($data['roles'] as $rol){
-                $rol['permisos'] = $rol->perms()->get();
-            }
-
-            return view ('roles.roles', $data);
         }
         catch (Exception $e) {
 
