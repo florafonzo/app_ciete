@@ -70,7 +70,7 @@
                         </tbody>
                     @endif
                 </table>
-                @if(Entrust::can('crear_uauarios'))
+                @if(Entrust::can('crear_usuarios'))
                     <div class="" style="text-align: center;">
                         <a href="{{URL::to('/')}}/usuarios/create" type="button" class="btn btn-success" >Agregar usuario </a>
                     </div>

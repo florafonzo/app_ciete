@@ -74,8 +74,8 @@ class PermisionsSeeder extends Seeder {
         $activar_curso->save();
 
         $crear_usuarios = new Permission();
-        $crear_usuarios->name = 'ver_notas';
-        $crear_usuarios->display_name = 'ver notas';
+        $crear_usuarios->name = 'ver_notas_part';
+        $crear_usuarios->display_name = 'ver notas participantes';
         $crear_usuarios->save();
 
         $crear_usuarios = new Permission();
@@ -133,8 +133,20 @@ class PermisionsSeeder extends Seeder {
         $editar_perfil->display_name = 'editar perfil';
         $editar_perfil->save();
 
+        $ver_cursos = new Permission();
+        $ver_cursos->name = 'ver_cursos_part';
+        $ver_cursos->display_name = 'ver cursos participantes';
+        $ver_cursos->save();
+
+        $ver_cursos = new Permission();
+        $ver_cursos->name = 'ver_cursos_profe';
+        $ver_cursos->display_name = 'ver cursos profesores';
+        $ver_cursos->save();
+
+        $ver_nota = new Permission();
+        $ver_nota->name = 'ver_notas_profe';
+        $ver_nota->display_name = 'ver notas profesores';
+        $ver_nota->save();
     }
-
-
 
 }

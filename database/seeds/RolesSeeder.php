@@ -48,14 +48,14 @@ class RolesSeeder extends Seeder {
 
         $permisos = Permission::all();
         foreach($permisos as $permiso) {
-            if (($permiso->name == 'ver_lista_cursos') || ($permiso->name == 'crear_cursos') || ($permiso->name == 'editar_cursos') || ($permiso->name == 'eliminar_cursos') || ($permiso->name == 'ver_notas') || ($permiso->name == 'agregar_notas') || ($permiso->name == 'editar_notas') || ($permiso->name == 'eliminar_notas') || ($permiso->name == 'listar_alumnos')) {
+            if (($permiso->name == 'ver_lista_cursos') || ($permiso->name == 'crear_cursos') || ($permiso->name == 'editar_cursos') || ($permiso->name == 'eliminar_cursos') || ($permiso->name == 'ver_notas_profe') || ($permiso->name == 'agregar_notas') || ($permiso->name == 'editar_notas') || ($permiso->name == 'eliminar_notas') || ($permiso->name == 'listar_alumnos')) {
                 $coord->attachPermission($permiso);
             }
 
-            if (($permiso->name == 'ver_notas') || ($permiso->name == 'agregar_notas') || ($permiso->name == 'editar_notas') || ($permiso->name == 'eliminar_notas') || ($permiso->name == 'listar_alumnos')) {
+            if (($permiso->name == 'ver_notas_profe') || ($permiso->name == 'agregar_notas') || ($permiso->name == 'editar_notas') || ($permiso->name == 'eliminar_notas') || ($permiso->name == 'listar_alumnos')) {
                 $profesor->attachPermission($permiso);
             }
-            if ($permiso->name == 'obtener_certificado') {
+            if (($permiso->name == 'obtener_certificado') || ($permiso->name == 'ver_perfil') || ($permiso->name == 'editar_perfil') || ($permiso->name == 'ver_notas_part')) {
                 $participante->attachPermission($permiso);
             }
 

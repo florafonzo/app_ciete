@@ -89,7 +89,7 @@ $(document).ready(function() {
 //-------------------------------------------------------------------------//
 
 // ------ FadeOut para desaparecer notificaciones en un tiempo estimado ------ //
-    $('#flash_success').fadeToggle(500);
+    $('#flash_success').fadeToggle(2000);
 
 //--------------------------------------------
 

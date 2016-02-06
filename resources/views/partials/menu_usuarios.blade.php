@@ -47,7 +47,7 @@
                         <a style="text-decoration:none;" href="{{URL::to('/participante/perfil/editar')}}"> Editar perfil </a>
                     </li>
                 @endif
-                @if(Entrust::can('ver_cursos'))
+                @if(Entrust::can('ver_cursos_part'))
                     <li class="menu_usuarios @if(Request::is('participante/cursos')) active @endif">
                         <a style="text-decoration:none;" href="{{URL::to('/participante/cursos')}}"> Cursos inscritos </a>
                     </li>
@@ -62,15 +62,9 @@
                         Notas
                     </li>
                 @endif
-                @if(Entrust::can('ver_lista'))
+                @if(Entrust::can('listar_alumnos'))
                     <li>
                         Listas de participantes
-                    </li>
-                @endif
-
-                @if(Entrust::can('ver_historial'))
-                    <li>
-                        <a href="#"> Historial de cursos </a>
                     </li>
                 @endif
                 @if(Entrust::can('ver_certificados'))

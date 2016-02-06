@@ -222,7 +222,7 @@ class ParticipantesController extends Controller {
         try{
             //Verificación de los permisos del usuario para poder realizar esta acción
             $usuario_actual = Auth::user();
-            if($usuario_actual->can('ver_cursos')) {// Si el usuario posee los permisos necesarios continua con la acción
+            if($usuario_actual->can('ver_cursos_part')) {// Si el usuario posee los permisos necesarios continua con la acción
 
                 $data['errores'] = '';
                 $data['cursos'] = [];
@@ -257,7 +257,7 @@ class ParticipantesController extends Controller {
         try{
             //Verificación de los permisos del usuario para poder realizar esta acción
             $usuario_actual = Auth::user();
-            if($usuario_actual->can('ver_notas')) {// Si el usuario posee los permisos necesarios continua con la acción
+            if($usuario_actual->can('ver_notas_part')) {// Si el usuario posee los permisos necesarios continua con la acción
 
                 $data['errores'] = '';
 //                $data['cursos'] = [];

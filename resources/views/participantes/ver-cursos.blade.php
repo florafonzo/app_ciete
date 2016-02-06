@@ -36,10 +36,8 @@
                                 <td>{{ $curso[0]->fecha_fin  }}</td>
                                 <td>
                                     @if(Entrust::can('ver_notas'))
-                                        {!! Form::open(array('method' => 'GET','route' => array('cursos.edit', $curso[0]->id))) !!}
-                                        {!!Form::open(["url"=>"participante/cursos/".$curso->id."/notas",  "method" => "GET" )!!}
-                                        {{--{!! Form::button('<span class="glyphicon glyphicon-eye-open" data-toggle="tooltip" data-placement="bottom" title="Editar" aria-hidden="true"></span>', array('type' => 'submit', 'class' => 'btn btn-info'))!!}--}}
-                                            <button type="submit" class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="Editar">
+                                        {!!Form::open(["url"=>"participante/cursos/".$curso[0]->id."/notas",  "method" => "GET" ])!!}
+                                            <button type="submit" class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="Notas">
                                                 <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
                                             </button>
                                         {!! Form::close() !!}
