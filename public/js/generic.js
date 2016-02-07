@@ -128,17 +128,78 @@ $(document).ready(function() {
         var estado_id = e.target.value;
             //alert(estado_id);
         $.ajax({
-            url:        "/direccion?estado_id="+estado_id,
+            url:        "/ciudad/"+estado_id,
             dataType:   "json",
             success:    function(data){
-                console.log(data);
                 $('#ciudad').empty();
                 $.each(data, function(index, ciudadObj){
-                    $('#ciudad').append('<option value="'+ciudadObj.capital+'">'+ciudadObj.capital+'</option>');
+                //console.log(ciudadObj.ciudad);
+
+                    $('#ciudad').append('<option value="'+ciudadObj.ciudad+'">'+ciudadObj.ciudad+'</option>');
                     $(".localidad1").show();
-                    //$('#ciudad').append("{!! Form::select('id_ciudad',"+ ciudadObj.capital+", null, array('required', 'class' => 'form-control', 'id'=>'id_ciudad'))!!}");
                 });
+            }/*,
+            error: function(jqXHR, textStatus, errorThrown) {
+              console.log(textStatus, errorThrown);
             }
+            error: function (request, status, error) {
+                console.log(request.responseText);
+                //alert(request.responseText);
+            }*/
+
+        });
+
+        $.ajax({
+            url:        "/municipio/"+estado_id,
+            dataType:   "json",
+            success:    function(data){
+                $('#municipio').empty();
+                $.each(data, function(index, ciudadObj){
+                //console.log(ciudadObj.ciudad);
+
+                    $('#municipio').append('<option value="'+ciudadObj.municipio+'">'+ciudadObj.municipio+'</option>');
+                    $(".localidad2").show();
+                });
+            }/*,
+            error: function(jqXHR, textStatus, errorThrown) {
+              console.log(textStatus, errorThrown);
+            }
+            error: function (request, status, error) {
+                console.log(request.responseText);
+                //alert(request.responseText);
+            }*/
+
+        });
+
+
+    });
+
+ $('#municipio').on('change', function(e) {
+
+//            alert('holaaaas');
+        //console.log(e);
+        var municipio_id = e.target.value;
+        //alert(municipio_id);
+        $.ajax({
+            url:        "/parroquia/"+municipio_id,
+            dataType:   "json",
+            success:    function(data){
+                $('#parroquia').empty();
+                $.each(data, function(index, ciudadObj){
+                //console.log(ciudadObj.ciudad);
+
+                    $('#parroquia').append('<option value="'+ciudadObj.parroquia+'">'+ciudadObj.parroquia+'</option>');
+                    $(".localidad3").show();
+                });
+            }/*,
+            error: function(jqXHR, textStatus, errorThrown) {
+              console.log(textStatus, errorThrown);
+            }
+            error: function (request, status, error) {
+                console.log(request.responseText);
+                //alert(request.responseText);
+            }*/
+
         });
 
     });

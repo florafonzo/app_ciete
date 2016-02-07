@@ -50,12 +50,35 @@ Route::get('Contacto','InformacionController@getcontacto');
 Route::post('Contacto','InformacionController@postContacto');
 
 //Ruta dirección participantes
-Route::get('/direccion', function(){
-
-    $id = Input::get('id_est');
-    $ciudades = App\Models\Ciudad::where('id_estado', '=', '1' )->get();
+Route::get('/ciudad/{id}', function(){
+	$url = Request::url();
+	$porciones = explode("ciudad/", $url);
+	$id = $porciones[1];
+    $ciudades = App\Models\Ciudad::where('id_estado', '=', $id )->get();
+    //$municipios = App\Models\Municipio::where('id_estado', '=', $id )->get();
 
     return Response::json($ciudades);
+});
+
+Route::get('/municipio/{id}', function(){
+	$url = Request::url();
+	$porciones = explode("municipio/", $url);
+	$id = $porciones[1];
+    $municipios = App\Models\Municipio::where('id_estado', '=', $id )->get();
+
+    return Response::json($municipios);
+});
+
+Route::get('/parroquia/{id}', function(){
+	$url = Request::url();
+	$porciones = explode("parroquia/", $url);
+	$municipio = $porciones[1];
+	echo "Municipio: ".$municipio."  ya";
+	$municipio = App\Models\Municipio::where('municipio', '=', $municipio )->get();
+
+    $parroquias = App\Models\Parroquia::where('id_municipio', '=', $municipio->id )->get();
+
+    return Response::json($parroquias);
 });
 
 //Rutas participante

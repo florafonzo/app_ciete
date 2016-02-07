@@ -55,7 +55,7 @@ class RolesSeeder extends Seeder {
             if (($permiso->name == 'ver_notas_profe') || ($permiso->name == 'agregar_notas') || ($permiso->name == 'editar_notas') || ($permiso->name == 'eliminar_notas') || ($permiso->name == 'listar_alumnos')) {
                 $profesor->attachPermission($permiso);
             }
-            if (($permiso->name == 'obtener_certificado') || ($permiso->name == 'ver_perfil') || ($permiso->name == 'editar_perfil') || ($permiso->name == 'ver_notas_part')) {
+            if (($permiso->name == 'obtener_certificado') || ($permiso->name == 'ver_perfil') || ($permiso->name == 'editar_perfil') || ($permiso->name == 'ver_notas_part') || ($permiso->name == 'ver_cursos_part')) {
                 $participante->attachPermission($permiso);
             }
 

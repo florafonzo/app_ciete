@@ -35,7 +35,7 @@
                                 <td>{{ $curso[0]->fecha_inicio  }}</td>
                                 <td>{{ $curso[0]->fecha_fin  }}</td>
                                 <td>
-                                    @if(Entrust::can('ver_notas'))
+                                    @if(Entrust::can('ver_notas_part'))
                                         {!!Form::open(["url"=>"participante/cursos/".$curso[0]->id."/notas",  "method" => "GET" ])!!}
                                             <button type="submit" class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="Notas">
                                                 <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>

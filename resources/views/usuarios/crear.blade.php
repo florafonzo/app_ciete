@@ -123,7 +123,12 @@
                         <div class="form-group">
                             {!!Form::label('estado', 'Estado:', array('class' => 'col-md-4 control-label'))!!}
                             <div class="col-sm-8">
-                                {!! Form::select('id_est', $estados, null, array( 'class' => 'form-control', 'id'=>'id_est'))!!}
+                                {!! Form::select('id_estado', $estados, null, array( 'class' => 'form-control', 'id'=>'id_est'))!!}
+                                <!--<select class="form-control" id="id_est" name="id_est">
+                                    @foreach ($estados as $index=>$estado)
+                                        <option value="{{$index}}">{{$estado}}</option>
+                                    @endforeach 
+                                </select>-->
                             </div>
                         </div>
                     </div>
@@ -135,6 +140,26 @@
 
                                 </select>
                                 {{--{!! Form::select('id_ciudad', 'Ciudad', null, array('required', 'class' => 'form-control', 'id'=>'id_ciudad'))!!}--}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group localidad2">
+                        <div class="form-group">
+                            {!!Form::label('municipio', 'Municipio:', array('class' => 'col-md-4 control-label'))!!}
+                            <div class="col-sm-8">
+                                <select class="form-control" id="municipio">
+
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group localidad3">
+                        <div class="form-group">
+                            {!!Form::label('parroquia', 'Parroquia:', array('class' => 'col-md-4 control-label'))!!}
+                            <div class="col-sm-8">
+                                <select class="form-control" id="parroquia">
+
+                                </select>
                             </div>
                         </div>
                     </div>
