@@ -73,10 +73,8 @@ Route::get('/parroquia/{id}', function(){
 	$url = Request::url();
 	$porciones = explode("parroquia/", $url);
 	$municipio = $porciones[1];
-	echo "Municipio: ".$municipio."  ya";
-	$municipio = App\Models\Municipio::where('municipio', '=', $municipio )->get();
-
-    $parroquias = App\Models\Parroquia::where('id_municipio', '=', $municipio->id )->get();
+	
+    $parroquias = App\Models\Parroquia::where('id_municipio', '=', $municipio )->get();
 
     return Response::json($parroquias);
 });

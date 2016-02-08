@@ -64,8 +64,13 @@
                     <div class="form-group">
                         {!!Form::label('nombre', '¿El nuevo usuario es Participante? ', array( 'class' => 'col-md-4 control-label')) !!}
                         <div class="col-sm-8">
-                            {!! Form::radio('es_participante', 'si', false) !!} Si <br/>
-                            {!! Form::radio('es_participante', 'no', true) !!} No
+                            @if($es_participante)
+                                {!! Form::radio('es_participante', 'si', true) !!} Si <br/>
+                                {!! Form::radio('es_participante', 'no', false) !!} No
+                            @else
+                                {!! Form::radio('es_participante', 'si', false) !!} Si <br/>
+                                {!! Form::radio('es_participante', 'no', true) !!} No
+                            @endif    
                         </div>
                     </div>
                     <div class="form-group">
@@ -114,8 +119,13 @@
                     </div>
                     <div class="form-group mostrar">
                         {!!Form::label('pais', 'Pais: ', array('class' => 'col-md-4 control-label'))!!}
-                        <div class="col-sm-8">
-                            {!! Form::select('id_pais', $pais, null, array( 'class' => 'form-control', 'id'=>'id_pais'))!!}
+                        <div class="col-sm-8 pais">
+                            <select class="form-control " id="id_pais" name="id_pais">
+                                <option value="0"  selected="selected"> Seleccione un pais</option>
+                                @foreach ($paises as $index=>$pais)
+                                    <option value="{{$index}}">{{$pais}}</option>
+                                @endforeach 
+                            </select>
                         </div>
                     </div>
 
@@ -123,12 +133,13 @@
                         <div class="form-group">
                             {!!Form::label('estado', 'Estado:', array('class' => 'col-md-4 control-label'))!!}
                             <div class="col-sm-8">
-                                {!! Form::select('id_estado', $estados, null, array( 'class' => 'form-control', 'id'=>'id_est'))!!}
-                                <!--<select class="form-control" id="id_est" name="id_est">
+                                <!--{!! Form::select('id_estado', $estados, null, array( 'class' => 'form-control', 'id'=>'id_est'))!!}-->
+                                <select class="form-control col-sm-8" id="id_est" name="id_est">
+                                    <option value="0"  selected="selected"> Seleccione un estado</option>
                                     @foreach ($estados as $index=>$estado)
                                         <option value="{{$index}}">{{$estado}}</option>
                                     @endforeach 
-                                </select>-->
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -136,10 +147,9 @@
                         <div class="form-group">
                             {!!Form::label('ciudad', 'Ciudad:', array('class' => 'col-md-4 control-label'))!!}
                             <div class="col-sm-8">
-                                <select class="form-control" id="ciudad">
+                                <select class="form-control" id="ciudad" name="ciudad">
 
-                                </select>
-                                {{--{!! Form::select('id_ciudad', 'Ciudad', null, array('required', 'class' => 'form-control', 'id'=>'id_ciudad'))!!}--}}
+                                </select>                            
                             </div>
                         </div>
                     </div>
@@ -147,7 +157,7 @@
                         <div class="form-group">
                             {!!Form::label('municipio', 'Municipio:', array('class' => 'col-md-4 control-label'))!!}
                             <div class="col-sm-8">
-                                <select class="form-control" id="municipio">
+                                <select class="form-control" id="municipio" name="municipio">
 
                                 </select>
                             </div>
@@ -157,7 +167,7 @@
                         <div class="form-group">
                             {!!Form::label('parroquia', 'Parroquia:', array('class' => 'col-md-4 control-label'))!!}
                             <div class="col-sm-8">
-                                <select class="form-control" id="parroquia">
+                                <select class="form-control" id="parroquia" name="parroquia">
 
                                 </select>
                             </div>
@@ -190,31 +200,31 @@
                     <div class="form-group mostrar">
                         {!!Form::label('email_alternativo', 'Correo electrónico alternativo: ',  array( 'class' => 'col-md-4 control-label'))!!}
                         <div class="col-sm-8">
-                            {!! Form::email('email_alternativo', '', array('class' => 'form-control'))!!}
+                            {!! Form::email('email_alternativo', Session::get('email_alternativo'), array('class' => 'form-control'))!!}
                         </div>
                     </div>
                     <div class="form-group mostrar" id="mostrar">
                         {!!Form::label('twitter', 'Usuario twitter: ',  array( 'class' => 'col-md-4 control-label'))!!}
                         <div class="col-sm-8">
-                            {!! Form::text('twitter', '', array('class' => 'form-control'))!!}
+                            {!! Form::text('twitter', Session::get('twitter'), array('class' => 'form-control'))!!}
                         </div>
                     </div>
                     <div class="form-group mostrar" id="mostrar">
                         {!!Form::label('ocupacion', 'Ocupacion: ',  array( 'class' => 'col-md-4 control-label'))!!}
                         <div class="col-sm-8">
-                            {!! Form::text('ocupacion','', array('class' => 'form-control'))!!}
+                            {!! Form::text('ocupacion',Session::get('ocupacion'), array('class' => 'form-control'))!!}
                         </div>
                     </div>
                     <div class="form-group mostrar" id="mostrar">
                         {!!Form::label('titulo', 'Titulo de pregrado: ',  array( 'class' => 'col-md-4 control-label'))!!}
                         <div class="col-sm-8">
-                            {!! Form::text('titulo', '', array('class' => 'form-control'))!!}
+                            {!! Form::text('titulo', Session::get('titulo'), array('class' => 'form-control'))!!}
                         </div>
                     </div>
                     <div class="form-group mostrar" id="mostrar">
                         {!!Form::label('univ', 'Universidad dónde obtuvo el título: ',  array( 'class' => 'col-md-4 control-label'))!!}
                         <div class="col-sm-8">
-                            {!! Form::text('univ', '', array('class' => 'form-control'))!!}
+                            {!! Form::text('univ', Session::get('univ'), array('class' => 'form-control'))!!}
                         </div>
                     </div>
 

@@ -95,9 +95,11 @@ $(document).ready(function() {
 
 
 // ------ Mostrar estado, ciudad, municipio y parroquia si el País es igual a Venezuela ------//
-
+    $('.pais option:eq(0)').prop('selected', true)
     $(".localidad").hide();
     $(".localidad1").hide();
+    $(".localidad2").hide();
+    $(".localidad3").hide();
 
     $("#id_pais" ).change(function() {
         var pais = $("#id_pais :selected").text();
@@ -109,22 +111,9 @@ $(document).ready(function() {
         }
     });
 
-    //$("#id_est").change(function(){
-    //    var est= $("#id_est :selected").text();
-    //    $.ajax({
-    //        type: 'POST',
-    //        url: "usuarios.show",
-    //        data: est,
-    //        success: function(data) {
-    //            alert(data);
-    //        }
-    //    })
-    //});
 
     $('#id_est').on('change', function(e) {
 
-//            alert('holaaaas');
-        //console.log(e);
         var estado_id = e.target.value;
             //alert(estado_id);
         $.ajax({
@@ -132,10 +121,10 @@ $(document).ready(function() {
             dataType:   "json",
             success:    function(data){
                 $('#ciudad').empty();
+                $('#ciudad').append('<option value="0"  selected="selected"> Seleccione una ciudad</option>');
                 $.each(data, function(index, ciudadObj){
                 //console.log(ciudadObj.ciudad);
-
-                    $('#ciudad').append('<option value="'+ciudadObj.ciudad+'">'+ciudadObj.ciudad+'</option>');
+                    $('#ciudad').append('<option value="'+ciudadObj.id_ciudad+'">'+ciudadObj.ciudad+'</option>');
                     $(".localidad1").show();
                 });
             }/*,
@@ -154,10 +143,10 @@ $(document).ready(function() {
             dataType:   "json",
             success:    function(data){
                 $('#municipio').empty();
+                $('#municipio').append('<option value="0"  selected="selected"> Seleccione un municipio</option>');
                 $.each(data, function(index, ciudadObj){
                 //console.log(ciudadObj.ciudad);
-
-                    $('#municipio').append('<option value="'+ciudadObj.municipio+'">'+ciudadObj.municipio+'</option>');
+                    $('#municipio').append('<option value="'+ciudadObj.id_municipio+'">'+ciudadObj.municipio+'</option>');
                     $(".localidad2").show();
                 });
             }/*,
@@ -178,6 +167,7 @@ $(document).ready(function() {
 
 //            alert('holaaaas');
         //console.log(e);
+        $(".localidad3").show();
         var municipio_id = e.target.value;
         //alert(municipio_id);
         $.ajax({
@@ -185,11 +175,11 @@ $(document).ready(function() {
             dataType:   "json",
             success:    function(data){
                 $('#parroquia').empty();
+                $('#parroquia').append('<option value="0"  selected="selected"> Seleccione una parroquia</option>');
                 $.each(data, function(index, ciudadObj){
                 //console.log(ciudadObj.ciudad);
-
-                    $('#parroquia').append('<option value="'+ciudadObj.parroquia+'">'+ciudadObj.parroquia+'</option>');
-                    $(".localidad3").show();
+                    $('#parroquia').append('<option value="'+ciudadObj.id_parroquia+'">'+ciudadObj.parroquia+'</option>');
+                    
                 });
             }/*,
             error: function(jqXHR, textStatus, errorThrown) {

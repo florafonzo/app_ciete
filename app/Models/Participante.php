@@ -16,7 +16,7 @@ class Participante extends Model {
      *
      * @var array
      */
-    protected $fillable = ['id_usuario','id_direccion','nombre','apellido','documento_identidad','foto', 'telefono', 'celular', 'correo_alternativo', 'twitter', 'ocupacion', 'titulo_pregrado','universidad'];
+    protected $fillable = ['id_usuario','nombre','apellido','documento_identidad','foto', 'telefono', 'direccion','celular', 'correo_alternativo', 'twitter', 'ocupacion', 'titulo_pregrado','universidad'];
 
     public function user(){
         return $this->belongsTo('App\User','id_usuario');

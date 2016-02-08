@@ -81,11 +81,17 @@ class UsuariosController extends Controller {
                 Session::forget('documento_identidad');
                 Session::forget('telefono');
                 Session::forget('celular');
+                Session::forget('email_alternativo');
+                Session::forget('twitter');
+                Session::forget('ocupacion');
+                Session::forget('titulo');
+                Session::forget('univ');
 
                 $data['roles'] = Role::all()->lists('display_name', 'id');
-                $data['pais'] = Pais::all()->lists('nombre_mostrar', 'id');
+                $data['paises'] = Pais::all()->lists('nombre_mostrar', 'id');
                 $data['estados'] = Estado::all()->lists('estado','id_estado');
                 $data['errores'] = '';
+                $data['es_participante'] = false;
 
                 return view('usuarios.crear', $data);
 
@@ -116,8 +122,10 @@ class UsuariosController extends Controller {
             $usuario_actual = Auth::user();
 
             if($usuario_actual->can('crear_usuarios')) {   // Si el usuario posee los permisos necesarios continua con la acción
-
+                $data['es_participante'] = false;
                 $data['errores'] = '';
+                $dir = "";
+                //dd("pais: ".Input::get('id_pais')." ciudad: ".Input::get('ciudad')."  Municipio: ".Input::get('municipio')."  parr: ".Input::get('parroquia'));
                 $create = User::create([ //  Se crea el usuario en la tabla Users
                     'nombre' => $request->nombre,
                     'apellido' => $request->apellido,
@@ -135,8 +143,66 @@ class UsuariosController extends Controller {
                     $imagen = '';
                 }
 
-                if (($request->es_participante) == 'si') {  // Se verifica si el usuario es del tipo Perticipante y se crea en la tabla Participantes
 
+                if (($request->es_participante) == 'si') {  // Se verifica si el usuario es del tipo Perticipante y se crea en la tabla Participantes
+                    $pais = Input::get('id_pais');
+                    if ($pais == 231) {
+                        $estado = Input::get('id_est');
+                        $ciudad = Input::get('ciudad');
+                        $municipio = Input::get('municipio');
+                        $parroquia = Input::get('parroquia');
+                        if (($estado  == 0) || ($ciudad == 0) || ($municipio == 0) || ($parroquia == 0)) {
+                            DB::table('users')->where('id', '=', $usuario->id)->delete();
+                            $data['errores'] = "Debe completar todos los datos de la direecion (Estado, Ciudad, Municipio y Parroquia)";
+                            $data['roles'] = Role::all()->lists('display_name', 'id');
+                            $data['paises'] = Pais::all()->lists('nombre_mostrar', 'id');
+                            $data['estados'] = Estado::all()->lists('estado','id_estado');
+                            $data['es_participante'] = true;
+                            // Se guardan los datos ingresados por el usuario en sesion pra utilizarlos en caso de que se redirija
+                            // al usuari al formulario por algún error y no se pierdan los datos ingresados
+                            Session::set('nombre', $request->nombre);
+                            Session::set('apellido', $request->apellido);
+                            Session::set('email', $request->email);
+                            Session::set('documento_identidad', $request->documento_identidad);
+                            Session::set('telefono', $request->telefono);
+                            Session::set('celular', $request->celular);
+                            Session::set('email_alternativo', $request->email_alternativo);
+                            Session::set('twitter', $request->twitter);
+                            Session::set('ocupacion', $request->ocupacion);
+                            Session::set('titulo', $request->celular);
+                            Session::set('univ', $request->univ);
+
+                            return view('usuarios.crear', $data);
+                        }
+                        $dir = $pais.'-'.$estado.'-'.$ciudad.'-'.$municipio.'-'.$parroquia;
+                        
+                    }elseif ($pais == 0) {
+                        DB::table('users')->where('id', '=', $usuario->id)->delete();
+                        $data['errores'] = "Debe completar el campo pais";
+                        $data['roles'] = Role::all()->lists('display_name', 'id');
+                        $data['paises'] = Pais::all()->lists('nombre_mostrar', 'id');
+                        $data['estados'] = Estado::all()->lists('estado','id_estado');
+                        $data['es_participante'] = true;
+                        // Se guardan los datos ingresados por el usuario en sesion pra utilizarlos en caso de que se redirija
+                        // al usuari al formulario por algún error y no se pierdan los datos ingresados
+                        Session::set('nombre', $request->nombre);
+                        Session::set('apellido', $request->apellido);
+                        Session::set('email', $request->email);
+                        Session::set('documento_identidad', $request->documento_identidad);
+                        Session::set('telefono', $request->telefono);
+                        Session::set('celular', $request->celular);
+                        Session::set('email_alternativo', $request->email_alternativo);
+                        Session::set('twitter', $request->twitter);
+                        Session::set('ocupacion', $request->ocupacion);
+                        Session::set('titulo', $request->celular);
+                        Session::set('univ', $request->univ);
+
+                        return view('usuarios.crear', $data);
+                    }else{
+                        $dir = $pais;
+                    }
+
+                    //dd("direccion: ".$dir);
                     $create2 = Participante::findOrNew($request->id);
                     $create2->id_usuario = $usuario->id;
                     $create2->nombre = $request->nombre;
@@ -144,6 +210,7 @@ class UsuariosController extends Controller {
                     $create2->documento_identidad = $request->documento_identidad;
                     $create2->foto = $imagen;
                     $create2->telefono = $request->telefono;
+                    $create2->direccion = $dir;
                     $create2->celular = $request->celular;
                     $create2->correo_alternativo = $request->email_alternativo;
                     $create2->twitter = Input::get('twitter');
@@ -153,6 +220,7 @@ class UsuariosController extends Controller {
 
                 } elseif (($request->es_participante) == 'no') {    //  Si no es Perticipante entonces es Profesor
                     // Se verifica que el usuario haya seleccionado que roles tendrá el usuario que se está creando
+
                     if (empty(Input::get('id_rol'))) {  // Si no ha seleccionado ningún rol, se redirige al formulario
 
                         DB::table('users')->where('id', '=', $usuario->id)->delete();
@@ -210,7 +278,6 @@ class UsuariosController extends Controller {
             }else{   // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
 
                 return view('errors.sin_permiso');
-
             }
 
         }
@@ -242,13 +309,25 @@ class UsuariosController extends Controller {
                 $userRoles = $data['usuarios']->roles()->get(); // Se obtienen los roles del usuario que se desea editar
                 $data['rol'] = $userRoles;
                 $data['roles'] = Role::all()->lists('display_name', 'id');
-                $data['pais'] = Pais::all()->lists('pais', 'id');
+                $data['paises'] = Pais::all()->lists('pais', 'id');
                 $data['estados'] = Estado::all()->lists('estado','id_estado');
 
                 foreach ($userRoles as $role) { //  Se verifica el rol del usuario que se desea editar (si es Participante o Profesor) y se obtienen su datos
                     if (($role->name) == 'participante') {
                         $data['es_participante'] = true;
                         $data['datos_usuario'] = DB::table('participantes')->where('id_usuario', '=', $usuario->id)->first();
+                        $direccion = $data['datos_usuario']->direccion;
+                        $dir = explode("-", $direccion);
+                        $data['pais'] = $dir[0];
+                        $pos = strpos($direccion, '-');
+                        if ($pos === true) {
+                            dd("es VE");
+                            $data['estado'] = $dir[1];
+                            $data['ciudad'] = $dir[2];
+                            $data['municipio'] = $dir[3];
+                            $data['parroquia'] = $dir[4];
+                        }
+                        
                     } else {
                         $data['datos_usuario'] = DB::table('profesores')->where('id_usuario', '=', $usuario->id)->first();
                     }

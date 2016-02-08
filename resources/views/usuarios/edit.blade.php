@@ -75,7 +75,7 @@
                     <div class="form-group">
                         {!!Form::label('pais', 'Pais: ', array('class' => 'col-md-4 control-label'))!!}
                         <div class="col-sm-8">
-                            {!! Form::select('id_pais', $pais, null, array('required', 'class' => 'form-control', 'id'=>'id_pais'))!!}
+                            {!! Form::select('id_pais', $paises, null, array('required', 'class' => 'form-control', 'id'=>'id_pais'))!!}
                         </div>
                     </div>
 
