@@ -301,6 +301,11 @@ class UsuariosController extends Controller {
             $usuario_actual = Auth::user();
 
             if($usuario_actual->can('editar_usuarios')) {  // Si el usuario posee los permisos necesarios continua con la acción
+                $data['estado'] = '';
+                $data['ciudad'] = '';
+                $data['municipio'] = '';
+                $data['parroquia'] = '';
+                $data['es_VE'] = false;
 
                 $data['errores'] = '';
                 $data['es_participante'] = false;
@@ -311,6 +316,9 @@ class UsuariosController extends Controller {
                 $data['roles'] = Role::all()->lists('display_name', 'id');
                 $data['paises'] = Pais::all()->lists('pais', 'id');
                 $data['estados'] = Estado::all()->lists('estado','id_estado');
+                $data['ciudades'] = Ciudad::all()->lists('ciudad', 'id_ciudad');
+                $data['municipios'] = Municipio::all()->lists('municipio','id_municipio');
+                $data['parroquias'] = Parroquia::all()->lists('parroquia', 'id_parroquia');
 
                 foreach ($userRoles as $role) { //  Se verifica el rol del usuario que se desea editar (si es Participante o Profesor) y se obtienen su datos
                     if (($role->name) == 'participante') {
@@ -318,10 +326,10 @@ class UsuariosController extends Controller {
                         $data['datos_usuario'] = DB::table('participantes')->where('id_usuario', '=', $usuario->id)->first();
                         $direccion = $data['datos_usuario']->direccion;
                         $dir = explode("-", $direccion);
-                        $data['pais'] = $dir[0];
-                        $pos = strpos($direccion, '-');
-                        if ($pos === true) {
-                            dd("es VE");
+                        $data['paiss'] = $dir[0];
+                        $es_ve = strpos($direccion, '-');
+                        if ($es_ve) {
+                            $data['es_VE'] = true;
                             $data['estado'] = $dir[1];
                             $data['ciudad'] = $dir[2];
                             $data['municipio'] = $dir[3];

@@ -72,21 +72,46 @@
                         </div>
                     </div>
                     @if($es_participante)
-                    <div class="form-group">
-                        {!!Form::label('pais', 'Pais: ', array('class' => 'col-md-4 control-label'))!!}
-                        <div class="col-sm-8">
-                            {!! Form::select('id_pais', $paises, null, array('required', 'class' => 'form-control', 'id'=>'id_pais'))!!}
-                        </div>
-                    </div>
-
-                    <div class="localidad">
                         <div class="form-group">
-                            {!!Form::label('estado', 'Estado:', array('class' => 'col-md-4 control-label'))!!}
+                            {!!Form::label('pais', 'Pais: ', array('class' => 'col-md-4 control-label'))!!}
                             <div class="col-sm-8">
-                                {!! Form::select('id_est', $estados, null, array('required', 'class' => 'form-control', 'id'=>'id_est'))!!}
+                                {!! Form::select('id_pais', $paises, $paiss, array('required', 'class' => 'form-control', 'id'=>'id_pais'))!!}
                             </div>
                         </div>
-                    </div>
+                        @if($es_VE)
+                        <div class="">
+                            <div class="form-group">
+                                {!!Form::label('estado', 'Estado:', array('class' => 'col-md-4 control-label'))!!}
+                                <div class="col-sm-8">
+                                    {!! Form::select('id_est', $estados, $estado, array('required', 'class' => 'form-control', 'id'=>'id_est'))!!}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="">
+                            <div class="form-group">
+                                {!!Form::label('ciudad', 'Ciudad:', array('class' => 'col-md-4 control-label'))!!}
+                                <div class="col-sm-8">
+                                    {!! Form::select('ciudad', $ciudades, $ciudad, array('required', 'class' => 'form-control', 'id'=>'id_est'))!!}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="">
+                            <div class="form-group">
+                                {!!Form::label('municipio', 'Municipio:', array('class' => 'col-md-4 control-label'))!!}
+                                <div class="col-sm-8">
+                                    {!! Form::select('muncipio', $municipios, $municipio, array('required', 'class' => 'form-control', 'id'=>'id_est'))!!}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="">
+                            <div class="form-group">
+                                {!!Form::label('parroquia', 'Parroquia:', array('class' => 'col-md-4 control-label'))!!}
+                                <div class="col-sm-8">
+                                    {!! Form::select('parroquia', $parroquias, $parroquia, array('required', 'class' => 'form-control', 'id'=>'id_est'))!!}
+                                </div>
+                            </div>
+                        </div>
+                        @endif
                     @endif
                     <div class="form-group">
                         {!!Form::label('email', 'Correo electrónico',  array( 'class' => 'col-md-4 control-label'))!!}
