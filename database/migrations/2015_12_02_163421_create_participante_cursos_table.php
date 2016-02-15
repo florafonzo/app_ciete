@@ -17,6 +17,7 @@ class CreateParticipanteCursosTable extends Migration {
 			$table->increments('id');
 			$table->integer('id_participante')->unsigned();
 			$table->integer('id_curso')->unsigned();
+			$table->string('seccion')->unsigned();
 			$table->timestamps();
 
 

@@ -37,18 +37,18 @@
                         <a style="text-decoration:none;" href="{{URL::to('/cursos-desactivados')}}"> Cursos desactivados </a>
                     </li>
                 @endif
-                @if(Entrust::can('ver_perfil'))
-                    <li class="menu_usuarios @if(Request::is('participante/perfil')) active @endif">
+                @if(Entrust::can('ver_perfil_part'))
+                    <li class="menu_usuarios @if(Request::is('participante/perfil*')) active @endif">
                         <a style="text-decoration:none;" href="{{URL::to('/participante/perfil')}}"> Ver perfil </a>
                     </li>
                 @endif
-                @if(Entrust::can('editar_perfil'))
-                    <li class="menu_usuarios @if(Request::is('participante/perfil/editar')) active @endif">
-                        <a style="text-decoration:none;" href="{{URL::to('/participante/perfil/editar')}}"> Editar perfil </a>
-                    </li>
-                @endif
+                {{--@if(Entrust::can('editar_perfil'))--}}
+                    {{--<li class="menu_usuarios @if(Request::is('participante/perfil/editar')) active @endif">--}}
+                        {{--<a style="text-decoration:none;" href="{{URL::to('/participante/perfil/editar')}}"> Editar perfil </a>--}}
+                    {{--</li>--}}
+                {{--@endif--}}
                 @if(Entrust::can('ver_cursos_part'))
-                    <li class="menu_usuarios @if(Request::is('participante/cursos')) active @endif">
+                    <li class="menu_usuarios @if(Request::is('participante/cursos*')) active @endif">
                         <a style="text-decoration:none;" href="{{URL::to('/participante/cursos')}}"> Cursos inscritos </a>
                     </li>
                 @endif

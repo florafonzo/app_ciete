@@ -16,9 +16,9 @@
                 <table class="table table-hover">
                     <thead>
                     <tr>
-                        <th>Fecha de inscripcion</th>
                         <th>Nombre</th>
                         <th>Tipo</th>
+                        <th>Seccion</th>
                         <th>Fecha inicio</th>
                         <th>Fecha fin</th>
                         <th>Acciones</th>
@@ -29,9 +29,9 @@
                         <tbody>
                         @foreach($cursos as $index => $curso)
                             <tr>
-                                <td>{{$fechas[$index]}}</td>
                                 <td>{{ $curso[0]->nombre }}</td>
                                 <td>{{ $tipo_curso[$index] }}</td>
+                                <td>{{ $curso[0]->seccion  }}</td>
                                 <td>{{ $curso[0]->fecha_inicio  }}</td>
                                 <td>{{ $curso[0]->fecha_fin  }}</td>
                                 <td>

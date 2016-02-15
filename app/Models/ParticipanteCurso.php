@@ -16,7 +16,7 @@ class ParticipanteCurso extends Model {
      *
      * @var array
      */
-    protected $fillable = ['id_participante','id_curso'];
+    protected $fillable = ['id_participante','id_curso', 'seccion'];
 
 
 

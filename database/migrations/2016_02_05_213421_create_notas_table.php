@@ -16,8 +16,10 @@ class CreateNotasTable extends Migration {
 		{
 			$table->increments('id');
 			$table->integer('id_participante_curso')->unsigned();
-			$table->string('nombre');
+			$table->string('evaluacion');
 			$table->integer('nota');
+			$table->integer('porcentaje');
+
 			$table->timestamps();
 
 

@@ -123,15 +123,25 @@ class PermisionsSeeder extends Seeder {
         $crear_usuarios->display_name = 'ver webinar';
         $crear_usuarios->save();
 
-        $ver_perfil = new Permission();
-        $ver_perfil->name = 'ver_perfil';
-        $ver_perfil->display_name = 'ver perfil';
-        $ver_perfil->save();
+        $ver_perfil_part = new Permission();
+        $ver_perfil_part->name = 'ver_perfil_part';
+        $ver_perfil_part->display_name = 'ver perfil participante';
+        $ver_perfil_part->save();
 
-        $editar_perfil = new Permission();
-        $editar_perfil->name = 'editar_perfil';
-        $editar_perfil->display_name = 'editar perfil';
-        $editar_perfil->save();
+        $ver_perfil_prof = new Permission();
+        $ver_perfil_prof->name = 'ver_perfil_prof';
+        $ver_perfil_prof->display_name = 'ver perfil profesor';
+        $ver_perfil_prof->save();
+
+        $editar_perfil_part = new Permission();
+        $editar_perfil_part->name = 'editar_perfil_part';
+        $editar_perfil_part->display_name = 'editar perfil participante';
+        $editar_perfil_part->save();
+
+        $editar_perfil_prof = new Permission();
+        $editar_perfil_prof->name = 'editar_perfil_profe';
+        $editar_perfil_prof->display_name = 'editar perfil profesor';
+        $editar_perfil_prof->save();
 
         $ver_cursos = new Permission();
         $ver_cursos->name = 'ver_cursos_part';

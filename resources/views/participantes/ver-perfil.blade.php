@@ -104,7 +104,7 @@
                             {!! Form::text('univ', $datos[0]->universidad, array('disabled','class' => 'form-control'))!!}
                         </div>
                     </div>
-                    @if(Entrust::can('editar_perfil'))
+                    @if(Entrust::can('editar_perfil_part'))
                         <div class="" style="text-align: center;">
                             <a href="{{URL::to('/')}}/participante/perfil/editar" type="button" class="btn btn-success" >Editar datos </a>
                         </div>
