@@ -253,3 +253,21 @@ function activarCurso(id) {
 }
 //------------------------------------------------------------------------------//
 
+//------------------------Función para eliminar participante de un curso --------------------------------------------//
+function eliminarPart(id) {
+    swal({
+            title: "¿Está seguro que desea eliminar el participante del curso?",
+            text: "Si lo elimina no aparecerá en la lista de alumnos del curso",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#DD6B55',
+            confirmButtonText: "Eliminar",
+            closeOnConfirm: false
+        },
+        function(){
+            $('#form_eliminar_part'+id).submit();
+        })
+
+}
+//------------------------------------------------------------------------------//
+

@@ -18,26 +18,33 @@
                     <tr>
                         <th>Evaluación</th>
                         <th>Nota</th>
-                        <th></th>
                     </tr>
                     <tbody>
                     @if($notas->count())
-
                         @foreach($notas as $index => $nota)
                             <tr>
                                 <td>{{ $nota->evaluacion  }}</td>
                                 <td>{{ $nota->nota  }}</td>
                             </tr>
                         @endforeach
-
+                        <tr>
+                            <td style="font-weight: bold">Nota Final</td>
+                            <td>{{$promedio}}</td>
+                        </tr>
+                        <tr>
+                             <td>Queda por evaluar {{$porcentaje}}%</td>
+                            <td></td>
+                        </tr>
                     @else
-                        <t>No posee calificaciones por los momentos</t>
+                        <td>No posee calificaciones por los momentos</td>
                     @endif
                     </tbody>
                 </table>
-                <div class="" style="text-align: center;">
-                    <a href="{{URL::to("/")}}/participante/cursos" class="btn btn-default text-right"><span class="glyphicon glyphicon-chevron-left"></span> Regresar</a>
-                </div>
+                @if(Entrust::can('ver_cursos_part'))
+                    <div style="text-align: center;">
+                        <a href="{{URL::to("/")}}/participante/cursos" class="btn btn-default text-right"><span class="glyphicon glyphicon-chevron-left"></span> Regresar</a>
+                    </div>
+                @endif
             </div>
         @endif
     </div>

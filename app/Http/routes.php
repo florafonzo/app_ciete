@@ -26,6 +26,10 @@ Route::resource('/usuarios','UsuariosController');
 //Rutas manejo de cursos
 Route::get('cursos-desactivados', 'CursosController@indexDesactivados');
 Route::get('cursos-desactivados/activar/{id}', 'CursosController@activar');
+Route::get('cursos/{id}/participantes', 'CursosController@cursoParticipantes');
+Route::get('cursos/{id}/participantes/agregar', 'CursosController@cursoParticipantesAgregar');
+Route::get('cursos/participantes/{id}/eliminar', 'CursosController@cursoParticipantesEliminar');
+
 Route::resource('/cursos','CursosController');
 
 //Rutas manejo de roles

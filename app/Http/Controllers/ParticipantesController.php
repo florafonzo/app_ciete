@@ -264,7 +264,18 @@ class ParticipantesController extends Controller {
                 $curso_part = ParticipanteCurso::where('id_participante', '=', $id_part[0]->id)->where('id_curso', '=', $id)->get();
                 $data['curso'] = Curso::where('id', '=', $id)->get();
                 $data['notas'] = Nota::where('id_participante_curso', '=', $curso_part[0]->id)->get();
-//                dd('notas: '.$data['notas']);
+                if($data['notas']->count()) {
+                    $data['promedio'] = 0;
+                    $porcentaje = 0;
+                    foreach ($data['notas'] as $nota) {
+                        $calif = $nota->nota;
+                        $porcent = $nota->porcentaje;
+                        $porcentaje =  ($porcentaje + $porcent);
+                        $data['promedio'] = $data['promedio'] + ($calif * ($porcent / 100));
+                    }
+                    $data['porcentaje'] =  100 - $porcentaje;
+                }
+
                 return view('participantes.notas', $data);
 
             }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error

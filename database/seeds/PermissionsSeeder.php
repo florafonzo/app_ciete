@@ -157,6 +157,21 @@ class PermisionsSeeder extends Seeder {
         $ver_nota->name = 'ver_notas_profe';
         $ver_nota->display_name = 'ver notas profesores';
         $ver_nota->save();
+
+        $participantes_curso = new Permission();
+        $participantes_curso->name = 'participantes_curso';
+        $participantes_curso->display_name = 'manejar participantes de un curso';
+        $participantes_curso->save();
+
+        $agregar_part = new Permission();
+        $agregar_part->name = 'agregar_part_curso';
+        $agregar_part->display_name = 'agregar participante de un curso';
+        $agregar_part->save();
+
+        $eliminar_part = new Permission();
+        $eliminar_part->name = 'eliminar_part_curso';
+        $eliminar_part->display_name = 'eliminar participante de un curso';
+        $eliminar_part->save();
     }
 
 }

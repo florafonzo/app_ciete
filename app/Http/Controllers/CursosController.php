@@ -7,6 +7,8 @@ use App\Http\Requests\CursoRequest;
 
 use App\Models\CursoModalidadPago;
 use App\Models\ModalidadCurso;
+use App\Models\Participante;
+use App\Models\ParticipanteCurso;
 use App\Models\Permission;
 
 use Illuminate\Support\Facades\Auth;
@@ -542,6 +544,93 @@ class CursosController extends Controller {
                 }
 
                 return view('cursos.desactivados', $data);
+            }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
+
+                return view('errors.sin_permiso');
+            }
+        }
+        catch (Exception $e) {
+
+            return view('errors.error')->with('error',$e->getMessage());
+        }
+    }
+
+    public function cursoParticipantes($id) {
+        try{
+            //Verificación de los permisos del usuario para poder realizar esta acción
+            $usuario_actual = Auth::user();
+
+            if($usuario_actual->can('participantes_curso')) {  // Si el usuario posee los permisos necesarios continua con la acción
+                $data['errores'] = '';
+                $data['participantes'] = [];
+                $data['curso'] = Curso::where('id', '=', $id)->get();
+                $curso_part = ParticipanteCurso::where('id_curso', '=', $id)->get();
+                if($curso_part->count()){
+                    foreach ($curso_part as $index => $curso) {
+                        $data['participantes'][$index] = Participante::where('id', '=', $curso->id_participante)->get();
+                    }
+                }
+
+
+                return view('cursos.participantes', $data);
+            }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
+
+                return view('errors.sin_permiso');
+            }
+        }
+        catch (Exception $e) {
+
+            return view('errors.error')->with('error',$e->getMessage());
+        }
+    }
+
+    public function cursoParticipantesAgregar($id) {
+        try{
+            //Verificación de los permisos del usuario para poder realizar esta acción
+            $usuario_actual = Auth::user();
+
+            if($usuario_actual->can('agregar_part_curso')) {  // Si el usuario posee los permisos necesarios continua con la acción
+                $data['errores'] = '';
+//                $data['participantes'] = [];
+//                $data['curso'] = Curso::where('id', '=', $id)->get();
+//                $curso_part = ParticipanteCurso::where('id_curso', '=', $id)->get();
+//                if($curso_part->count()){
+//                    foreach ($curso_part as $index => $curso) {
+//                        $data['participantes'][$index] = Participante::where('id', '=', $curso->id_participante)->get();
+//                    }
+//                }
+
+
+                return view('cursos.participantes', $data);
+            }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
+
+                return view('errors.sin_permiso');
+            }
+        }
+        catch (Exception $e) {
+
+            return view('errors.error')->with('error',$e->getMessage());
+        }
+    }
+
+    public function cursoParticipantesEliminar($id) {
+        try{
+            //Verificación de los permisos del usuario para poder realizar esta acción
+            $usuario_actual = Auth::user();
+
+            if($usuario_actual->can('eliminar_part_curso')) {  // Si el usuario posee los permisos necesarios continua con la acción
+                $data['errores'] = '';
+//                $data['participantes'] = [];
+//                $data['curso'] = Curso::where('id', '=', $id)->get();
+//                $curso_part = ParticipanteCurso::where('id_curso', '=', $id)->get();
+//                if($curso_part->count()){
+//                    foreach ($curso_part as $index => $curso) {
+//                        $data['participantes'][$index] = Participante::where('id', '=', $curso->id_participante)->get();
+//                    }
+//                }
+//
+
+                return view('cursos.participantes', $data);
             }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
 
                 return view('errors.sin_permiso');
