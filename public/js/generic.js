@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    alert('ahhh');
+    //alert('ahhh');
     $("[data-toggle=tooltip]").tooltip();
 
 //    ------- Modal Eliminar Usuario ----------  ////
