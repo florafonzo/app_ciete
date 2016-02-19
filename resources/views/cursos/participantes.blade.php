@@ -34,7 +34,8 @@
 
                                 <td>
                                     @if(Entrust::can('eliminar_part_curso'))
-                                        {!!Form::open(["url"=>"cursos/participantes/".$participante[0]->id."/eliminar",  "method" => "DELETE", 'id' => 'form_eliminar_part'.$participante[0]->id ])!!}
+{{--                                        {!!Form::open(['url'=>'/extasis/participantes/missvenezuela/'.$candidata->id, 'class' => 'form-horizontal', 'method' => 'delete', 'id'=>'formelim-'.$candidata->id] )!!}    --}}
+                                        {!!Form::open(["url"=>"cursos/participantes/".$participante[0]->id."/eliminar",  "method" => "delete", "id" => "form_eliminar_part".$participante[0]->id ])!!}
                                         <button type="button" onclick="eliminarPart('{{$participante[0]->id}}')" class='btn btn-danger' data-toggle='tooltip' data-placement="bottom" title="Eliminar">
                                             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                         </button>
@@ -46,12 +47,12 @@
                         </tbody>
                     @endif
                 </table>
-                <div class="" style="text-align: center">
+                <div class="" style="">
                     @if(Entrust::can('ver_lista_cursos'))
-                        <a href="{{URL::to('/')}}/cursos" type="button" class="btn btn-default" style="text-decoration: none">Cancelar </a
+                        <a href="{{URL::to('/')}}/cursos" type="button" class="btn btn-default" style="text-decoration: none">Cancelar </a>
                     @endif
                     @if(Entrust::can('agregar_part_curso'))
-                        {!!Form::open(["url"=>"cursos/".$curso[0]->id."/participantes/agregar",  "method" => "GET" ])!!}
+                        {!!Form::open(["url"=>"cursos/participantes/agregar",  "method" => "GET" ])!!}
                         <button type="submit" class="btn btn-success" data-toggle="tooltip" data-placement="bottom" title="Agregar participante al curso" >
                             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Agregar
                         </button>

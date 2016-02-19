@@ -584,7 +584,7 @@ class CursosController extends Controller {
         }
     }
 
-    public function cursoParticipantesAgregar($id) {
+    public function cursoParticipantesAgregar() {
         try{
             //Verificación de los permisos del usuario para poder realizar esta acción
             $usuario_actual = Auth::user();
@@ -601,7 +601,7 @@ class CursosController extends Controller {
 //                }
 
 
-                return view('cursos.participantes', $data);
+                return view('cursos.participantes-agregar', $data);
             }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
 
                 return view('errors.sin_permiso');
@@ -630,7 +630,7 @@ class CursosController extends Controller {
 //                }
 //
 
-                return view('cursos.participantes', $data);
+                return view('cursos.participantes-eliminar', $data);
             }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
 
                 return view('errors.sin_permiso');
