@@ -169,7 +169,7 @@ class UsuariosController extends Controller {
                             Session::set('email_alternativo', $request->email_alternativo);
                             Session::set('twitter', $request->twitter);
                             Session::set('ocupacion', $request->ocupacion);
-                            Session::set('titulo', $request->celular);
+                            Session::set('titulo', $request->titulo);
                             Session::set('univ', $request->univ);
 
                             return view('usuarios.crear', $data);
@@ -194,7 +194,7 @@ class UsuariosController extends Controller {
                         Session::set('email_alternativo', $request->email_alternativo);
                         Session::set('twitter', $request->twitter);
                         Session::set('ocupacion', $request->ocupacion);
-                        Session::set('titulo', $request->celular);
+                        Session::set('titulo', $request->titulo);
                         Session::set('univ', $request->univ);
 
                         return view('usuarios.crear', $data);
@@ -314,19 +314,19 @@ class UsuariosController extends Controller {
                 $userRoles = $data['usuarios']->roles()->get(); // Se obtienen los roles del usuario que se desea editar
                 $data['rol'] = $userRoles;
                 $data['roles'] = Role::all()->lists('display_name', 'id');
-                $data['paises'] = Pais::all()->lists('pais', 'id');
+                /*$data['paises'] = Pais::all()->lists('pais', 'id');
                 $data['estados'] = Estado::all()->lists('estado','id_estado');
                 $data['ciudades'] = Ciudad::all()->lists('ciudad', 'id_ciudad');
                 $data['municipios'] = Municipio::all()->lists('municipio','id_municipio');
-                $data['parroquias'] = Parroquia::all()->lists('parroquia', 'id_parroquia');
+                $data['parroquias'] = Parroquia::all()->lists('parroquia', 'id_parroquia');*/
 
                 foreach ($userRoles as $role) { //  Se verifica el rol del usuario que se desea editar (si es Participante o Profesor) y se obtienen su datos
                     if (($role->name) == 'participante') {
                         $data['es_participante'] = true;
                         $data['datos_usuario'] = DB::table('participantes')->where('id_usuario', '=', $usuario->id)->first();
-                        $direccion = $data['datos_usuario']->direccion;
+                        /*$direccion = $data['datos_usuario']->direccion;
                         $dir = explode("-", $direccion);
-                        $data['paiss'] = $dir[0];
+                        //$data['paiss'] = $dir[0];
                         $es_ve = strpos($direccion, '-');
                         if ($es_ve) {
                             $data['es_VE'] = true;
@@ -334,7 +334,7 @@ class UsuariosController extends Controller {
                             $data['ciudad'] = $dir[2];
                             $data['municipio'] = $dir[3];
                             $data['parroquia'] = $dir[4];
-                        }
+                        }*/
                         
                     } else {
                         $data['datos_usuario'] = DB::table('profesores')->where('id_usuario', '=', $usuario->id)->first();
