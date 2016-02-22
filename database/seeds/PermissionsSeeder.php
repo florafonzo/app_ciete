@@ -160,7 +160,7 @@ class PermisionsSeeder extends Seeder {
 
         $participantes_curso = new Permission();
         $participantes_curso->name = 'participantes_curso';
-        $participantes_curso->display_name = 'manejar participantes de un curso';
+        $participantes_curso->display_name = 'ver participantes de un curso';
         $participantes_curso->save();
 
         $agregar_part = new Permission();

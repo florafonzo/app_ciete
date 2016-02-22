@@ -27,9 +27,9 @@ Route::resource('/usuarios','UsuariosController');
 Route::get('cursos-desactivados', 'CursosController@indexDesactivados');
 Route::get('cursos-desactivados/activar/{id}', 'CursosController@activar');
 Route::get('cursos/{id}/participantes', 'CursosController@cursoParticipantes');
-Route::get('cursos/participantes/agregar', 'CursosController@cursoParticipantesAgregar');
-Route::delete('cursos/participantes/{id}/eliminar', 'CursosController@cursoParticipantesEliminar');
-
+Route::get('cursos/{id}/participantes/agregar', 'CursosController@cursoParticipantesAgregar');
+Route::post('cursos/{id}/participantes/{id_part}/agregar', 'CursosController@cursoParticipantesGuardar');
+Route::delete('cursos/{id_curso}/participantes/{id_part}/eliminar', 'CursosController@cursoParticipantesEliminar');
 Route::resource('/cursos','CursosController');
 
 //Rutas manejo de roles

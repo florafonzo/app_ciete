@@ -563,7 +563,8 @@ class CursosController extends Controller {
             if($usuario_actual->can('participantes_curso')) {  // Si el usuario posee los permisos necesarios continua con la acción
                 $data['errores'] = '';
                 $data['participantes'] = [];
-                $data['curso'] = Curso::where('id', '=', $id)->get();
+                $data['curso'] = Curso::find($id);
+                //dd('curso: '.$data['curso']);
                 $curso_part = ParticipanteCurso::where('id_curso', '=', $id)->get();
                 if($curso_part->count()){
                     foreach ($curso_part as $index => $curso) {
@@ -584,22 +585,37 @@ class CursosController extends Controller {
         }
     }
 
-    public function cursoParticipantesAgregar() {
+    public function cursoParticipantesAgregar($id) {
         try{
             //Verificación de los permisos del usuario para poder realizar esta acción
             $usuario_actual = Auth::user();
 
             if($usuario_actual->can('agregar_part_curso')) {  // Si el usuario posee los permisos necesarios continua con la acción
                 $data['errores'] = '';
-//                $data['participantes'] = [];
-//                $data['curso'] = Curso::where('id', '=', $id)->get();
-//                $curso_part = ParticipanteCurso::where('id_curso', '=', $id)->get();
-//                if($curso_part->count()){
-//                    foreach ($curso_part as $index => $curso) {
-//                        $data['participantes'][$index] = Participante::where('id', '=', $curso->id_participante)->get();
-//                    }
-//                }
+                $data['participantes'] = [];
+                $repetido = 0;
+                $data['curso'] = Curso::find($id);
+                $participantes = ParticipanteCurso::where('id_curso', '!=', $id)->orderBy('id_participante')->get();
+                $noParticipantes = ParticipanteCurso::where('id_curso', '=', $id)->orderBy('id_participante')->get();
+                if ($participantes->count()) {
+                    foreach ($participantes as $index => $part) {
+                        foreach ($noParticipantes as $index1 => $parti) {
+                            $partic = $parti->id_participante;
+                            if ($partic == $part->id_participante) {
+                                continue;
+                            }else{
+                                if ($repetido == $part->id_participante) {
+                                    continue;
+                                }else{
+                                    $repetido = $part->id_participante;
 
+                                    $data['participantes'][$index] = Participante::where('id', '=', $part->id_participante)->get();
+                                }
+                            }
+                       }
+                    }
+                }    
+                //dd($data['participantes']);
 
                 return view('cursos.participantes-agregar', $data);
             }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
@@ -613,7 +629,29 @@ class CursosController extends Controller {
         }
     }
 
-    public function cursoParticipantesEliminar($id) {
+    public function cursoParticipantesGuardar($id) {
+        try{
+            //Verificación de los permisos del usuario para poder realizar esta acción
+            $usuario_actual = Auth::user();
+
+            if($usuario_actual->can('agregar_part_curso')) {  // Si el usuario posee los permisos necesarios continua con la acción
+                $data['errores'] = '';
+                
+                //dd($data['participantes']);
+
+                return view('cursos.participantes', $data);
+            }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
+
+                return view('errors.sin_permiso');
+            }
+        }
+        catch (Exception $e) {
+
+            return view('errors.error')->with('error',$e->getMessage());
+        }
+    }
+
+    public function cursoParticipantesEliminar($id_curso, $id_part) {
         try{
             //Verificación de los permisos del usuario para poder realizar esta acción
             $usuario_actual = Auth::user();

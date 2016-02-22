@@ -52,7 +52,7 @@
                         <a style="text-decoration:none;" href="{{URL::to('/participante/cursos')}}"> Cursos inscritos </a>
                     </li>
                 @endif
-                @if(Entrust::can('ver_cursos_profe'))
+               <!-- @if(Entrust::can('ver_cursos_profe'))
                     <li>
                         Cursos
                     </li>
@@ -71,7 +71,7 @@
                     <li>
                         <a href="#"> Obtener Certificado </a>
                     </li>
-                @endif
+                @endif-->
             </ul>
         </div>
     </div>
