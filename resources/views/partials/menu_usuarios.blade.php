@@ -52,26 +52,26 @@
                         <a style="text-decoration:none;" href="{{URL::to('/participante/cursos')}}"> Cursos inscritos </a>
                     </li>
                 @endif
-               <!-- @if(Entrust::can('ver_cursos_profe'))
-                    <li>
-                        Cursos
-                    </li>
-                @endif
-                @if(Entrust::can('ver_notas_profe'))
-                    <li>
-                        Notas
-                    </li>
-                @endif
-                @if(Entrust::can('listar_alumnos'))
-                    <li>
-                        Listas de participantes
-                    </li>
-                @endif
-                @if(Entrust::can('ver_certificados'))
-                    <li>
-                        <a href="#"> Obtener Certificado </a>
-                    </li>
-                @endif-->
+                {{--@if(Entrust::can('ver_cursos_profe'))--}}
+                    {{--<li>--}}
+                        {{--Cursos--}}
+                    {{--</li>--}}
+                {{--@endif--}}
+                {{--@if(Entrust::can('ver_notas_profe'))--}}
+                    {{--<li>--}}
+                        {{--Notas--}}
+                    {{--</li>--}}
+                {{--@endif--}}
+                {{--@if(Entrust::can('listar_alumnos'))--}}
+                    {{--<li>--}}
+                        {{--Listas de participantes--}}
+                    {{--</li>--}}
+                {{--@endif--}}
+                {{--@if(Entrust::can('ver_certificados'))--}}
+                    {{--<li>--}}
+                        {{--<a href="#"> Obtener Certificado </a>--}}
+                    {{--</li>--}}
+                {{--@endif--}}
             </ul>
         </div>
     </div>

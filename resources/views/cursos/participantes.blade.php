@@ -1,7 +1,7 @@
 @extends('layouts.layout')
 
 @section('content')
-    <div class="row">
+    <div class="row" xmlns="http://www.w3.org/1999/html">
 
         <div class="col-md-12 col-sm-12 col-md-offset-2 bienvenida">
             <h3>
@@ -46,10 +46,12 @@
                         </tbody>
                     @endif
                 </table>
-                <div class="" style="">
+                <div class="col-md-2 " style="">
                     @if(Entrust::can('ver_lista_cursos'))
-                        <a href="{{URL::to('/')}}/cursos" type="button" class="btn btn-default" style="text-decoration: none">Cancelar </a>
+                        <a href="{{URL::to('/')}}/cursos" type="button" class="btn btn-default" style="text-decoration: none"><span class="glyphicon glyphicon-remove"></span> Cancelar </a>
                     @endif
+                </div>
+                <div class="col-md-2 " style="">
                     @if(Entrust::can('agregar_part_curso'))
                         {!!Form::open(["url"=>"cursos/".$curso->id."/participantes/agregar",  "method" => "GET" ])!!}
                         <button type="submit" class="btn btn-success" data-toggle="tooltip" data-placement="bottom" title="Agregar participante al curso" >

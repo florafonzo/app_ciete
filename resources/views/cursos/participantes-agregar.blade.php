@@ -41,12 +41,14 @@
                         </tbody>
                     @endif
                 </table>
-                <div class="" style="">
+                <div class="col-md-2 " style="">
                     @if(Entrust::can('participantes_curso'))
-                        <a href="{{URL::to('/')}}/cursos/{{$curso->id}}/participantes" type="button" class="btn btn-default" style="text-decoration: none">Cancelar </a>
+                        <a href="{{URL::to('/')}}/cursos/{{$curso->id}}/participantes" type="button" class="btn btn-default" style="text-decoration: none"> <span class="glyphicon glyphicon-remove"></span> Cancelar </a>
                     @endif
+                </div>
+                <div class="col-md-2" style="">
                     @if(Entrust::can('agregar_part_curso'))
-                        {!!Form::open(["url"=>"cursos/".$curso->id."/participantes/".$participante[0]->id."/agregar",  "method" => "POST" ])!!}
+                        {!!Form::open(["url"=>"cursos/".$curso->id."/participantes/agregar",  "method" => "POST" ])!!}
                         <button type="submit" class="btn btn-success" data-toggle="tooltip" data-placement="bottom" title="Agregar participante al curso" >
                             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Agregar
                         </button>

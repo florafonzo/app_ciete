@@ -257,7 +257,7 @@ function activarCurso(id) {
 function eliminarPart(id) {
     swal({
             title: "¿Está seguro que desea eliminar el participante del curso?",
-            text: "Si lo elimina no aparecerá en la lista de alumnos del curso",
+            text: "Si lo elimina no aparecerá en la lista de alumnos del curso y se eliminará su historial",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: '#DD6B55',

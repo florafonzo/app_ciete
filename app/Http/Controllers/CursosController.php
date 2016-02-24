@@ -639,7 +639,7 @@ class CursosController extends Controller {
                 
                 //dd($data['participantes']);
 
-                return view('cursos.participantes', $data);
+                return view('cursos.falta', $data);
             }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
 
                 return view('errors.sin_permiso');
@@ -658,17 +658,27 @@ class CursosController extends Controller {
 
             if($usuario_actual->can('eliminar_part_curso')) {  // Si el usuario posee los permisos necesarios continua con la acción
                 $data['errores'] = '';
-//                $data['participantes'] = [];
-//                $data['curso'] = Curso::where('id', '=', $id)->get();
-//                $curso_part = ParticipanteCurso::where('id_curso', '=', $id)->get();
-//                if($curso_part->count()){
-//                    foreach ($curso_part as $index => $curso) {
-//                        $data['participantes'][$index] = Participante::where('id', '=', $curso->id_participante)->get();
-//                    }
-//                }
-//
+//                $curso = Curso::find($id_curso);
+//                $participante = Participante::find($id_part);
 
-                return view('cursos.participantes-eliminar', $data);
+                $part_curso = ParticipanteCurso::where('id_curso', '=', $id_curso)->where('id_participante', '=', $id_part)->first();
+//                dd('PArticipante_curso:  ' . $part_curso);
+
+                DB::table('notas')->where('id_participante_curso', '=', $part_curso->id)->delete();
+                DB::table('participante_cursos')->where('id', '=', $part_curso->id)->delete();
+
+                $data['participantes'] = [];
+                $data['curso'] = Curso::find($id_curso);
+                //dd('curso: '.$data['curso']);
+                $curso_part = ParticipanteCurso::where('id_curso', '=', $id_curso)->get();
+                if($curso_part->count()){
+                    foreach ($curso_part as $index => $curso) {
+                        $data['participantes'][$index] = Participante::where('id', '=', $curso->id_participante)->get();
+                    }
+                }
+
+                Session::set('mensaje', 'Usuario eliminado con éxito');
+                return view('cursos.participantes', $data);
             }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
 
                 return view('errors.sin_permiso');
