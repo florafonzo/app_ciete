@@ -4,6 +4,7 @@ use App\Http\Requests;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CursoRequest;
+use App\Http\Requests\CursoParticipanteRequest;
 
 use App\Models\CursoModalidadPago;
 use App\Models\ModalidadCurso;
@@ -243,8 +244,6 @@ class CursosController extends Controller {
                 $create2->instituciones_aval = $request->instituciones_aval;
                 $create2->aliados = $request->aliados;
                 $create2->plan_estudio = $request->plan_estudio;
-                //			$create2->id_modalidad_pago = '1';
-                //			$create2->modalidades_pago = '';
                 $create2->costo = $request->costo;
                 $create2->imagen_carrusel = $imagen;
                 $create2->descripcion_carrusel = $request->descripcion_carrusel;
@@ -342,7 +341,7 @@ class CursosController extends Controller {
                     $data['modalidad_curso'] = $data['cursos']->id_modalidad_curso;
                     $data['tipos'] = TipoCurso::all()->lists('nombre', 'id');
 
-                    return view('cursos.crear', $data);
+                    return view('cursos.editar', $data);
 
                 }else{
                     if (($request->fecha_inicio) > ($request->fecha_fin)) {
@@ -354,7 +353,7 @@ class CursosController extends Controller {
                         $data['modalidad_curso'] = $data['cursos']->id_modalidad_curso;
                         $data['tipos'] = TipoCurso::all()->lists('nombre', 'id');
 
-                        return view('cursos.crear', $data);
+                        return view('cursos.editar', $data);
                     }
                 }
 
@@ -385,7 +384,7 @@ class CursosController extends Controller {
                         $data['modalidad_curso'] = $data['cursos']->id_modalidad_curso;
                         $data['tipos'] = TipoCurso::all()->lists('nombre', 'id');
 
-                        return view('cursos.crear', $data);
+                        return view('cursos.editar', $data);
                     }
                 }
 
@@ -418,8 +417,6 @@ class CursosController extends Controller {
                 $cursos->instituciones_aval = $request->instituciones_aval;
                 $cursos->aliados = $request->aliados;
                 $cursos->plan_estudio = $request->plan_estudio;
-                $cursos->id_modalidad_pago = '1';
-                $cursos->modalidades_pago = '';
                 $cursos->costo = $request->costo;
                 $cursos->imagen_carrusel = $imagen;
                 $cursos->descripcion_carrusel = $request->descripcion_carrusel;
@@ -629,15 +626,17 @@ class CursosController extends Controller {
         }
     }
 
-    public function cursoParticipantesGuardar($id) {
+    public function cursoParticipantesGuardar(CursoParticipanteRequest $request, $id) {
         try{
             //Verificación de los permisos del usuario para poder realizar esta acción
             $usuario_actual = Auth::user();
 
             if($usuario_actual->can('agregar_part_curso')) {  // Si el usuario posee los permisos necesarios continua con la acción
                 $data['errores'] = '';
-                
-                //dd($data['participantes']);
+                $curso = Curso::find($id);
+
+                $parti = Input::get('agregar');
+                dd($parti[0]) ;
 
                 return view('cursos.falta', $data);
             }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error

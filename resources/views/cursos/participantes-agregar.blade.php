@@ -33,7 +33,7 @@
 
                                 <td class="">
                                     @if(Entrust::can('agregar_part_curso'))
-                                        {!! Form::checkbox('agregar[]',null, false)!!}
+                                        {!! Form::checkbox('agregar[]','{{$participante[0]->id}}', null)!!}
                                     @endif
                                 </td>
                             </tr>
