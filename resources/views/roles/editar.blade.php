@@ -29,8 +29,12 @@
                     <div class="form-group">
                         {!!Form::label('permisos', 'Permisos',  array( 'class' => 'col-md-4 control-label'))!!}
                         <div class="col-sm-8">
-                            @foreach($permisos as $permiso)
-                                {!! Form::checkbox('permisos[]', $permiso, false) !!} {{$permiso}} <br>
+                            @foreach($permisos as $index => $permiso)
+                                @if ($perms[$index] == true)
+                                    {!! Form::checkbox('permisos[]', $permiso, true) !!} {{$permiso}} <br>
+                                @else
+                                    {!! Form::checkbox('permisos[]', $permiso, false) !!} {{$permiso}} <br>
+                                @endif
                             @endforeach
                         </div>
                     </div>

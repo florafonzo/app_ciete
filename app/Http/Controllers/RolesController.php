@@ -206,7 +206,7 @@ class RolesController extends Controller {
                     $arr[$perm->id] = true;
                 }
                 $data['perms'] = $arr;
-                dd($arr);
+                
                 return view ('roles.editar', $data);
 
             }else{  // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
