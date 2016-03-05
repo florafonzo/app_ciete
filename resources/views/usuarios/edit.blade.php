@@ -49,8 +49,12 @@
                         <div class="form-group">
                             {!!Form::label('rol', 'Rol',  array( 'class' => 'col-md-4 control-label'))!!}
                             <div class="col-sm-8">
-                                @foreach($roles as $role)
-                                    {!! Form::checkbox('id_rol[]', $role, false) !!} {{$role}} <br>
+                                @foreach($roles as $index => $role)
+                                    @if($rols[$index] == true)
+                                        {!! Form::checkbox('id_rol[]', $role, true) !!} {{$role}} <br>
+                                    @else
+                                        {!! Form::checkbox('id_rol[]', $role, false) !!} {{$role}} <br>
+                                    @endif
                                 @endforeach
                             </div>
                         </div>

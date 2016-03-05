@@ -193,7 +193,20 @@ class RolesController extends Controller {
                 $data['errores'] = '';
                 $data['roles'] = Role::find($id);   // Se ontienen los datos del rol que se desea editar
                 $data['permisos'] = Permission::all()->lists('display_name','id');  // Se obtienen todos los permisos guardados en base de datos
+                $permisos = $data['roles']->perms()->get(); 
+                $arr = [];
+                $permisos = array($permisos);
+                //dd($permisos);
 
+                foreach ($data['permisos'] as $index => $permiso) {
+                    $arr[$index] = false;
+                }
+                //dd(count($permisos[0]));
+                foreach ($permisos[0] as $index => $perm) {
+                    $arr[$perm->id] = true;
+                }
+                $data['perms'] = $arr;
+                dd($arr);
                 return view ('roles.editar', $data);
 
             }else{  // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error

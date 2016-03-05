@@ -359,23 +359,11 @@ class UsuariosController extends Controller {
                         foreach ($data['roles'] as $index => $rol) {
                             $arr[$index] = false;
                         }
+                        //dd($usuario_rol[0]);
                         foreach ($usuario_rol[0] as $index => $rol) {
-                            if($index < 2) {
-                                if ($rol->id == ($index + 1)) {
-                                    $arr[$index + 1] = true;
-                                } else {
-                                    $arr[$index + 1] = false;
-                                }
-                            }else{
-                                if ($rol->id == ($index + 2)) {
-                                    $arr[$index + 2] = true;
-                                } else {
-                                    $arr[$index + 2] = false;
-                                }
-                            }
+                            $arr[$rol->id] = true;
                         }
-                        $data['pagos'] = $arr;
-
+                        $data['rols'] = $arr;
                     }
                     break;
                 }

@@ -19,7 +19,7 @@ class CreateParticipantesTable extends Migration {
 			$table->string('nombre');
 			$table->string('apellido');
 			$table->string('documento_identidad')->unique();
-			$table->string('foto');
+			//$table->string('foto');
 			$table->string('telefono');
 			$table->string('direccion');
 			$table->string('celular');

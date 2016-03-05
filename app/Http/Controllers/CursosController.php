@@ -333,11 +333,9 @@ class CursosController extends Controller {
 
                 $pagos = CursoModalidadPago::where('id_curso', '=', $id)->orderBy('id_modalidad_pago')->get();
                 foreach ($pagos as $index => $pago) {
-                    if($pago->id_modalidad_pago == ($index + 1)){
-                        $arr[$index+1] = true;
-                    }else{
-                        $arr[$index+1] = false;
-                    }
+                    //if($pago->id_modalidad_pago == ($index + 1)){
+                        $arr[$pago->id_modalidad_pago] = true;
+                    //}
                 }
                 $data['pagos'] = $arr;
 

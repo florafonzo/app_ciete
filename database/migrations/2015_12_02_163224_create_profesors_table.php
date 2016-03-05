@@ -19,7 +19,7 @@ class CreateProfesorsTable extends Migration {
 			$table->string('nombre');
 			$table->string('apellido');
 			$table->string('documento_identidad')->unique();
-			$table->string('foto');
+			//$table->string('foto');
 			$table->string('telefono');
 			$table->string('celular');
 			$table->timestamps();
