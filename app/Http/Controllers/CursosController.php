@@ -4,6 +4,7 @@ use App\Http\Requests;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CursoRequest;
+use App\Http\Requests\CursoEditRequest;
 use App\Http\Requests\CursoParticipanteRequest;
 
 use App\Models\CursoModalidadPago;
@@ -12,6 +13,8 @@ use App\Models\Participante;
 use App\Models\ParticipanteCurso;
 use App\Models\Permission;
 
+use App\Models\Profesor;
+use App\Models\ProfesorCurso;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -38,15 +41,22 @@ class CursosController extends Controller {
 
             //Verificación de los permisos del usuario para poder realizar esta acción
             $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
 
             if($usuario_actual->can('ver_lista_cursos')) {    // Si el usuario posee los permisos necesarios continua con la acción
-
                 $data['errores'] = '';
                 $data['cursos'] = Curso::orderBy('created_at')->get(); // Se obtienen todos los cursos con sus datos
 
                 foreach ($data['cursos'] as $curso) {   // Se asocia el tipo a cada curso (Cápsulo o Diplomado)
                     $tipo = TipoCurso::where('id', '=', $curso->id_tipo)->get();
                     $curso['tipo_curso'] = $tipo[0]->nombre;
+                    $curso['inicio'] = new DateTime($curso->fecha_inicio);
+                    $curso['fin'] = new DateTime($curso->fecha_fin);
+
                 }
 
                 return view('cursos.cursos', $data);
@@ -73,8 +83,14 @@ class CursosController extends Controller {
 
             //Verificación de los permisos del usuario para poder realizar esta acción
             $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
 
             if($usuario_actual->can('crear_cursos')) {    // Si el usuario posee los permisos necesarios continua con la acción
+//                $data['foto'] = $usuario_actual->foto;
 
                 // Se eliminan los datos guardados en sesion anteriormente
                 Session::forget('nombre');
@@ -130,6 +146,11 @@ class CursosController extends Controller {
 		{
             //Verificación de los permisos del usuario para poder realizar esta acción
             $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
 
             if($usuario_actual->can('crear_cursos')) {  // Si el usuario posee los permisos necesarios continua con la acción
                 $data['errores'] = '';
@@ -194,7 +215,6 @@ class CursosController extends Controller {
 
                 // Se verifica que el usuario haya seleccionado por lo menos una modalidad de pago
                 if (empty(Input::get('modalidades_pago'))) {    // Si no ha seleccionado ningúna modalidad, se redirige al formulario
-                    //                    dd("fallo modalidad");
                     $data['errores'] = "Debe seleccionar una modalidad de pago.";
                     $data['tipos'] = TipoCurso::all()->lists('nombre', 'id');
                     $data['modalidad_pago'] = ModalidadPago::all()->lists('nombre', 'id');
@@ -287,6 +307,11 @@ class CursosController extends Controller {
 
             //Verificación de los permisos del usuario para poder realizar esta acción
             $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
 
             if($usuario_actual->can('editar_cursos')) {   // Si el usuario posee los permisos necesarios continua con la acción
 
@@ -298,6 +323,23 @@ class CursosController extends Controller {
                 $data['modalidades_curso'] = ModalidadCurso::all()->lists('nombre', 'id');
                 $data['modalidad_curso'] = $data['cursos']->id_modalidad_curso;
                 $data['tipos'] = TipoCurso::all()->lists('nombre', 'id');
+                $data['inicio'] = new DateTime($data['cursos']->fecha_inicio);
+                $data['fin'] = new DateTime($data['cursos']->fecha_fin);
+
+                $arr = [];
+                foreach ($data['modalidad_pago'] as $index => $mod) {
+                    $arr[$index] = false;
+                }
+
+                $pagos = CursoModalidadPago::where('id_curso', '=', $id)->orderBy('id_modalidad_pago')->get();
+                foreach ($pagos as $index => $pago) {
+                    if($pago->id_modalidad_pago == ($index + 1)){
+                        $arr[$index+1] = true;
+                    }else{
+                        $arr[$index+1] = false;
+                    }
+                }
+                $data['pagos'] = $arr;
 
                 return view('cursos.editar', $data);
 
@@ -320,11 +362,16 @@ class CursosController extends Controller {
      *
 	 * @return Retorna la lista de cursos con los datos actualizados.
 	 */
-	public function update(CursoRequest $request, $id)
+	public function update(CursoEditRequest $request, $id)
 	{
         try{
             //Verificación de los permisos del usuario para poder realizar esta acción
             $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
 
             if($usuario_actual->can('editar_cursos')) {    // Si el usuario posee los permisos necesarios continua con la acción
                 $data['errores'] = '';
@@ -461,6 +508,11 @@ class CursosController extends Controller {
         try{
             //Verificación de los permisos del usuario para poder realizar esta acción
             $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
 
             if($usuario_actual->can('eliminar_cursos')) {  // Si el usuario posee los permisos necesarios continua con la acción
                 // Se obtienen los datos del curso que se desea eliminar
@@ -475,6 +527,8 @@ class CursosController extends Controller {
                 foreach ($data['cursos'] as $curso) {
                     $tipo = TipoCurso::where('id', '=', $curso->id_tipo)->get();
                     $curso['tipo_curso'] = $tipo[0]->nombre;
+                    $curso['inicio'] = new DateTime($curso->fecha_inicio);
+                    $curso['fin'] = new DateTime($curso->fecha_fin);
                 }
 
                 return view('cursos.cursos', $data);
@@ -496,6 +550,11 @@ class CursosController extends Controller {
 
             //Verificación de los permisos del usuario para poder realizar esta acción
             $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
 
             if($usuario_actual->can('ver_lista_cursos')) {   // Si el usuario posee los permisos necesarios continua con la acción
 
@@ -505,6 +564,8 @@ class CursosController extends Controller {
                 foreach ($data['cursos'] as $curso) {   // Se asocia el tipo a cada curso (Cápsulo o Diplomado)
                     $tipo = TipoCurso::where('id', '=', $curso->id_tipo)->get();
                     $curso['tipo_curso'] = $tipo[0]->nombre;
+                    $curso['inicio'] = new DateTime($curso->fecha_inicio);
+                    $curso['fin'] = new DateTime($curso->fecha_fin);
                 }
 
                 return view('cursos.desactivados', $data);
@@ -524,9 +585,14 @@ class CursosController extends Controller {
         try{
             //Verificación de los permisos del usuario para poder realizar esta acción
             $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
 
             if($usuario_actual->can('activar_cursos')) {  // Si el usuario posee los permisos necesarios continua con la acción
-                // Se obtienen los datos del curso que se desea eliminar
+                // Se obtienen los datos del curso que se desea activar
                 $curso = Curso::find($id);
                 //Se activa el curso
                 $curso->curso_activo = true;
@@ -552,16 +618,21 @@ class CursosController extends Controller {
         }
     }
 
+//    ------------------------ Participantes ------------------------------------
     public function cursoParticipantes($id) {
         try{
             //Verificación de los permisos del usuario para poder realizar esta acción
             $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
 
             if($usuario_actual->can('participantes_curso')) {  // Si el usuario posee los permisos necesarios continua con la acción
                 $data['errores'] = '';
                 $data['participantes'] = [];
                 $data['curso'] = Curso::find($id);
-                //dd('curso: '.$data['curso']);
                 $curso_part = ParticipanteCurso::where('id_curso', '=', $id)->get();
                 if($curso_part->count()){
                     foreach ($curso_part as $index => $curso) {
@@ -569,8 +640,7 @@ class CursosController extends Controller {
                     }
                 }
 
-
-                return view('cursos.participantes', $data);
+                return view('cursos.participantes.participantes', $data);
             }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
 
                 return view('errors.sin_permiso');
@@ -586,35 +656,81 @@ class CursosController extends Controller {
         try{
             //Verificación de los permisos del usuario para poder realizar esta acción
             $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
 
             if($usuario_actual->can('agregar_part_curso')) {  // Si el usuario posee los permisos necesarios continua con la acción
                 $data['errores'] = '';
-                $data['participantes'] = [];
-                $repetido = 0;
                 $data['curso'] = Curso::find($id);
+                $arr = [];
+                $todos = DB::table('participante_cursos')->select('id_participante')->get();
+                foreach ($todos as $index => $todo) {
+                    $arr[$index] = $todo->id_participante;
+                }
+                $no_estan = DB::table('participantes')->whereNotIn('id',$arr)->get();
                 $participantes = ParticipanteCurso::where('id_curso', '!=', $id)->orderBy('id_participante')->get();
                 $noParticipantes = ParticipanteCurso::where('id_curso', '=', $id)->orderBy('id_participante')->get();
+                $participante = $participantes;
+                $hay = false;
+                $repetido = 0;
+                $verificar = false;
                 if ($participantes->count()) {
-                    foreach ($participantes as $index => $part) {
-                        foreach ($noParticipantes as $index1 => $parti) {
-                            $partic = $parti->id_participante;
-                            if ($partic == $part->id_participante) {
-                                continue;
-                            }else{
-                                if ($repetido == $part->id_participante) {
-                                    continue;
+                    if($noParticipantes->count()) {
+                        foreach ($participantes as $index => $part) {
+                            foreach ($noParticipantes as $index1 => $parti) {
+                                $partic = $parti->id_participante;
+                                if ($partic == $part->id_participante) {
+                                    unset($participante[$index]);
+                                    $hay = true;
                                 }else{
-                                    $repetido = $part->id_participante;
-
-                                    $data['participantes'][$index] = Participante::where('id', '=', $part->id_participante)->get();
+                                    if($part->id_participante == $repetido){
+                                        unset($participante[$index]);
+                                    }
                                 }
                             }
-                       }
+                            $repetido = $part->id_participante;
+                            if(($hay == false)){
+                                $verificar = true;
+                            }else{
+                                $hay = false;
+                            }
+                        }
+                        $participante = array($participante);
+                        if ($participante != null) {
+                            $participante = array_values($participante);
+                        }
+                        if($verificar) {
+                            foreach ($participante[0] as $index => $datos) {
+                                $data['participantes'][$index] = Participante::find($datos->id_participante);
+                            }
+                            if($no_estan != null) {
+                                $tam = count($data['participantes']) - 1;
+                                foreach ($no_estan as $datos) {
+                                    $data['participantes'][$tam] = $datos;
+                                    $tam++;
+                                }
+                            }
+                        }else{
+                            if($no_estan != null) {
+                                foreach ($no_estan as $index => $datos) {
+                                    $data['participantes'][$index] = $datos;
+                                }
+                            }else {
+                                $data['participantes'] = '';
+                            }
+                        }
+                    }else{
+                        $data['participantes'] = Participante::all();
                     }
-                }    
-                //dd($data['participantes']);
+                }else{
+                    $data['participantes'] = '';
+                }
 
-                return view('cursos.participantes-agregar', $data);
+                return view('cursos.participantes.agregar', $data);
+
             }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
 
                 return view('errors.sin_permiso');
@@ -626,19 +742,47 @@ class CursosController extends Controller {
         }
     }
 
-    public function cursoParticipantesGuardar(CursoParticipanteRequest $request, $id) {
+    public function cursoParticipantesGuardar($id_curso, $id_part) {
         try{
             //Verificación de los permisos del usuario para poder realizar esta acción
             $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
 
             if($usuario_actual->can('agregar_part_curso')) {  // Si el usuario posee los permisos necesarios continua con la acción
                 $data['errores'] = '';
-                $curso = Curso::find($id);
+                $curso = Curso::find($id_curso);
+                $participante = Participante::find($id_part);
+                $existe = ParticipanteCurso::where('id_participante', '=', $id_part)->where('id_curso', '=', $id_curso)->get();
 
-                $parti = Input::get('agregar');
-                dd($parti[0]) ;
+                if($existe->count()) {
+                    Session::set('error', 'Ya existe el registro en la base de datos');
+                    return $this->cursoParticipantesAgregar($id_curso);
+                }else{
+                    if ($curso != null || $participante != null) {
+                        $part_curso = ParticipanteCurso::create(['id_participante' => $id_part,
+                            'id_curso' => $id_curso,
+                            'seccion' => 'B',
+                        ]);
+                        $part_curso->save();
 
-                return view('cursos.falta', $data);
+                        if ($part_curso->save()) {
+                            Session::set('mensaje', 'Participante agregado con éxito');
+                            return $this->cursoParticipantesAgregar($id_curso);
+                        } else {
+                            Session::set('error', 'Ha ocurrido un error inesperado');
+                            return $this->cursoParticipantesAgregar($id_curso);
+                        }
+                    } else {
+                        Session::set('error', 'Ha ocurrido un error inesperado');
+                        return $this->index();
+                    }
+                }
+
+
             }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
 
                 return view('errors.sin_permiso');
@@ -654,6 +798,11 @@ class CursosController extends Controller {
         try{
             //Verificación de los permisos del usuario para poder realizar esta acción
             $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
 
             if($usuario_actual->can('eliminar_part_curso')) {  // Si el usuario posee los permisos necesarios continua con la acción
                 $data['errores'] = '';
@@ -661,14 +810,12 @@ class CursosController extends Controller {
 //                $participante = Participante::find($id_part);
 
                 $part_curso = ParticipanteCurso::where('id_curso', '=', $id_curso)->where('id_participante', '=', $id_part)->first();
-//                dd('PArticipante_curso:  ' . $part_curso);
 
                 DB::table('notas')->where('id_participante_curso', '=', $part_curso->id)->delete();
                 DB::table('participante_cursos')->where('id', '=', $part_curso->id)->delete();
 
                 $data['participantes'] = [];
                 $data['curso'] = Curso::find($id_curso);
-                //dd('curso: '.$data['curso']);
                 $curso_part = ParticipanteCurso::where('id_curso', '=', $id_curso)->get();
                 if($curso_part->count()){
                     foreach ($curso_part as $index => $curso) {
@@ -677,7 +824,7 @@ class CursosController extends Controller {
                 }
 
                 Session::set('mensaje', 'Usuario eliminado con éxito');
-                return view('cursos.participantes', $data);
+                return view('cursos.participantes.participantes', $data);
             }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
 
                 return view('errors.sin_permiso');
@@ -688,4 +835,134 @@ class CursosController extends Controller {
             return view('errors.error')->with('error',$e->getMessage());
         }
     }
+//    -------------------------------------------------------------------------------------------
+
+//--------------------------------------- Profesores --------------------------------------------
+
+    public function cursoProfesores($id) {
+        try{
+            //Verificación de los permisos del usuario para poder realizar esta acción
+            $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
+
+            if($usuario_actual->can('profesores_curso')) {  // Si el usuario posee los permisos necesarios continua con la acción
+                $data['errores'] = '';
+                $data['profesores'] = [];
+                $data['curso'] = Curso::find($id);
+                //dd('curso: '.$data['curso']);
+                $curso_prof = ProfesorCurso::where('id_curso', '=', $id)->get();
+//                dd($curso_prof);
+                if($curso_prof->count()){
+                    foreach ($curso_prof as $index => $curso) {
+                        $data['profesores'][$index] = Profesor::where('id', '=', $curso->id_profesor)->get();
+                    }
+                }
+
+                return view('cursos.profesores.profesores', $data);
+            }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
+
+                return view('errors.sin_permiso');
+            }
+        }
+        catch (Exception $e) {
+
+            return view('errors.error')->with('error',$e->getMessage());
+        }
+    }
+
+    public function cursoProfesoresAgregar($id) {
+        try{
+            //Verificación de los permisos del usuario para poder realizar esta acción
+            $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
+
+            if($usuario_actual->can('agregar_prof_curso')) {  // Si el usuario posee los permisos necesarios continua con la acción
+                $data['errores'] = '';
+                $data['curso'] = Curso::find($id);
+                $arr = [];
+                $todos = DB::table('profesor_cursos')->select('id_profesor')->get();
+                foreach ($todos as $index => $todo) {
+                    $arr[$index] = $todo->id_profesor;
+                }
+                $no_estan = DB::table('profesores')->whereNotIn('id',$arr)->get();
+                $profesores = ProfesorCurso::where('id_curso', '!=', $id)->orderBy('id_profesor')->get();
+                $noProfesores = ProfesorCurso::where('id_curso', '=', $id)->orderBy('id_profesor')->get();
+                $profesor = $profesores;
+                $hay = false;
+                $repetido = 0;
+                $verificar = false;
+                if ($profesores->count()) {
+                    if($noProfesores->count()) {
+                        foreach ($profesores as $index => $prof) {
+                            foreach ($noProfesores as $index1 => $profe) {
+                                $profe_id = $profe->id_profesor;
+                                if ($profe_id == $prof->id_profesor) {
+                                    unset($profesor[$index]);
+                                    $hay = true;
+                                }else{
+                                    if($prof->id_profesor == $repetido){
+                                        unset($profesor[$index]);
+                                    }
+                                }
+                            }
+                            $repetido = $prof->id_profesor;
+                            if(($hay == false)){
+                                $verificar = true;
+                            }else{
+                                $hay = false;
+                            }
+                        }
+                        $profesor = array($profesor);
+                        if ($profesor != null) {
+                            $profesor = array_values($profesor);
+                        }
+
+                        if($verificar) {
+                            foreach ($profesor[0] as $index => $datos) {
+                                $data['profesores'][$index] = Profesor::find($datos->id_profesor);
+                            }
+                            if($no_estan != null) {
+                                $tam = count($data['profesores']) - 1;
+                                foreach ($no_estan as $datos) {
+                                    $data['profesores'][$tam] = $datos;
+                                    $tam++;
+                                }
+                            }
+                        }else{
+                            if($no_estan != null) {
+                                foreach ($no_estan as $index => $datos) {
+                                    $data['profesores'][$index] = $datos;
+                                }
+                            }else {
+                                $data['profesores'] = '';
+                            }
+                        }
+                    }else{
+                        $data['profesores'] = Profesor::all();
+                    }
+                }else{
+                    $data['profesores'] = '';
+                }
+
+                return view('cursos.profesores.agregar', $data);
+
+            }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
+
+                return view('errors.sin_permiso');
+            }
+        }
+        catch (Exception $e) {
+
+            return view('errors.error')->with('error',$e->getMessage());
+        }
+    }
+//-----------------------------------------------------------------------------------------------
 }

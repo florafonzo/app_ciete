@@ -191,12 +191,12 @@
                             {!! Form::password('password_confirmation', array('required','class' => 'form-control')) !!}
                         </div>
                     </div>
-                    <div class="form-group">
-                        {!!Form::label('imagen', 'Imagen de perfil: ',  array( 'class' => 'col-md-4 control-label'))!!}
-                        <div class="col-sm-8">
-                            {!!Form::file('imagen', '',array('class' => 'form-control'))!!}
-                        </div>
-                    </div>
+                    {{--<div class="form-group">--}}
+                        {{--{!!Form::label('imagen', 'Imagen de perfil: ',  array( 'class' => 'col-md-4 control-label'))!!}--}}
+                        {{--<div class="col-sm-8">--}}
+                            {{--{!!Form::file('imagen', '',array('class' => 'form-control'))!!}--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
                     <div class="form-group mostrar">
                         {!!Form::label('email_alternativo', 'Correo electrónico alternativo: ',  array( 'class' => 'col-md-4 control-label'))!!}
                         <div class="col-sm-8">
@@ -229,7 +229,8 @@
                     </div>
 
                     <a href="{{URL::to("/")}}/usuarios" class="btn btn-default text-right"><span class="glyphicon glyphicon-remove"></span> Cancelar</a>
-                    {!! Form::submit('Crear', array('class' => 'btn btn-success')) !!}
+                    <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-save" ></span> Crear </button>
+                {{--{!! Form::submit('Crear', array('class' => 'btn btn-success')) !!}--}}
 
 
                 {!! Form::close() !!}

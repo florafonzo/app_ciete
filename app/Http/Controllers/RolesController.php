@@ -25,6 +25,11 @@ class RolesController extends Controller {
 		try{
             //Verificación de los permisos del usuario para poder realizar esta acción
             $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
 
             if($usuario_actual->can('ver_roles')) {    // Si el usuario posee los permisos necesarios continua con la acción
                 $data['errores'] = '';
@@ -60,6 +65,11 @@ class RolesController extends Controller {
 
             //Verificación de los permisos del usuario para poder realizar esta acción
             $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
 
             if($usuario_actual->can('crear_roles')) { // Si el usuario posee los permisos necesarios continua con la acción
 
@@ -98,6 +108,11 @@ class RolesController extends Controller {
         {
             //Verificación de los permisos del usuario para poder realizar esta acción
             $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
 
             if($usuario_actual->can('crear_roles')) {   // Si el usuario posee los permisos necesarios continua con la acción
                 $data['errores'] = '';
@@ -168,6 +183,11 @@ class RolesController extends Controller {
 
             //Verificación de los permisos del usuario para poder realizar esta acción
             $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
 
             if($usuario_actual->can('editar_roles')) {   // Si el usuario posee los permisos necesarios continua con la acción
                 $data['errores'] = '';
@@ -202,6 +222,11 @@ class RolesController extends Controller {
 
             //Verificación de los permisos del usuario para poder realizar esta acción
             $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
 
             if($usuario_actual->can('editar_roles')) {  // Si el usuario posee los permisos necesarios continua con la acción
                 $data['errores'] = '';
@@ -277,6 +302,11 @@ class RolesController extends Controller {
         try{
             //Verificación de los permisos del usuario para poder realizar esta acción
             $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
 
             if($usuario_actual->can('eliminar_roles')) {    // Si el usuario posee los permisos necesarios continua con la acción
                 $rol = Role::find($id);

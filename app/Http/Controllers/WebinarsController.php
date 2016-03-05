@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\WebinarRequest;
 use App\Http\Requests\WebinarEditarRequest;
+use DateTime;
 
 use App\Models\Webinar;
 use Illuminate\Http\Request;
@@ -24,10 +25,19 @@ class WebinarsController extends Controller {
 		try{
 			//Verificación de los permisos del usuario para poder realizar esta acción
             $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
 
-            if($usuario_actual->can('ver_webinar')) {  // Si el usuario posee los permisos necesarios continua con la acción
+            if($usuario_actual->can('ver_webinars')) {  // Si el usuario posee los permisos necesarios continua con la acción
 				$data['errores'] = '';
 				$data['webinars'] = Webinar::orderBy('created_at')->get();   // Se obtienen todos los webinars
+                foreach ($data['webinars'] as $web) {   //Formato fechas
+                    $web['inicio'] = new DateTime($web->fecha_inicio);
+                    $web['fin'] = new DateTime($web->fecha_fin);
+                }
 
 				return view('webinars.webinars', $data);  // Se muestra la lista de webinars
 
@@ -55,8 +65,13 @@ class WebinarsController extends Controller {
 
 			//Verificación de los permisos del usuario para poder realizar esta acción
             $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
 
-            if($usuario_actual->can('crear_webinar')) {  // Si el usuario posee los permisos necesarios continua con la acción
+            if($usuario_actual->can('crear_webinars')) {  // Si el usuario posee los permisos necesarios continua con la acción
 
 				// Se eliminan los datos guardados en sesion anteriormente
 				Session::forget('nombre');
@@ -96,8 +111,13 @@ class WebinarsController extends Controller {
         {
             //Verificación de los permisos del usuario para poder realizar esta acción
             $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
 
-            if($usuario_actual->can('crear_webinar')) {  // Si el usuario posee los permisos necesarios continua con la acción
+            if($usuario_actual->can('crear_webinars')) {  // Si el usuario posee los permisos necesarios continua con la acción
                 $data['errores'] = '';
 
                 // Se guardan los datos ingresados por el usuario en sesion pra utilizarlos en caso de que se redirija
@@ -207,8 +227,13 @@ class WebinarsController extends Controller {
         try{
             //Verificación de los permisos del usuario para poder realizar esta acción
             $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
 
-            if($usuario_actual->can('editar_webinar')) {  // Si el usuario posee los permisos necesarios continua con la acción // Si el usuario posee los permisos necesarios continua con la acción
+            if($usuario_actual->can('editar_webinars')) {  // Si el usuario posee los permisos necesarios continua con la acción // Si el usuario posee los permisos necesarios continua con la acción
 
                 $data['errores'] = '';
                 $data['webinars'] = Webinar::find($id); // Se obtiene la información del webinar seleccionado
@@ -241,8 +266,13 @@ class WebinarsController extends Controller {
 //            dd($id);
             //Verificación de los permisos del usuario para poder realizar esta acción
             $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
 
-            if($usuario_actual->can('editar_webinar')) {  // Si el usuario posee los permisos necesarios continua con la acción
+            if($usuario_actual->can('editar_webinars')) {  // Si el usuario posee los permisos necesarios continua con la acción
                 $data['errores'] = '';
                 $webinar = Webinar::find($id);
 
@@ -322,8 +352,13 @@ class WebinarsController extends Controller {
         try{
             //Verificación de los permisos del usuario para poder realizar esta acción
             $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
 
-            if($usuario_actual->can('eliminar_webinar')) {  // Si el usuario posee los permisos necesarios continua con la acción
+            if($usuario_actual->can('eliminar_webinars')) {  // Si el usuario posee los permisos necesarios continua con la acción
                 // Se obtienen los datos del webinar que se desea eliminar
                 $webinar = Webinar::find($id);
                 //Se desactiva el webinar
@@ -332,7 +367,11 @@ class WebinarsController extends Controller {
 
                 // Se redirige al usuario a la lista de webinars actualizada
                 $data['errores'] = '';
-                $data['webinars'] = Webinar::all();
+                $data['webinars'] = Webinar::orderBy('created_at')->get();;
+                foreach ($data['webinars'] as $web) {   //Formato fechas
+                    $web['inicio'] = new DateTime($web->fecha_inicio);
+                    $web['fin'] = new DateTime($web->fecha_fin);
+                }
 
                 return view('webinars.webinars', $data);
             }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
@@ -345,5 +384,76 @@ class WebinarsController extends Controller {
             return view('errors.error')->with('error',$e->getMessage());
         }
 	}
+
+    public function indexDesactivados()
+    {
+        try{
+
+            //Verificación de los permisos del usuario para poder realizar esta acción
+            $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
+
+            if($usuario_actual->can('ver_webinars')) {   // Si el usuario posee los permisos necesarios continua con la acción
+
+                $data['errores'] = '';
+                $data['webinars'] = Webinar::orderBy('created_at')->get(); // Se obtienen todos los webinars con sus datos
+                foreach ($data['webinars'] as $web) {   //Formato fechas
+                    $web['inicio'] = new DateTime($web->fecha_inicio);
+                    $web['fin'] = new DateTime($web->fecha_fin);
+                }
+
+                return view('webinars.desactivados', $data);
+
+            }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
+
+                return view('errors.sin_permiso');
+            }
+        }
+        catch (Exception $e) {
+
+            return view('errors.error')->with('error',$e->getMessage());
+        }
+    }
+
+    public function activar($id) {
+        try{
+            //Verificación de los permisos del usuario para poder realizar esta acción
+            $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
+
+            if($usuario_actual->can('activar_cursos')) {  // Si el usuario posee los permisos necesarios continua con la acción
+                // Se obtienen los datos del webinars que se desea activar
+                $webinar = Webinar::find($id);
+                //Se activa el webinar
+                $webinar->webinar_activo = true;
+                $webinar->save(); // se guarda
+
+                // Se redirige al usuario a la lista de webinars actualizada
+                $data['errores'] = '';
+                $data['webinars'] = Webinar::orderBy('created_at')->get();
+                foreach ($data['webinars'] as $web) {   //Formato fechas
+                    $web['inicio'] = new DateTime($web->fecha_inicio);
+                    $web['fin'] = new DateTime($web->fecha_fin);
+                }
+
+                return view('webinars.desactivados', $data);
+            }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
+
+                return view('errors.sin_permiso');
+            }
+        }
+        catch (Exception $e) {
+
+            return view('errors.error')->with('error',$e->getMessage());
+        }
+    }
 
 }

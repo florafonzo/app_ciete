@@ -29,8 +29,8 @@
                             @if($webinar->webinar_activo)
                                 <tr>
                                     <td>{{ $webinar->nombre }}</td>
-                                    <td>{{ $webinar->fecha_inicio }} </td>
-                                    <td>{{ $webinar->fecha_fin }} </td>
+                                    <td>{{ $webinar->inicio->format('d-m-Y') }} </td>
+                                    <td>{{ $webinar->fin->format('d-m-Y') }} </td>
                                     <td>
                                         @if(Entrust::can('editar_webinars'))
                                             {{--<button><span class="glyphicon glyphicon-pencil" data-toggle="tooltip" data-placement="bottom" title="Editar" aria-hidden="true"></span></button>--}}

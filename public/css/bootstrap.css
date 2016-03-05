@@ -213,7 +213,7 @@ table {
     page-break-inside: avoid;
   }
   img {
-    max-width: 100% !important;
+    /*max-width: 100% !important;*/
   }
   @page  {
     margin: 2cm .5cm;
@@ -294,7 +294,7 @@ a:focus {
 }
 img {
   vertical-align: middle;
-  max-width: 100%;
+  /*max-width: 100%;*/
   height: auto;
   border: 0;
 }
@@ -5825,10 +5825,10 @@ button.close {
 .modal-content {
   position: relative;
   top: 20%;
-  left: 35%; /*modificado para el modal de candidatas*/
+  /*left: 35%; /!*modificado para el modal de candidatas*!/*/
   z-index: 99999;
-  width: 700px; /*modificado para el modal de candidatas*/
-  margin-left: -135px;
+  /*width: 700px; /!*modificado para el modal de candidatas*!/*/
+  /*margin-left: -135px;*/
   background-color: #ffffff;
 }
 .modal-backdrop {
@@ -5892,17 +5892,17 @@ button.close {
   background-color: #FFFFFF;
 }
 .modal-footer p {
-  font-weight: 400;
-  color: #fff;
+  /*font-weight: 400;*/
+  /*color: #fff;*/
   margin: 0;
 }
 .modal-footer a {
-  font-weight: 700;
-  color: #FFFFFF;
+  /*font-weight: 700;*/
+  /*color: #FFFFFF;*/
 }
 .modal-footer p, .modal-footer a {
-  font-size: 11px;
-  line-height: 11px;
+  /*font-size: 11px;*/
+  /*line-height: 11px;*/
 }
 .modal-footer:before,
 .modal-footer:after {

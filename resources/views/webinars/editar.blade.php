@@ -108,7 +108,8 @@
                     {{--</div>--}}
 
                     <a href="{{URL::to("/")}}/webinars" class="btn btn-default text-right"><span class="glyphicon glyphicon-remove"></span> Cancelar</a>
-                    {!! Form::submit('Editar', array('class' => 'btn btn-success')) !!}
+                    <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-save" ></span> Guardar </button>
+{{--                    {!! Form::submit('Editar', array('class' => 'btn btn-success')) !!}--}}
 
                     {!! Form::close() !!}
                 @endif

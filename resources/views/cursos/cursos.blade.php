@@ -30,8 +30,8 @@
                                 <tr>
                                     <td>{{ $curso->nombre }}</td>
                                     <td>{{ $curso->tipo_curso  }}</td>
-                                    <td>{{ $curso->fecha_inicio  }}</td>
-                                    <td>{{ $curso->fecha_fin  }}</td>
+                                    <td>{{ $curso->inicio->format('d-m-Y') }}</td>
+                                    <td>{{ $curso->fin->format('d-m-Y')  }}</td>
 
                                     <td>
                                         @if(Entrust::can('editar_cursos'))
@@ -60,6 +60,15 @@
                                                 <button type="submit" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="Participantes">
                                                     <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                                                 </button>
+                                            {!! Form::close() !!}
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if(Entrust::can('profesores_curso'))
+                                            {!!Form::open(["url"=>"cursos/".$curso->id."/profesores",  "method" => "GET" ])!!}
+                                            <button type="submit" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="Pr">
+                                                <span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span>
+                                            </button>
                                             {!! Form::close() !!}
                                         @endif
                                     </td>

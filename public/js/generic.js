@@ -89,7 +89,7 @@ $(document).ready(function() {
 //-------------------------------------------------------------------------//
 
 // ------ FadeOut para desaparecer notificaciones en un tiempo estimado ------ //
-    $('#flash_success').fadeToggle(4000);
+    $('.flash_time').fadeToggle(4000);
 
 //--------------------------------------------
 
@@ -196,6 +196,51 @@ $(document).ready(function() {
 //------------------------------------------------------------------------------//
 
 
+// ----------------------- Imagen Perfil Crop ----------------------------------//
+
+    $('#enviar').hide();
+    $('#imagen2').hide();
+    $('#aceptar').hide();
+    $( "#file_perfil" ).on("change", function(e){
+        var dir = e.target.files;
+        var romper = true;
+        $.each(dir, function(index, file) {
+
+            var fileReader = new FileReader();
+
+            // When the filereader loads initiate a function
+            fileReader.onload = (function(file) {
+
+                return function(e) {
+
+                    // This is the image
+                    var image = this.result;
+                    $('#imagen2').attr('src', image);
+                    //$('#imagen2').hide();
+
+                };
+
+
+            })(dir[index]);
+
+            // For data URI purposes
+            fileReader.readAsDataURL(file);
+            if(romper) return false;
+        });
+
+        setTimeout(function() {
+            var imagee =  $('#imagen2');
+            var source = imagee.attr('src');
+            $('#imagen').attr('src', source);
+            $('.esconder').show();
+            $("#imagenModal").modal({backdrop: 'static', keyboard: false});
+            resizeableImage($('.resize-image'));
+        }, 50);
+        $('#nombre_hidden').val($('#nombre').val());
+        $('#descripcion_hidden').val($('#descripcion').val());
+    });
+//------------------------------------------------------------------------------------------//
+
 
 
 });
@@ -240,7 +285,7 @@ function desactivarCurso(id) {
 function activarCurso(id) {
     swal({
             title: "¿Está seguro que desea activarlo?",
-            text: "Si lo activa, aparecera en la lista de cursos disponibles",
+            text: "Si lo activa, aparecerá en la lista de cursos disponibles",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: 'green',
@@ -249,6 +294,24 @@ function activarCurso(id) {
         },
         function(){
             $('#form_activar'+id).submit();
+        })
+}
+//------------------------------------------------------------------------------//
+
+// ------------------------Función para activar webinar --------------------------------------------//
+
+function activarWebinar(id) {
+    swal({
+            title: "¿Está seguro que desea activarlo?",
+            text: "Si lo activa, aparecerá en la lista de webinars disponibles",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: 'green',
+            confirmButtonText: "Activar",
+            closeOnConfirm: false
+        },
+        function(){
+            $('#webinar_activar'+id).submit();
         })
 }
 //------------------------------------------------------------------------------//
@@ -268,6 +331,24 @@ function eliminarPart(id) {
             $('#form_eliminar_part'+id).submit();
         })
 
+}
+//------------------------------------------------------------------------------//
+
+// ------------------------Función para agregar participante a un curso --------------------------------------------//
+
+function agregarPart(id) {
+    swal({
+            title: "¿Está seguro que desea agregar el usuario al curso?",
+            text: "Si lo agrega, aparecerá en la lista de participantes del curso",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: 'green',
+            confirmButtonText: "Agregar",
+            closeOnConfirm: false
+        },
+        function(){
+            $('#part_agregar'+id).submit();
+        })
 }
 //------------------------------------------------------------------------------//
 

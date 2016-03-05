@@ -9,8 +9,10 @@ use App\Models\TipoCurso;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Exception;
 use DB;
+use Intervention\Image\ImageManagerStatic as Image;
 
 use App\Models\Participante;
 use Illuminate\Http\Request;
@@ -30,6 +32,11 @@ class ParticipantesController extends Controller {
         try {
             //Verificación de los permisos del usuario para poder realizar esta acción
             $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
 
             if($usuario_actual->can('ver_perfil_part')) { // Si el usuario posee los permisos necesarios continua con la acción
                 $data['errores'] = '';
@@ -57,6 +64,12 @@ class ParticipantesController extends Controller {
         try{
             //Verificación de los permisos del usuario para poder realizar esta acción
             $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
+
             if($usuario_actual->can('ver_perfil_part')) {     // Si el usuario posee los permisos necesarios continua con la acción
 
                 $data['errores'] = '';
@@ -83,17 +96,23 @@ class ParticipantesController extends Controller {
      *
      * @return Response
      */
-    public function editarPerfil()
+    public function editarPerfil($id)
     {
         try{
             //Verificación de los permisos del usuario para poder realizar esta acción
             $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+                Session::flash('imagen', 'yes');
+            }
+
             if($usuario_actual->can('editar_perfil_part')) { // Si el usuario posee los permisos necesarios continua con la acción
 
                 $data['errores'] = '';
                 $data['datos'] = Participante::where('id_usuario', '=', $usuario_actual->id)->get(); // Se obtienen los datos del participante
                 $data['email']= User::where('id', '=', $usuario_actual->id)->get(); // Se obtiene el correo principal del participante;
-//                dd($data['datos']);
 
                 return view('participantes.editar-perfil', $data);
 
@@ -122,11 +141,18 @@ class ParticipantesController extends Controller {
 
             //Verificación de los permisos del usuario para poder realizar esta acción
             $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
+
             if($usuario_actual->can('editar_perfil_part')) {  // Si el usuario posee los permisos necesarios continua con la acción
 
                 $data['errores'] = '';
                 $usuario = User::find($id); // Se obtienen los datos del participante que se desea editar
                 $participante = Participante::where('id_usuario', '=', $id)->get(); // Se obtiene el resto de los datos del participante que se desea editar
+                $img_nueva = Session::get('cortar');
 
                 $email = $request->email;
                 // Se verifica si el correo ingresado es igual al anterior y si no lo es se verifica
@@ -146,29 +172,33 @@ class ParticipantesController extends Controller {
                     }
                 }
 
+                if($img_nueva == 'yes'){
+                    $file = Input::get('dir');
+                    Storage::delete('/images/images_perfil/' . $request->file_viejo);
+                    $file = str_replace('data:image/png;base64,', '', $file);
+                    $nombreTemporal = 'perfil_' . date('dmY') . '_' . date('His') . ".jpg";
+                    $usuario->foto = $nombreTemporal;
+
+                    $imagen = Image::make($file);
+                    $payload = (string)$imagen->encode();
+                    Storage::put(
+                        '/images/images_perfil/'. $nombreTemporal,
+                        $payload
+                    );
+                }
+
                 // Se editan los datos del participante con los datos ingresados en el formulario
                 $usuario->nombre = $request->nombre;
                 $usuario->apellido = $request->apellido;
                 $usuario->email = $email;
-
-
-
                 $usuario->save();   // Se guardan los nuevos datos en la tabla Users
-
-
-                // Se verifica si se colocó una imagen en el formulario
-                if ($request->hasFile('imagen')) {
-                    $imagen = $request->file('imagen');
-                } else {
-                    $imagen = $participante[0]->foto;
-                }
 
                 // Se editan los datos del participante deseado con los datos ingresados en el formulario
                 $participante[0]->nombre = $request->nombre;
                 $participante[0]->apellido = $request->apellido;
                 $participante[0]->documento_identidad = $request->documento_identidad;
                 $participante[0]->telefono = $request->telefono;
-                $participante[0]->foto = $imagen;
+//                $participante[0]->foto = $imagen;
                 $participante[0]->celular = $request->celular;
                 $participante[0]->correo_alternativo = $request->correo_alternativo;
                 $participante[0]->twitter = Input::get('twitter');
@@ -186,6 +216,7 @@ class ParticipantesController extends Controller {
                         Session::set('mensaje','Datos guardados satisfactoriamente.');
                         $data['datos'] = Participante::where('id_usuario', '=', $id)->get(); // Se obtienen los datos del participante
                         $data['email']= User::where('id', '=', $id)->get(); // Se obtiene el correo principal del participante;
+                        $data['foto'] = $data['email'][0]->foto;
                         return view('participantes.ver-perfil', $data);
 
                     } else {    // Si el usuario no se ha actualizo con exito en la tabla Participante
@@ -222,6 +253,12 @@ class ParticipantesController extends Controller {
         try{
             //Verificación de los permisos del usuario para poder realizar esta acción
             $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
+
             if($usuario_actual->can('ver_cursos_part')) {// Si el usuario posee los permisos necesarios continua con la acción
 
                 $data['errores'] = '';
@@ -257,6 +294,12 @@ class ParticipantesController extends Controller {
         try{
             //Verificación de los permisos del usuario para poder realizar esta acción
             $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
+
             if($usuario_actual->can('ver_notas_part')) {// Si el usuario posee los permisos necesarios continua con la acción
 
                 $data['errores'] = '';
@@ -287,6 +330,65 @@ class ParticipantesController extends Controller {
 
             return view('errors.error')->with('error',$e->getMessage());
         }
+    }
+
+    public function cambiarImagen()
+    {
+        try {
+
+            $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
+
+            if($usuario_actual->can('editar_perfil_part')) {  // Si el usuario posee los permisos necesarios continua con la acción
+                $data['errores'] = '';
+                $data['datos'] = Participante::where('id_usuario', '=', $usuario_actual->id)->get(); // Se obtienen los datos del participante
+                $data['email']= User::where('id', '=', $usuario_actual->id)->get(); // Se obtiene el correo principal del participante;
+                Session::flash('imagen', 'yes');
+                return view('participantes.editar-perfil', $data);
+
+            }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
+
+                return view('errors.sin_permiso');
+            }
+
+        } catch (Exception $e) {
+            return view('errors.error')->with('error', $e->getMessage());
+        }
+    }
+
+    public function procesarImagen() {
+
+        try {
+
+            $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
+
+            if($usuario_actual->can('editar_perfil_part')) {  // Si el usuario posee los permisos necesarios continua con la acción
+                $data['ruta'] = Input::get('rutas');
+                $data['errores'] = '';
+                $data['datos'] = Participante::where('id_usuario', '=', $usuario_actual->id)->get(); // Se obtienen los datos del participante
+                $data['email']= User::where('id', '=', $usuario_actual->id)->get(); // Se obtiene el correo principal del participante;
+                Session::flash('imagen', null);
+                Session::flash('cortar', 'yes');
+                return view('participantes.editar-perfil', $data);
+
+            }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
+
+                return view('errors.sin_permiso');
+            }
+
+        } catch (Exception $e) {
+            return view('errors.error')->with('error', $e->getMessage());
+        }
+
     }
 
 }

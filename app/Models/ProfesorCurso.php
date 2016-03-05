@@ -9,7 +9,7 @@ class ProfesorCurso extends Model {
      *
      * @var string
      */
-    protected $table = 'participante_cursos';
+    protected $table = 'profesor_cursos';
 
     /**
      * The attributes that are mass assignable.

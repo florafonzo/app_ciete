@@ -50,11 +50,7 @@
                             {!!Form::label('rol', 'Rol',  array( 'class' => 'col-md-4 control-label'))!!}
                             <div class="col-sm-8">
                                 @foreach($roles as $role)
-                                    @if ($role == "Participante")
-                                        <?php continue; ?>
-                                    @else
-                                        {!! Form::checkbox('id_rol[]', $role, false) !!} {{$role}} <br>
-                                    @endif
+                                    {!! Form::checkbox('id_rol[]', $role, false) !!} {{$role}} <br>
                                 @endforeach
                             </div>
                         </div>
@@ -90,12 +86,12 @@
                             {!! Form::password('password_confirmation', array('required','class' => 'form-control')) !!}
                         </div>
                     </div>
-                    <div class="form-group">
-                        {!!Form::label('imagen', 'Imagen de perfil: ',  array( 'class' => 'col-md-4 control-label'))!!}
-                        <div class="col-sm-8">
-                            {!!Form::file('imagen', $datos_usuario->foto, array('class' => 'form-control'))!!}
-                        </div>
-                    </div>
+                    {{--<div class="form-group">--}}
+                        {{--{!!Form::label('imagen', 'Imagen de perfil: ',  array( 'class' => 'col-md-4 control-label'))!!}--}}
+                        {{--<div class="col-sm-8">--}}
+                            {{--{!!Form::file('imagen', $datos_usuario->foto, array('class' => 'form-control'))!!}--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
 
                     @if($es_participante)
                         <div class="form-group">
@@ -130,7 +126,9 @@
                         </div>
                     @endif
                         <a href="{{URL::to("/")}}/usuarios" class="btn btn-default text-right"><span class="glyphicon glyphicon-remove"></span> Cancelar</a>
-                        {!! Form::submit('Editar', array('class' => 'btn btn-success')) !!}
+                        <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-save" ></span> Guardar </button>
+
+{{--                    {!! Form::submit('Editar', array('class' => 'btn btn-success')) !!}--}}
 
 
                     {!! Form::close() !!}

@@ -15,7 +15,7 @@
                 @include('partials.mensajes'){{--Errores--}}
                 @if($datos->count())
                     {!! Form::open(array('method' => 'GET', 'action' => 'ParticipantesController@editarPerfil', 'class' => 'form-horizontal col-md-10', 'enctype' => "multipart/form-data")) !!}
-{{--                    {!! Form::open(array('method' => 'GET', 'route' => array('participante.editarPerfil', Auth::user()->id), 'class' => 'form-horizontal col-md-10', 'enctype' => "multipart/form-data")) !!}--}}
+                    {{--                    {!! Form::open(array('method' => 'GET', 'route' => array('participante.editarPerfil', Auth::user()->id), 'class' => 'form-horizontal col-md-10', 'enctype' => "multipart/form-data")) !!}--}}
                     <div class="form-group">
                         {!!Form::label('nombre', 'Nombre', array( 'class' => 'col-md-4 control-label')) !!}
                         <div class="col-sm-8">
@@ -35,7 +35,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        {!!Form::label('telefono', 'Teléfono de Fijo',  array( 'class' => 'col-md-4 control-label'))!!}
+                        {!!Form::label('telefono', 'Teléfono Fijo:',  array( 'class' => 'col-md-4 control-label'))!!}
                         <div class="col-sm-8">
                             {!!Form::text('telefono', $datos[0]->telefono ,array('disabled','class' => 'form-control'))!!}
                         </div>
@@ -48,19 +48,19 @@
                     </div>
 
                     {{--<div class="form-group">--}}
-                        {{--{!!Form::label('pais', 'Pais: ', array('class' => 'col-md-4 control-label'))!!}--}}
-                        {{--<div class="col-sm-8">--}}
-                            {{--{!! Form::select('id_pais', $pais, null, array('required', 'class' => 'form-control', 'id'=>'id_pais'))!!}--}}
-                        {{--</div>--}}
+                    {{--{!!Form::label('pais', 'Pais: ', array('class' => 'col-md-4 control-label'))!!}--}}
+                    {{--<div class="col-sm-8">--}}
+                    {{--{!! Form::select('id_pais', $pais, null, array('required', 'class' => 'form-control', 'id'=>'id_pais'))!!}--}}
+                    {{--</div>--}}
                     {{--</div>--}}
 
                     {{--<div class="localidad">--}}
-                        {{--<div class="form-group">--}}
-                            {{--{!!Form::label('estado', 'Estado:', array('class' => 'col-md-4 control-label'))!!}--}}
-                            {{--<div class="col-sm-8">--}}
-                                {{--{!! Form::select('id_est', $estados, null, array('required', 'class' => 'form-control', 'id'=>'id_est'))!!}--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
+                    {{--<div class="form-group">--}}
+                    {{--{!!Form::label('estado', 'Estado:', array('class' => 'col-md-4 control-label'))!!}--}}
+                    {{--<div class="col-sm-8">--}}
+                    {{--{!! Form::select('id_est', $estados, null, array('required', 'class' => 'form-control', 'id'=>'id_est'))!!}--}}
+                    {{--</div>--}}
+                    {{--</div>--}}
                     {{--</div>--}}
                     <div class="form-group">
                         {!!Form::label('email', 'Correo electrónico',  array( 'class' => 'col-md-4 control-label'))!!}
@@ -69,19 +69,19 @@
                         </div>
                     </div>
                     {{--<div class="form-group">--}}
-                        {{--{!!Form::label('imagen', 'Imagen de perfil: ',  array( 'class' => 'col-md-4 control-label'))!!}--}}
-                        {{--<div class="col-sm-8">--}}
-                            {{--{!!Form::file('imagen', $datos[0]->foto, array('class' => 'form-control'))!!}--}}
-                        {{--</div>--}}
+                    {{--{!!Form::label('imagen', 'Imagen de perfil: ',  array( 'class' => 'col-md-4 control-label'))!!}--}}
+                    {{--<div class="col-sm-8">--}}
+                    {{--{!!Form::file('imagen', $datos[0]->foto, array('class' => 'form-control'))!!}--}}
+                    {{--</div>--}}
                     {{--</div>--}}
                     <div class="form-group">
-                        {!!Form::label('correo_alternativo', 'Correo electrónico alternativo: ',  array( 'class' => 'col-md-4 control-label'))!!}
+                        {!!Form::label('correo_alternativo', 'Correo alternativo: ',  array( 'class' => 'col-md-4 control-label'))!!}
                         <div class="col-sm-8">
                             {!! Form::email('correo_alternativo', $datos[0]->correo_alternativo, array('disabled','class' => 'form-control'))!!}
                         </div>
                     </div>
                     <div class="form-group" >
-                        {!!Form::label('twitter', 'Usuario twitter: ',  array( 'class' => 'col-md-4 control-label'))!!}
+                        {!!Form::label('twitter', 'Twitter: ',  array( 'class' => 'col-md-4 control-label'))!!}
                         <div class="col-sm-8">
                             {!! Form::text('twitter', $datos[0]->twitter, array('disabled','class' => 'form-control'))!!}
                         </div>
@@ -99,14 +99,14 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        {!!Form::label('univ', 'Universidad dónde obtuvo el título: ',  array( 'class' => 'col-md-4 control-label'))!!}
+                        {!!Form::label('univ', 'Universidad: ',  array( 'class' => 'col-md-4 control-label'))!!}
                         <div class="col-sm-8">
                             {!! Form::text('univ', $datos[0]->universidad, array('disabled','class' => 'form-control'))!!}
                         </div>
                     </div>
                     @if(Entrust::can('editar_perfil_part'))
                         <div class="" style="text-align: center;">
-                            <a href="{{URL::to('/')}}/participante/perfil/editar" type="button" class="btn btn-success" >Editar datos </a>
+                            <a href="{{URL::to('/')}}/participante/perfil/{{Auth::user()->id}}/editar" type="button" class="btn btn-success" >Editar datos </a>
                         </div>
                     @endif
 
@@ -116,7 +116,5 @@
             </div>
         @endif
     </div>
-
-
 
 @stop

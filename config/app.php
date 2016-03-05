@@ -95,7 +95,7 @@ return [
 	|
 	*/
 
-	'log' => 'errorlog',
+	'log' => 'daily',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -152,6 +152,9 @@ return [
 //        Entrust
         'Zizaco\Entrust\EntrustServiceProvider',
 
+		//Intervention Image
+		'Intervention\Image\ImageServiceProvider',
+
 	],
 
 	/*
@@ -203,6 +206,7 @@ return [
         'Entrust' 	=> 'Zizaco\Entrust\EntrustFacade',
 		'Form'		=> 'Illuminate\Html\FormFacade',
 		'HTML'		=> 'Illuminate\Html\HtmlFacade',
+        'Image' => 'Intervention\Image\Facades\Image',
 
 	],
 

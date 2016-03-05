@@ -2,6 +2,10 @@ body{
     height: 100%;
 }
 
+a{
+    text-decoration: none !important;
+}
+
 
 /*Header*/
 header .container{
@@ -479,7 +483,11 @@ header .container{
     text-decoration: none;
 }
 
-
+/* Modal Crop Imagen perfil*/
+.modal-body {
+    max-height: 800px !important;
+}
+/*------------------------*/
 
 
 

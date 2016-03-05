@@ -208,7 +208,8 @@
                         </div>
                     </div>
                     <a href="{{URL::to("/")}}/cursos" class="btn btn-default text-right"><span class="glyphicon glyphicon-remove"></span> Cancelar</a>
-                    {!! Form::submit('Crear', array('class' => 'btn btn-success')) !!}
+                    <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-save" ></span> Crear </button>
+{{--                {!! Form::submit('Crear', array('class' => 'btn btn-success')) !!}--}}
 
                     {!! Form::close() !!}
                 {{--@endif--}}

@@ -38,6 +38,11 @@ class UsuariosController extends Controller {
 
             //Verificación de los permisos del usuario para poder realizar esta acción
             $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
 
             if($usuario_actual->can('ver_usuarios')) {   // Si el usuario posee los permisos necesarios continua con la acción
 
@@ -71,6 +76,11 @@ class UsuariosController extends Controller {
 
             //Verificación de los permisos del usuario para poder realizar esta acción
             $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
 
             if($usuario_actual->can('crear_usuarios')) {   // Si el usuario posee los permisos necesarios continua con la acción
 
@@ -120,12 +130,18 @@ class UsuariosController extends Controller {
 
             //Verificación de los permisos del usuario para poder realizar esta acción
             $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
 
             if($usuario_actual->can('crear_usuarios')) {   // Si el usuario posee los permisos necesarios continua con la acción
                 $data['es_participante'] = false;
                 $data['errores'] = '';
                 $dir = "";
                 //dd("pais: ".Input::get('id_pais')." ciudad: ".Input::get('ciudad')."  Municipio: ".Input::get('municipio')."  parr: ".Input::get('parroquia'));
+
                 $create = User::create([ //  Se crea el usuario en la tabla Users
                     'nombre' => $request->nombre,
                     'apellido' => $request->apellido,
@@ -136,13 +152,6 @@ class UsuariosController extends Controller {
                 $usuario = User::find($create->id);
                 $roles = $request->id_rol; // se obtienen los roles que le haya seleccionado el usuario en el formulario
                 $create2 = 0;
-
-                if ($request->hasFile('imagen')) {  //  Se verifica si el usuario colocó una imagen en el formulario
-                    $imagen = $request->file('imagen');
-                } else {
-                    $imagen = '';
-                }
-
 
                 if (($request->es_participante) == 'si') {  // Se verifica si el usuario es del tipo Perticipante y se crea en la tabla Participantes
                     $pais = Input::get('id_pais');
@@ -208,7 +217,6 @@ class UsuariosController extends Controller {
                     $create2->nombre = $request->nombre;
                     $create2->apellido = $request->apellido;
                     $create2->documento_identidad = $request->documento_identidad;
-                    $create2->foto = $imagen;
                     $create2->telefono = $request->telefono;
                     $create2->direccion = $dir;
                     $create2->celular = $request->celular;
@@ -245,7 +253,6 @@ class UsuariosController extends Controller {
                             'nombre' => $request->nombre,
                             'apellido' => $request->apellido,
                             'documento_identidad' => $request->documento_identidad,
-                            'foto' => $imagen,
                             'telefono' => $request->telefono,
                             'celular' => $request->celular
                         ]);
@@ -299,6 +306,11 @@ class UsuariosController extends Controller {
 
             //Verificación de los permisos del usuario para poder realizar esta acción
             $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
 
             if($usuario_actual->can('editar_usuarios')) {  // Si el usuario posee los permisos necesarios continua con la acción
                 $data['estado'] = '';
@@ -313,14 +325,15 @@ class UsuariosController extends Controller {
                 $data['usuarios'] = $usuario;    //Se obtienen los datos del usuario que se desea editar
                 $userRoles = $data['usuarios']->roles()->get(); // Se obtienen los roles del usuario que se desea editar
                 $data['rol'] = $userRoles;
-                $data['roles'] = Role::all()->lists('display_name', 'id');
+                $data['roles'] = Role::where('name', '!=', 'participante')->lists('display_name', 'id');
                 /*$data['paises'] = Pais::all()->lists('pais', 'id');
                 $data['estados'] = Estado::all()->lists('estado','id_estado');
                 $data['ciudades'] = Ciudad::all()->lists('ciudad', 'id_ciudad');
                 $data['municipios'] = Municipio::all()->lists('municipio','id_municipio');
                 $data['parroquias'] = Parroquia::all()->lists('parroquia', 'id_parroquia');*/
 
-                foreach ($userRoles as $role) { //  Se verifica el rol del usuario que se desea editar (si es Participante o Profesor) y se obtienen su datos
+                foreach ($userRoles as $role) { //  Se verifica el rol del usuario que se desea editar
+                // (si es Participante o Profesor) y se obtienen su datos
                     if (($role->name) == 'participante') {
                         $data['es_participante'] = true;
                         $data['datos_usuario'] = DB::table('participantes')->where('id_usuario', '=', $usuario->id)->first();
@@ -338,6 +351,31 @@ class UsuariosController extends Controller {
                         
                     } else {
                         $data['datos_usuario'] = DB::table('profesores')->where('id_usuario', '=', $usuario->id)->first();
+
+                        $arr = [];
+                        $usuario_rol = array($userRoles);
+//                        dd($usuario_rol[0]);
+
+                        foreach ($data['roles'] as $index => $rol) {
+                            $arr[$index] = false;
+                        }
+                        foreach ($usuario_rol[0] as $index => $rol) {
+                            if($index < 2) {
+                                if ($rol->id == ($index + 1)) {
+                                    $arr[$index + 1] = true;
+                                } else {
+                                    $arr[$index + 1] = false;
+                                }
+                            }else{
+                                if ($rol->id == ($index + 2)) {
+                                    $arr[$index + 2] = true;
+                                } else {
+                                    $arr[$index + 2] = false;
+                                }
+                            }
+                        }
+                        $data['pagos'] = $arr;
+
                     }
                     break;
                 }
@@ -373,6 +411,11 @@ class UsuariosController extends Controller {
 
             //Verificación de los permisos del usuario para poder realizar esta acción
             $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
 
             if($usuario_actual->can('editar_usuarios')) {   // Si el usuario posee los permisos necesarios continua con la acción
 
@@ -421,32 +464,25 @@ class UsuariosController extends Controller {
                 }
 
                 $password = bcrypt($request->password);
-                // Se editan los datos del usuario deseado con los datos ingresados en el formulario
-                $usuario->nombre = $request->nombre;
-                $usuario->apellido = $request->apellido;
-                $usuario->email = $email;
-                $usuario->password = $password;
 
                 $roles = Input::get('id_rol');
 
                 if ($es_participante) {
-                    $usuario->save();   // Se guardan los nuevos datos en la tabla Users
-
                     $tipo_usuario = Participante::find(1)->where('id_usuario', '=', $id)->first();
 
-                    // Se verifica si se colocó una imagen en el formulario
-                    if ($request->hasFile('imagen')) {
-                        $imagen = $request->file('imagen');
-                    } else {
-                        $imagen = $tipo_usuario->foto;
-                    }
+                    // Se editan los datos del usuario deseado de la tabla Users con los datos ingresados en el formulario
+                    $usuario->nombre = $request->nombre;
+                    $usuario->apellido = $request->apellido;
+                    $usuario->email = $email;
+                    $usuario->password = $password;
+                    $usuario->save();   // Se guardan los nuevos datos en la tabla Users
+
 
                     // Se editan los datos del usuario deseado de la tabla Participentes con los datos ingresados en el formulario
                     $tipo_usuario->nombre = $request->nombre;
                     $tipo_usuario->apellido = $request->apellido;
                     $tipo_usuario->documento_identidad = $request->documento_identidad;
                     $tipo_usuario->telefono = $request->telefono;
-                    $tipo_usuario->foto = $imagen;
                     $tipo_usuario->celular = $request->celular;
                     $tipo_usuario->correo_alternativo = $request->correo_alternativo;
                     $tipo_usuario->twitter = Input::get('twitter');
@@ -483,21 +519,19 @@ class UsuariosController extends Controller {
                         return view('usuarios.edit', $data);
 
                     } else {    // Si se completaron todos los campos necesarios se guardan los datos en la tabla Profesores
-
-                        $usuario->save();
                         $tipo_usuario = Profesor::find(1)->where('id_usuario', '=', $id)->first();
 
-                        if ($request->hasFile('imagen')) {
-                            $imagen = $request->file('imagen');
-                        } else {
-                            $imagen = $tipo_usuario->foto;
-                        }
+                        // Se editan los datos del usuario deseado de la tabla Users con los datos ingresados en el formulario
+                        $usuario->nombre = $request->nombre;
+                        $usuario->apellido = $request->apellido;
+                        $usuario->email = $email;
+                        $usuario->password = $password;
+                        $usuario->save();
 
                         $tipo_usuario->nombre = $request->nombre;
                         $tipo_usuario->apellido = $request->apellido;
                         $tipo_usuario->documento_identidad = $request->documento_identidad;
                         $tipo_usuario->telefono = $request->telefono;
-                        $tipo_usuario->foto = $imagen;
                         $tipo_usuario->celular = $request->celular;
 
                         $tipo_usuario->save();
@@ -552,6 +586,11 @@ class UsuariosController extends Controller {
 
             //Verificación de los permisos del usuario para poder realizar esta acción
             $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
 
             if($usuario_actual->can('eliminar_usuarios')) {   // Si el usuario posee los permisos necesarios continua con la acción
 

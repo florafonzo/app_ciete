@@ -172,6 +172,21 @@ class PermisionsSeeder extends Seeder {
         $eliminar_part->name = 'eliminar_part_curso';
         $eliminar_part->display_name = 'eliminar participante de un curso';
         $eliminar_part->save();
+
+        $profesores_cursos = new Permission();
+        $profesores_cursos->name = 'profesores_curso';
+        $profesores_cursos->display_name = 'ver profesores de un curso';
+        $profesores_cursos->save();
+
+        $agregar_prof = new Permission();
+        $agregar_prof->name = 'agregar_prof_curso';
+        $agregar_prof->display_name = 'agregar profesor de un curso';
+        $agregar_prof->save();
+
+        $eliminar_prof = new Permission();
+        $eliminar_prof->name = 'eliminar_prof_curso';
+        $eliminar_prof->display_name = 'eliminar profesor de un curso';
+        $eliminar_prof->save();
     }
 
 }

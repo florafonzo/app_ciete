@@ -31,8 +31,8 @@
                                 <tr>
                                     <td>{{ $curso->nombre }}</td>
                                     <td>{{ $curso->tipo_curso  }}</td>
-                                    <td>{{ $curso->fecha_inicio  }}</td>
-                                    <td>{{ $curso->fecha_fin  }}</td>
+                                    <td>{{ $curso->inicio->format('d-m-Y')  }}</td>
+                                    <td>{{ $curso->fin->format('d-m-Y')  }}</td>
 
                                     <td>
                                         @if(Entrust::can('activar_cursos'))

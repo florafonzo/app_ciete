@@ -5,7 +5,7 @@
 
         <div class="col-md-12 col-sm-12 col-md-offset-2 bienvenida">
             <h3>
-                Participantes del curso {{$curso->nombre}}
+                Profesores que dictan {{$curso->nombre}}
             </h3>
         </div>
 
@@ -18,24 +18,20 @@
                     <tr>
                         <th>Nombre</th>
                         <th>Apellido</th>
-                        {{--<th>Fecha Inicio</th>--}}
-                        {{--<th>Fecha Fin</th>--}}
                         <th>Acciones</th>
                     </tr>
                     </thead>
-                    @if($participantes != null)
-                        <tbody>
-                        @foreach($participantes as $participante)
-                            <tr>
-                                <td>{{ $participante[0]->nombre }}</td>
-                                <td>{{ $participante[0]->apellido  }}</td>
-                                {{--<td>{{ $participantes->fecha_inicio  }}</td>--}}
-                                {{--<td>{{ $participantes->fecha_fin  }}</td>--}}
+                    <tbody>
+                    @if($profesores != null)
 
+                        @foreach($profesores as $profesor)
+                            <tr>
+                                <td>{{ $profesor[0]->nombre }}</td>
+                                <td>{{ $profesor[0]->apellido  }}</td>
                                 <td>
-                                    @if(Entrust::can('eliminar_part_curso'))
-                                        {!!Form::open(["url"=>"cursos/".$curso->id."/participantes/".$participante[0]->id."/eliminar",  "method" => "delete", "id" => "form_eliminar_part".$participante[0]->id ])!!}
-                                        <button type="button" onclick="eliminarPart('{{$participante[0]->id}}')" class='btn btn-danger' data-toggle='tooltip' data-placement="bottom" title="Eliminar">
+                                    @if(Entrust::can('eliminar_prof_curso'))
+                                        {!!Form::open(["url"=>"cursos/".$curso->id."/profesores/".$profesor[0]->id."/eliminar",  "method" => "delete", "id" => "form_eliminar_prof".$profesor[0]->id ])!!}
+                                        <button type="button" onclick="eliminarPart('{{$profesor[0]->id}}')" class='btn btn-danger' data-toggle='tooltip' data-placement="bottom" title="Eliminar">
                                             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                         </button>
                                         {!! Form::close() !!}
@@ -43,8 +39,14 @@
                                 </td>
                             </tr>
                         @endforeach
-                        </tbody>
+                    @else
+                        <tr>
+                            <td>
+                                <strong> No existen profesores inscritos en este curso </strong>
+                            </td>
+                        </tr>
                     @endif
+                    </tbody>
                 </table>
                 <div class="col-md-2 " style="">
                     @if(Entrust::can('ver_lista_cursos'))
@@ -52,9 +54,9 @@
                     @endif
                 </div>
                 <div class="col-md-2 " style="">
-                    @if(Entrust::can('agregar_part_curso'))
-                        {!!Form::open(["url"=>"cursos/".$curso->id."/participantes/agregar",  "method" => "GET" ])!!}
-                        <button type="submit" class="btn btn-success" data-toggle="tooltip" data-placement="bottom" title="Agregar participante al curso" >
+                    @if(Entrust::can('agregar_prof_curso'))
+                        {!!Form::open(["url"=>"cursos/".$curso->id."/profesores/agregar",  "method" => "GET" ])!!}
+                        <button type="submit" class="btn btn-success" data-toggle="tooltip" data-placement="bottom" title="Agregar profesor al curso" >
                             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Agregar
                         </button>
                         {!! Form::close() !!}

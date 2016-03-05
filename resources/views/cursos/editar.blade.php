@@ -54,13 +54,13 @@
                     <div class="form-group">
                         {!!Form::label('fecha', 'Fecha',  array( 'class' => 'col-md-4 control-label'))!!}
                         <div class="col-sm-8">
-                            {!!Form::input('date', 'fecha_inicio', $cursos->fecha_inicio ,array('required','class' => 'form-control'))!!}
+                            {!!Form::input('date', 'fecha_inicio', $inicio->format('d/m/Y') ,array('required','class' => 'form-control'))!!}
                         </div>
                     </div>
                     <div class="form-group">
                         {!!Form::label('fecha', 'Fecha',  array( 'class' => 'col-md-4 control-label'))!!}
                         <div class="col-sm-8">
-                            {!!Form::input('date', 'fecha_fin', $cursos->fecha_fin ,array('required','class' => 'form-control'))!!}
+                            {!!Form::input('date', 'fecha_fin', $fin->format('d/m/Y') ,array('required','class' => 'form-control'))!!}
                         </div>
                     </div>
                     <div class="form-group">
@@ -168,8 +168,12 @@
                     <div class="form-group">
                         {!!Form::label('modalidades_pago', 'Modalidades de pago',  array( 'class' => 'col-md-4 control-label'))!!}
                         <div class="col-sm-8">
-                            @foreach($modalidad_pago as $modalidad)
-                                {!! Form::checkbox('modalidades_pago[]', $modalidad, false) !!} {{$modalidad}} <br>
+                            @foreach($modalidad_pago as $index => $modalidad)
+                                @if($pagos[$index] == true)
+                                    {!! Form::checkbox('modalidades_pago[]', $modalidad, true) !!} {{$modalidad}} <br>
+                                @else
+                                    {!! Form::checkbox('modalidades_pago[]', $modalidad, false) !!} {{$modalidad}} <br>
+                                @endif
                             @endforeach
                         </div>
                     </div>
@@ -191,8 +195,9 @@
                             {!! Form::text('descripcion_carrusel', $cursos->descrpcion_carrusel, array('class' => 'form-control'))!!}
                         </div>
                     </div>
-
-                    {!! Form::submit('Editar', array('class' => 'btn btn-success')) !!}
+                    <a href="{{URL::to("/")}}/cursos" class="btn btn-default text-right"><span class="glyphicon glyphicon-remove"></span> Cancelar</a>
+                    <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-save" ></span> Guardar </button>
+{{--                    {!! Form::submit('Editar', array('class' => 'btn btn-success')) !!}--}}
 
                     {!! Form::close() !!}
                 @endif
