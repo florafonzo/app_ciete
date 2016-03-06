@@ -139,16 +139,24 @@ class WebinarsController extends Controller {
                 if(($request->fecha_inicio) <= $fecha_actual) {
                     Session::set('error', 'La fecha de inicio debe ser mayor a la fecha actual');
                     $data['errores'] = '';
-                    $data['webinars'] = Webinar::all();   // Se obtienen todos los webinars
+                    //$data['webinars'] = Webinar::all();   // Se obtienen todos los webinars
                     return view('webinars.crear', $data);
 
                 }else{
                     if (($request->fecha_inicio) > ($request->fecha_fin)) {
                         Session::set('error', 'La fecha de inicio debe ser igual o menor a la fecha fin');
                         $data['errores'] = '';
-                        $data['webinars'] = Webinar::all();   // Se obtienen todos los webinars
+                        //$data['webinars'] = Webinar::all();   // Se obtienen todos los webinars
                         return view('webinars.crear', $data);
                     }
+                }
+
+                //se verifica que el MIN por seccion sea igual o menor al MAX
+                if (($request->mini) > ($request->maxi)) {
+                    //Session::set('error', 'La cantidad minima de cupos por seccion debe ser igual o menor a la canidad maxima');
+                    $data['errores'] = 'La cantidad minima de cupos por seccion debe ser igual o menor a la canidad maxima';
+
+                    return view('webinars.crear', $data);
                 }
 
 
@@ -287,6 +295,14 @@ class WebinarsController extends Controller {
                         Session::set('error', 'La fecha de inicio debe ser igual o menor a la fecha fin');
                         return view('webinars.crear', $data);
                     }
+                }
+
+                //se verifica que el MIN por seccion sea igual o menor al MAX
+                if (($request->mini) > ($request->maxi)) {
+                    Session::set('error', 'La cantidad minima de cupos por seccion debe ser igual o menor a la canidad maxima');
+                    $data['errores'] = '';
+
+                    return view('webinars.crear', $data);
                 }
 
                 $activo_carrusel = false;

@@ -209,6 +209,16 @@ class CursosController extends Controller {
                     }
                 }
 
+                //se verifica que el MIN por seccion sea igual o menor al MAX
+                if (($request->mini) > ($request->maxi)) {
+                    Session::set('error', 'La cantidad minima de cupos por seccion debe ser igual o menor a la canidad maxima');
+                    $data['tipos'] = TipoCurso::all()->lists('nombre', 'id');
+                    $data['modalidad_pago'] = ModalidadPago::all()->lists('nombre', 'id');
+                    $data['modalidad_curso'] = ModalidadCurso::all()->lists('nombre', 'id');
+
+                    return view('cursos.crear', $data);
+                }
+
                 $activo_carrusel = false;
                 // Se verifica si el usuario elijió que el curso este activo en el carrusel o no
                 if (Input::get('activo_carrusel') == "on") {
@@ -406,6 +416,16 @@ class CursosController extends Controller {
 
                         return view('cursos.editar', $data);
                     }
+                }
+
+                //se verifica que el MIN por seccion sea igual o menor al MAX
+                if (($request->mini) > ($request->maxi)) {
+                    Session::set('error', 'La cantidad minima de cupos por seccion debe ser igual o menor a la canidad maxima');
+                    $data['tipos'] = TipoCurso::all()->lists('nombre', 'id');
+                    $data['modalidad_pago'] = ModalidadPago::all()->lists('nombre', 'id');
+                    $data['modalidad_curso'] = ModalidadCurso::all()->lists('nombre', 'id');
+
+                    return view('cursos.crear', $data);
                 }
 
                 // Se verifica que el usuario haya seleccionado por lo menos una modalidad de pago

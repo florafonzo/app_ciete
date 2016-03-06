@@ -1,7 +1,7 @@
 @if (count($errors) > 0)
     <div class="row">
         <div class="errores ">
-            <strong>Whoops!</strong> Hubo ciertos errores con los datos ingresados: <br><br>
+            <strong>Whoops!</strong> Hubo ciertos errores: <br><br>
             <ul class="lista_errores">
                 @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
@@ -13,7 +13,7 @@
 @if ($errores != '')
     <div class="row">
         <div class="errores ">
-            <strong>Whoops!</strong> Hubo ciertos errores con los datos ingresados: <br><br>
+            <strong>Whoops!</strong> Hubo ciertos errores: <br><br>
             <ul class="lista_errores">
                 {{--@foreach ($errores->all() as $error)--}}
                 <li>{{ $errores }}</li>
@@ -28,7 +28,10 @@
     </div>
 @endif
 @if(Session::has('error'))
-    <div class='alert alert-danger flash_time'>
-        {{ Session::pull('error') }}
+    <div class='alert errores'>
+        <strong>Whoops!</strong> Hubo ciertos errores: <br><br>
+        <ul class="lista_errores">
+            <li>{{ Session::pull('error') }}</li>
+        </ul>
     </div>
 @endif

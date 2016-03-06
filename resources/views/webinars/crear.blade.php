@@ -44,9 +44,9 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    {!!Form::label('min', 'Cantidad de cupos MIN:',  array( 'class' => 'col-md-4 control-label'))!!}
+                    {!!Form::label('mini', 'Cantidad de cupos MIN:',  array( 'class' => 'col-md-4 control-label'))!!}
                     <div class="col-sm-8">
-                        {!!Form::text('min', Session::get('min') ,array('required','class' => 'form-control'))!!}
+                        {!!Form::text('mini', Session::get('min') ,array('required','class' => 'form-control'))!!}
                     </div>
                 </div>
                 <div class="form-group">

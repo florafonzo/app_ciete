@@ -75,25 +75,24 @@
                             {!! Form::text('link', $webinars->link, array('required','class' => 'form-control'))!!}
                         </div>
                     </div>
-
-                    {{--<div class="form-group">--}}
-                        {{--{!!Form::label('activo_carrusel_l', 'Curso activo en el carrusel?:',  array( 'class' => 'col-md-4 control-label'))!!}--}}
-                        {{--<div class="col-sm-8">--}}
-                            {{--{!! Form::checkbox('activo_carrusel',null, $webinars->activo_carrusel)!!}--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                    {{--<div class="form-group" id="imagen_carrusel">--}}
-                        {{--{!!Form::label('imagen_carrusel_l', 'Imagen carrusel:',  array( 'class' => 'col-md-4 control-label'))!!}--}}
-                        {{--<div class="col-sm-8">--}}
-                            {{--{!! Form::file('imagen_carrusel', $webinars->imagen_carrusel, array('class' => 'form-control'))!!}--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                    {{--<div class="form-group" id="descripcion_carrusel">--}}
-                        {{--{!!Form::label('desc_carrusel_l', 'Titulo de la imagen en el carrusel:',  array( 'class' => 'col-md-4 control-label'))!!}--}}
-                        {{--<div class="col-sm-8">--}}
-                            {{--{!! Form::text('descripcion_carrusel', $webinars->descrpcion_carrusel, array('class' => 'form-control'))!!}--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
+                    <div class="form-group">
+                        {!!Form::label('activo_carrusel', 'Webinar activo en el carrusel?:',  array( 'class' => 'col-md-4 control-label'))!!}
+                        <div class="col-sm-8">
+                            {!! Form::checkbox('activo_carrusel',null, false)!!}
+                        </div>
+                    </div>
+                    <div class="form-group" id="imagen_carrusel">
+                        {!!Form::label('imagen_carrusel_l', 'Imagen carrusel:',  array( 'class' => 'col-md-4 control-label'))!!}
+                        <div class="col-sm-8">
+                            {!! Form::file('imagen_carrusel', $webinars->imagen_carrusel, array('class' => 'form-control'))!!}
+                        </div>
+                    </div>
+                    <div class="form-group" id="descripcion_carrusel">
+                        {!!Form::label('desc_carrusel_l', 'Titulo de la imagen en el carrusel:',  array( 'class' => 'col-md-4 control-label'))!!}
+                        <div class="col-sm-8">
+                            {!! Form::text('descripcion_carrusel', $webinars->descrpcion_carrusel, array('class' => 'form-control'))!!}
+                        </div>
+                    </div>
 
                     <a href="{{URL::to("/")}}/webinars" class="btn btn-default text-right"><span class="glyphicon glyphicon-remove"></span> Cancelar</a>
                     <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-save" ></span> Guardar </button>
