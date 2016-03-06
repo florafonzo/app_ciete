@@ -16,10 +16,11 @@ class CreateCursosTable extends Migration {
 		{
 			$table->increments('id');
 			$table->integer('id_tipo')->unsigned();
-//			$table->integer('id_modalidad_pago')->unsigned();
 			$table->integer('id_modalidad_curso')->unsigned();
 			$table->boolean('curso_activo');
-			$table->integer('cupos');
+			$table->integer('secciones');
+			$table->integer('min');
+			$table->integer('max');
 			$table->string('nombre')->unique();
 			$table->date('fecha_inicio');
 			$table->date('fecha_fin');
@@ -38,7 +39,6 @@ class CreateCursosTable extends Migration {
 			$table->text('aliados');
 			$table->text('plan_estudio');
 			$table->float('costo');
-//			$table->text('modalidades_pago');
 			$table->string('imagen_carrusel');
 			$table->text('descripcion_carrusel');
 			$table->boolean('activo_carrusel');

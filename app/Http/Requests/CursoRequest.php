@@ -29,7 +29,9 @@ class CursoRequest extends Request {
     {
         return [
             'nombre' => 'required|max:255|unique:cursos',
-            'cupos' => 'required|integer|min:1',
+            'secciones' => 'required|integer|min:1',
+            'mini' => 'required|integer|min:1',
+            'maxi' => 'required|integer|min:1',
             'id_tipo' => 'required',
             'id_modalidad_curso' => 'required',
             'fecha_inicio' => 'required|date',

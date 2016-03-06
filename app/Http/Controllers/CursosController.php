@@ -94,7 +94,9 @@ class CursosController extends Controller {
 
                 // Se eliminan los datos guardados en sesion anteriormente
                 Session::forget('nombre');
-                Session::forget('cupos');
+                Session::forget('secciones');
+                Session::forget('min');
+                Session::forget('max');
                 Session::forget('id_tipo');
                 Session::forget('fecha_inicio');
                 Session::forget('fecha_fin');
@@ -165,7 +167,9 @@ class CursosController extends Controller {
                 // Se guardan los datos ingresados por el usuario en sesion pra utilizarlos en caso de que se redirija
                 // al usuari al formulario por algún error y no se pierdan los datos ingresados
                 Session::set('nombre', $request->nombre);
-                Session::set('cupos', $request->cupos);
+                Session::set('secciones', $request->secciones);
+                Session::set('min', $request->mini);
+                Session::set('max', $request->maxi);
                 Session::set('id_tipo', $request->id_tipo);
                 Session::set('fecha_inicio', $request->fecha_inicio);
                 Session::set('fecha_fin', $request->fecha_fin);
@@ -245,7 +249,9 @@ class CursosController extends Controller {
                 $create2 = Curso::findOrNew($request->id);
                 $create2->id_tipo = $request->id_tipo;
                 $create2->curso_activo = "true";
-                $create2->cupos = $request->cupos;
+                $create2->secciones = $request->secciones;
+                $create2->min = $request->mini;
+                $create2->max = $request->maxi;
                 $create2->nombre = $request->nombre;
                 $create2->fecha_inicio = $request->fecha_inicio;
                 $create2->fecha_fin = $request->fecha_fin;
@@ -416,8 +422,10 @@ class CursosController extends Controller {
 
                 }
 
+                $activo_carrusel = false;
                 //Se verifica si el usuario seleccionó que el curso esté activo en el carrusel
-                if (($request->activo_carrusel) == true) {
+                if (($request->activo_carrusel) == "on") {
+                    $activo_carrusel = true;
                     // Luego se verifica si los campos referente al carrusel estén completos
                     if ((empty(Input::get('descripcion_carrusel'))) or !($request->hasFile('imagen_carrusel'))) {// Si los campos no están completos se
                                                                                                      // redirige al usuario indicandole el error
@@ -443,7 +451,9 @@ class CursosController extends Controller {
 
                 // Se actualizan los datos del curso seleccionado
                 $cursos->id_tipo = $request->id_tipo;
-                $cursos->cupos = $request->cupos;
+                $cursos->secciones = $request->secciones;
+                $cursos->min = $request->mini;
+                $cursos->max = $request->maxi;
                 $cursos->nombre = $request->nombre;
                 $cursos->fecha_inicio = $request->fecha_inicio;
                 $cursos->fecha_fin = $request->fecha_fin;
@@ -465,7 +475,7 @@ class CursosController extends Controller {
                 $cursos->costo = $request->costo;
                 $cursos->imagen_carrusel = $imagen;
                 $cursos->descripcion_carrusel = $request->descripcion_carrusel;
-                $cursos->activo_carrusel = 'false';
+                $cursos->activo_carrusel = $activo_carrusel;
 
                 // Se verifica que se haya creado el curso de forma correcta
                 if ($cursos->save()) {

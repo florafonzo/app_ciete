@@ -75,7 +75,9 @@ class WebinarsController extends Controller {
 
 				// Se eliminan los datos guardados en sesion anteriormente
 				Session::forget('nombre');
-				Session::forget('cupos');
+				Session::forget('secciones');
+                Session::forget('min');
+                Session::forget('max');
 				Session::forget('fecha_inicio');
 				Session::forget('fecha_fin');
 				Session::forget('duracion');
@@ -123,7 +125,9 @@ class WebinarsController extends Controller {
                 // Se guardan los datos ingresados por el usuario en sesion pra utilizarlos en caso de que se redirija
                 // al usuari al formulario por algún error y no se pierdan los datos ingresados
                 Session::set('nombre', $request->nombre);
-                Session::set('cupos', $request->cupos);
+                Session::set('secciones', $request->secciones);
+                Session::set('min', $request->mini);
+                Session::set('max', $request->maxi);
                 Session::set('fecha_inicio', $request->fecha_inicio);
                 Session::set('fecha_fin', $request->fecha_fin);
                 Session::set('duracion', $request->duracion);
@@ -158,31 +162,28 @@ class WebinarsController extends Controller {
 
 //                Session::set('descripcion_carrusel', $request->descripcion_carrusel);
 
-//                $activo_carrusel = false;
-//                // Se verifica si el usuario elijió que el webinar este activo en el carrusel o no
-//                if (Input::get('activo_carrusel') == "on") {
-//                    $activo_carrusel = true;
-//                } elseif (Input::get('activo_carrusel') == null) {
-//                    $activo_carrusel = false;
-//                }
-
+                $activo_carrusel = false;
 
                 //Se verifica si el usuario seleccionó que el webinar esté activo en el carrusel
-//                if (Input::get('activo_carrusel') == "on") {
-//                    // Luego se verifica si los campos referente al carrusel estén completos
-//                    if ((empty(Input::get('descripcion_carrusel'))) or !($request->hasFile('imagen_carrusel'))) {   // Si no están completos se
-//                        // redirige al usuario indicandole el error
-//                        $data['errores'] = $data['errores'] . "  Debe completar los campos de descripcion y imagen del Carrusel";
-//
-//                        return view('webinars.crear', $data);
-//                    }
-//                }
+                //if (Input::get('activo_carrusel') == "on") {
+                if ($request->activo_carrusel == "on") {    
+                    $activo_carrusel = true;
+                    // Luego se verifica si los campos referente al carrusel estén completos
+                    if ((empty(Input::get('descripcion_carrusel'))) or !($request->hasFile('imagen_carrusel'))) {   // Si no están completos se
+                        // redirige al usuario indicandole el error
+                        $data['errores'] = $data['errores'] . "  Debe completar los campos de descripcion y imagen del Carrusel";
+
+                        return view('webinars.crear', $data);
+                    }
+                }
 
 
                 // Se crea el nuevo webinar con los datos ingresados
                 $create2 = Webinar::findOrNew($request->id);
                 $create2->webinar_activo = "true";
-                $create2->cupos = $request->cupos;
+                $create2->secciones = $request->secciones;
+                $create2->min = $request->mini;
+                $create2->max = $request->maxi;
                 $create2->nombre = $request->nombre;
                 $create2->fecha_inicio = $request->fecha_inicio;
                 $create2->fecha_fin = $request->fecha_fin;
@@ -190,9 +191,9 @@ class WebinarsController extends Controller {
                 $create2->lugar = $request->lugar;
                 $create2->descripcion = $request->descripcion;
                 $create2->link = $request->link;
-//                $create2->imagen_carrusel = $imagen;
-//                $create2->descripcion_carrusel = $request->descripcion_carrusel;
-//                $create2->activo_carrusel = $activo_carrusel;
+                $create2->imagen_carrusel = '';
+                $create2->descripcion_carrusel = $request->descripcion_carrusel;
+                $create2->activo_carrusel = $activo_carrusel;
 
                 // Se verifica que se haya creado el el webinar de forma correcta
                 if ($create2->save()) {
@@ -288,18 +289,20 @@ class WebinarsController extends Controller {
                     }
                 }
 
-//                //Se verifica si el usuario seleccionó que el webinar esté activo en el carrusel
-//                if (($request->activo_carrusel) == true) {
-//                    // Luego se verifica si los campos referente al carrusel estén completos
-//                    if ((empty(Input::get('descripcion_carrusel'))) or (empty(Input::get('imagen_carrusel')))) {// Si los campos no están completos se
-//                        // redirige al usuario indicandole el error
-//                        $data['errores'] = $data['errores'] . "  Debe completar los campos de descripcion y imagen del Carrusel";
-//                        $data['webinars'] = Webinar::find($id);
-//
-//
-//                        return view('webinars.crear', $data);
-//                    }
-//                }
+                $activo_carrusel = false;
+                //Se verifica si el usuario seleccionó que el webinar esté activo en el carrusel
+                if (($request->activo_carrusel) == "on") {
+                    $activo_carrusel = true;
+                    // Luego se verifica si los campos referente al carrusel estén completos
+                    if ((empty(Input::get('descripcion_carrusel'))) or (empty(Input::get('imagen_carrusel')))) {// Si los campos no están completos se
+                        // redirige al usuario indicandole el error
+                        $data['errores'] = $data['errores'] . "  Debe completar los campos de descripcion y imagen del Carrusel";
+                        $data['webinars'] = Webinar::find($id);
+
+
+                        return view('webinars.crear', $data);
+                    }
+                }
 
 //                //  Se verifica si el usuario colocó una imagen en el formulario
 //                if ($request->hasFile('imagen_carrusel')) {
@@ -309,7 +312,9 @@ class WebinarsController extends Controller {
 //                }
 
                 // Se actualizan los datos del webinar seleccionado
-                $webinar->cupos = $request->cupos;
+                $webinar->secciones = $request->secciones;
+                $webinar->min = $request->mini;
+                $webinar->max = $request->maxi;
                 $webinar->nombre = $request->nombre;
                 $webinar->fecha_inicio = $request->fecha_inicio;
                 $webinar->fecha_fin = $request->fecha_fin;
@@ -317,9 +322,9 @@ class WebinarsController extends Controller {
                 $webinar->lugar = $request->lugar;
                 $webinar->descripcion = $request->descripcion;
                 $webinar->link = $request->link;
-//                $webinars->imagen_carrusel = $imagen;
-//                $webinars->descripcion_carrusel = $request->descripcion_carrusel;
-//                $webinars->activo_carrusel = 'false';
+                $webinar->imagen_carrusel = '';
+                $webinar->descripcion_carrusel = $request->descripcion_carrusel;
+                $webinar->activo_carrusel = $activo_carrusel;
 
                 // Se verifica que se haya creado el webinar de forma correcta
                 if ($webinar->save()) {
