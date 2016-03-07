@@ -165,7 +165,7 @@ class PermisionsSeeder extends Seeder {
 
         $agregar_part = new Permission();
         $agregar_part->name = 'agregar_part_curso';
-        $agregar_part->display_name = 'agregar participante de un curso';
+        $agregar_part->display_name = 'agregar participante a un curso';
         $agregar_part->save();
 
         $eliminar_part = new Permission();
@@ -180,13 +180,43 @@ class PermisionsSeeder extends Seeder {
 
         $agregar_prof = new Permission();
         $agregar_prof->name = 'agregar_prof_curso';
-        $agregar_prof->display_name = 'agregar profesor de un curso';
+        $agregar_prof->display_name = 'agregar profesor a un curso';
         $agregar_prof->save();
 
         $eliminar_prof = new Permission();
         $eliminar_prof->name = 'eliminar_prof_curso';
         $eliminar_prof->display_name = 'eliminar profesor de un curso';
         $eliminar_prof->save();
+
+        $participantes_webinar = new Permission();
+        $participantes_webinar->name = 'participantes_webinar';
+        $participantes_webinar->display_name = 'ver participantes de un webinar';
+        $participantes_webinar->save();
+
+        $agregar_partW = new Permission();
+        $agregar_partW->name = 'agregar_part_webinar';
+        $agregar_partW->display_name = 'agregar participante a un webinar';
+        $agregar_partW->save();
+
+        $eliminar_partW = new Permission();
+        $eliminar_partW->name = 'eliminar_part_webinar';
+        $eliminar_partW->display_name = 'eliminar participante de un webinar';
+        $eliminar_partW->save();
+
+        $profesores_webinar = new Permission();
+        $profesores_webinar->name = 'profesores_webinar';
+        $profesores_webinar->display_name = 'ver profesores de un webinar';
+        $profesores_webinar->save();
+
+        $agregar_profW = new Permission();
+        $agregar_profW->name = 'agregar_prof_webinar';
+        $agregar_profW->display_name = 'agregar profesor a un webinar';
+        $agregar_profW->save();
+
+        $eliminar_profW = new Permission();
+        $eliminar_profW->name = 'eliminar_prof_webinar';
+        $eliminar_profW->display_name = 'eliminar profesor de un webinar';
+        $eliminar_profW->save();
     }
 
 }

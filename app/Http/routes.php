@@ -71,7 +71,6 @@ Route::group([
     Route::get('webinars/{id}/profesores/agregar', 'WebinarsController@webinarProfesoresAgregar');
     Route::get('webinars/{id_webinar}/profesores/{id_part}/agregar', 'WebinarsController@webinarProfesoresGuardar');
     Route::delete('webinars/{id_webinar}/profesores/{id_part}/eliminar', 'WebinarsController@webinarProfesoresEliminar');
-    
     Route::resource('/webinars','WebinarsController');
 
     //Ruta dirección participantes

@@ -160,7 +160,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        {!!Form::label('activo_carrusel_l', 'Curso activo en el carrusel?:',  array( 'class' => 'col-md-4 control-label'))!!}
+                        {!!Form::label('activo_carrusel', 'Curso activo en el carrusel?:',  array( 'class' => 'col-md-4 control-label'))!!}
                         <div class="col-sm-8">
                             {!! Form::checkbox('activo_carrusel',null, $cursos->activo_carrusel)!!}
                         </div>

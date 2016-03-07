@@ -664,7 +664,7 @@ class CursosController extends Controller {
                 $curso_part = ParticipanteCurso::where('id_curso', '=', $id)->get();
                 if($curso_part->count()){
                     foreach ($curso_part as $index => $curso) {
-                        $data['participantes'][$index] = Participante::where('id', '=', $curso->id_participante)->get();
+                        $data['participantes'][$index] = Participante::where('id', '=', $curso->id_participante)->orderBy('apellido')->get();
                     }
                 }
 
@@ -699,62 +699,73 @@ class CursosController extends Controller {
                     $arr[$index] = $todo->id_participante;
                 }
                 $no_estan = DB::table('participantes')->whereNotIn('id',$arr)->get();
+                $existe =  ParticipanteCurso::all();
                 $participantes = ParticipanteCurso::where('id_curso', '!=', $id)->orderBy('id_participante')->get();
                 $noParticipantes = ParticipanteCurso::where('id_curso', '=', $id)->orderBy('id_participante')->get();
                 $participante = $participantes;
                 $hay = false;
                 $repetido = 0;
                 $verificar = false;
-                if ($participantes->count()) {
-                    if($noParticipantes->count()) {
-                        foreach ($participantes as $index => $part) {
-                            foreach ($noParticipantes as $index1 => $parti) {
-                                $partic = $parti->id_participante;
-                                if ($partic == $part->id_participante) {
-                                    unset($participante[$index]);
-                                    $hay = true;
-                                }else{
-                                    if($part->id_participante == $repetido){
+                if($existe->count()) {
+                    if ($participantes->count()) {
+                        if ($noParticipantes->count()) {
+                            foreach ($participantes as $index => $part) {
+                                foreach ($noParticipantes as $index1 => $parti) {
+                                    $partic = $parti->id_participante;
+                                    if ($partic == $part->id_participante) {
                                         unset($participante[$index]);
+                                        $hay = true;
+                                    } else {
+                                        if ($part->id_participante == $repetido) {
+                                            unset($participante[$index]);
+                                        }
                                     }
                                 }
-                            }
-                            $repetido = $part->id_participante;
-                            if(($hay == false)){
-                                $verificar = true;
-                            }else{
-                                $hay = false;
-                            }
-                        }
-                        $participante = array($participante);
-                        if ($participante != null) {
-                            $participante = array_values($participante);
-                        }
-                        if($verificar) {
-                            foreach ($participante[0] as $index => $datos) {
-                                $data['participantes'][$index] = Participante::find($datos->id_participante);
-                            }
-                            if($no_estan != null) {
-                                $tam = count($data['participantes']) - 1;
-                                foreach ($no_estan as $datos) {
-                                    $data['participantes'][$tam] = $datos;
-                                    $tam++;
+                                $repetido = $part->id_participante;
+                                if (($hay == false)) {
+                                    $verificar = true;
+                                } else {
+                                    $hay = false;
                                 }
                             }
-                        }else{
-                            if($no_estan != null) {
-                                foreach ($no_estan as $index => $datos) {
-                                    $data['participantes'][$index] = $datos;
-                                }
-                            }else {
-                                $data['participantes'] = '';
+                            $participante = array($participante);
+                            if ($participante != null) {
+                                $participante = array_values($participante);
                             }
+                            if ($verificar) {
+                                foreach ($participante[0] as $index => $datos) {
+                                    $data['participantes'][$index] = Participante::find($datos->id_participante);
+                                }
+                                if ($no_estan != null) {
+                                    $tam = count($data['participantes']) - 1;
+                                    foreach ($no_estan as $datos) {
+                                        $data['participantes'][$tam] = $datos;
+                                        $tam++;
+                                    }
+                                }
+                            } else {
+                                if ($no_estan != null) {
+                                    foreach ($no_estan as $index => $datos) {
+                                        $data['participantes'][$index] = $datos;
+                                    }
+                                } else {
+                                    $data['participantes'] = '';
+                                }
+                            }
+                        } else {
+                            $data['participantes'] = Participante::all();
                         }
-                    }else{
-                        $data['participantes'] = Participante::all();
+                    } else {
+                        if ($no_estan != null) {
+                            foreach ($no_estan as $index => $datos) {
+                                $data['participantes'][$index] = $datos;
+                            }
+                        } else {
+                            $data['participantes'] = '';
+                        }
                     }
                 }else{
-                    $data['participantes'] = '';
+                    $data['participantes'] = Participante::orderBy('apellido')->get();
                 }
 
                 return view('cursos.participantes.agregar', $data);
@@ -847,7 +858,7 @@ class CursosController extends Controller {
                 $curso_part = ParticipanteCurso::where('id_curso', '=', $id_curso)->get();
                 if($curso_part->count()){
                     foreach ($curso_part as $index => $curso) {
-                        $data['participantes'][$index] = Participante::where('id', '=', $curso->id_participante)->get();
+                        $data['participantes'][$index] = Participante::where('id', '=', $curso->id_participante)->orderBy('apellido')->get();
                     }
                 }
 
@@ -921,67 +932,169 @@ class CursosController extends Controller {
                     $arr[$index] = $todo->id_profesor;
                 }
                 $no_estan = DB::table('profesores')->whereNotIn('id',$arr)->get();
+                $existe = ProfesorCurso::all();
                 $profesores = ProfesorCurso::where('id_curso', '!=', $id)->orderBy('id_profesor')->get();
                 $noProfesores = ProfesorCurso::where('id_curso', '=', $id)->orderBy('id_profesor')->get();
                 $profesor = $profesores;
                 $hay = false;
                 $repetido = 0;
                 $verificar = false;
-                if ($profesores->count()) {
-                    if($noProfesores->count()) {
-                        foreach ($profesores as $index => $prof) {
-                            foreach ($noProfesores as $index1 => $profe) {
-                                $profe_id = $profe->id_profesor;
-                                if ($profe_id == $prof->id_profesor) {
-                                    unset($profesor[$index]);
-                                    $hay = true;
-                                }else{
-                                    if($prof->id_profesor == $repetido){
+                if($existe->count()) {
+                    if ($profesores->count()) {
+                        if($noProfesores->count()) {
+                            foreach ($profesores as $index => $prof) {
+                                foreach ($noProfesores as $index1 => $profe) {
+                                    $profe_id = $profe->id_profesor;
+                                    if ($profe_id == $prof->id_profesor) {
                                         unset($profesor[$index]);
+                                        $hay = true;
+                                    }else{
+                                        if($prof->id_profesor == $repetido){
+                                            unset($profesor[$index]);
+                                        }
                                     }
                                 }
+                                $repetido = $prof->id_profesor;
+                                if(($hay == false)){
+                                    $verificar = true;
+                                }else{
+                                    $hay = false;
+                                }
                             }
-                            $repetido = $prof->id_profesor;
-                            if(($hay == false)){
-                                $verificar = true;
-                            }else{
-                                $hay = false;
+                            $profesor = array($profesor);
+                            if ($profesor != null) {
+                                $profesor = array_values($profesor);
                             }
-                        }
-                        $profesor = array($profesor);
-                        if ($profesor != null) {
-                            $profesor = array_values($profesor);
-                        }
 
-                        if($verificar) {
-                            foreach ($profesor[0] as $index => $datos) {
-                                $data['profesores'][$index] = Profesor::find($datos->id_profesor);
-                            }
-                            if($no_estan != null) {
-                                $tam = count($data['profesores']) - 1;
-                                foreach ($no_estan as $datos) {
-                                    $data['profesores'][$tam] = $datos;
-                                    $tam++;
+                            if($verificar) {
+                                foreach ($profesor[0] as $index => $datos) {
+                                    $data['profesores'][$index] = Profesor::find($datos->id_profesor);
+                                }
+                                if($no_estan != null) {
+                                    $tam = count($data['profesores']) - 1;
+                                    foreach ($no_estan as $datos) {
+                                        $data['profesores'][$tam] = $datos;
+                                        $tam++;
+                                    }
+                                }
+                            }else{
+                                if($no_estan != null) {
+                                    foreach ($no_estan as $index => $datos) {
+                                        $data['profesores'][$index] = $datos;
+                                    }
+                                }else {
+                                    $data['profesores'] = '';
                                 }
                             }
                         }else{
-                            if($no_estan != null) {
-                                foreach ($no_estan as $index => $datos) {
-                                    $data['profesores'][$index] = $datos;
-                                }
-                            }else {
-                                $data['profesores'] = '';
-                            }
+                            $data['profesores'] = Profesor::all();
                         }
                     }else{
-                        $data['profesores'] = Profesor::all();
+                        if ($no_estan != null) {
+                            foreach ($no_estan as $index => $datos) {
+                                $data['profesores'][$index] = $datos;
+    //                                $tam++;
+                            }
+                        }else {
+                            $data['profesores'] = '';
+                        }
                     }
                 }else{
-                    $data['profesores'] = '';
+                    $data['profesores'] = Profesor::orderBy('apellido')->get();
                 }
 
                 return view('cursos.profesores.agregar', $data);
 
+            }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
+
+                return view('errors.sin_permiso');
+            }
+        }
+        catch (Exception $e) {
+
+            return view('errors.error')->with('error',$e->getMessage());
+        }
+    }
+
+    public function cursoProfesoresGuardar($id_curso, $id_profesor) {
+        try{
+            //Verificación de los permisos del usuario para poder realizar esta acción
+            $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
+
+            if($usuario_actual->can('agregar_prof_curso')) {  // Si el usuario posee los permisos necesarios continua con la acción
+                $data['errores'] = '';
+                $curso = Curso::find($id_curso);
+                $profesor = Profesor::find($id_profesor);
+                $existe = ProfesorCurso::where('id_profesor', '=', $id_profesor)->where('id_curso', '=', $id_curso)->get();
+
+                if($existe->count()) {
+                    Session::set('error', 'Ya existe el registro en la base de datos');
+                    return $this->cursoProfesoresAgregar($id_curso);
+                }else{
+                    if ($curso != null || $profesor != null) {
+                        $prof_curso = ProfesorCurso::create([
+                            'id_profesor' => $id_profesor,
+                            'id_curso' => $id_curso
+                        ]);
+                        $prof_curso->save();
+
+                        if ($prof_curso->save()) {
+                            Session::set('mensaje', 'Profesor agregado con éxito');
+                            return $this->cursoProfesoresAgregar($id_curso);
+                        } else {
+                            Session::set('error', 'Ha ocurrido un error inesperado');
+                            return $this->cursoProfesoresAgregar($id_curso);
+                        }
+                    } else {
+                        Session::set('error', 'Ha ocurrido un error inesperado');
+                        return $this->index();
+                    }
+                }
+
+
+            }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
+
+                return view('errors.sin_permiso');
+            }
+        }
+        catch (Exception $e) {
+
+            return view('errors.error')->with('error',$e->getMessage());
+        }
+    }
+
+    public function cursoProfesoresEliminar($id_curso, $id_profesor) {
+        try{
+            //Verificación de los permisos del usuario para poder realizar esta acción
+            $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
+
+            if($usuario_actual->can('eliminar_prof_curso')) {  // Si el usuario posee los permisos necesarios continua con la acción
+                $data['errores'] = '';
+                $prof_curso = ProfesorCurso::where('id_curso', '=', $id_curso)->where('id_profesor', '=', $id_profesor)->first();
+
+                DB::table('profesor_cursos')->where('id', '=', $prof_curso->id)->delete();
+
+                $data['profesores'] = [];
+                $data['curso'] = Curso::find($id_curso);
+                $curso_prof = ProfesorCurso::where('id_curso', '=', $id_curso)->get();
+                if($curso_prof->count()){
+                    foreach ($curso_prof as $index => $curso) {
+                        $data['profesores'][$index] = Profesor::where('id', '=', $curso->id_profesor)->orderBy('apellido')->get();
+                    }
+                }
+
+                Session::set('mensaje', 'Usuario eliminado con éxito');
+                return view('cursos.profesores.profesores', $data);
             }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
 
                 return view('errors.sin_permiso');

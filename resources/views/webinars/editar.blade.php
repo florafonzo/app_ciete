@@ -78,7 +78,7 @@
                     <div class="form-group">
                         {!!Form::label('activo_carrusel', 'Webinar activo en el carrusel?:',  array( 'class' => 'col-md-4 control-label'))!!}
                         <div class="col-sm-8">
-                            {!! Form::checkbox('activo_carrusel',null, false)!!}
+                            {!! Form::checkbox('activo_carrusel',null, $webinars->activo_carrusel)!!}
                         </div>
                     </div>
                     <div class="form-group" id="imagen_carrusel">

@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Exception;
 use DB;
+use DateTime;
 use Intervention\Image\ImageManagerStatic as Image;
 
 use App\Models\Participante;
@@ -272,10 +273,14 @@ class ParticipantesController extends Controller {
                     foreach ($data['cursos_'] as $index => $curso) {
                         $cursos  = Curso::where('id', '=', $curso->id_curso)->get();
                         $data['cursos'][$index] = $cursos;
-                        $data['fechas'][$index] = $curso->created_at;
+//                        dd($cursos[0]->fecha_inicio);
+                        $data['inicio'][$index] = new DateTime($cursos[0]->fecha_inicio);
+                        $data['fin'][$index] = new DateTime($cursos[0]->fecha_fin);
+                        $data['seccion'][$index] = $curso->seccion;
                         $tipos = TipoCurso::where('id', '=', $cursos[0]->id_tipo)->get();
                         $data['tipo_curso'][$index] = $tipos[0]->nombre;
                     }
+//                    dd($);
                 }
 
                 return view('participantes.ver-cursos', $data);
@@ -356,10 +361,11 @@ class ParticipantesController extends Controller {
                     foreach ($webinars_ as $index => $web) {
                         $webinars  = Webinar::where('id', '=', $web->id_webinar)->get();
                         $data['webinars'][$index] = $webinars;
-                        $data['fechas'][$index] = $web->created_at;
-                        //$tipos = TipoCurso::where('id', '=', $webinars[0]->id_tipo)->get();
-                        //$data['tipo_curso'][$index] = $tipos[0]->nombre;
+                        $data['seccion'][$index] = $web->seccion;
+                        $data['inicio'][$index] = new DateTime($webinars[0]->fecha_inicio);
+                        $data['fin'][$index] = new DateTime($webinars[0]->fecha_fin);
                     }
+
                 }
 
                 return view('participantes.ver-webinars', $data);

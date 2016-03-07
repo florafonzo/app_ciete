@@ -29,9 +29,9 @@
                                     <td>{{ $participante[0]->nombre }}</td>
                                     <td>{{ $participante[0]->apellido  }}</td>
                                     <td>
-                                        @if(Entrust::can('eliminar_part_curso'))
-                                            {!!Form::open(["url"=>"webinars/".$webinar->id."/participantes/".$participante[0]->id."/eliminar",  "method" => "delete", "id" => "form_eliminar_part".$participante[0]->id ])!!}
-                                            <button type="button" onclick="eliminarPart('{{$participante[0]->id}}')" class='btn btn-danger' data-toggle='tooltip' data-placement="bottom" title="Eliminar">
+                                        @if(Entrust::can('eliminar_part_webinar'))
+                                            {!!Form::open(["url"=>"webinars/".$webinar->id."/participantes/".$participante[0]->id."/eliminar",  "method" => "delete", "id" => "eliminar_part_web".$participante[0]->id ])!!}
+                                            <button type="button" onclick="eliminarPartW('{{$participante[0]->id}}')" class='btn btn-danger' data-toggle='tooltip' data-placement="bottom" title="Eliminar">
                                                 <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                             </button>
                                             {!! Form::close() !!}
@@ -42,21 +42,21 @@
                         @else
                             <tr>
                                 <td>
-                                    <strong> No existen participantes inscritos en este curso </strong>
+                                    <strong> No existen participantes inscritos en este webinar </strong>
                                 </td>
                             </tr>
                         @endif
                     </tbody>
                 </table>
                 <div class="col-md-2 " style="">
-                    @if(Entrust::can('ver_lista_cursos'))
+                    @if(Entrust::can('ver_webinars'))
                         <a href="{{URL::to('/')}}/webinars" type="button" class="btn btn-default" style="text-decoration: none"><span class="glyphicon glyphicon-remove"></span> Cancelar </a>
                     @endif
                 </div>
                 <div class="col-md-2 " style="">
-                    @if(Entrust::can('agregar_part_curso'))
+                    @if(Entrust::can('agregar_part_webinar'))
                         {!!Form::open(["url"=>"webinars/".$webinar->id."/participantes/agregar",  "method" => "GET" ])!!}
-                        <button type="submit" class="btn btn-success" data-toggle="tooltip" data-placement="bottom" title="Agregar participante al curso" >
+                        <button type="submit" class="btn btn-success" data-toggle="tooltip" data-placement="bottom" title="Agregar participante al webinar" >
                             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Agregar
                         </button>
                         {!! Form::close() !!}

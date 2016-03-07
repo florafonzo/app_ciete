@@ -5,7 +5,7 @@
 
         <div class="col-md-12 col-sm-12 col-md-offset-2 bienvenida">
             <h3>
-                Agregar profesores al curso {{$curso->nombre}}
+                Agregar profesores para que dicten el curso {{$curso->nombre}}
             </h3>
         </div>
 
@@ -32,9 +32,9 @@
                                 <td>{{ $profesor->documento_identidad }}</td>
 
                                 <td class="">
-                                    @if(Entrust::can('agregar_part_curso'))
+                                    @if(Entrust::can('agregar_prof_curso'))
                                         {!!Form::open(["url"=>"cursos/".$curso->id."/profesores/".$profesor->id."/agregar",  "method" => "GET", 'id' => 'prof_agregar'.$profesor->id] )!!}
-                                        <button type="button" onclick="agregarPart('{{$profesor->id}}')" class="btn btn-info" title="Agregar profesor al curso" data-toggle="tooltip" data-placement="bottom" aria-hidden="true">
+                                        <button type="button" onclick="agregarProf('{{$profesor->id}}')" class="btn btn-info" title="Agregar profesor al curso" data-toggle="tooltip" data-placement="bottom" aria-hidden="true">
                                             <span class="glyphicon glyphicon-plus"></span>
                                         </button>
                                         {!!Form::close()!!}

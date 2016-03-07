@@ -63,7 +63,7 @@ $(document).ready(function() {
 //-------------------------------------------------------------------------//
 
 
-//  --------  Validar si el Curso Estara en el carrusel ---------- ///
+//  --------  Validar si el Curso Estará en el carrusel ---------- ///
     // $('#descripcion_carrusel').hide();
     //$('#imagen_carrusel').hide();
     if ($('#activo_carrusel:checkbox:checked').length <= 0) {
@@ -338,7 +338,7 @@ function eliminarPart(id) {
 
 function agregarPart(id) {
     swal({
-            title: "¿Está seguro que desea agregar el usuario al curso?",
+            title: "¿Está seguro que desea agregar el participante al curso?",
             text: "Si lo agrega, aparecerá en la lista de participantes del curso",
             type: "warning",
             showCancelButton: true,
@@ -351,4 +351,114 @@ function agregarPart(id) {
         })
 }
 //------------------------------------------------------------------------------//
+
+//------------------------Función para eliminar profesores de un curso --------------------------------------------//
+function eliminarProf(id) {
+    swal({
+            title: "¿Está seguro que desea eliminar el profesor del curso?",
+            text: "Si lo elimina no aparecerá en la lista de profesores que dictan el curso",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#DD6B55',
+            confirmButtonText: "Eliminar",
+            closeOnConfirm: false
+        },
+        function(){
+            $('#form_eliminar_prof'+id).submit();
+        })
+
+}
+//------------------------------------------------------------------------------//
+
+// ------------------------Función para agregar profesores a un curso --------------------------------------------//
+
+function agregarProf(id) {
+    swal({
+            title: "¿Está seguro que desea agregar el profesor al curso?",
+            text: "Si lo agrega, aparecerá en la lista de profesores que dictan el curso",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: 'green',
+            confirmButtonText: "Agregar",
+            closeOnConfirm: false
+        },
+        function(){
+            $('#prof_agregar'+id).submit();
+        })
+}
+//------------------------------------------------------------------------------//
+//------------------------Función para eliminar participante de un webinar --------------------------------------------//
+function eliminarPartW(id) {
+    swal({
+            title: "¿Está seguro que desea eliminar el participante del webinar?",
+            text: "Si lo elimina no aparecerá en la lista de alumnos del webinar y se eliminará su historial",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#DD6B55',
+            confirmButtonText: "Eliminar",
+            closeOnConfirm: false
+        },
+        function(){
+            $('#eliminar_part_web'+id).submit();
+        })
+
+}
+//------------------------------------------------------------------------------//
+
+// ------------------------Función para agregar participante a un webinar --------------------------------------------//
+
+function agregarPartW(id) {
+    swal({
+            title: "¿Está seguro que desea agregar el participante al webinar?",
+            text: "Si lo agrega, aparecerá en la lista de participantes del webinar",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: 'green',
+            confirmButtonText: "Agregar",
+            closeOnConfirm: false
+        },
+        function(){
+            $('#part_agregar_web'+id).submit();
+        })
+}
+//------------------------------------------------------------------------------//
+
+//------------------------Función para eliminar profesores de un webinar --------------------------------------------//
+function eliminarProfW(id) {
+    swal({
+            title: "¿Está seguro que desea eliminar el profesor del webinar?",
+            text: "Si lo elimina no aparecerá en la lista de profesores que dictan el webinar",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#DD6B55',
+            confirmButtonText: "Eliminar",
+            closeOnConfirm: false
+        },
+        function(){
+            $('#eliminar_prof_web'+id).submit();
+        })
+
+}
+//------------------------------------------------------------------------------//
+
+// ------------------------Función para agregar profesores a un webinar --------------------------------------------//
+
+function agregarProfW(id) {
+    swal({
+            title: "¿Está seguro que desea agregar el profesor al webinar?",
+            text: "Si lo agrega, aparecerá en la lista de profesores que dictan el webinar",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: 'green',
+            confirmButtonText: "Agregar",
+            closeOnConfirm: false
+        },
+        function(){
+            $('#prof_agregar_web'+id).submit();
+        })
+}
+//------------------------------------------------------------------------------//
+
+
+CKEDITOR.replace('.ckeditor');
 

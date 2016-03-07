@@ -31,7 +31,7 @@
                                 <td>
                                     @if(Entrust::can('eliminar_prof_curso'))
                                         {!!Form::open(["url"=>"cursos/".$curso->id."/profesores/".$profesor[0]->id."/eliminar",  "method" => "delete", "id" => "form_eliminar_prof".$profesor[0]->id ])!!}
-                                        <button type="button" onclick="eliminarPart('{{$profesor[0]->id}}')" class='btn btn-danger' data-toggle='tooltip' data-placement="bottom" title="Eliminar">
+                                        <button type="button" onclick="eliminarProf('{{$profesor[0]->id}}')" class='btn btn-danger' data-toggle='tooltip' data-placement="bottom" title="Eliminar">
                                             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                         </button>
                                         {!! Form::close() !!}
@@ -42,7 +42,7 @@
                     @else
                         <tr>
                             <td>
-                                <strong> No existen profesores inscritos en este curso </strong>
+                                <strong> No existen profesores que dicten este curso </strong>
                             </td>
                         </tr>
                     @endif
