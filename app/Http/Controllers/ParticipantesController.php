@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Curso;
 use App\Models\Nota;
 use App\Models\ParticipanteCurso;
+use App\Models\ParticipanteWebinar;
 use App\Models\TipoCurso;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Input;
@@ -15,6 +16,7 @@ use DB;
 use Intervention\Image\ImageManagerStatic as Image;
 
 use App\Models\Participante;
+use App\Models\Webinar;
 use Illuminate\Http\Request;
 use App\Http\Requests\ParticipanteRequest;
 use App\user;
@@ -331,6 +333,48 @@ class ParticipantesController extends Controller {
             return view('errors.error')->with('error',$e->getMessage());
         }
     }
+
+    public function verWebinars()
+    {
+        try{
+            //Verificación de los permisos del usuario para poder realizar esta acción
+            $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
+
+            if($usuario_actual->can('ver_cursos_part')) {// Si el usuario posee los permisos necesarios continua con la acción
+
+                $data['errores'] = '';
+                $data['webinars'] = [];
+                $data['fechas'] = [];
+                $participante = Participante::where('id_usuario', '=', $usuario_actual->id)->get(); //
+                $webinars_ = ParticipanteWebinar::where('id_participante', '=', $participante[0]->id)->get();
+                if ($webinars_->count()) {
+                    foreach ($webinars_ as $index => $web) {
+                        $webinars  = Webinar::where('id', '=', $web->id_webinar)->get();
+                        $data['webinars'][$index] = $webinars;
+                        $data['fechas'][$index] = $web->created_at;
+                        //$tipos = TipoCurso::where('id', '=', $webinars[0]->id_tipo)->get();
+                        //$data['tipo_curso'][$index] = $tipos[0]->nombre;
+                    }
+                }
+
+                return view('participantes.ver-webinars', $data);
+
+            }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
+
+                return view('errors.sin_permiso');
+            }
+        }
+        catch (Exception $e) {
+
+            return view('errors.error')->with('error',$e->getMessage());
+        }
+    }
+
 
     public function cambiarImagen()
     {

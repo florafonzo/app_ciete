@@ -11,6 +11,9 @@ use App\Http\Requests\WebinarEditarRequest;
 use DateTime;
 
 use App\Models\Webinar;
+use App\Models\ParticipanteWebinar;
+use App\Models\Participante;
+
 use Illuminate\Http\Request;
 
 class WebinarsController extends Controller {
@@ -476,5 +479,228 @@ class WebinarsController extends Controller {
             return view('errors.error')->with('error',$e->getMessage());
         }
     }
+
+
+//    ------------------------ Participantes ------------------------------------
+    public function webinarParticipantes($id) {
+        try{
+            //Verificación de los permisos del usuario para poder realizar esta acción
+            $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
+
+            if($usuario_actual->can('participantes_curso')) {  // Si el usuario posee los permisos necesarios continua con la acción
+                $data['errores'] = '';
+                $data['participantes'] = [];
+                $data['webinar'] = Webinar::find($id);
+                $web_part = ParticipanteWebinar::where('id_webinar', '=', $id)->get();
+                if($web_part->count()){
+                    foreach ($web_part as $index => $web) {
+                        $data['participantes'][$index] = Participante::where('id', '=', $web->id_participante)->get();
+                    }
+                }
+
+                return view('webinars.participantes.participantes', $data);
+            }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
+
+                return view('errors.sin_permiso');
+            }
+        }
+        catch (Exception $e) {
+
+            return view('errors.error')->with('error',$e->getMessage());
+        }
+    }
+
+    public function webinarParticipantesAgregar($id) {
+        try{
+            //Verificación de los permisos del usuario para poder realizar esta acción
+            $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
+
+            if($usuario_actual->can('agregar_part_curso')) {  // Si el usuario posee los permisos necesarios continua con la acción
+                $data['errores'] = '';
+                $data['webinar'] = Webinar::find($id);
+                $arr = [];
+                $todos = DB::table('participante_webinars')->select('id_participante')->get();
+                foreach ($todos as $index => $todo) {
+                    $arr[$index] = $todo->id_participante;
+                }
+                $no_estan = DB::table('participantes')->whereNotIn('id',$arr)->get();                
+                $participantes = ParticipanteWebinar::where('id_webinar', '!=', $id)->orderBy('id_participante')->get();                
+                $noParticipantes = ParticipanteWebinar::where('id_webinar', '=', $id)->orderBy('id_participante')->get();
+                //dd($noParticipantes);
+                $participante = $participantes;
+                $hay = false;
+                $repetido = 0;
+                $verificar = false;
+                if ($participantes->count()) {
+                    if($noParticipantes->count()) {
+                        foreach ($participantes as $index => $part) {
+                            foreach ($noParticipantes as $index1 => $parti) {
+                                $partic = $parti->id_participante;
+                                if ($partic == $part->id_participante) {
+                                    unset($participante[$index]);
+                                    $hay = true;
+                                }else{
+                                    if($part->id_participante == $repetido){
+                                        unset($participante[$index]);
+                                    }
+                                }
+                            }
+                            $repetido = $part->id_participante;
+                            if(($hay == false)){
+                                $verificar = true;
+                            }else{
+                                $hay = false;
+                            }
+                        }
+                        $participante = array($participante);
+                        if ($participante != null) {
+                            $participante = array_values($participante);
+                        }
+                        //dd($verificar);
+                        if($verificar) {
+                            foreach ($participante[0] as $index => $datos) {                                
+                                $data['participantes'][$index] = Participante::find($datos->id_participante);
+                            }
+                            if($no_estan != null) {
+                                $tam = count($data['participantes']);
+                                foreach ($no_estan as $datos) {
+                                    $data['participantes'][$tam] = $datos;
+                                    $tam++;
+                                }
+                                //dd($data['participantes']);
+                            }
+                        }else{
+                            if($no_estan != null) {
+                                foreach ($no_estan as $index => $datos) {
+                                    $data['participantes'][$index] = $datos;
+                                }
+                            }else {
+                                $data['participantes'] = '';
+                            }
+                        }
+                    }else{
+                        $data['participantes'] = Participante::all();
+                    }
+                }else{
+                    $data['participantes'] = '';
+                }
+
+                return view('webinars.participantes.agregar', $data);
+
+            }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
+
+                return view('errors.sin_permiso');
+            }
+        }
+        catch (Exception $e) {
+
+            return view('errors.error')->with('error',$e->getMessage());
+        }
+    }
+
+    public function webinarParticipantesGuardar($id_webinar, $id_part) {
+        try{
+            //Verificación de los permisos del usuario para poder realizar esta acción
+            $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
+
+            if($usuario_actual->can('agregar_part_curso')) {  // Si el usuario posee los permisos necesarios continua con la acción
+                $data['errores'] = '';
+                $webinar = Webinar::find($id_webinar);
+                $participante = Participante::find($id_part);
+                $existe = ParticipanteWebinar::where('id_participante', '=', $id_part)->where('id_webinar', '=', $id_webinar)->get();
+
+                if($existe->count()) {
+                    Session::set('error', 'Ya existe el registro en la base de datos');
+                    return $this->webinarParticipantesAgregar($id_webinar);
+                }else{
+                    if ($webinar != null && $participante != null) {
+                        $part_web = ParticipanteWebinar::create([
+                            'id_participante' => $id_part,
+                            'id_webinar' => $id_webinar,
+                            'seccion' => 'B',
+                        ]);
+                        $part_web->save();
+
+                        if ($part_web->save()) {
+                            Session::set('mensaje', 'Participante agregado con éxito');
+                            return $this->webinarParticipantesAgregar($id_webinar);
+                        } else {
+                            Session::set('error', 'Ha ocurrido un error inesperado');
+                            return $this->webinarParticipantesAgregar($id_webinar);
+                        }
+                    } else {
+                        Session::set('error', 'Ha ocurrido un error inesperado');
+                        return $this->index();
+                    }
+                }
+
+
+            }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
+
+                return view('errors.sin_permiso');
+            }
+        }
+        catch (Exception $e) {
+
+            return view('errors.error')->with('error',$e->getMessage());
+        }
+    }
+
+    public function webinarParticipantesEliminar($id_webinar, $id_part) {
+        try{
+            //Verificación de los permisos del usuario para poder realizar esta acción
+            $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
+
+            if($usuario_actual->can('eliminar_part_curso')) {  // Si el usuario posee los permisos necesarios continua con la acción
+                $data['errores'] = '';
+
+                $part_web = ParticipanteWebinar::where('id_webinar', '=', $id_webinar)->where('id_participante', '=', $id_part)->first();
+
+                //DB::table('notas')->where('id_participante_curso', '=', $part_web->id)->delete();
+                DB::table('participante_webinars')->where('id', '=', $part_web->id)->delete();
+
+                $data['participantes'] = [];
+                $data['webinar'] = Webinar::find($id_webinar);
+                $web_part = ParticipanteWebinar::where('id_webinar', '=', $id_webinar)->get();
+                if($web_part->count()){
+                    foreach ($web_part as $index => $web) {
+                        $data['participantes'][$index] = Participante::where('id', '=', $web->id_participante)->get();
+                    }
+                }
+
+                Session::set('mensaje', 'Usuario eliminado con éxito');
+                return view('webinars.participantes.participantes', $data);
+            }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
+
+                return view('errors.sin_permiso');
+            }
+        }
+        catch (Exception $e) {
+
+            return view('errors.error')->with('error',$e->getMessage());
+        }
+    }
+//    -------------------------------------------------------------------------------------------
+
 
 }

@@ -17,6 +17,7 @@
                     <thead>
                     <tr>
                         <th>Evaluación</th>
+                        <th>Valor</th>
                         <th>Nota</th>
                     </tr>
                     <tbody>
@@ -24,15 +25,18 @@
                         @foreach($notas as $index => $nota)
                             <tr>
                                 <td>{{ $nota->evaluacion  }}</td>
+                                <td>{{ $nota->porcentaje  }}%</td>
                                 <td>{{ $nota->nota  }}</td>
                             </tr>
                         @endforeach
                         <tr>
                             <td style="font-weight: bold">Nota Final</td>
+                            <td></td>
                             <td>{{$promedio}}</td>
                         </tr>
                         <tr>
                              <td>Queda por evaluar {{$porcentaje}}%</td>
+                            <td></td>
                             <td></td>
                         </tr>
                     @else

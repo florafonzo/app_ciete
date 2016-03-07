@@ -41,12 +41,28 @@
                                     </td>
                                     <td>
                                         @if(Entrust::can('eliminar_webinars'))
-                                            {{--<button><span class="glyphicon glyphicon-trash" data-toggle="tooltip" data-placement="bottom" title="Eliminar" aria-hidden="true"></span></button>--}}
-                                            {!! Form::open(array('method' => 'DELETE', 'route' => array('webinars.destroy', $webinar->id), 'id' => 'form_eliminar'.$webinar->id)) !!}
-                                                {{--{!! Form::button('<span class="glyphicon glyphicon-trash" id="{{$curso->id}}" data-toggle="tooltip" data-placement="bottom" title="Eliminar" aria-hidden="true"></span>', array('type' => 'button', 'data-toggle' => 'modal', 'data-target' => '#modal_eliminar_webinar','class' => 'btn btn-danger'))!!}--}}
+                                            {!! Form::open(array('method' => 'DELETE', 'route' => array('webinars.destroy', $webinar->id), 'id' => 'form_eliminar'.$webinar->id)) !!}                                            
                                                 <button type="button" onclick="mostrarModal('{{$webinar->id}}')" class='btn btn-danger' data-toggle='tooltip' data-placement="bottom" title="Eliminar" aria-hidden="true">
                                                     <span class="glyphicon glyphicon-trash" ></span>
                                                 </button>
+                                            {!! Form::close() !!}
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if(Entrust::can('participantes_curso'))
+                                            {!!Form::open(["url"=>"webinars/".$webinar->id."/participantes",  "method" => "GET" ])!!}
+                                                <button type="submit" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="Participantes">
+                                                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                                                </button>
+                                            {!! Form::close() !!}
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if(Entrust::can('profesores_curso'))
+                                            {!!Form::open(["url"=>"webinars/".$webinar->id."/profesores",  "method" => "GET" ])!!}
+                                            <button type="submit" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="Profesores">
+                                                <span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span>
+                                            </button>
                                             {!! Form::close() !!}
                                         @endif
                                     </td>

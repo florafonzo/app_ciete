@@ -18,6 +18,7 @@ class CreateParticipanteWebinarsTable extends Migration {
 
 			$table->integer('id_participante')->unsigned();
 			$table->integer('id_webinar')->unsigned();
+			$table->string('seccion');
 			$table->timestamps();
 
 

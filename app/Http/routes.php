@@ -63,6 +63,15 @@ Route::group([
     //Rutas manejo de webinars
     Route::get('webinars-desactivados', 'WebinarsController@indexDesactivados');
     Route::get('webinars-desactivados/activar/{id}', 'WebinarsController@activar');
+    Route::get('webinars/{id}/participantes', 'WebinarsController@webinarParticipantes');
+    Route::get('webinars/{id}/participantes/agregar', 'WebinarsController@webinarParticipantesAgregar');
+    Route::get('webinars/{id_webinar}/participantes/{id_part}/agregar', 'WebinarsController@webinarParticipantesGuardar');
+    Route::delete('webinars/{id_webinar}/participantes/{id_part}/eliminar', 'WebinarsController@webinarParticipantesEliminar');
+    Route::get('webinars/{id}/profesores', 'WebinarsController@webinarProfesores');
+    Route::get('webinars/{id}/profesores/agregar', 'WebinarsController@webinarProfesoresAgregar');
+    Route::get('webinars/{id_webinar}/profesores/{id_part}/agregar', 'WebinarsController@webinarProfesoresGuardar');
+    Route::delete('webinars/{id_webinar}/profesores/{id_part}/eliminar', 'WebinarsController@webinarProfesoresEliminar');
+    
     Route::resource('/webinars','WebinarsController');
 
     //Ruta dirección participantes
@@ -102,6 +111,8 @@ Route::group([
     Route::post('participante/perfil/procesar','ParticipantesController@procesarImagen');
     Route::get('/participante/cursos','ParticipantesController@verCursos');
     Route::get('/participante/cursos/{id}/notas','ParticipantesController@verNotasCurso');
+    Route::get('/participante/webinars','ParticipantesController@verWebinars');
+    Route::get('/participante/webinars/{id}/notas','ParticipantesController@verNotasCurso');
     Route::resource('/participante','ParticipantesController');
 });
 

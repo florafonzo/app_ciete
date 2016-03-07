@@ -57,6 +57,11 @@
                         <a style="text-decoration:none;" href="{{URL::to('/participante/cursos')}}"> Cursos inscritos </a>
                     </li>
                 @endif
+                @if(Entrust::can('ver_cursos_part'))
+                    <li class="menu_usuarios @if(Request::is('participante/webinars*')) active @endif">
+                        <a style="text-decoration:none;" href="{{URL::to('/participante/webinars')}}"> Webinars inscritos </a>
+                    </li>
+                @endif
                 {{--@if(Entrust::can('ver_cursos_profe'))--}}
                     {{--<li>--}}
                         {{--Cursos--}}
