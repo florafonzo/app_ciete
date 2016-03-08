@@ -55,6 +55,7 @@ class CursoEditRequest extends Request {
             'descripcion_carrusel' => 'max:100',
             'activo_carrusel' => '',
 
+
         ];
     }
 
