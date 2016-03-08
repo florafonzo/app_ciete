@@ -85,10 +85,12 @@ class WebinarsController extends Controller {
                 Session::forget('max');
 				Session::forget('fecha_inicio');
 				Session::forget('fecha_fin');
-				Session::forget('duracion');
-				Session::forget('lugar');
-				Session::forget('descripcion');
-				Session::forget('link');
+				Session::forget('especificaciones');
+				Session::forget('descripcion_carrusel');
+//				Session::forget('duracion');
+//				Session::forget('lugar');
+//				Session::forget('descripcion');
+//				Session::forget('link');
 
 				$data['errores'] = '';
 
@@ -135,10 +137,12 @@ class WebinarsController extends Controller {
                 Session::set('max', $request->maxi);
                 Session::set('fecha_inicio', $request->fecha_inicio);
                 Session::set('fecha_fin', $request->fecha_fin);
-                Session::set('duracion', $request->duracion);
-                Session::set('lugar', $request->lugar);
-                Session::set('descripcion', $request->descripcion);
-                Session::set('link', $request->link);
+                Session::set('especificaciones', $request->especificaciones);
+                Session::set('descripcion_carrusel', $request->descripcion_carrusel);
+//                Session::set('duracion', $request->duracion);
+//                Session::set('lugar', $request->lugar);
+//                Session::set('descripcion', $request->descripcion);
+//                Session::set('link', $request->link);
 
                 $fecha_actual = date('Y-m-d');// Se obtiene la fecha actual para validar las fechas de inicio y fin del Webinar
                 if(($request->fecha_inicio) <= $fecha_actual) {
@@ -200,10 +204,11 @@ class WebinarsController extends Controller {
                 $create2->nombre = $request->nombre;
                 $create2->fecha_inicio = $request->fecha_inicio;
                 $create2->fecha_fin = $request->fecha_fin;
-                $create2->duracion = $request->duracion;
-                $create2->lugar = $request->lugar;
-                $create2->descripcion = $request->descripcion;
-                $create2->link = $request->link;
+                $create2->especificaciones = $request->especificaciones;
+//                $create2->duracion = $request->duracion;
+//                $create2->lugar = $request->lugar;
+//                $create2->descripcion = $request->descripcion;
+//                $create2->link = $request->link;
                 $create2->imagen_carrusel = '';
                 $create2->descripcion_carrusel = $request->descripcion_carrusel;
                 $create2->activo_carrusel = $activo_carrusel;
@@ -292,12 +297,16 @@ class WebinarsController extends Controller {
                 $fecha_actual = date('Y-m-d');// Se obtiene la fecha actual para validar las fechas de inicio y fin del Webinar
                 if(($request->fecha_inicio) <= $fecha_actual) {
                     Session::set('error', 'La fecha de inicio debe ser mayor a la fecha actual');
-                    return view('webinars.crear', $data);
+                    $data['webinars'] = Webinar::find($id);
+
+                    return view('webinars.editar', $data);
 
                 }else{
                     if (($request->fecha_inicio) > ($request->fecha_fin)) {
                         Session::set('error', 'La fecha de inicio debe ser igual o menor a la fecha fin');
-                        return view('webinars.crear', $data);
+                        $data['webinars'] = Webinar::find($id);
+
+                        return view('webinars.editar', $data);
                     }
                 }
 
@@ -305,8 +314,9 @@ class WebinarsController extends Controller {
                 if (($request->mini) > ($request->maxi)) {
                     Session::set('error', 'La cantidad minima de cupos por seccion debe ser igual o menor a la canidad maxima');
                     $data['errores'] = '';
+                    $data['webinars'] = Webinar::find($id);
 
-                    return view('webinars.crear', $data);
+                    return view('webinars.editar', $data);
                 }
 
                 $activo_carrusel = false;
@@ -319,8 +329,7 @@ class WebinarsController extends Controller {
                         $data['errores'] = $data['errores'] . "  Debe completar los campos de descripcion y imagen del Carrusel";
                         $data['webinars'] = Webinar::find($id);
 
-
-                        return view('webinars.crear', $data);
+                        return view('webinars.editar', $data);
                     }
                 }
 
@@ -338,10 +347,11 @@ class WebinarsController extends Controller {
                 $webinar->nombre = $request->nombre;
                 $webinar->fecha_inicio = $request->fecha_inicio;
                 $webinar->fecha_fin = $request->fecha_fin;
-                $webinar->duracion = $request->duracion;
-                $webinar->lugar = $request->lugar;
-                $webinar->descripcion = $request->descripcion;
-                $webinar->link = $request->link;
+                $webinar->especificaciones = $request->especificaciones;
+//                $webinar->duracion = $request->duracion;
+//                $webinar->lugar = $request->lugar;
+//                $webinar->descripcion = $request->descripcion;
+//                $webinar->link = $request->link;
                 $webinar->imagen_carrusel = '';
                 $webinar->descripcion_carrusel = $request->descripcion_carrusel;
                 $webinar->activo_carrusel = $activo_carrusel;
@@ -351,6 +361,8 @@ class WebinarsController extends Controller {
                     return redirect('/webinars');
                 } else {    // Si el webinar no se ha creado bien se redirige al formulario de creación y se le indica al usuario el error
                     Session::set('error', 'Ha ocurrido un error inesperado');
+                    $data['webinars'] = Webinar::find($id);
+
                     return view('webinars.editar');
                 }
 
@@ -481,6 +493,11 @@ class WebinarsController extends Controller {
         }
     }
 
+//    Funcion para ordenar por apellido arreglos de objetos
+    public function cmp($a, $b) {
+        return strcmp($a->apellido, $b->apellido);
+    }
+
 
 //    ------------------------ Participantes ------------------------------------
     public function webinarParticipantes($id) {
@@ -535,78 +552,54 @@ class WebinarsController extends Controller {
                     $arr[$index] = $todo->id_participante;
                 }
                 $no_estan = DB::table('participantes')->whereNotIn('id',$arr)->get();
+                $arr = [];
+
                 $existe =  ParticipanteWebinar::all();
-                $participantes = ParticipanteWebinar::where('id_webinar', '!=', $id)->orderBy('id_participante')->get();                
-                $noParticipantes = ParticipanteWebinar::where('id_webinar', '=', $id)->orderBy('id_participante')->get();
-                //dd($noParticipantes);
-                $participante = $participantes;
-                $hay = false;
-                $repetido = 0;
-                $verificar = false;
-//                dd($existe->count());
                 if($existe->count()) {
-                    if ($participantes->count()) {
-                        if ($noParticipantes->count()) {
-                            foreach ($participantes as $index => $part) {
-                                foreach ($noParticipantes as $index1 => $parti) {
-                                    $partic = $parti->id_participante;
-                                    if ($partic == $part->id_participante) {
-                                        unset($participante[$index]);
-                                        $hay = true;
-                                    } else {
-                                        if ($part->id_participante == $repetido) {
-                                            unset($participante[$index]);
-                                        }
-                                    }
-                                }
-                                $repetido = $part->id_participante;
-                                if (($hay == false)) {
-                                    $verificar = true;
-                                } else {
-                                    $hay = false;
-                                }
-                            }
-                            $participante = array($participante);
-                            if ($participante != null) {
-                                $participante = array_values($participante);
-                            }
-                            //dd($verificar);
-                            if ($verificar) {
-                                foreach ($participante[0] as $index => $datos) {
-                                    $data['participantes'][$index] = Participante::find($datos->id_participante);
-                                }
-                                if ($no_estan != null) {
-                                    $tam = count($data['participantes']);
-                                    foreach ($no_estan as $datos) {
-                                        $data['participantes'][$tam] = $datos;
-                                        $tam++;
-                                    }
-                                    //dd($data['participantes']);
-                                }
-                            } else {
-                                if ($no_estan != null) {
-                                    foreach ($no_estan as $index => $datos) {
-                                        $data['participantes'][$index] = $datos;
-                                    }
-                                } else {
-                                    $data['participantes'] = '';
-                                }
-                            }
-                        } else {
-                            $data['participantes'] = Participante::all();
+                    $noParticipantes = ParticipanteWebinar::where('id_webinar', '=', $id)->orderBy('id_participante')->select('id_participante')->get();
+
+                    if ($noParticipantes->count()) {
+                        foreach ($noParticipantes as $index => $todo) {
+                            $arr[$index] = $todo->id_participante;
                         }
-                    } else {
-                        if ($no_estan != null) {
-                            foreach ($no_estan as $index => $datos) {
-                                $data['participantes'][$index] = $datos;
+
+                        $participantes = ParticipanteWebinar::where('id_webinar', '!=', $id)
+                            ->whereNotIn('id_participante', $arr)
+                            ->select('id_participante')
+                            ->orderBy('id_participante')
+                            ->get();
+                        $arr = [];
+                        foreach ($participantes as $index => $todo) {
+                            $arr[$index] = $todo->id_participante;
+                        }
+                        $parts = array_unique($arr);
+
+                        if($parts != null) {
+                            foreach ($parts as $index => $id_part) {
+                                $data['participantes'][$index] = Participante::find($id_part);
                             }
-                        } else {
+                        }else{
                             $data['participantes'] = '';
                         }
+                        if ($no_estan != null) {
+                            $tam = count($data['participantes']);
+                            foreach ($no_estan as $datos) {
+                                $data['participantes'][$tam] = $datos;
+                                $tam++;
+                            }
+                        }
+
+                        if($data['participantes'] != '') {
+                            usort($data['participantes'], array($this, "cmp")); //Ordenar por orden alfabetico segun el apellido
+                        }
+
+                    }else{
+                        $data['participantes'] = Participante::orderBy('apellido')->get();
                     }
                 }else{
                     $data['participantes'] = Participante::orderBy('apellido')->get();
                 }
+
                 return view('webinars.participantes.agregar', $data);
 
             }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
@@ -641,11 +634,16 @@ class WebinarsController extends Controller {
                     return $this->webinarParticipantesAgregar($id_webinar);
                 }else{
                     if ($webinar != null && $participante != null) {
-                        $part_web = ParticipanteWebinar::create([
-                            'id_participante' => $id_part,
-                            'id_webinar' => $id_webinar,
-                            'seccion' => 'B',
-                        ]);
+                        $part_web = new ParticipanteWebinar;
+                        $part_web->id_participante = $id_part;
+                        $part_web->id_webinar = $id_webinar;
+                        $part_web->seccion = 'B';
+
+//                        $part_web = ParticipanteWebinar::create([
+//                            'id_participante' => $id_part,
+//                            'id_webinar' => $id_webinar,
+//                            'seccion' => 'B',
+//                        ]);
                         $part_web->save();
 
                         if ($part_web->save()) {
@@ -768,71 +766,49 @@ class WebinarsController extends Controller {
                     $arr[$index] = $todo->id_profesor;
                 }
                 $no_estan = DB::table('profesores')->whereNotIn('id',$arr)->get();
-                $existe = ProfesorWebinar::all();
-                $profesores = ProfesorWebinar::where('id_webinar', '!=', $id)->orderBy('id_profesor')->get();
-                $noProfesores = ProfesorWebinar::where('id_webinar', '=', $id)->orderBy('id_profesor')->get();
-                $profesor = $profesores;
-                $hay = false;
-                $repetido = 0;
-                $verificar = false;
-                if($existe->count()) {
-                    if ($profesores->count()) {
-                        if ($noProfesores->count()) {
-                            foreach ($profesores as $index => $prof) {
-                                foreach ($noProfesores as $index1 => $profe) {
-                                    $profe_id = $profe->id_profesor;
-                                    if ($profe_id == $prof->id_profesor) {
-                                        unset($profesor[$index]);
-                                        $hay = true;
-                                    } else {
-                                        if ($prof->id_profesor == $repetido) {
-                                            unset($profesor[$index]);
-                                        }
-                                    }
-                                }
-                                $repetido = $prof->id_profesor;
-                                if (($hay == false)) {
-                                    $verificar = true;
-                                } else {
-                                    $hay = false;
-                                }
-                            }
-                            $profesor = array($profesor);
-                            if ($profesor != null) {
-                                $profesor = array_values($profesor);
-                            }
+                $arr = [];
 
-                            if ($verificar) {
-                                foreach ($profesor[0] as $index => $datos) {
-                                    $data['profesores'][$index] = Profesor::find($datos->id_profesor);
-                                }
-                                if ($no_estan != null) {
-                                    $tam = count($data['profesores']) - 1;
-                                    foreach ($no_estan as $datos) {
-                                        $data['profesores'][$tam] = $datos;
-                                        $tam++;
-                                    }
-                                }
-                            } else {
-                                if ($no_estan != null) {
-                                    foreach ($no_estan as $index => $datos) {
-                                        $data['profesores'][$index] = $datos;
-                                    }
-                                } else {
-                                    $data['profesores'] = '';
-                                }
-                            }
-                        } else {
-                            $data['profesores'] = Profesor::orderBy('apellido')->get();
+                $existe =  ProfesorWebinar::all();
+                if($existe->count()) {
+                    $noProfesor = ProfesorWebinar::where('id_webinar', '=', $id)->orderBy('id_profesor')->select('id_profesor')->get();
+
+                    if ($noProfesor->count()) {
+                        foreach ($noProfesor as $index => $todo) {
+                            $arr[$index] = $todo->id_profesor;
                         }
-                    } else {
-                        if ($no_estan != null) {
-                            foreach ($no_estan as $index => $datos) {
-                                $data['profesores'][$index] = $datos;
+
+                        $profesores = ProfesorWebinar::where('id_webinar', '!=', $id)
+                            ->whereNotIn('id_profesor', $arr)
+                            ->select('id_profesor')
+                            ->orderBy('id_profesor')
+                            ->get();
+                        $arr = [];
+                        foreach ($profesores as $index => $todo) {
+                            $arr[$index] = $todo->id_profesor;
+                        }
+                        $profes = array_unique($arr);
+
+                        if($profes != null) {
+                            foreach ($profes as $index => $id_prof) {
+                                $data['profesores'][$index] = Profesor::find($id_prof);
                             }
-                        }else {
+                        }else{
                             $data['profesores'] = '';
                         }
+                        if ($no_estan != null) {
+                            $tam = count($data['profesores']);
+                            foreach ($no_estan as $datos) {
+                                $data['profesores'][$tam] = $datos;
+                                $tam++;
+                            }
+                        }
+
+                        if($data['profesores'] != '') {
+                            usort($data['profesores'], array($this, "cmp")); //Ordenar por orden alfabetico segun el apellido
+                        }
+
+                    }else{
+                        $data['profesores'] = Profesor::orderBy('apellido')->get();
                     }
                 }else{
                     $data['profesores'] = Profesor::orderBy('apellido')->get();
@@ -872,10 +848,14 @@ class WebinarsController extends Controller {
                     return $this->webinarProfesoresAgregar($id_web);
                 }else{
                     if ($webinar != null || $profesor != null) {
-                        $prof_web = ProfesorWebinar::create([
-                            'id_profesor' => $id_profesor,
-                            'id_webinar' => $id_web
-                        ]);
+
+                        $prof_web = new ProfesorWebinar;
+                        $prof_web->id_profesor = $id_profesor;
+                        $prof_web->id_webinar = $id_web;
+//                        $prof_web = ProfesorWebinar::create([
+//                            'id_profesor' => $id_profesor,
+//                            'id_webinar' => $id_web
+//                        ]);
                         $prof_web->save();
 
                         if ($prof_web->save()) {
@@ -923,8 +903,8 @@ class WebinarsController extends Controller {
                 $data['webinar'] = Webinar::find($id_web);
                 $webinar_prof = ProfesorWebinar::where('id_webinar', '=', $id_web)->get();
                 if($webinar_prof->count()){
-                    foreach ($webinar_prof as $index => $curso) {
-                        $data['profesores'][$index] = Profesor::where('id', '=', $curso->id_profesor)->orderBy('apellido')->get();
+                    foreach ($webinar_prof as $index => $web) {
+                        $data['profesores'][$index] = Profesor::where('id', '=', $web->id_profesor)->orderBy('apellido')->get();
                     }
                 }
 

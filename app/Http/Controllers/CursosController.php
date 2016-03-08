@@ -100,19 +100,20 @@ class CursosController extends Controller {
                 Session::forget('id_tipo');
                 Session::forget('fecha_inicio');
                 Session::forget('fecha_fin');
-                Session::forget('duracion');
-                Session::forget('lugar');
-                Session::forget('descripcion');
-                Session::forget('dirigido_a');
-                Session::forget('proposito');
-                Session::forget('modalidad_estrategias');
-                Session::forget('acreditacion');
-                Session::forget('perfil');
-                Session::forget('requerimientos_tec');
-                Session::forget('perfil_egresado');
-                Session::forget('instituciones_aval');
-                Session::forget('aliados');
-                Session::forget('plan_estudio');
+                Session::forget('especificaciones');
+//                Session::forget('duracion');
+//                Session::forget('lugar');
+//                Session::forget('descripcion');
+//                Session::forget('dirigido_a');
+//                Session::forget('proposito');
+//                Session::forget('modalidad_estrategias');
+//                Session::forget('acreditacion');
+//                Session::forget('perfil');
+//                Session::forget('requerimientos_tec');
+//                Session::forget('perfil_egresado');
+//                Session::forget('instituciones_aval');
+//                Session::forget('aliados');
+//                Session::forget('plan_estudio');
                 Session::forget('costo');
                 Session::forget('descripcion_carrusel');
 
@@ -173,19 +174,20 @@ class CursosController extends Controller {
                 Session::set('id_tipo', $request->id_tipo);
                 Session::set('fecha_inicio', $request->fecha_inicio);
                 Session::set('fecha_fin', $request->fecha_fin);
-                Session::set('duracion', $request->duracion);
-                Session::set('lugar', $request->lugar);
-                Session::set('descripcion', $request->descripcion);
-                Session::set('dirigido_a', $request->dirigido_a);
-                Session::set('proposito', $request->proposito);
-                Session::set('modalidad_estrategias', $request->modalidad_estrategias);
-                Session::set('acreditacion', $request->acreditacion);
-                Session::set('perfil', $request->perfil);
-                Session::set('requerimientos_tec', $request->requerimientos_tec);
-                Session::set('perfil_egresado', $request->perfil_egresado);
-                Session::set('instituciones_aval', $request->instituciones_aval);
-                Session::set('aliados', $request->aliados);
-                Session::set('plan_estudio', $request->plan_estudio);
+                Session::set('especificaciones', $request->especificaciones);
+//                Session::set('duracion', $request->duracion);
+//                Session::set('lugar', $request->lugar);
+//                Session::set('descripcion', $request->descripcion);
+//                Session::set('dirigido_a', $request->dirigido_a);
+//                Session::set('proposito', $request->proposito);
+//                Session::set('modalidad_estrategias', $request->modalidad_estrategias);
+//                Session::set('acreditacion', $request->acreditacion);
+//                Session::set('perfil', $request->perfil);
+//                Session::set('requerimientos_tec', $request->requerimientos_tec);
+//                Session::set('perfil_egresado', $request->perfil_egresado);
+//                Session::set('instituciones_aval', $request->instituciones_aval);
+//                Session::set('aliados', $request->aliados);
+//                Session::set('plan_estudio', $request->plan_estudio);
                 Session::set('costo', $request->costo);
                 Session::set('descripcion_carrusel', $request->descripcion_carrusel);
 
@@ -265,21 +267,22 @@ class CursosController extends Controller {
                 $create2->nombre = $request->nombre;
                 $create2->fecha_inicio = $request->fecha_inicio;
                 $create2->fecha_fin = $request->fecha_fin;
-                $create2->duracion = $request->duracion;
-                $create2->id_modalidad_curso = $request->id_modalidad_curso;
-                $create2->lugar = $request->lugar;
-                $create2->area = '';
-                $create2->descripcion = $request->descripcion;
-                $create2->dirigido_a = $request->dirigido_a;
-                $create2->propositos = $request->proposito;
-                $create2->modalidad_estrategias = $request->modalidad_estrategias;
-                $create2->acreditacion = $request->acreditacion;
-                $create2->perfil = $request->perfil;
-                $create2->requerimientos_tec = $request->requerimientos_tec;
-                $create2->perfil_egresado = $request->perfil_egresado;
-                $create2->instituciones_aval = $request->instituciones_aval;
-                $create2->aliados = $request->aliados;
-                $create2->plan_estudio = $request->plan_estudio;
+                $create2->especificaciones = $request->especificaciones;
+//                $create2->duracion = $request->duracion;
+//                $create2->id_modalidad_curso = $request->id_modalidad_curso;
+//                $create2->lugar = $request->lugar;
+//                $create2->area = '';
+//                $create2->descripcion = $request->descripcion;
+//                $create2->dirigido_a = $request->dirigido_a;
+//                $create2->propositos = $request->proposito;
+//                $create2->modalidad_estrategias = $request->modalidad_estrategias;
+//                $create2->acreditacion = $request->acreditacion;
+//                $create2->perfil = $request->perfil;
+//                $create2->requerimientos_tec = $request->requerimientos_tec;
+//                $create2->perfil_egresado = $request->perfil_egresado;
+//                $create2->instituciones_aval = $request->instituciones_aval;
+//                $create2->aliados = $request->aliados;
+//                $create2->plan_estudio = $request->plan_estudio;
                 $create2->costo = $request->costo;
                 $create2->imagen_carrusel = $imagen;
                 $create2->descripcion_carrusel = $request->descripcion_carrusel;
@@ -477,21 +480,22 @@ class CursosController extends Controller {
                 $cursos->nombre = $request->nombre;
                 $cursos->fecha_inicio = $request->fecha_inicio;
                 $cursos->fecha_fin = $request->fecha_fin;
-                $cursos->duracion = $request->duracion;
-                $cursos->id_modalidad_curso = $request->id_modalidad_curso;
-                $cursos->lugar = $request->lugar;
-                $cursos->area = '';
-                $cursos->descripcion = $request->descripcion;
-                $cursos->dirigido_a = $request->dirigido_a;
-                $cursos->propositos = $request->proposito;
-                $cursos->modalidad_estrategias = $request->modalidad_estrategias;
-                $cursos->acreditacion = $request->acreditacion;
-                $cursos->perfil = $request->perfil;
-                $cursos->requerimientos_tec = $request->requerimientos_tec;
-                $cursos->perfil_egresado = $request->perfil_egresado;
-                $cursos->instituciones_aval = $request->instituciones_aval;
-                $cursos->aliados = $request->aliados;
-                $cursos->plan_estudio = $request->plan_estudio;
+                $cursos->especificaciones = $request->especificaciones;
+//                $cursos->duracion = $request->duracion;
+//                $cursos->id_modalidad_curso = $request->id_modalidad_curso;
+//                $cursos->lugar = $request->lugar;
+//                $cursos->area = '';
+//                $cursos->descripcion = $request->descripcion;
+//                $cursos->dirigido_a = $request->dirigido_a;
+//                $cursos->propositos = $request->proposito;
+//                $cursos->modalidad_estrategias = $request->modalidad_estrategias;
+//                $cursos->acreditacion = $request->acreditacion;
+//                $cursos->perfil = $request->perfil;
+//                $cursos->requerimientos_tec = $request->requerimientos_tec;
+//                $cursos->perfil_egresado = $request->perfil_egresado;
+//                $cursos->instituciones_aval = $request->instituciones_aval;
+//                $cursos->aliados = $request->aliados;
+//                $cursos->plan_estudio = $request->plan_estudio;
                 $cursos->costo = $request->costo;
                 $cursos->imagen_carrusel = $imagen;
                 $cursos->descripcion_carrusel = $request->descripcion_carrusel;
@@ -646,6 +650,11 @@ class CursosController extends Controller {
         }
     }
 
+    //    Funcion para ordenar por apellido arreglos de objetos
+    public function cmp($a, $b) {
+        return strcmp($a->apellido, $b->apellido);
+    }
+
 //    ------------------------ Participantes ------------------------------------
     public function cursoParticipantes($id) {
         try{
@@ -699,70 +708,49 @@ class CursosController extends Controller {
                     $arr[$index] = $todo->id_participante;
                 }
                 $no_estan = DB::table('participantes')->whereNotIn('id',$arr)->get();
+                $arr = [];
+
                 $existe =  ParticipanteCurso::all();
-                $participantes = ParticipanteCurso::where('id_curso', '!=', $id)->orderBy('id_participante')->get();
-                $noParticipantes = ParticipanteCurso::where('id_curso', '=', $id)->orderBy('id_participante')->get();
-                $participante = $participantes;
-                $hay = false;
-                $repetido = 0;
-                $verificar = false;
                 if($existe->count()) {
-                    if ($participantes->count()) {
-                        if ($noParticipantes->count()) {
-                            foreach ($participantes as $index => $part) {
-                                foreach ($noParticipantes as $index1 => $parti) {
-                                    $partic = $parti->id_participante;
-                                    if ($partic == $part->id_participante) {
-                                        unset($participante[$index]);
-                                        $hay = true;
-                                    } else {
-                                        if ($part->id_participante == $repetido) {
-                                            unset($participante[$index]);
-                                        }
-                                    }
-                                }
-                                $repetido = $part->id_participante;
-                                if (($hay == false)) {
-                                    $verificar = true;
-                                } else {
-                                    $hay = false;
-                                }
-                            }
-                            $participante = array($participante);
-                            if ($participante != null) {
-                                $participante = array_values($participante);
-                            }
-                            if ($verificar) {
-                                foreach ($participante[0] as $index => $datos) {
-                                    $data['participantes'][$index] = Participante::find($datos->id_participante);
-                                }
-                                if ($no_estan != null) {
-                                    $tam = count($data['participantes']) - 1;
-                                    foreach ($no_estan as $datos) {
-                                        $data['participantes'][$tam] = $datos;
-                                        $tam++;
-                                    }
-                                }
-                            } else {
-                                if ($no_estan != null) {
-                                    foreach ($no_estan as $index => $datos) {
-                                        $data['participantes'][$index] = $datos;
-                                    }
-                                } else {
-                                    $data['participantes'] = '';
-                                }
-                            }
-                        } else {
-                            $data['participantes'] = Participante::all();
+                    $noParticipantes = ParticipanteCurso::where('id_curso', '=', $id)->orderBy('id_participante')->select('id_participante')->get();
+
+                    if ($noParticipantes->count()) {
+                        foreach ($noParticipantes as $index => $todo) {
+                            $arr[$index] = $todo->id_participante;
                         }
-                    } else {
-                        if ($no_estan != null) {
-                            foreach ($no_estan as $index => $datos) {
-                                $data['participantes'][$index] = $datos;
+
+                        $participantes = ParticipanteCurso::where('id_curso', '!=', $id)
+                            ->whereNotIn('id_participante', $arr)
+                            ->select('id_participante')
+                            ->orderBy('id_participante')
+                            ->get();
+                        $arr = [];
+                        foreach ($participantes as $index => $todo) {
+                            $arr[$index] = $todo->id_participante;
+                        }
+                        $parts = array_unique($arr);
+
+                        if($parts != null) {
+                            foreach ($parts as $index => $id_part) {
+                                $data['participantes'][$index] = Participante::find($id_part);
                             }
-                        } else {
+                        }else{
                             $data['participantes'] = '';
                         }
+                        if ($no_estan != null) {
+                            $tam = count($data['participantes']);
+                            foreach ($no_estan as $datos) {
+                                $data['participantes'][$tam] = $datos;
+                                $tam++;
+                            }
+                        }
+
+                        if($data['participantes'] != '') {
+                            usort($data['participantes'], array($this, "cmp")); //Ordenar por orden alfabetico segun el apellido
+                        }
+
+                    }else{
+                        $data['participantes'] = Participante::orderBy('apellido')->get();
                     }
                 }else{
                     $data['participantes'] = Participante::orderBy('apellido')->get();
@@ -932,72 +920,49 @@ class CursosController extends Controller {
                     $arr[$index] = $todo->id_profesor;
                 }
                 $no_estan = DB::table('profesores')->whereNotIn('id',$arr)->get();
-                $existe = ProfesorCurso::all();
-                $profesores = ProfesorCurso::where('id_curso', '!=', $id)->orderBy('id_profesor')->get();
-                $noProfesores = ProfesorCurso::where('id_curso', '=', $id)->orderBy('id_profesor')->get();
-                $profesor = $profesores;
-                $hay = false;
-                $repetido = 0;
-                $verificar = false;
-                if($existe->count()) {
-                    if ($profesores->count()) {
-                        if($noProfesores->count()) {
-                            foreach ($profesores as $index => $prof) {
-                                foreach ($noProfesores as $index1 => $profe) {
-                                    $profe_id = $profe->id_profesor;
-                                    if ($profe_id == $prof->id_profesor) {
-                                        unset($profesor[$index]);
-                                        $hay = true;
-                                    }else{
-                                        if($prof->id_profesor == $repetido){
-                                            unset($profesor[$index]);
-                                        }
-                                    }
-                                }
-                                $repetido = $prof->id_profesor;
-                                if(($hay == false)){
-                                    $verificar = true;
-                                }else{
-                                    $hay = false;
-                                }
-                            }
-                            $profesor = array($profesor);
-                            if ($profesor != null) {
-                                $profesor = array_values($profesor);
-                            }
+                $arr = [];
 
-                            if($verificar) {
-                                foreach ($profesor[0] as $index => $datos) {
-                                    $data['profesores'][$index] = Profesor::find($datos->id_profesor);
-                                }
-                                if($no_estan != null) {
-                                    $tam = count($data['profesores']) - 1;
-                                    foreach ($no_estan as $datos) {
-                                        $data['profesores'][$tam] = $datos;
-                                        $tam++;
-                                    }
-                                }
-                            }else{
-                                if($no_estan != null) {
-                                    foreach ($no_estan as $index => $datos) {
-                                        $data['profesores'][$index] = $datos;
-                                    }
-                                }else {
-                                    $data['profesores'] = '';
-                                }
+                $existe =  ProfesorCurso::all();
+                if($existe->count()) {
+                    $noProfesor = ProfesorCurso::where('id_curso', '=', $id)->orderBy('id_profesor')->select('id_profesor')->get();
+
+                    if ($noProfesor->count()) {
+                        foreach ($noProfesor as $index => $todo) {
+                            $arr[$index] = $todo->id_profesor;
+                        }
+
+                        $profesores = ProfesorCurso::where('id_curso', '!=', $id)
+                            ->whereNotIn('id_profesor', $arr)
+                            ->select('id_profesor')
+                            ->orderBy('id_profesor')
+                            ->get();
+                        $arr = [];
+                        foreach ($profesores as $index => $todo) {
+                            $arr[$index] = $todo->id_profesor;
+                        }
+                        $profes = array_unique($arr);
+
+                        if($profes != null) {
+                            foreach ($profes as $index => $id_prof) {
+                                $data['profesores'][$index] = Profesor::find($id_prof);
                             }
                         }else{
-                            $data['profesores'] = Profesor::all();
-                        }
-                    }else{
-                        if ($no_estan != null) {
-                            foreach ($no_estan as $index => $datos) {
-                                $data['profesores'][$index] = $datos;
-    //                                $tam++;
-                            }
-                        }else {
                             $data['profesores'] = '';
                         }
+                        if ($no_estan != null) {
+                            $tam = count($data['profesores']);
+                            foreach ($no_estan as $datos) {
+                                $data['profesores'][$tam] = $datos;
+                                $tam++;
+                            }
+                        }
+
+                        if($data['profesores'] != '') {
+                            usort($data['profesores'], array($this, "cmp")); //Ordenar por orden alfabetico segun el apellido
+                        }
+
+                    }else{
+                        $data['profesores'] = Profesor::orderBy('apellido')->get();
                     }
                 }else{
                     $data['profesores'] = Profesor::orderBy('apellido')->get();

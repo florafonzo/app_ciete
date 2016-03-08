@@ -6,6 +6,10 @@ a{
     text-decoration: none !important;
 }
 
+.label_esp{
+    padding-left: 15px;
+}
+
 
 /*Header*/
 header .container{
