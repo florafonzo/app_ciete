@@ -652,6 +652,7 @@ class CursosController extends Controller {
 
     //    Funcion para ordenar por apellido arreglos de objetos
     public function cmp($a, $b) {
+//        dd('A: ' . $a . 'B: ' . $b);
         return strcmp($a->apellido, $b->apellido);
     }
 
@@ -675,6 +676,9 @@ class CursosController extends Controller {
                     foreach ($curso_part as $index => $curso) {
                         $data['participantes'][$index] = Participante::where('id', '=', $curso->id_participante)->orderBy('apellido')->get();
                     }
+//                    $data['participantes'] = array($data['participantes']);
+//                    usort($data['participantes'], array($this, "cmp"));
+//                    $data['participantes'] = $data['participantes'][0];
                 }
 
                 return view('cursos.participantes.participantes', $data);
@@ -880,13 +884,14 @@ class CursosController extends Controller {
                 $data['errores'] = '';
                 $data['profesores'] = [];
                 $data['curso'] = Curso::find($id);
-                //dd('curso: '.$data['curso']);
                 $curso_prof = ProfesorCurso::where('id_curso', '=', $id)->get();
-//                dd($curso_prof);
                 if($curso_prof->count()){
                     foreach ($curso_prof as $index => $curso) {
-                        $data['profesores'][$index] = Profesor::where('id', '=', $curso->id_profesor)->get();
+                        $data['profesores'][$index] = Profesor::where('id', '=', $curso->id_profesor)->orderBy('apellido')->get();
                     }
+                    $data['profesores'] = array($data['profesores']);
+                    usort($data['profesores'], array($this, "cmp"));
+                    $data['profesores'] = $data['profesores'][0];
                 }
 
                 return view('cursos.profesores.profesores', $data);

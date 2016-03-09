@@ -201,43 +201,50 @@ $(document).ready(function() {
     $('#enviar').hide();
     $('#imagen2').hide();
     $('#aceptar').hide();
+    $('#alerta_img').hide();
     $( "#file_perfil" ).on("change", function(e){
-        var dir = e.target.files;
-        var romper = true;
-        $.each(dir, function(index, file) {
+        var nombre = $( "#file_perfil").val();
+        var ext = nombre.split('.').pop();
+        if(ext!= null && ((ext == 'jpeg') || (ext == 'jpg'))) {
+            var dir = e.target.files;
+            var romper = true;
+            $.each(dir, function (index, file) {
 
-            var fileReader = new FileReader();
+                var fileReader = new FileReader();
 
-            // When the filereader loads initiate a function
-            fileReader.onload = (function(file) {
+                // When the filereader loads initiate a function
+                fileReader.onload = (function (file) {
 
-                return function(e) {
+                    return function (e) {
 
-                    // This is the image
-                    var image = this.result;
-                    $('#imagen2').attr('src', image);
-                    //$('#imagen2').hide();
+                        // This is the image
+                        var image = this.result;
+                        $('#imagen2').attr('src', image);
+                        //$('#imagen2').hide();
 
-                };
+                    };
 
 
-            })(dir[index]);
+                })(dir[index]);
 
-            // For data URI purposes
-            fileReader.readAsDataURL(file);
-            if(romper) return false;
-        });
+                // For data URI purposes
+                fileReader.readAsDataURL(file);
+                if (romper) return false;
+            });
 
-        setTimeout(function() {
-            var imagee =  $('#imagen2');
-            var source = imagee.attr('src');
-            $('#imagen').attr('src', source);
-            $('.esconder').show();
-            $("#imagenModal").modal({backdrop: 'static', keyboard: false});
-            resizeableImage($('.resize-image'));
-        }, 50);
-        $('#nombre_hidden').val($('#nombre').val());
-        $('#descripcion_hidden').val($('#descripcion').val());
+            setTimeout(function () {
+                var imagee = $('#imagen2');
+                var source = imagee.attr('src');
+                $('#imagen').attr('src', source);
+                $('.esconder').show();
+                $("#imagenModal").modal({backdrop: 'static', keyboard: false});
+                resizeableImage($('.resize-image'));
+            }, 50);
+            $('#nombre_hidden').val($('#nombre').val());
+            $('#descripcion_hidden').val($('#descripcion').val());
+        }else{
+            $('#alerta_img').show();
+        }
     });
 //------------------------------------------------------------------------------------------//
 
