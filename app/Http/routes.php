@@ -111,7 +111,6 @@ Route::group([
     Route::get('/participante/cursos','ParticipantesController@verCursos');
     Route::get('/participante/cursos/{id}/notas','ParticipantesController@verNotasCurso');
     Route::get('/participante/webinars','ParticipantesController@verWebinars');
-    Route::get('/participante/webinars/{id}/notas','ParticipantesController@verNotasCurso');
     Route::resource('/participante','ParticipantesController');
 
     //Rutas profesores
@@ -120,9 +119,11 @@ Route::group([
     Route::get('profesor/perfil/imagen','ProfesoresController@cambiarImagen');
     Route::post('profesor/perfil/procesar','ProfesoresController@procesarImagen');
     Route::get('/profesor/cursos','ProfesoresController@verCursos');
-    Route::get('/profesor/cursos/{id}/notas','ProfesoresController@verNotasCurso');
+    Route::get('/profesor/cursos/{id}/secciones','ProfesoresController@verSeccionesCurso');
+    Route::get('/profesor/cursos/{id}/secciones/{seccion}/participantes','ProfesoresController@verParticipantesSeccion');
+    Route::get('/profesor/cursos/{id}/secciones/{seccion}/participantes/{id_alumno}/notas','ProfesoresController@verNotasParticipante');
     Route::get('/profesor/webinars','ProfesoresController@verWebinars');
-    Route::get('/profesor/webinars/{id}/notas','ProfesoresController@verNotasCurso');
+    Route::get('/profesor/webinars/{id}/secciones','ProfesoresController@verSeccionesWebinar');
     Route::resource('/profesor','ProfesoresController');
 });
 

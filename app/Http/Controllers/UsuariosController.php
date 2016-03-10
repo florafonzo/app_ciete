@@ -146,6 +146,7 @@ class UsuariosController extends Controller {
                     'nombre' => $request->nombre,
                     'apellido' => $request->apellido,
                     'email' => $request->email,
+                    'foto' => 'foto_participante.png',
                     'password' => bcrypt($request->password),
                 ]);
 

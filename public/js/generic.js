@@ -195,6 +195,17 @@ $(document).ready(function() {
     });
 //------------------------------------------------------------------------------//
 
+//    -------------Resaltar input file ----------------//
+//    var cambio = $( "#imagen").val();
+//    alert(cambio);
+//    if(cambio == 'yes'){
+//        $( "#perfil").css({'border-style' : 'solid', 'border-color' : '#1968b3'});
+//        $( "#file_perfil").css({'background-color' : '#fff'});
+//        $( "#borde").css({'padding' : '8px'});
+//
+//    }
+
+//    -----------------------------------------------------
 
 // ----------------------- Imagen Perfil Crop ----------------------------------//
 

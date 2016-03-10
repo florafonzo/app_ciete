@@ -18,6 +18,7 @@ class CreateProfesorWebinarsTable extends Migration {
 
 			$table->integer('id_profesor')->unsigned();
 			$table->integer('id_webinar')->unsigned();
+			$table->string('seccion');
 			$table->timestamps();
 
 
