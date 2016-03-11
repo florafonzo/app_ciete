@@ -5,7 +5,7 @@
 
         <div class="col-md-12 col-sm-12 col-md-offset-2 bienvenida">
             <h3>
-                Cursos inscritos
+                Participantes del curso {{$curso->nombre}} <br/> Sección - {{$seccion}}
             </h3>
         </div>
 
@@ -32,8 +32,8 @@
                                 <td>{{ $participante->documento_identidad }}</td>
                                 <td>
                                     @if(Entrust::can('ver_notas_profe'))
-                                        {!!Form::open(["url"=>"profesor/cursos/".$curso."/secciones/".$seccion."/participantes/".$participante->id."/notas",  "method" => "GET" ])!!}
-                                        <button type="submit" class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="Alumnos">
+                                        {!!Form::open(["url"=>"profesor/cursos/".$curso->id."/secciones/".$seccion."/participantes/".$participante->id."/notas",  "method" => "GET" ])!!}
+                                        <button type="submit" class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="Notas">
                                             <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
                                         </button>
                                         {!! Form::close() !!}

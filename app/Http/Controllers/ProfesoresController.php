@@ -4,6 +4,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Models\Curso;
+use App\Models\Nota;
 use App\Models\Participante;
 use App\Models\ParticipanteCurso;
 use App\Models\ProfesorCurso;
@@ -359,7 +360,7 @@ class ProfesoresController extends Controller {
             if($usuario_actual->can('ver_notas_profe')) {// Si el usuario posee los permisos necesarios continua con la acción
 
                 $data['errores'] = '';
-                $data['curso'] = $id_curso;
+                $data['curso'] = Curso::find($id_curso);
                 $arr = [];
 //                $profesor = Profesor::where('id_usuario', '=', $usuario_actual->id)->get();
                 $secciones = ProfesorCurso::where('id_curso', '=', $id_curso)->select('seccion')->get();
@@ -394,9 +395,8 @@ class ProfesoresController extends Controller {
             }
 
             if($usuario_actual->can('ver_notas_profe')) {// Si el usuario posee los permisos necesarios continua con la acción
-
                 $data['errores'] = '';
-                $data['curso'] = $id_curso;
+                $data['curso'] = Curso::find($id_curso);
                 $data['seccion'] = $seccion;
                 $seccion = str_replace(' ', '', $seccion);
                 $participantes = ParticipanteCurso::where('id_curso', '=', $id_curso)->where('seccion', '=', $seccion)->select('id_participante')->get();
@@ -424,38 +424,107 @@ class ProfesoresController extends Controller {
     }
 
 
-
-
-    public function verNotasParticipante($id_curso, $id_part)
+    public function verNotasParticipante($id_curso, $seccion, $id_part)
     {
         try{
-//            //Verificación de los permisos del usuario para poder realizar esta acción
-//            $usuario_actual = Auth::user();
-//            if($usuario_actual->foto != null) {
-//                $data['foto'] = $usuario_actual->foto;
-//            }else{
-//                $data['foto'] = 'foto_participante.png';
-//            }
-//
-//            if($usuario_actual->can('ver_notas_profe')) {// Si el usuario posee los permisos necesarios continua con la acción
-//
-//                $data['errores'] = '';
-//                $data['curso'] = $id_curso;
-//                $arr = [];
-////                $profesor = Profesor::where('id_usuario', '=', $usuario_actual->id)->get();
-//                $secciones = ProfesorCurso::where('id_curso', '=', $id_curso)->select('seccion')->get();
-//                foreach ($secciones as $index => $seccion) {
-//                    $arr[$index] = $seccion->seccion;
-//                }
-//                $data['secciones'] = array_unique($arr);
-////                dd($data['secciones']);
-//
-//                return view('profesores.secciones', $data);
-//
-//            }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
-//
-//                return view('errors.sin_permiso');
-//            }
+            //Verificación de los permisos del usuario para poder realizar esta acción
+            $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
+
+            if($usuario_actual->can('ver_notas_profe')) {// Si el usuario posee los permisos necesarios continua con la acción
+
+                $data['errores'] = '';
+                $data['curso'] = Curso::find($id_curso);
+                $seccion = str_replace(' ', '', $seccion);
+                $data['seccion'] = $seccion;
+                $data['participante'] = Participante::find($id_part);
+                $arr = [];
+                $participante = ParticipanteCurso::where('id_participante', '=', $id_part)
+                                ->where('id_curso', '=', $id_curso)
+                                ->where('seccion', '=', $seccion)
+                                ->select('id')->get();
+
+                if($participante->count()) {
+                    $data['notas'] = Nota::where('id_participante_curso', '=', $participante[0]->id)->get();
+                    if($data['notas']->count()){
+                        $data['promedio'] = 0;
+                        $porcentaje = 0;
+                        foreach ($data['notas'] as $nota) {
+                            $calif = $nota->nota;
+                            $porcent = $nota->porcentaje;
+                            $porcentaje =  ($porcentaje + $porcent);
+                            $data['promedio'] = $data['promedio'] + ($calif * ($porcent / 100));
+                        }
+                        $data['porcentaje'] =  100 - $porcentaje;
+                    }
+                }else{
+                    $data['notas'] = '';
+                }
+
+                return view('profesores.notas', $data);
+
+            }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
+
+                return view('errors.sin_permiso');
+            }
+        }
+        catch (Exception $e) {
+
+            return view('errors.error')->with('error',$e->getMessage());
+        }
+    }
+
+    public function editarNotasParticipante($id_curso, $seccion, $id_part)
+    {
+        try{
+            //Verificación de los permisos del usuario para poder realizar esta acción
+            $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
+
+            if($usuario_actual->can('ver_notas_profe')) {// Si el usuario posee los permisos necesarios continua con la acción
+
+                $data['errores'] = '';
+                $data['curso'] = Curso::find($id_curso);
+                $seccion = str_replace(' ', '', $seccion);
+                $data['seccion'] = $seccion;
+                $data['participante'] = Participante::find($id_part);
+                $arr = [];
+                $participante = ParticipanteCurso::where('id_participante', '=', $id_part)
+                    ->where('id_curso', '=', $id_curso)
+                    ->where('seccion', '=', $seccion)
+                    ->select('id')->get();
+
+                if($participante->count()) {
+                    $data['notas'] = Nota::where('id_participante_curso', '=', $participante[0]->id)->get();
+                    if($data['notas']->count()){
+                        $data['promedio'] = 0;
+                        $porcentaje = 0;
+                        foreach ($data['notas'] as $nota) {
+                            $calif = $nota->nota;
+                            $porcent = $nota->porcentaje;
+                            $porcentaje =  ($porcentaje + $porcent);
+                            $data['promedio'] = $data['promedio'] + ($calif * ($porcent / 100));
+                        }
+                        $data['porcentaje'] =  100 - $porcentaje;
+                    }
+                }else{
+                    $data['notas'] = '';
+                }
+
+                return view('profesores.notas', $data);
+
+            }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
+
+                return view('errors.sin_permiso');
+            }
         }
         catch (Exception $e) {
 

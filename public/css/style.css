@@ -10,6 +10,9 @@ a{
     padding-left: 15px;
 }
 
+.izq{
+    text-align: left !important;
+}
 
 /*Header*/
 header .container{
