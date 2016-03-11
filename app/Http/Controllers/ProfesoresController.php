@@ -22,6 +22,7 @@ use App\Models\Profesor;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProfesorRequest;
+use App\Http\Requests\CalificarRequest;
 
 class ProfesoresController extends Controller {
 
@@ -478,8 +479,8 @@ class ProfesoresController extends Controller {
         }
     }
 
-    public function editarNotasParticipante($id_curso, $seccion, $id_part)
-    {
+    public function store(CalificarRequest $request, $id_curso, $seccion, $id_part) {
+
         try{
             //Verificación de los permisos del usuario para poder realizar esta acción
             $usuario_actual = Auth::user();
@@ -489,37 +490,52 @@ class ProfesoresController extends Controller {
                 $data['foto'] = 'foto_participante.png';
             }
 
-            if($usuario_actual->can('ver_notas_profe')) {// Si el usuario posee los permisos necesarios continua con la acción
-
+            if($usuario_actual->can('agregar_notas')) {// Si el usuario posee los permisos necesarios continua con la acción
+                dd($request->id);
                 $data['errores'] = '';
                 $data['curso'] = Curso::find($id_curso);
                 $seccion = str_replace(' ', '', $seccion);
                 $data['seccion'] = $seccion;
                 $data['participante'] = Participante::find($id_part);
-                $arr = [];
-                $participante = ParticipanteCurso::where('id_participante', '=', $id_part)
-                    ->where('id_curso', '=', $id_curso)
-                    ->where('seccion', '=', $seccion)
-                    ->select('id')->get();
+                $nota = Nota::findOrNew($request->id);
+                $total = 0;
 
-                if($participante->count()) {
-                    $data['notas'] = Nota::where('id_participante_curso', '=', $participante[0]->id)->get();
-                    if($data['notas']->count()){
-                        $data['promedio'] = 0;
-                        $porcentaje = 0;
-                        foreach ($data['notas'] as $nota) {
-                            $calif = $nota->nota;
-                            $porcent = $nota->porcentaje;
-                            $porcentaje =  ($porcentaje + $porcent);
-                            $data['promedio'] = $data['promedio'] + ($calif * ($porcent / 100));
-                        }
-                        $data['porcentaje'] =  100 - $porcentaje;
+                $nota->evaluacion = $request->evaluacion;
+                $nota->nota = $request->nota;
+
+                $part = ParticipanteCurso::where('id_curso', '=', $id_curso)
+                                            ->where('id_participante', '=', $id_part)
+                                            ->where('seccion', '=', $seccion)
+                                            ->select('id')->get();
+                if($part->count()){
+                    $notas = Nota::where('id_participante_curso', '=', $part[0]->id)->select('porcentaje')->get();
+                    foreach ($notas as $not){
+                        $total = $total + $not->porcentaje;
                     }
-                }else{
-                    $data['notas'] = '';
+                    $total = $total + $request->porcentaje;
+                    if($total > 100){
+                        Session::set('error_mod', 'El porcentaje de la nota debe ser menor ya que el total supera el 100%');
+                        return view('profesores.notas', $data);
+                    }else{
+                        $nota->porcentaje = $request->porcentaje;
+                        $nota->save();
+
+                    }
+                }
+                if ($nota->save()) {
+                    if($request->id == null) {
+                        Session::set('mensaje', 'Nota creada satisfactoriamente.');
+                        return $this->verNotasParticipante($id_curso, $seccion, $id_part);
+                    }else{
+                        Session::set('mensaje', 'Nota editada satisfactoriamente.');
+                        return $this->verNotasParticipante($id_curso, $seccion, $id_part);
+                    }
+
+                } else{
+                    Session::set('error', 'Ha ocurrido un error inesperado');
+                    return $this->verNotasParticipante($id_curso, $seccion,$id_part);
                 }
 
-                return view('profesores.notas', $data);
 
             }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
 
