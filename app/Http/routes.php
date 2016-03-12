@@ -71,7 +71,6 @@ Route::group([
     Route::get('webinars/{id}/profesores/agregar', 'WebinarsController@webinarProfesoresAgregar');
     Route::get('webinars/{id_webinar}/profesores/{id_part}/agregar', 'WebinarsController@webinarProfesoresGuardar');
     Route::delete('webinars/{id_webinar}/profesores/{id_part}/eliminar', 'WebinarsController@webinarProfesoresEliminar');
-    
     Route::resource('/webinars','WebinarsController');
 
     //Ruta dirección participantes
@@ -112,8 +111,23 @@ Route::group([
     Route::get('/participante/cursos','ParticipantesController@verCursos');
     Route::get('/participante/cursos/{id}/notas','ParticipantesController@verNotasCurso');
     Route::get('/participante/webinars','ParticipantesController@verWebinars');
-    Route::get('/participante/webinars/{id}/notas','ParticipantesController@verNotasCurso');
     Route::resource('/participante','ParticipantesController');
+
+    //Rutas profesores
+    Route::get('/profesor/perfil','ProfesoresController@verPerfil');
+    Route::get('/profesor/perfil/{id}/editar','ProfesoresController@editarPerfil');
+    Route::get('profesor/perfil/imagen','ProfesoresController@cambiarImagen');
+    Route::post('profesor/perfil/procesar','ProfesoresController@procesarImagen');
+    Route::get('/profesor/cursos','ProfesoresController@verCursos');
+    Route::get('/profesor/cursos/{id}/secciones','ProfesoresController@verSeccionesCurso');
+    Route::get('/profesor/cursos/{id}/secciones/{seccion}/participantes','ProfesoresController@verParticipantesSeccion');
+    Route::get('/profesor/cursos/{id}/secciones/{seccion}/participantes/{id_alumno}/notas','ProfesoresController@verNotasParticipante');
+//    Route::post('/profesor/cursos/{id}/secciones/{seccion}/participantes/{id_alumno}/notas','ProfesoresController@guardarNotasParticipante');
+    Route::post('/profesor/cursos/{id}/secciones/{seccion}/participantes/{id_alumno}/notas','ProfesoresController@store');
+    Route::delete('/profesor/cursos/{id}/secciones/{seccion}/participantes/{id_alumno}/notas/{id_nota}','ProfesoresController@eliminarNotasParticipante');
+    Route::get('/profesor/webinars','ProfesoresController@verWebinars');
+    Route::get('/profesor/webinars/{id}/secciones','ProfesoresController@verSeccionesWebinar');
+    Route::resource('/profesor','ProfesoresController');
 });
 
 //Route::get('/', 'WelcomeController@index');

@@ -22,10 +22,10 @@ class CreateWebinarsTable extends Migration {
 			$table->string('nombre')->unique();
 			$table->date('fecha_inicio');
             $table->date('fecha_fin');
-            $table->integer('duracion');
-			$table->text('lugar');
-			$table->text('descripcion');
-			$table->text('link');
+            $table->text('especificaciones');
+//			$table->text('lugar');
+//			$table->text('descripcion');
+//			$table->text('link');
 			$table->boolean('activo_carrusel');
 			$table->string('imagen_carrusel');
 			$table->text('descripcion_carrusel');

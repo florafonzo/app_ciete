@@ -1,5 +1,5 @@
 @if (count($errors) > 0)
-    <div class="row">
+    {{--<div class="row">--}}
         <div class="errores ">
             <strong>Whoops!</strong> Hubo ciertos errores: <br><br>
             <ul class="lista_errores">
@@ -8,10 +8,10 @@
                 @endforeach
             </ul>
         </div>
-    </div>
+    {{--</div>--}}
 @endif
 @if ($errores != '')
-    <div class="row">
+    {{--<div class="row">--}}
         <div class="errores ">
             <strong>Whoops!</strong> Hubo ciertos errores: <br><br>
             <ul class="lista_errores">
@@ -20,7 +20,7 @@
                 {{--@endforeach--}}
             </ul>
         </div>
-    </div>
+    {{--</div>--}}
 @endif
 @if(Session::has('mensaje'))
     <div id="" class='alert alert-success flash_time'>
@@ -35,3 +35,6 @@
         </ul>
     </div>
 @endif
+<div class="alert alert-warning" id="alerta_img" hidden>
+    <strong>Cuidado!</strong> Debe colocar solo imagenes de tipo JPG o JPEG.
+</div>

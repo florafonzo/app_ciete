@@ -17,6 +17,7 @@ class CreateProfesorCursosTable extends Migration {
 			$table->increments('id');
 			$table->integer('id_profesor')->unsigned();
 			$table->integer('id_curso')->unsigned();
+			$table->string('seccion');
 			$table->timestamps();
 
 

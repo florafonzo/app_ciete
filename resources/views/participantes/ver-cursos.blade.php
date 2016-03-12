@@ -32,8 +32,8 @@
                                 <td>{{ $curso[0]->nombre }}</td>
                                 <td>{{ $tipo_curso[$index] }}</td>
                                 <td>{{ $curso[0]->seccion  }}</td>
-                                <td>{{ $curso[0]->fecha_inicio  }}</td>
-                                <td>{{ $curso[0]->fecha_fin  }}</td>
+                                <td>{{ $inicio[$index]->format('d-m-Y')  }}</td>
+                                <td>{{ $fin[$index]->format('d-m-Y')  }}</td>
                                 <td>
                                     @if(Entrust::can('ver_notas_part'))
                                         {!!Form::open(["url"=>"participante/cursos/".$curso[0]->id."/notas",  "method" => "GET" ])!!}

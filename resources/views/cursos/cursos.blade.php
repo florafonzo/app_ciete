@@ -73,8 +73,8 @@
                                         @endif
                                     </td>
                                 </tr>
-                            @else
-                                <?php continue; ?>
+                            {{--@else--}}
+                                {{--<?php continue; ?>--}}
                             @endif
                         @endforeach
                         </tbody>

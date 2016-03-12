@@ -32,9 +32,9 @@
                                     <td>{{ $partici->documento_identidad }}</td>
 
                                     <td class="">
-                                        @if(Entrust::can('agregar_part_curso'))
-                                            {!!Form::open(["url"=>"webinars/".$webinar->id."/participantes/".$partici->id."/agregar",  "method" => "GET", 'id' => 'part_agregar'.$partici->id] )!!}
-                                                <button type="button" onclick="agregarPart('{{$partici->id}}')" class="btn btn-info" title="Agregar participante al curso" data-toggle="tooltip" data-placement="bottom" aria-hidden="true">
+                                        @if(Entrust::can('agregar_part_webinar'))
+                                            {!!Form::open(["url"=>"webinars/".$webinar->id."/participantes/".$partici->id."/agregar",  "method" => "GET", 'id' => 'part_agregar_web'.$partici->id] )!!}
+                                                <button type="button" onclick="agregarPartW('{{$partici->id}}')" class="btn btn-info" title="Agregar participante al webinar" data-toggle="tooltip" data-placement="bottom" aria-hidden="true">
                                                     <span class="glyphicon glyphicon-plus"></span>
                                                 </button>
                                             {!!Form::close()!!}
@@ -52,19 +52,10 @@
                     </tbody>
                 </table>
                 <div class="col-md-2 " style="">
-                    @if(Entrust::can('participantes_curso'))
+                    @if(Entrust::can('participantes_webinar'))
                         <a href="{{URL::to('/')}}/webinars/{{$webinar->id}}/participantes" type="button" class="btn btn-default" style="text-decoration: none"> <span class="glyphicon glyphicon-remove"></span> Cancelar </a>
                     @endif
                 </div>
-                {{--<div class="col-md-2" style="">--}}
-                    {{--@if(Entrust::can('agregar_part_curso'))--}}
-                        {{--{!!Form::open(["url"=>"cursos/".$curso->id."/participantes/agregar",  "method" => "POST" ])!!}--}}
-                        {{--<button type="submit" class="btn btn-success" data-toggle="tooltip" data-placement="bottom" title="Agregar participante al curso" >--}}
-                            {{--<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Agregar--}}
-                        {{--</button>--}}
-                        {{--{!! Form::close() !!}--}}
-                    {{--@endif--}}
-                {{--</div>--}}
             </div>
         @endif
     </div>

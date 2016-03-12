@@ -20,7 +20,7 @@
                         <th>Seccion</th>
                         <th>Fecha inicio</th>
                         <th>Fecha fin</th>
-                        <th>Acciones</th>
+                        {{--<th>Acciones</th>--}}
                         <th></th>
                     </tr>
                     </thead>
@@ -29,18 +29,18 @@
                         @foreach($webinars as $index => $web)
                             <tr>
                                 <td>{{ $web[0]->nombre }}</td>
-                                <td>{{ $web[0]->seccion  }}</td>
-                                <td>{{ $web[0]->fecha_inicio  }}</td>
-                                <td>{{ $web[0]->fecha_fin  }}</td>
-                                <td>
-                                    @if(Entrust::can('ver_notas_part'))
-                                        {!!Form::open(["url"=>"participante/webinars/".$web[0]->id."/notas",  "method" => "GET" ])!!}
-                                            <button type="submit" class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="Notas">
-                                                <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
-                                            </button>
-                                        {!! Form::close() !!}
-                                    @endif
-                                </td>
+                                <td>{{ $seccion[0]  }}</td>
+                                <td>{{ $inicio[$index]->format('d-m-Y')  }}</td>
+                                <td>{{ $fin[$index]->format('d-m-Y') }}</td>
+                                {{--<td>--}}
+                                    {{--@if(Entrust::can('ver_notas_part'))--}}
+                                        {{--{!!Form::open(["url"=>"participante/webinars/".$web[0]->id."/notas",  "method" => "GET" ])!!}--}}
+                                            {{--<button type="submit" class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="Notas">--}}
+                                                {{--<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>--}}
+                                            {{--</button>--}}
+                                        {{--{!! Form::close() !!}--}}
+                                    {{--@endif--}}
+                                {{--</td>--}}
                             </tr>
                         @endforeach
                         </tbody>

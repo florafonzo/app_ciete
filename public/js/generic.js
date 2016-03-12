@@ -63,7 +63,7 @@ $(document).ready(function() {
 //-------------------------------------------------------------------------//
 
 
-//  --------  Validar si el Curso Estara en el carrusel ---------- ///
+//  --------  Validar si el Curso Estará en el carrusel ---------- ///
     // $('#descripcion_carrusel').hide();
     //$('#imagen_carrusel').hide();
     if ($('#activo_carrusel:checkbox:checked').length <= 0) {
@@ -195,53 +195,77 @@ $(document).ready(function() {
     });
 //------------------------------------------------------------------------------//
 
+//    -------------Resaltar input file ----------------//
+//    var cambio = $( "#imagen").val();
+//    alert(cambio);
+//    if(cambio == 'yes'){
+//        $( "#perfil").css({'border-style' : 'solid', 'border-color' : '#1968b3'});
+//        $( "#file_perfil").css({'background-color' : '#fff'});
+//        $( "#borde").css({'padding' : '8px'});
+//
+//    }
+
+//    -----------------------------------------------------
+
+//------------------------ Modal notas(profesor) ------------------------------------------//
+//    $("#agregar_nota").on("click", function(){
+//        $("#notasModal").modal();
+//    });
+
+
+//-----------------------------------------------------------------------------------------//
 
 // ----------------------- Imagen Perfil Crop ----------------------------------//
 
     $('#enviar').hide();
     $('#imagen2').hide();
     $('#aceptar').hide();
+    $('#alerta_img').hide();
     $( "#file_perfil" ).on("change", function(e){
-        var dir = e.target.files;
-        var romper = true;
-        $.each(dir, function(index, file) {
+        var nombre = $( "#file_perfil").val();
+        var ext = nombre.split('.').pop();
+        if(ext!= null && ((ext == 'jpeg') || (ext == 'jpg'))) {
+            var dir = e.target.files;
+            var romper = true;
+            $.each(dir, function (index, file) {
 
-            var fileReader = new FileReader();
+                var fileReader = new FileReader();
 
-            // When the filereader loads initiate a function
-            fileReader.onload = (function(file) {
+                // When the filereader loads initiate a function
+                fileReader.onload = (function (file) {
 
-                return function(e) {
+                    return function (e) {
 
-                    // This is the image
-                    var image = this.result;
-                    $('#imagen2').attr('src', image);
-                    //$('#imagen2').hide();
+                        // This is the image
+                        var image = this.result;
+                        $('#imagen2').attr('src', image);
+                        //$('#imagen2').hide();
 
-                };
+                    };
 
 
-            })(dir[index]);
+                })(dir[index]);
 
-            // For data URI purposes
-            fileReader.readAsDataURL(file);
-            if(romper) return false;
-        });
+                // For data URI purposes
+                fileReader.readAsDataURL(file);
+                if (romper) return false;
+            });
 
-        setTimeout(function() {
-            var imagee =  $('#imagen2');
-            var source = imagee.attr('src');
-            $('#imagen').attr('src', source);
-            $('.esconder').show();
-            $("#imagenModal").modal({backdrop: 'static', keyboard: false});
-            resizeableImage($('.resize-image'));
-        }, 50);
-        $('#nombre_hidden').val($('#nombre').val());
-        $('#descripcion_hidden').val($('#descripcion').val());
+            setTimeout(function () {
+                var imagee = $('#imagen2');
+                var source = imagee.attr('src');
+                $('#imagen').attr('src', source);
+                $('.esconder').show();
+                $("#imagenModal").modal({backdrop: 'static', keyboard: false});
+                resizeableImage($('.resize-image'));
+            }, 50);
+            $('#nombre_hidden').val($('#nombre').val());
+            $('#descripcion_hidden').val($('#descripcion').val());
+        }else{
+            $('#alerta_img').show();
+        }
     });
 //------------------------------------------------------------------------------------------//
-
-
 
 });
 //------------------------Función para eliminar --------------------------------------------//
@@ -338,7 +362,7 @@ function eliminarPart(id) {
 
 function agregarPart(id) {
     swal({
-            title: "¿Está seguro que desea agregar el usuario al curso?",
+            title: "¿Está seguro que desea agregar el participante al curso?",
             text: "Si lo agrega, aparecerá en la lista de participantes del curso",
             type: "warning",
             showCancelButton: true,
@@ -351,4 +375,114 @@ function agregarPart(id) {
         })
 }
 //------------------------------------------------------------------------------//
+
+//------------------------Función para eliminar profesores de un curso --------------------------------------------//
+function eliminarProf(id) {
+    swal({
+            title: "¿Está seguro que desea eliminar el profesor del curso?",
+            text: "Si lo elimina no aparecerá en la lista de profesores que dictan el curso",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#DD6B55',
+            confirmButtonText: "Eliminar",
+            closeOnConfirm: false
+        },
+        function(){
+            $('#form_eliminar_prof'+id).submit();
+        })
+
+}
+//------------------------------------------------------------------------------//
+
+// ------------------------Función para agregar profesores a un curso --------------------------------------------//
+
+function agregarProf(id) {
+    swal({
+            title: "¿Está seguro que desea agregar el profesor al curso?",
+            text: "Si lo agrega, aparecerá en la lista de profesores que dictan el curso",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: 'green',
+            confirmButtonText: "Agregar",
+            closeOnConfirm: false
+        },
+        function(){
+            $('#prof_agregar'+id).submit();
+        })
+}
+//------------------------------------------------------------------------------//
+//------------------------Función para eliminar participante de un webinar --------------------------------------------//
+function eliminarPartW(id) {
+    swal({
+            title: "¿Está seguro que desea eliminar el participante del webinar?",
+            text: "Si lo elimina no aparecerá en la lista de alumnos del webinar y se eliminará su historial",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#DD6B55',
+            confirmButtonText: "Eliminar",
+            closeOnConfirm: false
+        },
+        function(){
+            $('#eliminar_part_web'+id).submit();
+        })
+
+}
+//------------------------------------------------------------------------------//
+
+// ------------------------Función para agregar participante a un webinar --------------------------------------------//
+
+function agregarPartW(id) {
+    swal({
+            title: "¿Está seguro que desea agregar el participante al webinar?",
+            text: "Si lo agrega, aparecerá en la lista de participantes del webinar",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: 'green',
+            confirmButtonText: "Agregar",
+            closeOnConfirm: false
+        },
+        function(){
+            $('#part_agregar_web'+id).submit();
+        })
+}
+//------------------------------------------------------------------------------//
+
+//------------------------Función para eliminar profesores de un webinar --------------------------------------------//
+function eliminarProfW(id) {
+    swal({
+            title: "¿Está seguro que desea eliminar el profesor del webinar?",
+            text: "Si lo elimina no aparecerá en la lista de profesores que dictan el webinar",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#DD6B55',
+            confirmButtonText: "Eliminar",
+            closeOnConfirm: false
+        },
+        function(){
+            $('#eliminar_prof_web'+id).submit();
+        })
+
+}
+//------------------------------------------------------------------------------//
+
+// ------------------------Función para agregar profesores a un webinar --------------------------------------------//
+
+function agregarProfW(id) {
+    swal({
+            title: "¿Está seguro que desea agregar el profesor al webinar?",
+            text: "Si lo agrega, aparecerá en la lista de profesores que dictan el webinar",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: 'green',
+            confirmButtonText: "Agregar",
+            closeOnConfirm: false
+        },
+        function(){
+            $('#prof_agregar_web'+id).submit();
+        })
+}
+//------------------------------------------------------------------------------//
+
+
+CKEDITOR.replace('.ckeditor');
 
