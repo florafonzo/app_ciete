@@ -157,6 +157,7 @@ class ProfesoresController extends Controller {
                 $usuario = User::find($id); // Se obtienen los datos del profesor que se desea editar
                 $profesor = Profesor::where('id_usuario', '=', $id)->get(); // Se obtiene el resto de los datos del profesor que se desea editar
                 $img_nueva = Session::get('cortar');
+                dd('img_nuev:  ' . $img_nueva);
 
                 $email = $request->email;
                 // Se verifica si el correo ingresado es igual al anterior y si no lo es se verifica
@@ -177,6 +178,7 @@ class ProfesoresController extends Controller {
                 }
 
                 if($img_nueva == 'yes'){
+
                     $file = Input::get('dir');
                     Storage::delete('/images/images_perfil/' . $request->file_viejo);
                     $file = str_replace('data:image/png;base64,', '', $file);

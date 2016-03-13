@@ -17,7 +17,7 @@
                     <a class="lista-menu" href="/">Inicio</a>
                 </li>
                 <li class="dropdown fondo">
-                    <a class="lista-menu" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Información del Centro <span class="caret"></span></a>
+                    <a class="lista-menu" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Nosotros <span class="caret"></span></a>
                     <ul class="dropdown-menu menu_bajo">
                         <li><a href="/Misión-y-Visión">¿Quiénes somos?</a></li>
                         <li><a href="/Estructura">Estructura</a></li>
@@ -77,8 +77,11 @@
                         </li>
                     </ul>
                 </li>
-                <li class="fondo borde_no">
+                <li class="fondo ">
                     <a class="lista-menu" href="/Créditos">Créditos</a>
+                </li>
+                <li class="fondo borde_no">
+                    <a class="lista-menu" href="/preinscripcion/principal">Preinscripción</a>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">

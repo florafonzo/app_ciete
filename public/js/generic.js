@@ -482,6 +482,41 @@ function agregarProfW(id) {
         })
 }
 //------------------------------------------------------------------------------//
+//------------------------Función para desactivar preinscripcion ---------------//
+
+function desactivarPrecurso(id) {
+    swal({
+            title: "¿Está seguro que desea desactivar el curso?",
+            text: "Si lo desactiva, no estará disponible en la preinscripción",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#DD6B55',
+            confirmButtonText: "Desactivar",
+            closeOnConfirm: false
+        },
+        function(){
+            $('#form_desactivar'+id).submit();
+        })
+}
+//------------------------------------------------------------------------------//
+
+//------------------------Función para activar preinscripcion ------------------//
+
+function activarPrecurso(id) {
+    swal({
+            title: "¿Está seguro que desea activarlo?",
+            text: "Si lo activa, aparecerá en la lista de cursos disponibles",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: 'green',
+            confirmButtonText: "Activar",
+            closeOnConfirm: false
+        },
+        function(){
+            $('#form_activar'+id).submit();
+        })
+}
+//------------------------------------------------------------------------------//
 
 
 CKEDITOR.replace('.ckeditor');

@@ -31,6 +31,9 @@ Route::post('/password/reset', 'Auth\PasswordController@postReset');
 Route::get('Contacto','InformacionController@getcontacto');
 Route::post('Contacto','InformacionController@postContacto');
 
+//Ruta prenscripcion
+Route::get('/preinscripcion/principal', 'PreinscripcionController@mostrarPreinscripcion');
+
 //Rutas Loggin y recuperación de contraseñas
 Route::controllers([
     'auth' => 'Auth\AuthController',
@@ -112,6 +115,19 @@ Route::group([
     Route::get('/participante/cursos/{id}/notas','ParticipantesController@verNotasCurso');
     Route::get('/participante/webinars','ParticipantesController@verWebinars');
     Route::resource('/participante','ParticipantesController');
+
+        //Rutas preinscripción
+    Route::get('/preinscripcion','PreinscripcionController@index');
+    Route::post('/preinscripcion/principal', 'PreinscripcionController@mostrar');
+    Route::get('/preinscripcion/activar/{id}',[
+    'as' => 'preinscripcion.activar',
+    'uses' => 'PreinscripcionController@activarPreinscripcion'
+    ]);
+    Route::get('/preinscripcion/desactivar/{id}',[
+    'as' => 'preinscripcion.desactivar',
+    'uses' => 'PreinscripcionController@desactivarPreinscripcion'
+    ]);
+
 
     //Rutas profesores
     Route::get('/profesor/perfil','ProfesoresController@verPerfil');

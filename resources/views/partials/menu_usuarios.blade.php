@@ -62,6 +62,11 @@
                         <a style="text-decoration:none;" href="{{URL::to('/participante/webinars')}}"> Webinars inscritos </a>
                     </li>
                 @endif
+                @if(Entrust::can('activar_preinscripcion'))
+                    <li class="menu_usuarios @if(Request::is('preinscripcion')) active @endif">
+                        <a style="text-decoration:none;" href="{{URL::to('/preinscripcion')}}"> Preinscripción </a>
+                    </li>
+                @endif
                 @if(Entrust::can('ver_perfil_prof'))
                     <li class="menu_usuarios @if(Request::is('profesor/perfil*')) active @endif">
                         <a style="text-decoration:none;" href="{{URL::to('/profesor/perfil')}}"> Ver perfil </a>
@@ -69,7 +74,7 @@
                 @endif
                 @if(Entrust::can('ver_cursos_profe'))
                     <li class="menu_usuarios @if(Request::is('profesor/cursos*')) active @endif">
-                        <a href="{{URL::to('/profesor/cursos')}}"> Cursos </a>
+                        <a href="{{URL::to('/profesor/cursos')}}"> Cursos dictados</a>
                     </li>
                 @endif
                 {{--@if(Entrust::can('ver_notas_profe'))--}}

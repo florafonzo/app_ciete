@@ -45,7 +45,6 @@
                                     <td>
                                         @if(Entrust::can('eliminar_cursos'))
                                             {!! Form::open(array('method' => 'DELETE', 'route' => array('cursos.destroy', $curso->id), 'id' => 'form_desactivar'.$curso->id)) !!}
-                                                {{--{!! Form::button('<span class="glyphicon glyphicon-trash" id="{{$curso->id}}" data-toggle="tooltip" data-placement="bottom" title="Eliminar" aria-hidden="true"></span>', array('type' => 'button', 'data-toggle' => 'modal', 'data-target' => '#modal_eliminar_cursos','class' => 'btn btn-danger'))!!}--}}
                                                 <button type="button" onclick="desactivarCurso('{{$curso->id}}')" class='btn btn-danger' data-toggle='tooltip' data-placement="bottom" title="Eliminar">
                                                     <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                                 </button>
@@ -54,9 +53,7 @@
                                     </td>
                                     <td>
                                         @if(Entrust::can('participantes_curso'))
-                                            {{--{!! Form::open(array('method' => 'GET', 'route' => array('cursos.cursoParticipantes', $curso->id))) !!}--}}
                                             {!!Form::open(["url"=>"cursos/".$curso->id."/participantes",  "method" => "GET" ])!!}
-                                            {{--{!! Form::open(array('method' => 'GET', 'action' => 'CursosController@cursoParticipantes', 'class' => 'form-horizontal col-md-10', 'enctype' => "multipart/form-data")) !!}--}}
                                                 <button type="submit" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="Participantes">
                                                     <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                                                 </button>
@@ -73,8 +70,6 @@
                                         @endif
                                     </td>
                                 </tr>
-                            {{--@else--}}
-                                {{--<?php continue; ?>--}}
                             @endif
                         @endforeach
                         </tbody>
