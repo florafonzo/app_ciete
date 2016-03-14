@@ -163,7 +163,7 @@ $(document).ready(function() {
 
     });
 
- $('#municipio').on('change', function(e) {
+    $('#municipio').on('change', function(e) {
 
 //            alert('holaaaas');
         //console.log(e);
@@ -212,31 +212,67 @@ $(document).ready(function() {
 //        $("#notasModal").modal();
 //    });
 
-   $(".edit_nota").on("click", function () { // Click to only happen on announce links
+   //$(".edit_nota").on("click", function () { // Click to only happen on announce links
+   //     var id = $(this).data('id');
+   //     var curso = $(this).data('curso');
+   //     var seccion = $(this).data('seccion');
+   //     var part = $(this).data('part');
+   //     //alert('id: ' + id + ' curso:  '+curso+' Secc: '+seccion+' part:  '+part);
+   //     /*$("#notaId").val($(this).data('id'));
+   //     $('input[name=evaluacion]').val("'{{$nota["+id+"]->evaluacion}}'");
+   //     $('#notasEditModal').modal('show');*/
+   //
+   //     $.ajax({
+   //         cache: false,
+   //         type: 'GET',
+   //         url: '/profesor/cursos/'+curso+'/secciones/'+seccion+'/participantes/'+part+'/notas/'+id,
+   //         success: function(data)
+   //         {
+   //             alert(data[0]);
+   //             $('#notasEditModal').modal('show');
+   //             //$('#modalContent').show().html(data);
+   //         },
+   //         error: function(jqXHR, textStatus, errorThrown) {
+   //           console.log(textStatus, errorThrown);
+   //         }
+   //     });
+   //
+   //});
+
+    $(".edit_nota").on("click", function () {
         var id = $(this).data('id');
-        //alert(id);
         var curso = $(this).data('curso');
         var seccion = $(this).data('seccion');
         var part = $(this).data('part');
-        /*$("#notaId").val($(this).data('id'));
-        $('input[name=evaluacion]').val("'{{$nota["+id+"]->evaluacion}}'");
-        $('#notasEditModal').modal('show');*/
 
         $.ajax({
-            cache: false,
-            type: 'GET',
-            url: '/profesor/cursos/'+curso+'/secciones/'+seccion+'/participantes/'+part+'/notas/'+id,
-            success: function(data) 
-            {
-                $('#notasEditModal').modal('show');
-                //$('#modalContent').show().html(data);
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-              console.log(textStatus, errorThrown);
-            }
+            url:        "/nota/"+id,
+            dataType:   "json",
+            success:    function(data){
+                $('#eval').empty();
+                $('#calif').empty();
+                $('#porct').empty();
+                $('#id_nota').val(null);
+                $('#id_nota').val(id);
+                $.each(data, function(index, Obj){
+                    console.log(Obj.nota);
+                    $('#eval').append('<input type="text" name="evaluacion" class="form-control" value="'+Obj.evaluacion+'" required />');
+                    $('#calif').append('<input type="text" name="nota" class="form-control" value="'+Obj.nota+'" required />');
+                    $('#porct').append('<input type="text" name="porcentaje" class="form-control" value="'+Obj.porcentaje+'" required />');
+                    $('#notasEditModal').modal('show');
+                });
+             },
+             error: function(jqXHR, textStatus, errorThrown) {
+             console.log(textStatus, errorThrown);
+             }/*
+             error: function (request, status, error) {
+             console.log(request.responseText);
+             //alert(request.responseText);
+             }*/
+
         });
 
-   });
+    });
 
 
     /*$("#edit_nota").on("click", function () {

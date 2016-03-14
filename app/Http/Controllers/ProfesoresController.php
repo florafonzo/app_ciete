@@ -7,8 +7,11 @@ use App\Models\Curso;
 use App\Models\Nota;
 use App\Models\Participante;
 use App\Models\ParticipanteCurso;
+use App\Models\ParticipanteWebinar;
 use App\Models\ProfesorCurso;
+use App\Models\ProfesorWebinar;
 use App\Models\TipoCurso;
+use App\Models\Webinar;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Auth;
@@ -232,7 +235,7 @@ class ProfesoresController extends Controller {
                     // se redirige al formulario de edicion y se le indica al usuario el error
                 } else {
                     Session::set('error', 'Ha ocurrido un error inesperado');
-                    return view('participantes.editar-perfil', $data);
+                    return view('profesores.editar-perfil', $data);
                 }
             }else{   // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
 
@@ -305,6 +308,8 @@ class ProfesoresController extends Controller {
 
     }
 
+//---------------------------------------- Cursos -------------------------------------------
+
     public function verCursos()
     {
         try{
@@ -337,7 +342,7 @@ class ProfesoresController extends Controller {
 //                    dd($);
                 }
 
-                return view('profesores.cursos', $data);
+                return view('profesores.cursos.cursos', $data);
 
             }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
 
@@ -372,10 +377,10 @@ class ProfesoresController extends Controller {
                 foreach ($secciones as $index => $seccion) {
                     $arr[$index] = $seccion->seccion;
                 }
+                sort($arr);
                 $data['secciones'] = array_unique($arr);
-//                dd($data['secciones']);
 
-                return view('profesores.secciones', $data);
+                return view('profesores.cursos.secciones', $data);
 
             }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
 
@@ -415,7 +420,7 @@ class ProfesoresController extends Controller {
                 }
 //                dd($data['participantes']);
 
-                return view('profesores.participantes', $data);
+                return view('profesores.cursos.participantes', $data);
 
             }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
 
@@ -474,7 +479,7 @@ class ProfesoresController extends Controller {
                 }
                 //dd($data['notas']);
 
-                return view('profesores.notas', $data);
+                return view('profesores.cursos.notas', $data);
 
             }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
 
@@ -485,71 +490,13 @@ class ProfesoresController extends Controller {
 
             return view('errors.error')->with('error',$e->getMessage());
         }
-    }
-
-    public function edit($id_curso, $seccion, $id_part, $id_nota) {
-    
-        try{
-            //Verificación de los permisos del usuario para poder realizar esta acción
-            $usuario_actual = Auth::user();
-            if($usuario_actual->foto != null) {
-                $data['foto'] = $usuario_actual->foto;
-            }else{
-                $data['foto'] = 'foto_participante.png';
-            }
-
-            if($usuario_actual->can('editar_notas')) {// Si el usuario posee los permisos necesarios continua con la acción
-                $data['errores'] = '';
-                $data['curso'] = Curso::find($id_curso);
-                $data['seccion'] = $seccion;
-                $seccion = str_replace(' ', '', $seccion);
-                $data['calificacion'] = Nota::find($id_nota);
-                dd($data['calificacion']);
-
-                $data['participante'] = Participante::find($id_part);
-                $arr = [];
-                $participante = ParticipanteCurso::where('id_participante', '=', $id_part)
-                                ->where('id_curso', '=', $id_curso)
-                                ->where('seccion', '=', $seccion)
-                                ->select('id')->get();
-
-                if($participante->count()) {
-                    $data['notas'] = Nota::where('id_participante_curso', '=', $participante[0]->id)->get();
-                    if($data['notas']->count()){
-                        $data['promedio'] = 0;
-                        $porcentaje = 0;
-                        foreach ($data['notas'] as $nota) {
-                            $calif = $nota->nota;
-                            $porcent = $nota->porcentaje;
-                            $porcentaje =  ($porcentaje + $porcent);
-                            $data['promedio'] = $data['promedio'] + ($calif * ($porcent / 100));
-                        }
-                        $data['porcentaje'] =  100 - $porcentaje;
-                    }/*else{
-                        $data['notas'] = [];
-                    }*/
-                }else{
-                    $data['notas'] = '';
-                }
-
-                return view('profesores.notas', $data);
-
-            }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
-
-                return view('errors.sin_permiso');
-            }
-        }
-        catch (Exception $e) {
-
-            return view('errors.error')->with('error',$e->getMessage());
-        }        
-
     }
 
     public function store(CalificarRequest $request, $id_curso, $seccion, $id_part) {
 
         try{
-            //Verificación de los permisos del usuario para poder realizar esta acción
+//            dd('ahhhhhh2');
+            //Verificación de    los permisos del usuario para poder realizar esta acción
             $usuario_actual = Auth::user();
             if($usuario_actual->foto != null) {
                 $data['foto'] = $usuario_actual->foto;
@@ -558,14 +505,14 @@ class ProfesoresController extends Controller {
             }
 
             if($usuario_actual->can('agregar_notas')) {// Si el usuario posee los permisos necesarios continua con la acción
-                //dd($request->id);
-                $id = Input::get('id');
+                $id = Input::get('id_nota');
                 $data['errores'] = '';
                 $data['curso'] = Curso::find($id_curso);
                 $seccion = str_replace(' ', '', $seccion);
                 $data['seccion'] = $seccion;
                 $data['participante'] = Participante::find($id_part);
                 $nota = Nota::findOrNew($id);
+
                 $total = 0;
 
                 $part = ParticipanteCurso::where('id_curso', '=', $id_curso)
@@ -581,7 +528,7 @@ class ProfesoresController extends Controller {
                         $total = $total + $request->porcentaje;
                         if($total > 100){
                             Session::set('error_mod', 'El porcentaje de la nota debe ser menor ya que el total supera el 100%');
-                            return view('profesores.notas', $data);
+                            return view('profesores.cursos.notas', $data);
                         }
                     }    
                     $nota->id_participante_curso = $part[0]->id;
@@ -592,7 +539,7 @@ class ProfesoresController extends Controller {
                 }
                 if ($nota->save()) {
                     if($id == null) {
-                        dd('holaaaaa');
+//                        dd('holaaaaa');
                         Session::set('mensaje', 'Nota creada satisfactoriamente.');
                         return $this->verNotasParticipante($id_curso, $seccion, $id_part);
                     }else{
@@ -617,4 +564,158 @@ class ProfesoresController extends Controller {
         }
     }
 
+
+    public function eliminarNotasParticipante($id_curso, $seccion, $id_part, $id_nota) {
+
+        try{
+            //Verificación de los permisos del usuario para poder realizar esta acción
+            $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
+
+            if($usuario_actual->can('editar_notas')) {// Si el usuario posee los permisos necesarios continua con la acción
+                $data['errores'] = '';
+
+                DB::table('notas')->where('id', '=', $id_nota)->delete();
+
+                return $this->verNotasParticipante($id_curso, $seccion, $id_part);
+
+            }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
+
+                return view('errors.sin_permiso');
+            }
+        }
+        catch (Exception $e) {
+
+            return view('errors.error')->with('error',$e->getMessage());
+        }
+
+    }
+//-------------------------------------------------------------------------------------------
+
+//---------------------------------------- Webinars -----------------------------------------
+
+    public function verWebinars()
+    {
+        try{
+            //Verificación de los permisos del usuario para poder realizar esta acción
+            $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
+
+            if($usuario_actual->can('ver_cursos_profe')) {// Si el usuario posee los permisos necesarios continua con la acción
+
+                $data['errores'] = '';
+                $data['webinars'] = [];
+                $data['fechas'] = [];
+                $profesor = Profesor::where('id_usuario', '=', $usuario_actual->id)->get();
+                $data['webinars_'] = ProfesorWebinar::where('id_profesor', '=', $profesor[0]->id)->get();
+                if ($data['webinars_']->count()) {
+                    foreach ($data['webinars_'] as $index => $web) {
+                        $webinars  = Webinar::where('id', '=', $web->id_webinar)->get();
+                        $data['webinars'][$index] = $webinars;
+                        $data['inicio'][$index] = new DateTime($webinars[0]->fecha_inicio);
+                        $data['fin'][$index] = new DateTime($webinars[0]->fecha_fin);
+                        $data['seccion'][$index] = $web->seccion;
+                    }
+//                    dd($);
+                }
+
+                return view('profesores.webinars.webinars', $data);
+
+            }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
+
+                return view('errors.sin_permiso');
+            }
+        }
+        catch (Exception $e) {
+
+            return view('errors.error')->with('error',$e->getMessage());
+        }
+    }
+
+
+    public function verSeccionesWebinar($id)
+    {
+        try{
+            //Verificación de los permisos del usuario para poder realizar esta acción
+            $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
+
+            if($usuario_actual->can('ver_notas_profe')) {// Si el usuario posee los permisos necesarios continua con la acción
+
+                $data['errores'] = '';
+                $data['webinar'] = Webinar::find($id);
+                $arr = [];
+//                $profesor = Profesor::where('id_usuario', '=', $usuario_actual->id)->get();
+                $secciones = ParticipanteWebinar::where('id_webinar', '=', $id)->select('seccion')->get();
+                foreach ($secciones as $index => $seccion) {
+                    $arr[$index] = $seccion->seccion;
+                }
+                sort($arr);
+                $data['secciones'] = array_unique($arr);
+
+                return view('profesores.webinars.secciones', $data);
+
+            }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
+
+                return view('errors.sin_permiso');
+            }
+        }
+        catch (Exception $e) {
+
+            return view('errors.error')->with('error',$e->getMessage());
+        }
+    }
+
+    public function verParticipantesWebinar($id, $seccion)
+    {
+        try{
+            //Verificación de los permisos del usuario para poder realizar esta acción
+            $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
+
+            if($usuario_actual->can('ver_notas_profe')) {// Si el usuario posee los permisos necesarios continua con la acción
+                $data['errores'] = '';
+                $data['webinar'] = Webinar::find($id);
+                $data['seccion'] = $seccion;
+                $seccion = str_replace(' ', '', $seccion);
+                $participantes = ParticipanteWebinar::where('id_webinar', '=', $id)->where('seccion', '=', $seccion)->select('id_participante')->get();
+//                dd($participantes);
+                if($participantes != null) {
+                    foreach ($participantes as $part) {
+                        $data['participantes'] = Participante::where('id', '=', $part->id_participante)->get();
+                    }
+                }else{
+                    $data['participantes'] = '';
+                }
+
+                return view('profesores.webinars.participantes', $data);
+
+            }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
+
+                return view('errors.sin_permiso');
+            }
+        }
+        catch (Exception $e) {
+
+            return view('errors.error')->with('error',$e->getMessage());
+        }
+    }
+
+//-------------------------------------------------------------------------------------------
 }

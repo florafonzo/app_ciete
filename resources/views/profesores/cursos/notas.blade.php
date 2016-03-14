@@ -36,7 +36,7 @@
                                 </td>
                                 <td>
                                     @if(Entrust::can('eliminar_notas'))
-                                        {!!Form::open(["url"=>"profesor/cursos/".$curso->id."/secciones/".$seccion."/participantes/".$participante->id."/nota/".$nota->id,  "method" => "DELETE" ])!!}
+                                        {!!Form::open(["url"=>"profesor/cursos/".$curso->id."/secciones/".$seccion."/participantes/".$participante->id."/notas/".$nota->id,  "method" => "DELETE", "id" => "form_eliminar".$nota->id ])!!}
                                         <button type="button" onclick="mostrarModal('{{$nota->id}}')" class='btn btn-danger' data-toggle='tooltip' data-placement="bottom" title="Eliminar" aria-hidden="true">
                                             <span class="glyphicon glyphicon-trash" ></span>
                                         </button>
@@ -131,34 +131,26 @@
                     <h4> Edición calificación </h4>
                 </div>
                 <div class="modal-body">
-                    {!!Form::model($calificacion,["url"=>"profesor/cursos/".$curso->id."/secciones/".$seccion."/participantes/".$participante->id."/nota/",  "method" => "post" ])!!}
+                    {!!Form::open(["url"=>"profesor/cursos/".$curso->id."/secciones/".$seccion."/participantes/".$participante->id."/notas",  "method" => "post" ])!!}
                     <div class="row">
                         <div class="col-md-10 col-md-offset-1 col-xs-12">
-                            <div class="form-group">
-                                <input type="hidden" name="notaId" value="" />
+                            <div class="form-group" >
                                 {!!Form::label('nombre', 'Evaluación:', array( 'class' => 'col-md-4 izq')) !!}
-                                <!--<input id="Evaluacion" name="Evaluacion" class="form-control" type="text" value=""/>-->
-                                {!!Form::text('evaluacion', null ,array('required', 'class' => 'form-control')) !!}
-                                {!!Form::hidden('id',null)!!}
-                                {{--</div>--}}
+                                <input type="hidden" value="" id="id_nota" name="id_nota">
+                                <div id="eval" ></div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" >
                                 {!!Form::label('nota', 'Nota:', array( 'class' => 'col-md-4 izq')) !!}
-                                {{--<div class="col-sm-8">--}}
-                                {!!Form::text('nota', null ,array('required', 'class' => 'form-control')) !!}
-                                {{--</div>--}}
+                                <div id="calif"></div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" >
                                 {!!Form::label('porcent', 'Porcentaje:', array( 'class' => 'col-md-4 izq')) !!}
-                                {{--<div class="col-sm-8">--}}
-                                {!!Form::text('porcentaje', null ,array('required', 'class' => 'form-control')) !!}
-                                {{--</div>--}}
+                                <div id="porct" ></div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    {{--<a class="btn btn-default pull-left" href="{{URL::to('/')}}/profesor/cursos/{{$curso->id}}/secciones/{{$seccion}}/participantes/{{$participante->id}}/notas"><span class="glyphicon glyphicon-remove"></span> Cancelar</a>--}}
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                     <button type="submit" class="btn btn-success btn-success pull-right" ><span class="glyphicon glyphicon-floppy-disk"></span> Guardar</button>
                 </div>

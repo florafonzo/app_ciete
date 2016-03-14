@@ -8,16 +8,16 @@
                     <div class="panel-heading">Formulario de preinscripción</div>
                     <div class="panel-body">
                         @include('partials.mensajes'){{--Errores--}}
-                        <!-- @if (count($errors) > 0)
-                            <div class="alert errores">
-                                <strong>Whoops!</strong> Hubo ciertos errores con los datos ingresados:<br><br>
-                                <ul class="">
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                         @endif-->
+                         {{--@if (count($errors) > 0)--}}
+                            {{--<div class="alert errores">--}}
+                                {{--<strong>Whoops!</strong> Hubo ciertos errores con los datos ingresados:<br><br>--}}
+                                {{--<ul class="">--}}
+                                    {{--@foreach ($errors->all() as $error)--}}
+                                        {{--<li>{{ $error }}</li>--}}
+                                    {{--@endforeach--}}
+                                {{--</ul>--}}
+                            {{--</div>--}}
+                         {{--@endif--}}
 
                         <form id="form" method="POST" action="{{ url('Contacto') }}">
 

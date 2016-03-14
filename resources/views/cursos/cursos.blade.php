@@ -53,7 +53,7 @@
                                     </td>
                                     <td>
                                         @if(Entrust::can('participantes_curso'))
-                                            {!!Form::open(["url"=>"cursos/".$curso->id."/participantes",  "method" => "GET" ])!!}
+                                            {!!Form::open(["url"=>"cursos/".$curso->id."/secciones/participantes",  "method" => "GET" ])!!}
                                                 <button type="submit" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="Participantes">
                                                     <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                                                 </button>
@@ -62,7 +62,7 @@
                                     </td>
                                     <td>
                                         @if(Entrust::can('profesores_curso'))
-                                            {!!Form::open(["url"=>"cursos/".$curso->id."/profesores",  "method" => "GET" ])!!}
+                                            {!!Form::open(["url"=>"cursos/".$curso->id."/secciones/profesores",  "method" => "GET" ])!!}
                                             <button type="submit" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="Profesores">
                                                 <span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span>
                                             </button>

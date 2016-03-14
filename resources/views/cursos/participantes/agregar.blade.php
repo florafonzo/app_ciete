@@ -33,7 +33,7 @@
 
                                     <td class="">
                                         @if(Entrust::can('agregar_part_curso'))
-                                            {!!Form::open(["url"=>"cursos/".$curso->id."/participantes/".$partici->id."/agregar",  "method" => "GET", 'id' => 'part_agregar'.$partici->id] )!!}
+                                            {!!Form::open(["url"=>"cursos/".$curso->id."/secciones/".$seccion."/participantes/".$partici->id."/agregar",  "method" => "GET", 'id' => 'part_agregar'.$partici->id] )!!}
                                                 <button type="button" onclick="agregarPart('{{$partici->id}}')" class="btn btn-info" title="Agregar participante al curso" data-toggle="tooltip" data-placement="bottom" aria-hidden="true">
                                                     <span class="glyphicon glyphicon-plus"></span>
                                                 </button>
@@ -54,7 +54,7 @@
                 </table>
                 <div class="col-md-2 " style="">
                     @if(Entrust::can('participantes_curso'))
-                        <a href="{{URL::to('/')}}/cursos/{{$curso->id}}/participantes" type="button" class="btn btn-default" style="text-decoration: none"> <span class="glyphicon glyphicon-chevron-left"></span> Volver </a>
+                        <a href="{{URL::to('/')}}/cursos/{{$curso->id}}/secciones/{{$seccion}}/participantes" type="button" class="btn btn-default" style="text-decoration: none"> <span class="glyphicon glyphicon-chevron-left"></span> Volver </a>
                     @endif
                 </div>
                 {{--<div class="col-md-2" style="">--}}

@@ -30,7 +30,7 @@
                     </li>
                 @endif
                 @if(Entrust::can('ver_webinars'))
-                    <li class="menu_usuarios @if(Request::is('webinars/*')) active @endif">
+                    <li class="menu_usuarios @if(Request::is('webinars*')) active @endif">
                         <a style="text-decoration:none;" href="{{URL::to('/webinars')}}"> Webinars </a>
                     </li>
                 @endif
@@ -75,6 +75,11 @@
                 @if(Entrust::can('ver_cursos_profe'))
                     <li class="menu_usuarios @if(Request::is('profesor/cursos*')) active @endif">
                         <a href="{{URL::to('/profesor/cursos')}}"> Cursos dictados</a>
+                    </li>
+                @endif
+                @if(Entrust::can('ver_cursos_profe'))
+                    <li class="menu_usuarios @if(Request::is('profesor/webinars*')) active @endif">
+                        <a href="{{URL::to('/profesor/webinars')}}"> Webinars dictados</a>
                     </li>
                 @endif
                 {{--@if(Entrust::can('ver_notas_profe'))--}}

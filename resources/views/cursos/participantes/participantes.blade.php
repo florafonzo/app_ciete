@@ -35,7 +35,7 @@
 
                                     <td>
                                         @if(Entrust::can('eliminar_part_curso'))
-                                            {!!Form::open(["url"=>"cursos/".$curso->id."/participantes/".$participante[0]->id."/eliminar",  "method" => "delete", "id" => "form_eliminar_part".$participante[0]->id ])!!}
+                                            {!!Form::open(["url"=>"cursos/".$curso->id."/secciones/".$seccion."/participantes/".$participante[0]->id."/eliminar",  "method" => "delete", "id" => "form_eliminar_part".$participante[0]->id ])!!}
                                             <button type="button" onclick="eliminarPart('{{$participante[0]->id}}')" class='btn btn-danger' data-toggle='tooltip' data-placement="bottom" title="Eliminar">
                                                 <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                             </button>
@@ -60,7 +60,7 @@
                 </div>
                 <div class="col-md-2 " style="">
                     @if(Entrust::can('agregar_part_curso'))
-                        {!!Form::open(["url"=>"cursos/".$curso->id."/participantes/agregar",  "method" => "GET" ])!!}
+                        {!!Form::open(["url"=>"cursos/".$curso->id."/secciones/".$seccion."/participantes/agregar",  "method" => "GET" ])!!}
                         <button type="submit" class="btn btn-success" data-toggle="tooltip" data-placement="bottom" title="Agregar participante al curso" >
                             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Agregar
                         </button>

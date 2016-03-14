@@ -50,14 +50,16 @@ Route::group([
     //Rutas manejo de cursos
     Route::get('cursos-desactivados', 'CursosController@indexDesactivados');
     Route::get('cursos-desactivados/activar/{id}', 'CursosController@activar');
-    Route::get('cursos/{id}/participantes', 'CursosController@cursoParticipantes');
-    Route::get('cursos/{id}/participantes/agregar', 'CursosController@cursoParticipantesAgregar');
-    Route::get('cursos/{id_curso}/participantes/{id_part}/agregar', 'CursosController@cursoParticipantesGuardar');
-    Route::delete('cursos/{id_curso}/participantes/{id_part}/eliminar', 'CursosController@cursoParticipantesEliminar');
-    Route::get('cursos/{id}/profesores', 'CursosController@cursoProfesores');
-    Route::get('cursos/{id}/profesores/agregar', 'CursosController@cursoProfesoresAgregar');
-    Route::get('cursos/{id_curso}/profesores/{id_part}/agregar', 'CursosController@cursoProfesoresGuardar');
-    Route::delete('cursos/{id_curso}/profesores/{id_part}/eliminar', 'CursosController@cursoProfesoresEliminar');
+    Route::get('cursos/{id}/secciones/participantes', 'CursosController@cursoSeccionesParts');
+    Route::get('cursos/{id_curso}/secciones/{seccion}/participantes', 'CursosController@cursoParticipantes');
+    Route::get('cursos/{id_curso}/secciones/{seccion}/participantes/agregar', 'CursosController@cursoParticipantesAgregar');
+    Route::get('cursos/{id_curso}/secciones/{seccion}/participantes/{id_part}/agregar', 'CursosController@cursoParticipantesGuardar');
+    Route::delete('cursos/{id_curso}/secciones/{seccion}/participantes/{id_part}/eliminar', 'CursosController@cursoParticipantesEliminar');
+    Route::get('cursos/{id}/secciones/profesores', 'CursosController@cursoSeccionesProfes');
+    Route::get('cursos/{id}/secciones/{seccion}/profesores', 'CursosController@cursoProfesores');
+    Route::get('cursos/{id}/secciones/{seccion}/profesores/agregar', 'CursosController@cursoProfesoresAgregar');
+    Route::get('cursos/{id_curso}/secciones/{seccion}/profesores/{id_part}/agregar', 'CursosController@cursoProfesoresGuardar');
+    Route::delete('cursos/{id_curso}/secciones/{seccion}/profesores/{id_part}/eliminar', 'CursosController@cursoProfesoresEliminar');
     Route::resource('/cursos','CursosController');
 
     //Rutas manejo de roles
@@ -138,12 +140,24 @@ Route::group([
     Route::get('/profesor/cursos/{id}/secciones','ProfesoresController@verSeccionesCurso');
     Route::get('/profesor/cursos/{id}/secciones/{seccion}/participantes','ProfesoresController@verParticipantesSeccion');
     Route::get('/profesor/cursos/{id}/secciones/{seccion}/participantes/{id_alumno}/notas','ProfesoresController@verNotasParticipante');
-//    Route::post('/profesor/cursos/{id}/secciones/{seccion}/participantes/{id_alumno}/notas','ProfesoresController@guardarNotasParticipante');
     Route::post('/profesor/cursos/{id}/secciones/{seccion}/participantes/{id_alumno}/notas','ProfesoresController@store');
-    Route::get('/profesor/cursos/{id}/secciones/{seccion}/participantes/{id_alumno}/notas/{id_nota}','ProfesoresController@edit');
     Route::delete('/profesor/cursos/{id}/secciones/{seccion}/participantes/{id_alumno}/notas/{id_nota}','ProfesoresController@eliminarNotasParticipante');
+//    Route::get('/profesor/webinars','ProfesoresController@verWebinars');
+//    Route::get('/profesor/webinars/{id}/secciones','ProfesoresController@verSeccionesWebinar');
+    Route::get('/nota/{id}', function(){
+        $url = Request::url();
+        $porciones = explode("nota/", $url);
+        $nota = $porciones[1];
+
+        $nota = App\Models\Nota::where('id', '=', $nota )->get();
+
+        return Response::json($nota);
+    });
+
     Route::get('/profesor/webinars','ProfesoresController@verWebinars');
     Route::get('/profesor/webinars/{id}/secciones','ProfesoresController@verSeccionesWebinar');
+    Route::get('/profesor/webinars/{id}/secciones/{seccion}/participantes','ProfesoresController@verParticipantesWebinar');
+
     Route::resource('/profesor','ProfesoresController');
 });
 
