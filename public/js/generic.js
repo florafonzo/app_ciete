@@ -212,6 +212,39 @@ $(document).ready(function() {
 //        $("#notasModal").modal();
 //    });
 
+   $(".edit_nota").on("click", function () { // Click to only happen on announce links
+        var id = $(this).data('id');
+        //alert(id);
+        var curso = $(this).data('curso');
+        var seccion = $(this).data('seccion');
+        var part = $(this).data('part');
+        /*$("#notaId").val($(this).data('id'));
+        $('input[name=evaluacion]').val("'{{$nota["+id+"]->evaluacion}}'");
+        $('#notasEditModal').modal('show');*/
+
+        $.ajax({
+            cache: false,
+            type: 'GET',
+            url: '/profesor/cursos/'+curso+'/secciones/'+seccion+'/participantes/'+part+'/notas/'+id,
+            success: function(data) 
+            {
+                $('#notasEditModal').modal('show');
+                //$('#modalContent').show().html(data);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+              console.log(textStatus, errorThrown);
+            }
+        });
+
+   });
+
+
+    /*$("#edit_nota").on("click", function () {
+        var myBookId = $(this).data('id');
+        $("#notasEditModal ").val( myBookId );
+        $('#notasEditModal').modal('show');
+    });*/
+
 
 //-----------------------------------------------------------------------------------------//
 

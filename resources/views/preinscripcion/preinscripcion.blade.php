@@ -5,7 +5,7 @@
 
         <div class="col-md-12 col-sm-12 col-md-offset-2 bienvenida">
             <h3>
-                Curso para preinscripción
+                Cursos para preinscripción
             </h3>
         </div>
 
@@ -34,7 +34,7 @@
                                     <td>{{ $curso->fin->format('d-m-Y')  }}</td>
 
                                     <td>
-                                        @if (!$curso->activar_preinscripcion)
+                                        @if (!$curso->activo_preinscripcion)
                                             @if(Entrust::can('activar_preinscripcion'))
                                                 {!! Form::open(array('method' => 'GET','route' => array('preinscripcion.activar', $curso->id))) !!}
                                                     <button type="submit" class="btn btn-success" data-toggle="tooltip" data-placement="bottom" title="Activar" >

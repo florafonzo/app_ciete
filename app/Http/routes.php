@@ -140,6 +140,7 @@ Route::group([
     Route::get('/profesor/cursos/{id}/secciones/{seccion}/participantes/{id_alumno}/notas','ProfesoresController@verNotasParticipante');
 //    Route::post('/profesor/cursos/{id}/secciones/{seccion}/participantes/{id_alumno}/notas','ProfesoresController@guardarNotasParticipante');
     Route::post('/profesor/cursos/{id}/secciones/{seccion}/participantes/{id_alumno}/notas','ProfesoresController@store');
+    Route::get('/profesor/cursos/{id}/secciones/{seccion}/participantes/{id_alumno}/notas/{id_nota}','ProfesoresController@edit');
     Route::delete('/profesor/cursos/{id}/secciones/{seccion}/participantes/{id_alumno}/notas/{id_nota}','ProfesoresController@eliminarNotasParticipante');
     Route::get('/profesor/webinars','ProfesoresController@verWebinars');
     Route::get('/profesor/webinars/{id}/secciones','ProfesoresController@verSeccionesWebinar');

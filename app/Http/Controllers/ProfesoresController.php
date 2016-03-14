@@ -156,8 +156,8 @@ class ProfesoresController extends Controller {
                 $data['errores'] = '';
                 $usuario = User::find($id); // Se obtienen los datos del profesor que se desea editar
                 $profesor = Profesor::where('id_usuario', '=', $id)->get(); // Se obtiene el resto de los datos del profesor que se desea editar
-                $img_nueva = Session::get('cortar');
-                dd('img_nuev:  ' . $img_nueva);
+                $img_nueva = Input::get('cortar');//Session::get('cortar');
+                //dd('img_nuev:  ' .  $request->file_viejo);
 
                 $email = $request->email;
                 // Se verifica si el correo ingresado es igual al anterior y si no lo es se verifica
@@ -180,7 +180,9 @@ class ProfesoresController extends Controller {
                 if($img_nueva == 'yes'){
 
                     $file = Input::get('dir');
-                    Storage::delete('/images/images_perfil/' . $request->file_viejo);
+                    if($usuario->foto != null){
+                       Storage::delete('/images/images_perfil/' . $request->file_viejo);
+                    }                    
                     $file = str_replace('data:image/png;base64,', '', $file);
                     $nombreTemporal = 'perfil_' . date('dmY') . '_' . date('His') . ".jpg";
                     $usuario->foto = $nombreTemporal;
@@ -366,7 +368,7 @@ class ProfesoresController extends Controller {
                 $data['curso'] = Curso::find($id_curso);
                 $arr = [];
 //                $profesor = Profesor::where('id_usuario', '=', $usuario_actual->id)->get();
-                $secciones = ProfesorCurso::where('id_curso', '=', $id_curso)->select('seccion')->get();
+                $secciones = ParticipanteCurso::where('id_curso', '=', $id_curso)->select('seccion')->get();
                 foreach ($secciones as $index => $seccion) {
                     $arr[$index] = $seccion->seccion;
                 }
@@ -441,6 +443,7 @@ class ProfesoresController extends Controller {
             if($usuario_actual->can('ver_notas_profe')) {// Si el usuario posee los permisos necesarios continua con la acción
 
                 $data['errores'] = '';
+                $data['calificacion'] = '';
                 $data['curso'] = Curso::find($id_curso);
                 $seccion = str_replace(' ', '', $seccion);
                 $data['seccion'] = $seccion;
@@ -463,10 +466,13 @@ class ProfesoresController extends Controller {
                             $data['promedio'] = $data['promedio'] + ($calif * ($porcent / 100));
                         }
                         $data['porcentaje'] =  100 - $porcentaje;
-                    }
+                    }/*else{
+                        $data['notas'] = [];
+                    }*/
                 }else{
                     $data['notas'] = '';
                 }
+                //dd($data['notas']);
 
                 return view('profesores.notas', $data);
 
@@ -481,6 +487,65 @@ class ProfesoresController extends Controller {
         }
     }
 
+    public function edit($id_curso, $seccion, $id_part, $id_nota) {
+    
+        try{
+            //Verificación de los permisos del usuario para poder realizar esta acción
+            $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
+
+            if($usuario_actual->can('editar_notas')) {// Si el usuario posee los permisos necesarios continua con la acción
+                $data['errores'] = '';
+                $data['curso'] = Curso::find($id_curso);
+                $data['seccion'] = $seccion;
+                $seccion = str_replace(' ', '', $seccion);
+                $data['calificacion'] = Nota::find($id_nota);
+                dd($data['calificacion']);
+
+                $data['participante'] = Participante::find($id_part);
+                $arr = [];
+                $participante = ParticipanteCurso::where('id_participante', '=', $id_part)
+                                ->where('id_curso', '=', $id_curso)
+                                ->where('seccion', '=', $seccion)
+                                ->select('id')->get();
+
+                if($participante->count()) {
+                    $data['notas'] = Nota::where('id_participante_curso', '=', $participante[0]->id)->get();
+                    if($data['notas']->count()){
+                        $data['promedio'] = 0;
+                        $porcentaje = 0;
+                        foreach ($data['notas'] as $nota) {
+                            $calif = $nota->nota;
+                            $porcent = $nota->porcentaje;
+                            $porcentaje =  ($porcentaje + $porcent);
+                            $data['promedio'] = $data['promedio'] + ($calif * ($porcent / 100));
+                        }
+                        $data['porcentaje'] =  100 - $porcentaje;
+                    }/*else{
+                        $data['notas'] = [];
+                    }*/
+                }else{
+                    $data['notas'] = '';
+                }
+
+                return view('profesores.notas', $data);
+
+            }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
+
+                return view('errors.sin_permiso');
+            }
+        }
+        catch (Exception $e) {
+
+            return view('errors.error')->with('error',$e->getMessage());
+        }        
+
+    }
+
     public function store(CalificarRequest $request, $id_curso, $seccion, $id_part) {
 
         try{
@@ -493,17 +558,15 @@ class ProfesoresController extends Controller {
             }
 
             if($usuario_actual->can('agregar_notas')) {// Si el usuario posee los permisos necesarios continua con la acción
-                dd($request->id);
+                //dd($request->id);
+                $id = Input::get('id');
                 $data['errores'] = '';
                 $data['curso'] = Curso::find($id_curso);
                 $seccion = str_replace(' ', '', $seccion);
                 $data['seccion'] = $seccion;
                 $data['participante'] = Participante::find($id_part);
-                $nota = Nota::findOrNew($request->id);
+                $nota = Nota::findOrNew($id);
                 $total = 0;
-
-                $nota->evaluacion = $request->evaluacion;
-                $nota->nota = $request->nota;
 
                 $part = ParticipanteCurso::where('id_curso', '=', $id_curso)
                                             ->where('id_participante', '=', $id_part)
@@ -511,21 +574,25 @@ class ProfesoresController extends Controller {
                                             ->select('id')->get();
                 if($part->count()){
                     $notas = Nota::where('id_participante_curso', '=', $part[0]->id)->select('porcentaje')->get();
-                    foreach ($notas as $not){
-                        $total = $total + $not->porcentaje;
-                    }
-                    $total = $total + $request->porcentaje;
-                    if($total > 100){
-                        Session::set('error_mod', 'El porcentaje de la nota debe ser menor ya que el total supera el 100%');
-                        return view('profesores.notas', $data);
-                    }else{
-                        $nota->porcentaje = $request->porcentaje;
-                        $nota->save();
-
-                    }
+                    if($notas->count()){
+                        foreach ($notas as $not){
+                            $total = $total + $not->porcentaje;
+                        }
+                        $total = $total + $request->porcentaje;
+                        if($total > 100){
+                            Session::set('error_mod', 'El porcentaje de la nota debe ser menor ya que el total supera el 100%');
+                            return view('profesores.notas', $data);
+                        }
+                    }    
+                    $nota->id_participante_curso = $part[0]->id;
+                    $nota->evaluacion = $request->evaluacion;
+                    $nota->nota = $request->nota;
+                    $nota->porcentaje = $request->porcentaje;
+                    $nota->save();
                 }
                 if ($nota->save()) {
-                    if($request->id == null) {
+                    if($id == null) {
+                        dd('holaaaaa');
                         Session::set('mensaje', 'Nota creada satisfactoriamente.');
                         return $this->verNotasParticipante($id_curso, $seccion, $id_part);
                     }else{

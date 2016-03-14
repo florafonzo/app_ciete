@@ -155,7 +155,7 @@ class ParticipantesController extends Controller {
                 $data['errores'] = '';
                 $usuario = User::find($id); // Se obtienen los datos del participante que se desea editar
                 $participante = Participante::where('id_usuario', '=', $id)->get(); // Se obtiene el resto de los datos del participante que se desea editar
-                $img_nueva = Session::get('cortar');
+                $img_nueva = Input::get('cortar');//Session::get('cortar');
 
                 $email = $request->email;
                 // Se verifica si el correo ingresado es igual al anterior y si no lo es se verifica
@@ -177,7 +177,9 @@ class ParticipantesController extends Controller {
 
                 if($img_nueva == 'yes'){
                     $file = Input::get('dir');
-                    Storage::delete('/images/images_perfil/' . $request->file_viejo);
+                    if($usuario->foto != null){
+                        Storage::delete('/images/images_perfil/' . $request->file_viejo);
+                    }
                     $file = str_replace('data:image/png;base64,', '', $file);
                     $nombreTemporal = 'perfil_' . date('dmY') . '_' . date('His') . ".jpg";
                     $usuario->foto = $nombreTemporal;

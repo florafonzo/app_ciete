@@ -84,7 +84,6 @@
                         {!!Form::hidden('img_carg',null)!!}
                         {!!Form::hidden('cortar',null)!!}
                         <img src="{{URL::to('/')}}/images/images_perfil/{{$foto}}" id="imagen_cortada" width="150" height="150"><br><br>
-                        {{--{!!Html::image('/img/images_perfil/'.$perfil->file_perfil,null, ['height'=>'279', 'width'=>'270 ']) !!} <br><br>--}}
                         <a class="btn btn-warning btn-sm" href="{{URL::to('/')}}/profesor/perfil/imagen" title="Cambiar foto" data-toggle="tooltip" data-placement="bottom" aria-hidden="true" style="text-decoration: none">Cambiar</a>
                     @endif
                 @endif
@@ -134,8 +133,8 @@
             <div class="modal-footer">
                 <a class="btn btn-default pull-left" href="{{URL::to('/')}}/profesor/perfil/{{Auth::user()->id}}/editar"><span class="glyphicon glyphicon-remove"></span> Cancelar</a>
                 {!!Form::open(['url' => 'profesor/perfil/procesar/',  "method" => "post", "id" => "form_imagen"])!!}
-                <input type="hidden" class="" id="rutas" name="rutas">
-                <button type="submit" class="btn btn-success btn-success pull-right" id="aceptar" ><span class="glyphicon glyphicon-ok"></span> Aceptar</button>
+                    <input type="hidden" class="" id="rutas" name="rutas">
+                    <button type="submit" class="btn btn-success btn-success pull-right" id="aceptar" ><span class="glyphicon glyphicon-ok"></span> Aceptar</button>
                 {!! Form::close() !!}
 
             </div>

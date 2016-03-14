@@ -29,16 +29,13 @@
                                 <td>{{ $nota->nota  }}</td>
                                 <td>
                                     @if(Entrust::can('editar_notas'))
-                                        {{--{!! Form::open(array('method' => 'GET','route' => array('webinars.edit', $nota->id))) !!}--}}
-                                            <button type="button" data-toggle="modal" data-target="#notasEditModal" class='btn btn-info' data-toggle='tooltip' data-placement="bottom" title="Editar" aria-hidden="true">
-                                                <span class="glyphicon glyphicon-pencil" ></span>
-                                            </button>
-                                            {{--{!! Form::button('<span class="glyphicon glyphicon-pencil" data-toggle="tooltip" data-placement="bottom" title="Editar" aria-hidden="true"></span>', array('type' => 'button', 'class' => 'btn btn-info'))!!}--}}
+                                        <button type="button" data-toggle="modal" data-id="{{$nota->id}}" data-curso="{{$curso->id}}" data-seccion="{{$seccion}}" data-part="{{$participante->id}}" class='btn btn-info edit_nota' data-toggle='tooltip' data-placement="bottom" title="Editar" aria-hidden="true">
+                                            <span class="glyphicon glyphicon-pencil" ></span>
+                                        </button>
                                     @endif
                                 </td>
                                 <td>
                                     @if(Entrust::can('eliminar_notas'))
-                                        {{--{!! Form::open(array('method' => 'DELETE', 'route' => array('webinars.destroy', $nota->id), 'id' => 'form_eliminar_nota'.$nota->id)) !!}--}}
                                         {!!Form::open(["url"=>"profesor/cursos/".$curso->id."/secciones/".$seccion."/participantes/".$participante->id."/nota/".$nota->id,  "method" => "DELETE" ])!!}
                                         <button type="button" onclick="mostrarModal('{{$nota->id}}')" class='btn btn-danger' data-toggle='tooltip' data-placement="bottom" title="Eliminar" aria-hidden="true">
                                             <span class="glyphicon glyphicon-trash" ></span>
@@ -134,12 +131,13 @@
                     <h4> Edición calificación </h4>
                 </div>
                 <div class="modal-body">
-                    {!!Form::model($nota,["url"=>"profesor/cursos/".$curso->id."/secciones/".$seccion."/participantes/".$participante->id."/nota/",  "method" => "post" ])!!}
+                    {!!Form::model($calificacion,["url"=>"profesor/cursos/".$curso->id."/secciones/".$seccion."/participantes/".$participante->id."/nota/",  "method" => "post" ])!!}
                     <div class="row">
                         <div class="col-md-10 col-md-offset-1 col-xs-12">
                             <div class="form-group">
+                                <input type="hidden" name="notaId" value="" />
                                 {!!Form::label('nombre', 'Evaluación:', array( 'class' => 'col-md-4 izq')) !!}
-                                {{--<div class="col-sm-8">--}}
+                                <!--<input id="Evaluacion" name="Evaluacion" class="form-control" type="text" value=""/>-->
                                 {!!Form::text('evaluacion', null ,array('required', 'class' => 'form-control')) !!}
                                 {!!Form::hidden('id',null)!!}
                                 {{--</div>--}}
