@@ -14,6 +14,11 @@ a{
     text-align: left !important;
 }
 
+/*botones tablas-listas*/
+.boton_{
+    width: 90px;
+}
+
 /*Header*/
 header .container{
     height: 200px !important;

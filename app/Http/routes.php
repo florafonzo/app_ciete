@@ -139,6 +139,7 @@ Route::group([
     Route::get('/profesor/cursos','ProfesoresController@verCursos');
     Route::get('/profesor/cursos/{id}/secciones','ProfesoresController@verSeccionesCurso');
     Route::get('/profesor/cursos/{id}/secciones/{seccion}/participantes','ProfesoresController@verParticipantesSeccion');
+    Route::get('/profesor/cursos/{id}/secciones/{seccion}/lista','ProfesoresController@generarLista');
     Route::get('/profesor/cursos/{id}/secciones/{seccion}/participantes/{id_alumno}/notas','ProfesoresController@verNotasParticipante');
     Route::post('/profesor/cursos/{id}/secciones/{seccion}/participantes/{id_alumno}/notas','ProfesoresController@store');
     Route::delete('/profesor/cursos/{id}/secciones/{seccion}/participantes/{id_alumno}/notas/{id_nota}','ProfesoresController@eliminarNotasParticipante');
@@ -157,6 +158,7 @@ Route::group([
     Route::get('/profesor/webinars','ProfesoresController@verWebinars');
     Route::get('/profesor/webinars/{id}/secciones','ProfesoresController@verSeccionesWebinar');
     Route::get('/profesor/webinars/{id}/secciones/{seccion}/participantes','ProfesoresController@verParticipantesWebinar');
+    Route::get('/profesor/webinars/{id}/secciones/{seccion}/lista','ProfesoresController@generarListaW');
 
     Route::resource('/profesor','ProfesoresController');
 });

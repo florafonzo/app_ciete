@@ -27,12 +27,12 @@
                         <tbody>
                         @foreach($participantes as $participante)
                             <tr>
-                                <td>{{ $participante->nombre }}</td>
-                                <td>{{ $participante->apellido }}</td>
-                                <td>{{ $participante->documento_identidad }}</td>
+                                <td>{{ $participante[0]->nombre }}</td>
+                                <td>{{ $participante[0]->apellido }}</td>
+                                <td>{{ $participante[0]->documento_identidad }}</td>
                                 <td>
                                     @if(Entrust::can('ver_notas_profe'))
-                                        {!!Form::open(["url"=>"profesor/cursos/".$curso->id."/secciones/".$seccion."/participantes/".$participante->id."/notas",  "method" => "GET" ])!!}
+                                        {!!Form::open(["url"=>"profesor/cursos/".$curso->id."/secciones/".$seccion."/participantes/".$participante[0]->id."/notas",  "method" => "GET" ])!!}
                                         <button type="submit" class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="Notas">
                                             <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
                                         </button>
@@ -47,7 +47,7 @@
                     @endif
                 </table>
                 @if(Entrust::can('ver_perfil_prof'))
-                    <a href="{{URL::to("/")}}/profesor/cursos/{{$curso}}/secciones" class="btn btn-default text-right"><span class="glyphicon glyphicon-remove"></span> Volver</a>
+                    <a href="{{URL::to("/")}}/profesor/cursos/{{$curso->id}}/secciones" class="btn btn-default text-right"><span class="glyphicon glyphicon-remove"></span> Volver</a>
                 @endif
             </div>
         @endif

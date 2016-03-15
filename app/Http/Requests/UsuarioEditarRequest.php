@@ -35,7 +35,7 @@ class UsuarioEditarRequest extends Request {
             'telefono' => 'required|max:20',
             'celular' => 'max:20',
             'email' => 'required|email|max:255',
-            'password' => 'required|confirmed|min:6',
+            'password' => 'confirmed|min:6',
             'email_alternativo' => 'email|max:255|unique:users',
             'imagen' => 'mimes:jpeg,png,jpg|max:1024',
         ];

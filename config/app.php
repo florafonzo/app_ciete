@@ -149,11 +149,14 @@ return [
         /*Twitter provider:*/
         'Thujohn\Twitter\TwitterServiceProvider',
 
-//        Entrust
+		//Entrust
         'Zizaco\Entrust\EntrustServiceProvider',
 
 		//Intervention Image
 		'Intervention\Image\ImageServiceProvider',
+
+		//PDF
+		'Barryvdh\DomPDF\ServiceProvider',
 
 	],
 
@@ -207,6 +210,7 @@ return [
 		'Form'		=> 'Illuminate\Html\FormFacade',
 		'HTML'		=> 'Illuminate\Html\HtmlFacade',
         'Image' => 'Intervention\Image\Facades\Image',
+		'PDF' => 'Barryvdh\DomPDF\Facade',
 
 	],
 

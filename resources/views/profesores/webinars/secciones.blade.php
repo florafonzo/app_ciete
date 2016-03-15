@@ -26,7 +26,7 @@
                         @foreach($secciones as $seccion)
                             <tr>
                                 <td>{{ $seccion }}</td>
-                                <td>
+                                <td  class="boton_">
                                     @if(Entrust::can('listar_alumnos'))
                                         {!!Form::open(["url"=>"profesor/webinars/".$webinar->id."/secciones/".$seccion."/participantes",  "method" => "GET" ])!!}
                                         <button type="submit" class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="Participantes">
@@ -35,9 +35,20 @@
                                         {!! Form::close() !!}
                                     @endif
                                 </td>
+                                <td class="boton_">
+                                    @if(Entrust::can('listar_alumnos'))
+                                        {!!Form::open(["url"=>"profesor/webinars/".$webinar->id."/secciones/".$seccion."/lista",  "method" => "GET", "target" => "_blank"])!!}
+                                        <button type="submit" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Lista de alumnos">
+                                            <span class="glyphicon glyphicon-save" aria-hidden="true"></span>
+                                        </button>
+                                        {!! Form::close() !!}
+                                    @endif
+                                </td>
                             </tr>
                         @endforeach
                         </tbody>
+                    @else
+                        <td>No existen participantes en el curso</td>
                     @endif
                 </table>
                 @if(Entrust::can('ver_cursos_profe'))

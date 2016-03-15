@@ -21,6 +21,9 @@
                         <th>Fecha Inicio</th>
                         <th>Fecha Fin</th>
                         <th>Acciones</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
                     </tr>
                     </thead>
                     @if($cursos->count())

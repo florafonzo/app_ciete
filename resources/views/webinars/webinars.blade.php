@@ -21,6 +21,9 @@
                         <th>Fecha fin</th>
                         <th>Acciones</th>
                         <th></th>
+                        <th></th>
+                        <th></th>
+
                     </tr>
                     </thead>
                     @if($webinars->count())
@@ -31,7 +34,7 @@
                                     <td>{{ $webinar->nombre }}</td>
                                     <td>{{ $webinar->inicio->format('d-m-Y') }} </td>
                                     <td>{{ $webinar->fin->format('d-m-Y') }} </td>
-                                    <td>
+                                    <td class="boton_">
                                         @if(Entrust::can('editar_webinars'))
                                             {{--<button><span class="glyphicon glyphicon-pencil" data-toggle="tooltip" data-placement="bottom" title="Editar" aria-hidden="true"></span></button>--}}
                                             {!! Form::open(array('method' => 'GET','route' => array('webinars.edit', $webinar->id))) !!}
@@ -39,7 +42,7 @@
                                             {!! Form::close() !!}
                                         @endif
                                     </td>
-                                    <td>
+                                    <td class="boton_">
                                         @if(Entrust::can('eliminar_webinars'))
                                             {!! Form::open(array('method' => 'DELETE', 'route' => array('webinars.destroy', $webinar->id), 'id' => 'form_eliminar'.$webinar->id)) !!}                                            
                                                 <button type="button" onclick="mostrarModal('{{$webinar->id}}')" class='btn btn-danger' data-toggle='tooltip' data-placement="bottom" title="Eliminar" aria-hidden="true">
@@ -48,7 +51,7 @@
                                             {!! Form::close() !!}
                                         @endif
                                     </td>
-                                    <td>
+                                    <td class="boton_">
                                         @if(Entrust::can('participantes_webinar'))
                                             {!!Form::open(["url"=>"webinars/".$webinar->id."/participantes",  "method" => "GET" ])!!}
                                                 <button type="submit" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="Participantes">
@@ -57,7 +60,7 @@
                                             {!! Form::close() !!}
                                         @endif
                                     </td>
-                                    <td>
+                                    <td class="boton_">
                                         @if(Entrust::can('profesores_webinar'))
                                             {!!Form::open(["url"=>"webinars/".$webinar->id."/profesores",  "method" => "GET" ])!!}
                                             <button type="submit" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="Profesores">

@@ -12,6 +12,7 @@ use App\Models\ProfesorCurso;
 use App\Models\ProfesorWebinar;
 use App\Models\TipoCurso;
 use App\Models\Webinar;
+use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Auth;
@@ -412,8 +413,8 @@ class ProfesoresController extends Controller {
                 $participantes = ParticipanteCurso::where('id_curso', '=', $id_curso)->where('seccion', '=', $seccion)->select('id_participante')->get();
 //                dd($participantes);
                 if($participantes != null) {
-                    foreach ($participantes as $part) {
-                        $data['participantes'] = Participante::where('id', '=', $part->id_participante)->get();
+                    foreach ($participantes as $index => $part) {
+                        $data['participantes'][$index] = Participante::where('id', '=', $part->id_participante)->get();
                     }
                 }else{
                     $data['participantes'] = '';
@@ -697,8 +698,8 @@ class ProfesoresController extends Controller {
                 $participantes = ParticipanteWebinar::where('id_webinar', '=', $id)->where('seccion', '=', $seccion)->select('id_participante')->get();
 //                dd($participantes);
                 if($participantes != null) {
-                    foreach ($participantes as $part) {
-                        $data['participantes'] = Participante::where('id', '=', $part->id_participante)->get();
+                    foreach ($participantes as $index => $part) {
+                        $data['participantes'][$index] = Participante::where('id', '=', $part->id_participante)->get();
                     }
                 }else{
                     $data['participantes'] = '';
@@ -718,4 +719,91 @@ class ProfesoresController extends Controller {
     }
 
 //-------------------------------------------------------------------------------------------
+
+    public function generarLista($id, $seccion) {
+        try {
+
+            $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
+
+            if($usuario_actual->can('listar_alumnos')) {// Si el usuario posee los permisos necesarios continua con la acción
+                $data['errores'] = '';
+                $data['curso'] = Curso::find($id);
+                $data['seccion'] = $seccion;
+                $seccion = str_replace(' ', '', $seccion);
+                $participantes = ParticipanteCurso::where('id_curso', '=', $id)->where('seccion', '=', $seccion)->select('id_participante')->get();
+                if($participantes != null) {
+                    foreach ($participantes as $index => $part) {
+                        $data['participantes'][$index] = Participante::where('id', '=', $part->id_participante)->get();
+                    }
+                }else{
+                    $data['participantes'] = '';
+                }
+
+                if($data['participantes'] != '') {
+                    usort($data['participantes'], array($this, "cmp")); //Ordenar por orden alfabetico segun el apellido
+                }
+
+                $pdf = PDF::loadView('profesores.cursos.lista',$data);
+                return $pdf->stream("Listado curso - ".$data['curso']->nombre." - seccion ".$seccion.".pdf");
+
+            }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
+
+                return view('errors.sin_permiso');
+            }
+        }
+        catch(Exception $e){
+            return view('errors.error')->with('error',$e->getMessage());
+        }
+    }
+
+    public function generarListaW($id, $seccion) {
+        try {
+
+            $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
+
+            if($usuario_actual->can('listar_alumnos')) {// Si el usuario posee los permisos necesarios continua con la acción
+                $data['errores'] = '';
+                $data['webinar'] = Webinar::find($id);
+                $data['seccion'] = $seccion;
+                $seccion = str_replace(' ', '', $seccion);
+                $participantes = ParticipanteWebinar::where('id_webinar', '=', $id)->where('seccion', '=', $seccion)->select('id_participante')->get();
+                if($participantes != null) {
+                    foreach ($participantes as $index => $part) {
+                        $data['participantes'][$index] = Participante::where('id', '=', $part->id_participante)->get();
+                    }
+                }else{
+                    $data['participantes'] = '';
+                }
+
+                if($data['participantes'] != '') {
+                    usort($data['participantes'], array($this, "cmp")); //Ordenar por orden alfabetico segun el apellido
+                }
+
+                $pdf = PDF::loadView('profesores.webinars.lista',$data);
+                return $pdf->stream("Listado webinar - ".$data['webinar']->nombre." - seccion ".$seccion.".pdf", array('Attachment'=>0));
+
+            }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
+
+                return view('errors.sin_permiso');
+            }
+        }
+        catch(Exception $e){
+            return view('errors.error')->with('error',$e->getMessage());
+        }
+    }
+
+    //    Funcion para ordenar por apellido arreglos de objetos
+    public function cmp($a, $b) {
+        return strcmp($a[0]->apellido, $b[0]->apellido);
+    }
 }
