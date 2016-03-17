@@ -48,8 +48,12 @@ Route::group([
     Route::resource('/usuarios','UsuariosController');
 
     //Rutas manejo de cursos
-    Route::get('cursos-desactivados', 'CursosController@indexDesactivados');
-    Route::get('cursos-desactivados/activar/{id}', 'CursosController@activar');
+    Route::get('cursos/desactivados', 'CursosController@indexDesactivados');
+    Route::get('cursos/desactivados/activar/{id}', 'CursosController@activar');
+    Route::get('cursos/imagen/{id}','CursosController@cambiarImagen1');
+    Route::post('cursos/procesar/{id}','CursosController@procesarImagen1');
+        Route::get('cursos/imagen','CursosController@cambiarImagen');
+    Route::post('cursos/procesar','CursosController@procesarImagen');
     Route::get('cursos/{id}/secciones/participantes', 'CursosController@cursoSeccionesParts');
     Route::get('cursos/{id_curso}/secciones/{seccion}/participantes', 'CursosController@cursoParticipantes');
     Route::get('cursos/{id_curso}/secciones/{seccion}/participantes/agregar', 'CursosController@cursoParticipantesAgregar');

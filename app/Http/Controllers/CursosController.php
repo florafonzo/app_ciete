@@ -5,27 +5,28 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CursoRequest;
 use App\Http\Requests\CursoEditRequest;
-use App\Http\Requests\CursoParticipanteRequest;
 
 use App\Models\CursoModalidadPago;
 use App\Models\ModalidadCurso;
 use App\Models\Participante;
 use App\Models\ParticipanteCurso;
-use App\Models\Permission;
-
+use App\Models\Curso;
+use App\Models\ModalidadPago;
+use App\Models\TipoCurso;
 use App\Models\Profesor;
 use App\Models\ProfesorCurso;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\ImageManagerStatic as Image;
 use DateTime;
 use Exception;
 
 
-use App\Models\Curso;
-use App\Models\ModalidadPago;
-use App\Models\TipoCurso;
+
 use Illuminate\Http\Request;
 
 class CursosController extends Controller {
@@ -90,9 +91,9 @@ class CursosController extends Controller {
             }
 
             if($usuario_actual->can('crear_cursos')) {    // Si el usuario posee los permisos necesarios continua con la acción
-//                $data['foto'] = $usuario_actual->foto;
-
-                // Se eliminan los datos guardados en sesion anteriormente
+                $data['activo_'] = false;
+                Session::flash('imagen', 'yes');
+//                 Se eliminan los datos guardados en sesión anteriormente
                 Session::forget('nombre');
                 Session::forget('secciones');
                 Session::forget('min');
@@ -101,19 +102,6 @@ class CursosController extends Controller {
                 Session::forget('fecha_inicio');
                 Session::forget('fecha_fin');
                 Session::forget('especificaciones');
-//                Session::forget('duracion');
-//                Session::forget('lugar');
-//                Session::forget('descripcion');
-//                Session::forget('dirigido_a');
-//                Session::forget('proposito');
-//                Session::forget('modalidad_estrategias');
-//                Session::forget('acreditacion');
-//                Session::forget('perfil');
-//                Session::forget('requerimientos_tec');
-//                Session::forget('perfil_egresado');
-//                Session::forget('instituciones_aval');
-//                Session::forget('aliados');
-//                Session::forget('plan_estudio');
                 Session::forget('costo');
                 Session::forget('descripcion_carrusel');
 
@@ -157,13 +145,7 @@ class CursosController extends Controller {
 
             if($usuario_actual->can('crear_cursos')) {  // Si el usuario posee los permisos necesarios continua con la acción
                 $data['errores'] = '';
-
-                //  Se verifica si el usuario colocó una imagen en el formulario
-                if ($request->hasFile('imagen_carrusel')) {
-                    $imagen = $request->file('imagen_carrusel');
-                } else {
-                    $imagen = '';
-                }
+                $img_nueva = Input::get('cortar');
 
                 // Se guardan los datos ingresados por el usuario en sesion pra utilizarlos en caso de que se redirija
                 // al usuari al formulario por algún error y no se pierdan los datos ingresados
@@ -175,19 +157,6 @@ class CursosController extends Controller {
                 Session::set('fecha_inicio', $request->fecha_inicio);
                 Session::set('fecha_fin', $request->fecha_fin);
                 Session::set('especificaciones', $request->especificaciones);
-//                Session::set('duracion', $request->duracion);
-//                Session::set('lugar', $request->lugar);
-//                Session::set('descripcion', $request->descripcion);
-//                Session::set('dirigido_a', $request->dirigido_a);
-//                Session::set('proposito', $request->proposito);
-//                Session::set('modalidad_estrategias', $request->modalidad_estrategias);
-//                Session::set('acreditacion', $request->acreditacion);
-//                Session::set('perfil', $request->perfil);
-//                Session::set('requerimientos_tec', $request->requerimientos_tec);
-//                Session::set('perfil_egresado', $request->perfil_egresado);
-//                Session::set('instituciones_aval', $request->instituciones_aval);
-//                Session::set('aliados', $request->aliados);
-//                Session::set('plan_estudio', $request->plan_estudio);
                 Session::set('costo', $request->costo);
                 Session::set('descripcion_carrusel', $request->descripcion_carrusel);
 
@@ -244,7 +213,7 @@ class CursosController extends Controller {
                 //Se verifica si el usuario seleccionó que el curso esté activo en el carrusel
                 if ($activo_carrusel) {
                     // Luego se verifica si los campos referente al carrusel estén completos
-                    if ((empty(Input::get('descripcion_carrusel'))) or !($request->hasFile('imagen_carrusel'))) {   // Si no están completos se
+                    if ((empty(Input::get('descripcion_carrusel'))) or ($img_nueva != 'yes')) {   // Si no están completos se
                                                                                                     // redirige al usuario indicandole el error
                         $data['errores'] = $data['errores'] . "  Debe completar los campos de descripcion y imagen del Carrusel";
                         $data['tipos'] = TipoCurso::all()->lists('nombre', 'id');
@@ -257,9 +226,11 @@ class CursosController extends Controller {
 
                 $modalidades = Input::get('modalidades_pago');  // Se obtienen las modalidades de pago seleccionadas
 
+
                 // Se crea el nuevo curso con los datos ingresados
                 $create2 = Curso::findOrNew($request->id);
                 $create2->id_tipo = $request->id_tipo;
+                $create2->id_modalidad_curso = $request->id_modalidad_curso;
                 $create2->curso_activo = "true";
                 $create2->secciones = $request->secciones;
                 $create2->min = $request->mini;
@@ -268,25 +239,25 @@ class CursosController extends Controller {
                 $create2->fecha_inicio = $request->fecha_inicio;
                 $create2->fecha_fin = $request->fecha_fin;
                 $create2->especificaciones = $request->especificaciones;
-//                $create2->duracion = $request->duracion;
-//                $create2->id_modalidad_curso = $request->id_modalidad_curso;
-//                $create2->lugar = $request->lugar;
-//                $create2->area = '';
-//                $create2->descripcion = $request->descripcion;
-//                $create2->dirigido_a = $request->dirigido_a;
-//                $create2->propositos = $request->proposito;
-//                $create2->modalidad_estrategias = $request->modalidad_estrategias;
-//                $create2->acreditacion = $request->acreditacion;
-//                $create2->perfil = $request->perfil;
-//                $create2->requerimientos_tec = $request->requerimientos_tec;
-//                $create2->perfil_egresado = $request->perfil_egresado;
-//                $create2->instituciones_aval = $request->instituciones_aval;
-//                $create2->aliados = $request->aliados;
-//                $create2->plan_estudio = $request->plan_estudio;
                 $create2->costo = $request->costo;
-                $create2->imagen_carrusel = $imagen;
                 $create2->descripcion_carrusel = $request->descripcion_carrusel;
                 $create2->activo_carrusel = $activo_carrusel;
+
+                if($img_nueva == 'yes'){
+                    $file = Input::get('dir');
+                    $file = str_replace('data:image/png;base64,', '', $file);
+                    $nombreTemporal = 'imagen_curso_' . date('dmY') . '_' . date('His') . ".jpg";
+                    $create2->imagen_carrusel = $nombreTemporal;
+
+                    $imagen = Image::make($file);
+                    $payload = (string)$imagen->encode();
+                    Storage::put(
+                        '/images/images_carrusel/cursos/'. $nombreTemporal,
+                        $payload
+                    );
+                }else{
+                    $create2->imagen_carrusel = '';
+                }
 
                 // Se verifica que se haya creado el el curso de forma correcta
                 if ($create2->save()) {
@@ -336,6 +307,7 @@ class CursosController extends Controller {
 
                 $data['errores'] = '';
                 $data['cursos'] = Curso::find($id); // Se obtiene la información del curso seleccionado
+                $data['activo_'] =  $data['cursos']->activo_carrusel;
                 //Se obtienen todos los tipos de cursos, modalidades de pago y modalidades de curso.
                 $data['tipo'] = $data['cursos']->id_tipo;
                 $data['modalidad_pago'] = ModalidadPago::all()->lists('nombre', 'id');
@@ -393,30 +365,40 @@ class CursosController extends Controller {
             if($usuario_actual->can('editar_cursos')) {    // Si el usuario posee los permisos necesarios continua con la acción
                 $data['errores'] = '';
                 $cursos = Curso::find($id);
+                $img_nueva = Input::get('cortar');
 
+                if($img_nueva == 'yes'){
+                    $data['activo_'] =  true;
+                }else{
+                    $data['activo_'] =  $data['cursos']->activo_carrusel;
+                }
+
+                $data['cursos'] = Curso::find($id);
+                $data['inicio'] = new DateTime($cursos->fecha_inicio);
+                $data['fin'] = new DateTime($cursos->fecha_fin);
+                $data['tipo'] = $data['cursos']->id_tipo;
+                $data['modalidad_pago'] = ModalidadPago::all()->lists('nombre', 'id');
+                $data['modalidades_curso'] = ModalidadCurso::all()->lists('nombre', 'id');
+                $data['modalidad_curso'] = $data['cursos']->id_modalidad_curso;
+                $data['tipos'] = TipoCurso::all()->lists('nombre', 'id');
+                $arr = [];
+                foreach ($data['modalidad_pago'] as $index => $mod) {
+                    $arr[$index] = false;
+                }
+                $pagos = CursoModalidadPago::where('id_curso', '=', $id)->orderBy('id_modalidad_pago')->get();
+                foreach ($pagos as $index => $pago) {
+                    $arr[$pago->id_modalidad_pago] = true;
+                }
+                $data['pagos'] = $arr;
 
                 $fecha_actual = date('Y-m-d');// Se obtiene la fecha actual para validar las fechas de inicio y fin del curso
                 if(($request->fecha_inicio) <= $fecha_actual) {
                     Session::set('error', 'La fecha de inicio debe ser mayor a la fecha actual');
-                    $data['cursos'] = Curso::find($id);
-                    $data['tipo'] = $data['cursos']->id_tipo;
-                    $data['modalidad_pago'] = ModalidadPago::all()->lists('nombre', 'id');
-                    $data['modalidades_curso'] = ModalidadCurso::all()->lists('nombre', 'id');
-                    $data['modalidad_curso'] = $data['cursos']->id_modalidad_curso;
-                    $data['tipos'] = TipoCurso::all()->lists('nombre', 'id');
-
                     return view('cursos.editar', $data);
 
                 }else{
                     if (($request->fecha_inicio) > ($request->fecha_fin)) {
                         Session::set('error', 'La fecha de inicio debe ser igual o menor a la fecha fin');
-                        $data['cursos'] = Curso::find($id);
-                        $data['tipo'] = $data['cursos']->id_tipo;
-                        $data['modalidad_pago'] = ModalidadPago::all()->lists('nombre', 'id');
-                        $data['modalidades_curso'] = ModalidadCurso::all()->lists('nombre', 'id');
-                        $data['modalidad_curso'] = $data['cursos']->id_modalidad_curso;
-                        $data['tipos'] = TipoCurso::all()->lists('nombre', 'id');
-
                         return view('cursos.editar', $data);
                     }
                 }
@@ -424,23 +406,12 @@ class CursosController extends Controller {
                 //se verifica que el MIN por seccion sea igual o menor al MAX
                 if (($request->mini) > ($request->maxi)) {
                     Session::set('error', 'La cantidad minima de cupos por seccion debe ser igual o menor a la canidad maxima');
-                    $data['tipos'] = TipoCurso::all()->lists('nombre', 'id');
-                    $data['modalidad_pago'] = ModalidadPago::all()->lists('nombre', 'id');
-                    $data['modalidad_curso'] = ModalidadCurso::all()->lists('nombre', 'id');
-
-                    return view('cursos.crear', $data);
+                    return view('cursos.editar', $data);
                 }
 
                 // Se verifica que el usuario haya seleccionado por lo menos una modalidad de pago
                 if (empty(Input::get('modalidades_pago'))) {    // Si no ha seleccionado ningúna modalidad, se redirige al formulario
-                    $data['cursos'] = Curso::find($id);
                     $data['errores'] = "Debe seleccionar una modalidad de pago.";
-                    $data['tipo'] = $data['cursos']->id_tipo;
-                    $data['modalidad_pago'] = ModalidadPago::all()->lists('nombre', 'id');
-                    $data['modalidades_curso'] = ModalidadCurso::all()->lists('nombre', 'id');
-                    $data['modalidad_curso'] = $data['cursos']->id_modalidad_curso;
-                    $data['tipos'] = TipoCurso::all()->lists('nombre', 'id');
-
                     return view('cursos.editar', $data);
 
                 }
@@ -450,30 +421,18 @@ class CursosController extends Controller {
                 if (($request->activo_carrusel) == "on") {
                     $activo_carrusel = true;
                     // Luego se verifica si los campos referente al carrusel estén completos
-                    if ((empty(Input::get('descripcion_carrusel'))) or !($request->hasFile('imagen_carrusel'))) {// Si los campos no están completos se
-                                                                                                     // redirige al usuario indicandole el error
+                    if ((empty(Input::get('descripcion_carrusel'))) or ($img_nueva != 'yes')) {// Si los campos no están completos se
+                                                                                              // redirige al usuario indicandole el error
                         $data['errores'] = $data['errores'] . "  Debe completar los campos de descripcion y imagen del Carrusel";
-                        $data['cursos'] = Curso::find($id);
-                        $data['tipo'] = $data['cursos']->id_tipo;
-                        $data['modalidad_pago'] = ModalidadPago::all()->lists('nombre', 'id');
-                        $data['modalidades_curso'] = ModalidadCurso::all()->lists('nombre', 'id');
-                        $data['modalidad_curso'] = $data['cursos']->id_modalidad_curso;
-                        $data['tipos'] = TipoCurso::all()->lists('nombre', 'id');
-
                         return view('cursos.editar', $data);
                     }
                 }
 
-                //  Se verifica si el usuario colocó una imagen en el formulario
-                if ($request->hasFile('imagen_carrusel')) {
-                    $imagen = $request->file('imagen_carrusel');
-                } else {
-                    $imagen = $cursos->imagen_carrusel;
-                }
                 $modalidades = Input::get('modalidades_pago');  // Se obtienen las modalidades de pago seleccionadas
 
                 // Se actualizan los datos del curso seleccionado
                 $cursos->id_tipo = $request->id_tipo;
+                $cursos->id_modalidad_curso = $request->id_modalidad_curso;
                 $cursos->secciones = $request->secciones;
                 $cursos->min = $request->mini;
                 $cursos->max = $request->maxi;
@@ -481,25 +440,28 @@ class CursosController extends Controller {
                 $cursos->fecha_inicio = $request->fecha_inicio;
                 $cursos->fecha_fin = $request->fecha_fin;
                 $cursos->especificaciones = $request->especificaciones;
-//                $cursos->duracion = $request->duracion;
-//                $cursos->id_modalidad_curso = $request->id_modalidad_curso;
-//                $cursos->lugar = $request->lugar;
-//                $cursos->area = '';
-//                $cursos->descripcion = $request->descripcion;
-//                $cursos->dirigido_a = $request->dirigido_a;
-//                $cursos->propositos = $request->proposito;
-//                $cursos->modalidad_estrategias = $request->modalidad_estrategias;
-//                $cursos->acreditacion = $request->acreditacion;
-//                $cursos->perfil = $request->perfil;
-//                $cursos->requerimientos_tec = $request->requerimientos_tec;
-//                $cursos->perfil_egresado = $request->perfil_egresado;
-//                $cursos->instituciones_aval = $request->instituciones_aval;
-//                $cursos->aliados = $request->aliados;
-//                $cursos->plan_estudio = $request->plan_estudio;
                 $cursos->costo = $request->costo;
-                $cursos->imagen_carrusel = $imagen;
                 $cursos->descripcion_carrusel = $request->descripcion_carrusel;
                 $cursos->activo_carrusel = $activo_carrusel;
+
+                if($img_nueva == 'yes'){
+                    $file = Input::get('dir');
+                    if($cursos->imagen_carrusel != null){
+                        Storage::delete('/images/images_carrusel/cursos/' . $request->file_viejo);
+                    }
+                    $file = str_replace('data:image/png;base64,', '', $file);
+                    $nombreTemporal = 'imagen_curso_' . date('dmY') . '_' . date('His') . ".jpg";
+                    $cursos->imagen_carrusel = $nombreTemporal;
+
+                    $imagen = Image::make($file);
+                    $payload = (string)$imagen->encode();
+                    Storage::put(
+                        '/images/images_carrusel/cursos/'. $nombreTemporal,
+                        $payload
+                    );
+                }else{
+                    $cursos->imagen_carrusel = '';
+                }
 
                 // Se verifica que se haya creado el curso de forma correcta
                 if ($cursos->save()) {
@@ -648,6 +610,233 @@ class CursosController extends Controller {
 
             return view('errors.error')->with('error',$e->getMessage());
         }
+    }
+
+    public function cambiarImagen()
+    {
+        try {
+
+            $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
+
+            if($usuario_actual->can('crear_cursos')) {  // Si el usuario posee los permisos necesarios continua con la acción
+                $data['errores'] = '';
+                dd(Input::get('nombre'));
+                //Se obtienen todos los tipos de cursos, modalidades de pago y modalidades de curso.
+                $data['tipos'] = TipoCurso::all()->lists('nombre', 'id');
+                $data['modalidad_pago'] = ModalidadPago::all()->lists('nombre', 'id');
+                $data['modalidad_curso'] = ModalidadCurso::all()->lists('nombre', 'id');
+                $data['activo_'] = true;
+                Session::flash('imagen', 'yes');
+                Session::flash('img_carg', 'yes');
+
+//                $data['errores'] = '';
+//                $data['cursos'] = Curso::find($id); // Se obtiene la información del curso seleccionado
+//                //Se obtienen todos los tipos de cursos, modalidades de pago y modalidades de curso.
+//                $data['tipo'] = $data['cursos']->id_tipo;
+//                $data['modalidad_pago'] = ModalidadPago::all()->lists('nombre', 'id');
+//                $data['modalidades_curso'] = ModalidadCurso::all()->lists('nombre', 'id');
+//                $data['modalidad_curso'] = $data['cursos']->id_modalidad_curso;
+//                $data['tipos'] = TipoCurso::all()->lists('nombre', 'id');
+//                $data['inicio'] = new DateTime($data['cursos']->fecha_inicio);
+//                $data['fin'] = new DateTime($data['cursos']->fecha_fin);
+//
+//                $arr = [];
+//                foreach ($data['modalidad_pago'] as $index => $mod) {
+//                    $arr[$index] = false;
+//                }
+//
+//                $pagos = CursoModalidadPago::where('id_curso', '=', $id)->orderBy('id_modalidad_pago')->get();
+//                foreach ($pagos as $index => $pago) {
+//                    //if($pago->id_modalidad_pago == ($index + 1)){
+//                    $arr[$pago->id_modalidad_pago] = true;
+//                    //}
+//                }
+//                $data['pagos'] = $arr;
+                return view('cursos.crear', $data);
+
+            }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
+
+                return view('errors.sin_permiso');
+            }
+
+        } catch (Exception $e) {
+            return view('errors.error')->with('error', $e->getMessage());
+        }
+    }
+
+    public function procesarImagen() {
+
+        try {
+
+            $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
+
+            if($usuario_actual->can('crear_cursos')) {  // Si el usuario posee los permisos necesarios continua con la acción
+
+                $data['ruta'] = Input::get('rutas');
+                $data['errores'] = '';
+                //Se obtienen todos los tipos de cursos, modalidades de pago y modalidades de curso.
+                $data['tipos'] = TipoCurso::all()->lists('nombre', 'id');
+                $data['modalidad_pago'] = ModalidadPago::all()->lists('nombre', 'id');
+                $data['modalidad_curso'] = ModalidadCurso::all()->lists('nombre', 'id');
+                $data['activo_'] = true;
+                Session::flash('imagen', null);
+                Session::flash('cortar', 'yes');
+                Session::flash('img_carg', 'yes');
+//                dd(Session::get('cortar'));
+
+//                $data['errores'] = '';
+//                $data['cursos'] = Curso::find($id); // Se obtiene la información del curso seleccionado
+//                //Se obtienen todos los tipos de cursos, modalidades de pago y modalidades de curso.
+//                $data['tipo'] = $data['cursos']->id_tipo;
+//                $data['modalidad_pago'] = ModalidadPago::all()->lists('nombre', 'id');
+//                $data['modalidades_curso'] = ModalidadCurso::all()->lists('nombre', 'id');
+//                $data['modalidad_curso'] = $data['cursos']->id_modalidad_curso;
+//                $data['tipos'] = TipoCurso::all()->lists('nombre', 'id');
+//                $data['inicio'] = new DateTime($data['cursos']->fecha_inicio);
+//                $data['fin'] = new DateTime($data['cursos']->fecha_fin);
+//
+//                $arr = [];
+//                foreach ($data['modalidad_pago'] as $index => $mod) {
+//                    $arr[$index] = false;
+//                }
+//
+//                $pagos = CursoModalidadPago::where('id_curso', '=', $id)->orderBy('id_modalidad_pago')->get();
+//                foreach ($pagos as $index => $pago) {
+//                    //if($pago->id_modalidad_pago == ($index + 1)){
+//                    $arr[$pago->id_modalidad_pago] = true;
+//                    //}
+//                }
+//                $data['pagos'] = $arr;
+
+                return view('cursos.crear', $data);
+
+            }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
+
+                return view('errors.sin_permiso');
+            }
+
+        } catch (Exception $e) {
+            return view('errors.error')->with('error', $e->getMessage());
+        }
+
+    }
+
+    public function cambiarImagen1($id)
+    {
+        try {
+
+            $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
+
+            if($usuario_actual->can('crear_cursos')) {  // Si el usuario posee los permisos necesarios continua con la acción
+                $data['activo_'] = true;
+                Session::flash('imagen', 'yes');
+                Session::flash('img_carg', 'yes');
+
+                $data['errores'] = '';
+                $data['cursos'] = Curso::find($id); // Se obtiene la información del curso seleccionado
+                //Se obtienen todos los tipos de cursos, modalidades de pago y modalidades de curso.
+                $data['tipo'] = $data['cursos']->id_tipo;
+                $data['modalidad_pago'] = ModalidadPago::all()->lists('nombre', 'id');
+                $data['modalidades_curso'] = ModalidadCurso::all()->lists('nombre', 'id');
+                $data['modalidad_curso'] = $data['cursos']->id_modalidad_curso;
+                $data['tipos'] = TipoCurso::all()->lists('nombre', 'id');
+                $data['inicio'] = new DateTime($data['cursos']->fecha_inicio);
+                $data['fin'] = new DateTime($data['cursos']->fecha_fin);
+
+                $arr = [];
+                foreach ($data['modalidad_pago'] as $index => $mod) {
+                    $arr[$index] = false;
+                }
+
+                $pagos = CursoModalidadPago::where('id_curso', '=', $id)->orderBy('id_modalidad_pago')->get();
+                foreach ($pagos as $index => $pago) {
+                    //if($pago->id_modalidad_pago == ($index + 1)){
+                    $arr[$pago->id_modalidad_pago] = true;
+                    //}
+                }
+                $data['pagos'] = $arr;
+                return view('cursos.editar', $data);
+
+            }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
+
+                return view('errors.sin_permiso');
+            }
+
+        } catch (Exception $e) {
+            return view('errors.error')->with('error', $e->getMessage());
+        }
+    }
+
+    public function procesarImagen1($id) {
+
+        try {
+
+            $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
+
+            if($usuario_actual->can('crear_cursos')) {  // Si el usuario posee los permisos necesarios continua con la acción
+
+                $data['ruta'] = Input::get('rutas');
+                $data['activo_'] = true;
+                Session::flash('imagen', null);
+                Session::flash('cortar', 'yes');
+                Session::flash('img_carg', 'yes');
+//                dd(Session::get('cortar'));
+
+                $data['errores'] = '';
+                $data['cursos'] = Curso::find($id); // Se obtiene la información del curso seleccionado
+                //Se obtienen todos los tipos de cursos, modalidades de pago y modalidades de curso.
+                $data['tipo'] = $data['cursos']->id_tipo;
+                $data['modalidad_pago'] = ModalidadPago::all()->lists('nombre', 'id');
+                $data['modalidades_curso'] = ModalidadCurso::all()->lists('nombre', 'id');
+                $data['modalidad_curso'] = $data['cursos']->id_modalidad_curso;
+                $data['tipos'] = TipoCurso::all()->lists('nombre', 'id');
+                $data['inicio'] = new DateTime($data['cursos']->fecha_inicio);
+                $data['fin'] = new DateTime($data['cursos']->fecha_fin);
+
+                $arr = [];
+                foreach ($data['modalidad_pago'] as $index => $mod) {
+                    $arr[$index] = false;
+                }
+
+                $pagos = CursoModalidadPago::where('id_curso', '=', $id)->orderBy('id_modalidad_pago')->get();
+                foreach ($pagos as $index => $pago) {
+                    //if($pago->id_modalidad_pago == ($index + 1)){
+                    $arr[$pago->id_modalidad_pago] = true;
+                    //}
+                }
+                $data['pagos'] = $arr;
+
+                return view('cursos.editar', $data);
+
+            }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
+
+                return view('errors.sin_permiso');
+            }
+
+        } catch (Exception $e) {
+            return view('errors.error')->with('error', $e->getMessage());
+        }
+
     }
 
     //    Funcion para ordenar por apellido arreglos de objetos

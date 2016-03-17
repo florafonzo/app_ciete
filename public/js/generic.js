@@ -253,12 +253,14 @@ $(document).ready(function() {
                 $('#calif').empty();
                 $('#porct').empty();
                 $('#id_nota').val(null);
-                $('#id_nota').val(id);
+                $('#id_nota').val(String(id));
                 $.each(data, function(index, Obj){
                     console.log(Obj.nota);
                     $('#eval').append('<input type="text" name="evaluacion" class="form-control" value="'+Obj.evaluacion+'" required />');
                     $('#calif').append('<input type="text" name="nota" class="form-control" value="'+Obj.nota+'" required />');
                     $('#porct').append('<input type="text" name="porcentaje" class="form-control" value="'+Obj.porcentaje+'" required />');
+
+                    alert(String(id));
                     $('#notasEditModal').modal('show');
                 });
              },
@@ -284,7 +286,7 @@ $(document).ready(function() {
 
 //-----------------------------------------------------------------------------------------//
 
-// ----------------------- Imagen Perfil Crop ----------------------------------//
+// ----------------------- Imagen Crop ----------------------------------//
 
     $('#enviar').hide();
     $('#imagen2').hide();

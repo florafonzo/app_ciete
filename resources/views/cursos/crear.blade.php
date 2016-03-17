@@ -64,78 +64,6 @@
                     {!!Form::label('especif', 'Especificaciones:',  array( 'class' => 'label_esp'))!!}
                     {!!Form::textarea('especificaciones', Session::get('especificaciones') ,array('required','class' => 'form-control ckeditor'))!!}
                 </div>
-                {{--<div class="form-group">--}}
-                {{--{!!Form::label('duracion', 'Duracion del curso en horas: ', array( 'class' => 'col-md-4 control-label')) !!}--}}
-                {{--<div class="col-sm-8">--}}
-                {{--{!!Form::text('duracion',Session::get('duracion') ,array('required', 'class' => 'form-control')) !!}--}}
-                {{--</div>--}}
-                {{--</div>--}}
-                {{--<div class="form-group">--}}
-                {{--{!!Form::label('lugar', 'Lugar:',  array( 'class' => 'col-md-4 control-label'))!!}--}}
-                {{--<div class="col-sm-8">--}}
-                {{--{!!Form::text('lugar', Session::get('lugar') ,array('required','class' => 'form-control'))!!}--}}
-                {{--</div>--}}
-                {{--</div>--}}
-                {{--<div class="form-group">--}}
-                    {{--{!!Form::label('dirigido', 'Dirigido a',  array( 'class' => 'col-md-4 control-label'))!!}--}}
-                    {{--<div class="col-sm-8">--}}
-                        {{--{!! Form::textarea('dirigido_a', Session::get('dirigido_a'), array('required','class' => 'form-control'))!!}--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-                {{--<div class="form-group">--}}
-                    {{--{!!Form::label('proposito', 'Propósitos',  array( 'class' => 'col-md-4 control-label'))!!}--}}
-                    {{--<div class="col-sm-8">--}}
-                        {{--{!! Form::textarea('proposito', Session::get('proposito'), array('required','class' => 'form-control'))!!}--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-                {{--<div class="form-group">--}}
-                    {{--{!!Form::label('modalidad', 'Modalidad/Estrategia',  array( 'class' => 'col-md-4 control-label'))!!}--}}
-                    {{--<div class="col-sm-8">--}}
-                        {{--{!! Form::textarea('modalidad_estrategias', Session::get('modalidad_estrategias'), array('required','class' => 'form-control'))!!}--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-                {{--<div class="form-group">--}}
-                    {{--{!!Form::label('acreditacion', 'Acreditación',  array( 'class' => 'col-md-4 control-label'))!!}--}}
-                    {{--<div class="col-sm-8">--}}
-                        {{--{!! Form::textarea('acreditacion',Session::get('acreditacion'), array('required','class' => 'form-control'))!!}--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-                {{--<div class="form-group">--}}
-                    {{--{!!Form::label('perfil', 'Perfil requerido',  array( 'class' => 'col-md-4 control-label'))!!}--}}
-                    {{--<div class="col-sm-8">--}}
-                        {{--{!! Form::textarea('perfil', Session::get('perfil'), array('required','class' => 'form-control'))!!}--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-                {{--<div class="form-group">--}}
-                    {{--{!!Form::label('req_tec', 'Requerimientos técnicos',  array( 'class' => 'col-md-4 control-label'))!!}--}}
-                    {{--<div class="col-sm-8">--}}
-                        {{--{!! Form::textarea('requerimientos_tec', Session::get('requerimientos_tec'), array('required','class' => 'form-control'))!!}--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-                {{--<div class="form-group">--}}
-                    {{--{!!Form::label('perfil_egresado', 'Perfil del egresado',  array( 'class' => 'col-md-4 control-label'))!!}--}}
-                    {{--<div class="col-sm-8">--}}
-                        {{--{!! Form::textarea('perfil_egresado', Session::get('perfil_egresado'), array('required','class' => 'form-control'))!!}--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-                {{--<div class="form-group">--}}
-                    {{--{!!Form::label('instituciones_aval', 'Instituciones que avalan el curso',  array( 'class' => 'col-md-4 control-label'))!!}--}}
-                    {{--<div class="col-sm-8">--}}
-                        {{--{!! Form::textarea('instituciones_aval', Session::get('instituciones_aval'), array('required','class' => 'form-control'))!!}--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-                {{--<div class="form-group">--}}
-                    {{--{!!Form::label('aliados', 'Aliados',  array( 'class' => 'col-md-4 control-label'))!!}--}}
-                    {{--<div class="col-sm-8">--}}
-                        {{--{!! Form::textarea('aliados', Session::get('aliados'), array('required','class' => 'form-control'))!!}--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-                {{--<div class="form-group">--}}
-                    {{--{!!Form::label('plan_estudio', 'Plan de estudio',  array( 'class' => 'col-md-4 control-label'))!!}--}}
-                    {{--<div class="col-sm-8">--}}
-                        {{--{!! Form::textarea('plan_estudio', Session::get('plan_estudio'), array('required','class' => 'form-control'))!!}--}}
-                    {{--</div>--}}
-                {{--</div>--}}
                 <div class="form-group">
                     {!!Form::label('costo', 'Costo:',  array( 'class' => 'col-md-4 '))!!}
                     <div class="col-sm-8">
@@ -153,15 +81,42 @@
                 <div class="form-group">
                     {!!Form::label('activo_carrusel', 'Curso activo en el carrusel?',  array( 'class' => 'col-md-4 '))!!}
                     <div class="col-sm-8">
-                        {!! Form::checkbox('activo_carrusel',null, false)!!}
+                        @if($activo_)
+                            {!! Form::checkbox('activo_carrusel',null, true)!!}
+                        @else
+                            {!! Form::checkbox('activo_carrusel',null, false)!!}
+                        @endif
                     </div>
                 </div>
                 <div class="form-group" id="imagen_carrusel">
-                    {!!Form::label('imagen_carrusel', 'Imagen carrusel:',  array( 'class' => 'col-md-4 '))!!}
-                    <div class="col-sm-8">
-                        {!! Form::file('imagen_carrusel', null, array('class' => 'form-control'))!!}
+                    {!!Form::label('imagen_carrusel', 'Imagen carrusel: ',  array( 'class' => 'col-md-4 '))!!}
+                    <div class="col-sm-8" id="borde">
+                        @if (Session::has('imagen'))
+                            {!!Form::file('file_perfil',['required'=>'True', 'id' => 'file_perfil', 'accept' => 'image/jpeg'])!!}
+                            {!!Form::hidden('img_carg','yes',['id' => 'oculto'])!!}
+                            {{--{!!Form::hidden('file_viejo',$foto)!!}--}}
+                        @else
+                            @if (Session::has('cortar'))
+                                <br>
+                                {!!Form::hidden('img_carg',null)!!}
+                                {!!Form::hidden('cortar','yes')!!}
+                                {!!Form::hidden('dir',$ruta)!!}
+                                {{--{!!Form::hidden('file_viejo',$foto)!!}--}}
+                                <img src="{{$ruta}}" id="imagen_cortada" width="150" height="150"><br><br>
+                                <a class="btn btn-success btn-xs" href="{{URL::to('/')}}/cursos/imagen">Cambiar</a>
+                            {{--@else--}}
+                                {{--<br>--}}
+                                {{--{!!Form::hidden('img_carg',null)!!}--}}
+                                {{--{!!Form::hidden('cortar',null)!!}--}}
+                                {{--<img src="{{URL::to('/')}}/images/images_carrusel/cursos/" id="imagen_cortada" width="150" height="150"><br><br>--}}
+                                {{--{!!Html::image('/img/images_perfil/'.$perfil->file_perfil,null, ['height'=>'279', 'width'=>'270 ']) !!} <br><br>--}}
+                                {{--<a class="btn btn-warning btn-sm" href="{{URL::to('/')}}/cursos/imagen" title="Cambiar foto" data-toggle="tooltip" data-placement="bottom" aria-hidden="true" style="text-decoration: none">Cambiar</a>--}}
+                            @endif
+                        @endif
                     </div>
                 </div>
+                <img class="" id="imagen2" src="" alt="">
+                {{--{!!Form::hidden('file_viejo',$foto)!!}--}}
                 <div class="form-group" id="descripcion_carrusel">
                     {!!Form::label('desc_carrusel', 'Titulo de la imagen en el carrusel:',  array( 'class' => 'col-md-4 '))!!}
                     <div class="col-sm-8">
@@ -175,5 +130,46 @@
             </div>
         @endif
     </div>
+
+    {{--Modal edición imagen de carrusel--}}
+    <div class="modal fade" id="imagenModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <a href="{{URL::to('/')}}/cursos/create" class="pull-right"> <span class="glyphicon glyphicon-remove" style="color: #333;"></span> </a>
+                    <h4> Edición de imagen</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="content2 esconder" id="" style="display: none; ">
+                        <div class="component ">
+                            <div class="overlay ">
+                                <div class="overlay-inner ">
+                                </div>
+                            </div>
+                            <img class="resize-image" id="imagen" src="" alt="image for resizing">
+                        </div>
+
+                    </div>
+                    <div id="pepe">
+                    </div>
+                    <br>
+                    <div style="text-align: center">
+                        <button class="btn js-crop" type="button"><i class="fa fa-crop"></i> Cortar </button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-default pull-left" href="{{URL::to('/')}}/cursos/create"><span class="glyphicon glyphicon-remove"></span> Cancelar</a>
+                    {!!Form::open(['url' => 'cursos/procesar',  "method" => "post", "id" => ""])!!}
+                        <input type="hidden" class="" id="rutas" name="rutas">
+                        <button type="submit" class="btn btn-success btn-success pull-right" id="aceptar" ><span class="glyphicon glyphicon-ok"></span> Aceptar</button>
+                    {!! Form::close() !!}
+
+                </div>
+            </div>
+        </div>
+    </div>
+    {{--Fin Modal--}}
 
 @stop

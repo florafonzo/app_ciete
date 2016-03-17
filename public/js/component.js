@@ -196,6 +196,7 @@ var resizeableImage = function(image_target) {
 
         var imagen1 = imagen.toString();
         $('#rutas').val(imagen1);
+        $('input[name=dirs]').val(imagen1);
         $('#pepe').append('<img src="'+imagen+'" class="img-responsive center-block">');
         $('#aceptar').show();
         $('.esconder').hide();

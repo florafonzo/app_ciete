@@ -13,7 +13,7 @@
             <div class="col-md-8 col-sm-8 opciones_part2">
                 @include('partials.mensajes')
                 @if($cursos->count())
-                    {!! Form::open(array('method' => 'PUT', 'route' => array('cursos.update', $cursos->id),'files' => true, 'class' => 'form-horizontal col-md-12')) !!}
+                    {!! Form::open(array('method' => 'PUT', 'route' => array('cursos.update', $cursos->id), 'class' => 'form-horizontal col-md-12')) !!}
 
                     <div class="form-group">
                         {!!Form::label('nombre_l', 'Nombre:', array( 'class' => 'col-md-4 ')) !!}
@@ -67,84 +67,6 @@
                         {!!Form::label('especif', 'Especificaciones:',  array( 'class' => 'label_esp'))!!}
                         {!!Form::textarea('especificaciones', $cursos->especificaciones ,array('required','class' => 'form-control ckeditor'))!!}
                     </div>
-                    {{--<div class="form-group">--}}
-                        {{--{!!Form::label('duracion_l', 'Duracion del curso en horas: ', array( 'class' => 'col-md-4 control-label')) !!}--}}
-                        {{--<div class="col-sm-8">--}}
-                            {{--{!!Form::text('duracion',$cursos->duracion ,array('required', 'class' => 'form-control')) !!}--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                    {{--<div class="form-group">--}}
-                        {{--{!!Form::label('lugar_l', 'Lugar:',  array( 'class' => 'col-md-4 control-label'))!!}--}}
-                        {{--<div class="col-sm-8">--}}
-                            {{--{!!Form::text('lugar', $cursos->lugar ,array('required','class' => 'form-control'))!!}--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                    {{--<div class="form-group">--}}
-                        {{--{!!Form::label('desc_l', 'Descripción:',  array( 'class' => 'col-md-4 control-label'))!!}--}}
-                        {{--<div class="col-sm-8">--}}
-                            {{--{!!Form::textarea('descripcion', $cursos->descripcion ,array('required','class' => 'form-control'))!!}--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                    {{--<div class="form-group">--}}
-                        {{--{!!Form::label('dirigido_l', 'Dirigido a:',  array( 'class' => 'col-md-4 control-label'))!!}--}}
-                        {{--<div class="col-sm-8">--}}
-                            {{--{!! Form::textarea('dirigido_a', $cursos->dirigido_a, array('required','class' => 'form-control'))!!}--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                    {{--<div class="form-group">--}}
-                        {{--{!!Form::label('proposito_l', 'Propósitos:',  array( 'class' => 'col-md-4 control-label'))!!}--}}
-                        {{--<div class="col-sm-8">--}}
-                            {{--{!! Form::textarea('proposito', $cursos->propositos, array('required','class' => 'form-control'))!!}--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                    {{--<div class="form-group">--}}
-                        {{--{!!Form::label('modalidad_l', 'Modalidad/Estrategia:',  array( 'class' => 'col-md-4 control-label'))!!}--}}
-                        {{--<div class="col-sm-8">--}}
-                            {{--{!! Form::textarea('modalidad_estrategias', $cursos->modalidad_estrategias, array('required','class' => 'form-control'))!!}--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                    {{--<div class="form-group">--}}
-                        {{--{!!Form::label('acreditacion_l', 'Acreditación:',  array( 'class' => 'col-md-4 control-label'))!!}--}}
-                        {{--<div class="col-sm-8">--}}
-                            {{--{!! Form::textarea('acreditacion', $cursos->acreditacion, array('required','class' => 'form-control'))!!}--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                    {{--<div class="form-group">--}}
-                        {{--{!!Form::label('perfil_l', 'Perfil requerido:',  array( 'class' => 'col-md-4 control-label'))!!}--}}
-                        {{--<div class="col-sm-8">--}}
-                            {{--{!! Form::textarea('perfil', $cursos->perfil, array('required','class' => 'form-control'))!!}--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                    {{--<div class="form-group">--}}
-                        {{--{!!Form::label('req_tec_l', 'Requerimientos técnicos:',  array( 'class' => 'col-md-4 control-label'))!!}--}}
-                        {{--<div class="col-sm-8">--}}
-                            {{--{!! Form::textarea('requerimientos_tec', $cursos->requerimientos_tec, array('required','class' => 'form-control'))!!}--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                    {{--<div class="form-group">--}}
-                        {{--{!!Form::label('perfil_egresado_l', 'Perfil del egresado:',  array( 'class' => 'col-md-4 control-label'))!!}--}}
-                        {{--<div class="col-sm-8">--}}
-                            {{--{!! Form::textarea('perfil_egresado', $cursos->perfil_egresado, array('required','class' => 'form-control'))!!}--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                    {{--<div class="form-group">--}}
-                        {{--{!!Form::label('instituciones_aval_l', 'Instituciones que avalan el curso:',  array( 'class' => 'col-md-4 control-label'))!!}--}}
-                        {{--<div class="col-sm-8">--}}
-                            {{--{!! Form::textarea('instituciones_aval', $cursos->instituciones_aval, array('required','class' => 'form-control'))!!}--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                    {{--<div class="form-group">--}}
-                        {{--{!!Form::label('aliados_l', 'Aliados:',  array( 'class' => 'col-md-4 control-label'))!!}--}}
-                        {{--<div class="col-sm-8">--}}
-                            {{--{!! Form::textarea('aliados', $cursos->aliados, array('required','class' => 'form-control'))!!}--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                    {{--<div class="form-group">--}}
-                        {{--{!!Form::label('plan_estudio_l', 'Plan de estudio:',  array( 'class' => 'col-md-4 control-label'))!!}--}}
-                        {{--<div class="col-sm-8">--}}
-                            {{--{!! Form::textarea('plan_estudio', $cursos->plan_estudio, array('required','class' => 'form-control'))!!}--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
                     <div class="form-group">
                         {!!Form::label('costo_l', 'Costo:',  array( 'class' => 'col-md-4 '))!!}
                         <div class="col-sm-8">
@@ -166,21 +88,63 @@
                     <div class="form-group">
                         {!!Form::label('activo_carrusel', 'Curso activo en el carrusel?:',  array( 'class' => 'col-md-4 '))!!}
                         <div class="col-sm-8">
-                            {!! Form::checkbox('activo_carrusel',null, $cursos->activo_carrusel)!!}
+                            @if($activo_)
+                                {!! Form::checkbox('activo_carrusel',null, true)!!}
+                            @else
+                                {!! Form::checkbox('activo_carrusel',null, $cursos->activo_carrusel)!!}
+                            @endif
+                            {{--{!! Form::checkbox('activo_carrusel',null, $cursos->activo_carrusel)!!}--}}
                         </div>
                     </div>
                     <div class="form-group" id="imagen_carrusel">
-                        {!!Form::label('imagen_carrusel_l', 'Imagen carrusel:',  array( 'class' => 'col-md-4 '))!!}
-                        <div class="col-sm-8">
-                            {!! Form::file('imagen_carrusel', $cursos->imagen_carrusel, array('class' => 'form-control'))!!}
+                        {!!Form::label('imagen_perfil', 'Imagen de Perfil: ',  array( 'class' => 'col-md-4 '))!!}
+                        <div class="col-sm-8" id="borde">
+                            @if($cursos->imagen_carrusel == null && !(Session::has('img_carg')))
+                                {!!Form::file('file_perfil',['id' => 'file_perfil', 'accept' => 'image/jpeg'])!!}
+                                {!!Form::hidden('img_carg',null)!!}
+                                {!!Form::hidden('file_viejo',$cursos->imagen_carrusel)!!}
+                            @else
+                                @if (Session::has('imagen'))
+                                    {!!Form::file('file_perfil',['id' => 'file_perfil', 'accept' => 'image/jpeg'])!!}
+                                    {!!Form::hidden('img_carg','yes',['id' => 'oculto'])!!}
+                                    {!!Form::hidden('file_viejo',$cursos->imagen_carrusel)!!}
+                                @else
+                                    @if (Session::get('cortar') == "yes")
+                                        <br>
+                                        {!!Form::hidden('img_carg','yes')!!}
+                                        {!!Form::hidden('cortar','yes')!!}
+                                        {!!Form::hidden('dir',$ruta)!!}
+                                        {!!Form::hidden('file_viejo',$cursos->imagen_carrusel)!!}
+                                        <img src="{{$ruta}}" id="imagen_cortada" width="150" height="150"><br><br>
+                                        <a class="btn btn-success btn-xs" href="{{URL::to('/')}}/cursos/imagen/{{$cursos->id}}">Cambiar</a>
+                                    @else
+                                        <br>
+                                        {!!Form::hidden('img_carg','yes')!!}
+                                        {!!Form::hidden('cortar',null)!!}
+                                        <img src="{{URL::to('/')}}/images/images_carrusel/cursos/{{$cursos->imagen_carrusel}}" id="imagen_cortada" width="150" height="150"><br><br>
+                                        {{--{!!Html::image('/img/images_perfil/'.$perfil->file_perfil,null, ['height'=>'279', 'width'=>'270 ']) !!} <br><br>--}}
+                                        <a class="btn btn-warning btn-sm" href="{{URL::to('/')}}/cursos/imagen/{{$cursos->id}}" title="Cambiar foto" data-toggle="tooltip" data-placement="bottom" aria-hidden="true" style="text-decoration: none">Cambiar</a>
+                                    @endif
+                                @endif
+                            @endif
                         </div>
                     </div>
+                    <img class="" id="imagen2" src="" alt="">
+                    {!!Form::hidden('file_viejo',$cursos->imagen_carrusel)!!}
+                    {{--<div class="form-group" id="imagen_carrusel">--}}
+                        {{--{!!Form::label('imagen_carrusel_l', 'Imagen carrusel:',  array( 'class' => 'col-md-4 '))!!}--}}
+                        {{--<div class="col-sm-8">--}}
+                            {{--{!! Form::file('imagen_carrusel', $cursos->imagen_carrusel, array('class' => 'form-control'))!!}--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
                     <div class="form-group" id="descripcion_carrusel">
                         {!!Form::label('desc_carrusel_l', 'Titulo de la imagen en el carrusel:',  array( 'class' => 'col-md-4 '))!!}
                         <div class="col-sm-8">
-                            {!! Form::text('descripcion_carrusel', $cursos->descrpcion_carrusel, array('class' => 'form-control'))!!}
+                            {!! Form::text('descripcion_carrusel', $cursos->descripcion_carrusel, array('class' => 'form-control'))!!}
                         </div>
                     </div>
+                    {!!Form::hidden('dirs')!!}
+                    {{--<input type="hidden" class="" id="dirs" name="dirs">--}}
                     <a href="{{URL::to("/")}}/cursos" class="btn btn-default text-right"><span class="glyphicon glyphicon-remove"></span> Cancelar</a>
                     <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-save" ></span> Guardar </button>
 
@@ -189,5 +153,47 @@
             </div>
         @endif
     </div>
+
+    {{--Modal edición imagen de perfil--}}
+    <div class="modal fade" id="imagenModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <a href="{{URL::to('/')}}/cursos/edit/{{$cursos->id}}" class="pull-right"> <span class="glyphicon glyphicon-remove" style="color: #333;"></span> </a>
+                    <h4> Edición de imagen</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="content2 esconder" id="" style="display: none; ">
+                        <div class="component ">
+                            <div class="overlay ">
+                                <div class="overlay-inner ">
+                                </div>
+                            </div>
+                            <img class="resize-image" id="imagen" src="" alt="image for resizing">
+                        </div>
+
+                    </div>
+                    <div id="pepe">
+                    </div>
+                    <br>
+                    <div style="text-align: center">
+                        <button class="btn js-crop" type="button"><i class="fa fa-crop"></i> Cortar </button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-default pull-left" href="{{URL::to('/')}}/cursos/edit/{{$cursos->id}}"><span class="glyphicon glyphicon-remove"></span> Cancelar</a>
+                    {!!Form::open(['url' => 'cursos/procesar/'.$cursos->id,  "method" => "post", "id" => "form_imagen"])!!}
+                    <input type="hidden" class="" id="rutas" name="rutas">
+                    <button type="submit" class="btn btn-success btn-success pull-right" id="aceptar" ><span class="glyphicon glyphicon-ok"></span> Aceptar</button>
+                    {!! Form::close() !!}
+
+                </div>
+            </div>
+        </div>
+    </div>
+    {{--Fin Modal--}}
+
 
 @stop

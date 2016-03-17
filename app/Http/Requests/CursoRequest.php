@@ -38,7 +38,7 @@ class CursoRequest extends Request {
             'fecha_fin' => 'required|date',
 //            'duracion' => 'required|integer',
 //            'lugar' => 'required|max:100',
-            'descripcion' => 'required',
+            'especificaciones' => 'required',
 //            'dirigido_a' => 'required|max:1000',
 //            'proposito' => 'required|max:1000',
 //            'modalidad_estrategias' => 'required|max:1000',

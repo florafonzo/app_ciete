@@ -39,7 +39,7 @@
                                             {{--{!! Form::open(array('method' => 'GET','route' => array('cursos-desactivados/activar/'.$curso->id))) !!}--}}
                                             {{--{!! Form::button('<span class="glyphicon glyphicon-ok" data-toggle="tooltip" data-placement="bottom" title="Activar" aria-hidden="true"></span>', array('type' => 'submit', 'class' => 'btn btn-success'))!!}--}}
                                             {{--{!! Form::close() !!}--}}
-                                            {!!Form::open(["url"=>"cursos-desactivados/activar/".$curso->id,  "method" => "GET", 'id' => 'form_activar'.$curso->id] )!!}
+                                            {!!Form::open(["url"=>"cursos/desactivados/activar/".$curso->id,  "method" => "GET", 'id' => 'form_activar'.$curso->id] )!!}
                                              <button type="button" onclick="activarCurso('{{$curso->id}}')" class="btn btn-success" title="Activar" data-toggle="tooltip" data-placement="bottom" aria-hidden="true">
                                                  <span class="glyphicon glyphicon-ok"></span>
                                              </button>
