@@ -50,10 +50,15 @@ Route::group([
     //Rutas manejo de cursos
     Route::get('cursos/desactivados', 'CursosController@indexDesactivados');
     Route::get('cursos/desactivados/activar/{id}', 'CursosController@activar');
+
+        Route::get('cursos/imagen','CursosController@cambiarImagen');
+        Route::post('cursos/procesar','CursosController@procesarImagen');
+
     Route::get('cursos/imagen/{id}','CursosController@cambiarImagen1');
     Route::post('cursos/procesar/{id}','CursosController@procesarImagen1');
-        Route::get('cursos/imagen','CursosController@cambiarImagen');
-    Route::post('cursos/procesar','CursosController@procesarImagen');
+
+
+
     Route::get('cursos/{id}/secciones/participantes', 'CursosController@cursoSeccionesParts');
     Route::get('cursos/{id_curso}/secciones/{seccion}/participantes', 'CursosController@cursoParticipantes');
     Route::get('cursos/{id_curso}/secciones/{seccion}/participantes/agregar', 'CursosController@cursoParticipantesAgregar');
@@ -64,14 +69,19 @@ Route::group([
     Route::get('cursos/{id}/secciones/{seccion}/profesores/agregar', 'CursosController@cursoProfesoresAgregar');
     Route::get('cursos/{id_curso}/secciones/{seccion}/profesores/{id_part}/agregar', 'CursosController@cursoProfesoresGuardar');
     Route::delete('cursos/{id_curso}/secciones/{seccion}/profesores/{id_part}/eliminar', 'CursosController@cursoProfesoresEliminar');
-    Route::resource('/cursos','CursosController');
+    Route::resource('/cursos','CursosController',['only'=> ['index','create','store','update','edit', 'destroy']]);
 
     //Rutas manejo de roles
     Route::resource('/roles','RolesController');
 
     //Rutas manejo de webinars
-    Route::get('webinars-desactivados', 'WebinarsController@indexDesactivados');
-    Route::get('webinars-desactivados/activar/{id}', 'WebinarsController@activar');
+    Route::get('webinars/desactivados', 'WebinarsController@indexDesactivados');//cambiar
+    Route::get('webinars/desactivados/activar/{id}', 'WebinarsController@activar');
+        Route::get('webinars/imagen','WebinarsController@cambiarImagen');
+        Route::post('webinars/procesar','WebinarsController@procesarImagen');
+
+        Route::get('webinars/imagen/{id}','WebinarsController@cambiarImagen1');
+        Route::post('webinars/procesar/{id}','WebinarsController@procesarImagen1');
     Route::get('webinars/{id}/participantes', 'WebinarsController@webinarParticipantes');
     Route::get('webinars/{id}/participantes/agregar', 'WebinarsController@webinarParticipantesAgregar');
     Route::get('webinars/{id_webinar}/participantes/{id_part}/agregar', 'WebinarsController@webinarParticipantesGuardar');

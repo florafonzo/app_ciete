@@ -34,7 +34,7 @@
 
                                     <td>
                                         @if(Entrust::can('activar_cursos'))
-                                            {!!Form::open(["url"=>"webinars-desactivados/activar/".$webinar->id,  "method" => "GET", 'id' => 'webinar_activar'.$webinar->id] )!!}
+                                            {!!Form::open(["url"=>"webinars/desactivados/activar/".$webinar->id,  "method" => "GET", 'id' => 'webinar_activar'.$webinar->id] )!!}
                                             <button type="button" onclick="activarWebinar('{{$webinar->id}}')" class="btn btn-success" title="Activar" data-toggle="tooltip" data-placement="bottom" aria-hidden="true">
                                                 <span class="glyphicon glyphicon-ok"></span>
                                             </button>

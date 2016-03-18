@@ -102,16 +102,19 @@
                             @if($cursos->imagen_carrusel == null && !(Session::has('img_carg')))
                                 {!!Form::file('file_perfil',['id' => 'file_perfil', 'accept' => 'image/jpeg'])!!}
                                 {!!Form::hidden('img_carg',null)!!}
+                                {!!Form::hidden('img_',null)!!}
                                 {!!Form::hidden('file_viejo',$cursos->imagen_carrusel)!!}
                             @else
                                 @if (Session::has('imagen'))
                                     {!!Form::file('file_perfil',['id' => 'file_perfil', 'accept' => 'image/jpeg'])!!}
                                     {!!Form::hidden('img_carg','yes',['id' => 'oculto'])!!}
+                                    {!!Form::hidden('img_',null)!!}
                                     {!!Form::hidden('file_viejo',$cursos->imagen_carrusel)!!}
                                 @else
                                     @if (Session::get('cortar') == "yes")
                                         <br>
                                         {!!Form::hidden('img_carg','yes')!!}
+                                        {!!Form::hidden('img_','yes')!!}
                                         {!!Form::hidden('cortar','yes')!!}
                                         {!!Form::hidden('dir',$ruta)!!}
                                         {!!Form::hidden('file_viejo',$cursos->imagen_carrusel)!!}
@@ -120,9 +123,9 @@
                                     @else
                                         <br>
                                         {!!Form::hidden('img_carg','yes')!!}
+                                        {!!Form::hidden('img_','yes')!!}
                                         {!!Form::hidden('cortar',null)!!}
                                         <img src="{{URL::to('/')}}/images/images_carrusel/cursos/{{$cursos->imagen_carrusel}}" id="imagen_cortada" width="150" height="150"><br><br>
-                                        {{--{!!Html::image('/img/images_perfil/'.$perfil->file_perfil,null, ['height'=>'279', 'width'=>'270 ']) !!} <br><br>--}}
                                         <a class="btn btn-warning btn-sm" href="{{URL::to('/')}}/cursos/imagen/{{$cursos->id}}" title="Cambiar foto" data-toggle="tooltip" data-placement="bottom" aria-hidden="true" style="text-decoration: none">Cambiar</a>
                                     @endif
                                 @endif
@@ -131,20 +134,12 @@
                     </div>
                     <img class="" id="imagen2" src="" alt="">
                     {!!Form::hidden('file_viejo',$cursos->imagen_carrusel)!!}
-                    {{--<div class="form-group" id="imagen_carrusel">--}}
-                        {{--{!!Form::label('imagen_carrusel_l', 'Imagen carrusel:',  array( 'class' => 'col-md-4 '))!!}--}}
-                        {{--<div class="col-sm-8">--}}
-                            {{--{!! Form::file('imagen_carrusel', $cursos->imagen_carrusel, array('class' => 'form-control'))!!}--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
                     <div class="form-group" id="descripcion_carrusel">
                         {!!Form::label('desc_carrusel_l', 'Titulo de la imagen en el carrusel:',  array( 'class' => 'col-md-4 '))!!}
                         <div class="col-sm-8">
                             {!! Form::text('descripcion_carrusel', $cursos->descripcion_carrusel, array('class' => 'form-control'))!!}
                         </div>
                     </div>
-                    {!!Form::hidden('dirs')!!}
-                    {{--<input type="hidden" class="" id="dirs" name="dirs">--}}
                     <a href="{{URL::to("/")}}/cursos" class="btn btn-default text-right"><span class="glyphicon glyphicon-remove"></span> Cancelar</a>
                     <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-save" ></span> Guardar </button>
 

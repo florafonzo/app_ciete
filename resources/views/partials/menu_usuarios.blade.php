@@ -20,8 +20,8 @@
                     </li>
                 @endif
                 @if(Entrust::can('ver_lista_cursos'))
-                    <li class="menu_usuarios @if(Request::is('cursos-desactivados*')) active @endif">
-                        <a style="text-decoration:none;" href="{{URL::to('/cursos-desactivados')}}"> Cursos desactivados </a>
+                    <li class="menu_usuarios @if(Request::is('cursos/desactivados*')) active @endif">
+                        <a style="text-decoration:none;" href="{{URL::to('/cursos/desactivados')}}"> Cursos desactivados </a>
                     </li>
                 @endif
                 @if(Entrust::can('ver_roles'))
@@ -35,8 +35,8 @@
                     </li>
                 @endif
                 @if(Entrust::can('ver_webinars'))
-                    <li class="menu_usuarios @if(Request::is('webinars-desactivados*')) active @endif">
-                        <a style="text-decoration:none;" href="{{URL::to('/webinars-desactivados')}}"> Webinars desactivados </a>
+                    <li class="menu_usuarios @if(Request::is('webinars/desactivados*')) active @endif">
+                        <a style="text-decoration:none;" href="{{URL::to('/webinars/desactivados')}}"> Webinars desactivados </a>
                     </li>
                 @endif
                     {{--<li class="menu_usuarios @if(Request::is('carrusel*')) active @endif">--}}

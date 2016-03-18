@@ -92,7 +92,6 @@ class CursosController extends Controller {
 
             if($usuario_actual->can('crear_cursos')) {    // Si el usuario posee los permisos necesarios continua con la acción
                 $data['activo_'] = false;
-                Session::flash('imagen', 'yes');
 //                 Se eliminan los datos guardados en sesión anteriormente
                 Session::forget('nombre');
                 Session::forget('secciones');
@@ -146,6 +145,16 @@ class CursosController extends Controller {
             if($usuario_actual->can('crear_cursos')) {  // Si el usuario posee los permisos necesarios continua con la acción
                 $data['errores'] = '';
                 $img_nueva = Input::get('cortar');
+                $img_cargada = Input::get('img_');
+
+                if($img_nueva == 'yes'){
+                    $data['activo_'] =  true;
+                    $data['ruta'] = Input::get('dir');
+                    Session::flash('cortar', 'yes');
+//                    Session::flash('img_carg', 'yes');
+                }else{
+                    $data['activo_'] =  false;
+                }
 
                 // Se guardan los datos ingresados por el usuario en sesion pra utilizarlos en caso de que se redirija
                 // al usuari al formulario por algún error y no se pierdan los datos ingresados
@@ -160,22 +169,18 @@ class CursosController extends Controller {
                 Session::set('costo', $request->costo);
                 Session::set('descripcion_carrusel', $request->descripcion_carrusel);
 
+                $data['tipos'] = TipoCurso::all()->lists('nombre', 'id');
+                $data['modalidad_pago'] = ModalidadPago::all()->lists('nombre', 'id');
+                $data['modalidad_curso'] = ModalidadCurso::all()->lists('nombre', 'id');
+
                 $fecha_actual = date('Y-m-d');// Se obtiene la fecha actual para validar las fechas de inicio y fin del curso
                 if(($request->fecha_inicio) <= $fecha_actual) {
                     Session::set('error', 'La fecha de inicio debe ser mayor a la fecha actual');
-                    $data['tipos'] = TipoCurso::all()->lists('nombre', 'id');
-                    $data['modalidad_pago'] = ModalidadPago::all()->lists('nombre', 'id');
-                    $data['modalidad_curso'] = ModalidadCurso::all()->lists('nombre', 'id');
-
                     return view('cursos.crear', $data);
 
                 }else{
                     if (($request->fecha_inicio) > ($request->fecha_fin)) {
                         Session::set('error', 'La fecha de inicio debe ser igual o menor a la fecha fin');
-                        $data['tipos'] = TipoCurso::all()->lists('nombre', 'id');
-                        $data['modalidad_pago'] = ModalidadPago::all()->lists('nombre', 'id');
-                        $data['modalidad_curso'] = ModalidadCurso::all()->lists('nombre', 'id');
-
                         return view('cursos.crear', $data);
                     }
                 }
@@ -183,10 +188,6 @@ class CursosController extends Controller {
                 //se verifica que el MIN por seccion sea igual o menor al MAX
                 if (($request->mini) > ($request->maxi)) {
                     Session::set('error', 'La cantidad minima de cupos por seccion debe ser igual o menor a la canidad maxima');
-                    $data['tipos'] = TipoCurso::all()->lists('nombre', 'id');
-                    $data['modalidad_pago'] = ModalidadPago::all()->lists('nombre', 'id');
-                    $data['modalidad_curso'] = ModalidadCurso::all()->lists('nombre', 'id');
-
                     return view('cursos.crear', $data);
                 }
 
@@ -201,11 +202,6 @@ class CursosController extends Controller {
                 // Se verifica que el usuario haya seleccionado por lo menos una modalidad de pago
                 if (empty(Input::get('modalidades_pago'))) {    // Si no ha seleccionado ningúna modalidad, se redirige al formulario
                     $data['errores'] = "Debe seleccionar una modalidad de pago.";
-                    $data['tipos'] = TipoCurso::all()->lists('nombre', 'id');
-                    $data['modalidad_pago'] = ModalidadPago::all()->lists('nombre', 'id');
-                    $data['modalidad_curso'] = ModalidadCurso::all()->lists('nombre', 'id');
-
-
                     return view('cursos.crear', $data);
 
                 }
@@ -213,13 +209,9 @@ class CursosController extends Controller {
                 //Se verifica si el usuario seleccionó que el curso esté activo en el carrusel
                 if ($activo_carrusel) {
                     // Luego se verifica si los campos referente al carrusel estén completos
-                    if ((empty(Input::get('descripcion_carrusel'))) or ($img_nueva != 'yes')) {   // Si no están completos se
+                    if ((empty(Input::get('descripcion_carrusel'))) or ($img_cargada != 'yes')) {   // Si no están completos se
                                                                                                     // redirige al usuario indicandole el error
                         $data['errores'] = $data['errores'] . "  Debe completar los campos de descripcion y imagen del Carrusel";
-                        $data['tipos'] = TipoCurso::all()->lists('nombre', 'id');
-                        $data['modalidad_pago'] = ModalidadPago::all()->lists('nombre', 'id');
-                        $data['modalidad_curso'] = ModalidadCurso::all()->lists('nombre', 'id');
-
                         return view('cursos.crear', $data);
                     }
                 }
@@ -304,7 +296,6 @@ class CursosController extends Controller {
             }
 
             if($usuario_actual->can('editar_cursos')) {   // Si el usuario posee los permisos necesarios continua con la acción
-
                 $data['errores'] = '';
                 $data['cursos'] = Curso::find($id); // Se obtiene la información del curso seleccionado
                 $data['activo_'] =  $data['cursos']->activo_carrusel;
@@ -366,11 +357,15 @@ class CursosController extends Controller {
                 $data['errores'] = '';
                 $cursos = Curso::find($id);
                 $img_nueva = Input::get('cortar');
+                $img_cargada = Input::get('img_');
 
                 if($img_nueva == 'yes'){
                     $data['activo_'] =  true;
+                    $data['ruta'] = Input::get('dir');
+                    Session::flash('cortar', 'yes');
+                    Session::flash('img_carg', 'yes');
                 }else{
-                    $data['activo_'] =  $data['cursos']->activo_carrusel;
+                    $data['activo_'] =  $cursos->activo_carrusel;
                 }
 
                 $data['cursos'] = Curso::find($id);
@@ -421,7 +416,7 @@ class CursosController extends Controller {
                 if (($request->activo_carrusel) == "on") {
                     $activo_carrusel = true;
                     // Luego se verifica si los campos referente al carrusel estén completos
-                    if ((empty(Input::get('descripcion_carrusel'))) or ($img_nueva != 'yes')) {// Si los campos no están completos se
+                    if ( (empty(Input::get('descripcion_carrusel'))) or ($img_cargada == null)) {// Si los campos no están completos se
                                                                                               // redirige al usuario indicandole el error
                         $data['errores'] = $data['errores'] . "  Debe completar los campos de descripcion y imagen del Carrusel";
                         return view('cursos.editar', $data);
