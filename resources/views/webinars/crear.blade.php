@@ -11,7 +11,7 @@
             @include('partials.menu_usuarios')
             <div class="col-md-8 col-xs-12 opciones_part2">
                 @include('partials.mensajes')
-                {!! Form::open(array('method' => 'POST', 'action' => 'WebinarsController@store', 'files' => true,'class' => 'form-horizontal col-md-10')) !!}
+                {!! Form::open(array('method' => 'POST', 'action' => 'WebinarsController@store', 'class' => 'form-horizontal col-md-10')) !!}
 
                 <div class="form-group">
                     {!!Form::label('nombre', 'Nombre:', array( 'class' => 'col-md-4')) !!}
@@ -53,42 +53,42 @@
                     {!!Form::label('especif', 'Especificaciones:',  array( 'class' => 'label_esp'))!!}
                     {!!Form::textarea('especificaciones', Session::get('especificaciones') ,array('required','class' => 'form-control ckeditor'))!!}
                 </div>
-                {{--<div class="form-group">--}}
-                    {{--{!!Form::label('duracion', 'Duracion del curso en horas: ', array( 'class' => 'col-md-4 control-label')) !!}--}}
-                    {{--<div class="col-sm-8">--}}
-                        {{--{!!Form::text('duracion',Session::get('duracion') ,array('required', 'class' => 'form-control')) !!}--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-                {{--<div class="form-group">--}}
-                    {{--{!!Form::label('lugar', 'Lugar:',  array( 'class' => 'col-md-4 control-label'))!!}--}}
-                    {{--<div class="col-sm-8">--}}
-                        {{--{!!Form::text('lugar', Session::get('lugar') ,array('required','class' => 'form-control'))!!}--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-                {{--<div class="form-group">--}}
-                    {{--{!!Form::label('desc', 'Descripción:',  array( 'class' => 'col-md-4 control-label'))!!}--}}
-                    {{--<div class="col-sm-8">--}}
-                        {{--{!!Form::textarea('descripcion', Session::get('descripcion') ,array('required','class' => 'form-control'))!!}--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-                {{--<div class="form-group">--}}
-                    {{--{!!Form::label('link', 'Url:',  array( 'class' => 'col-md-4 control-label'))!!}--}}
-                    {{--<div class="col-sm-8">--}}
-                        {{--{!! Form::text('link', Session::get('link'), array('required','class' => 'form-control'))!!}--}}
-                    {{--</div>--}}
-                {{--</div>--}}
                 <div class="form-group">
                     {!!Form::label('activo_carrusel', 'Webinar activo en el carrusel?:',  array( 'class' => 'col-md-4'))!!}
                     <div class="col-sm-8">
-                        {!! Form::checkbox('activo_carrusel',null, false)!!}
+                        @if($activo_)
+                            {!! Form::checkbox('activo_carrusel',null, true)!!}
+                        @else
+                            {!! Form::checkbox('activo_carrusel',null, false)!!}
+                        @endif
                     </div>
                 </div>
                 <div class="form-group" id="imagen_carrusel">
-                    {!!Form::label('imagen_carrusel', 'Imagen carrusel:',  array( 'class' => 'col-md-4'))!!}
-                    <div class="col-sm-8">
-                        {!! Form::file('imagen_carrusel', null, array('class' => 'form-control'))!!}
+                    {!!Form::label('imagen_carrusel', 'Imagen carrusel: ',  array( 'class' => 'col-md-4 '))!!}
+                    <div class="col-sm-8" id="borde">
+                        @if(!(Session::has('img_carg')))
+                            {!!Form::file('file_perfil',['id' => 'file_perfil', 'accept' => 'image/jpeg'])!!}
+                            {!!Form::hidden('img_carg',null)!!}
+                        @else
+                            @if (Session::has('imagen'))
+                                {!!Form::file('file_perfil',[ 'id' => 'file_perfil', 'accept' => 'image/jpeg'])!!}
+                                {!!Form::hidden('img_carg','yes')!!}
+                                {!!Form::hidden('img_',null)!!}
+                            @else
+                                @if (Session::has('cortar'))
+                                    <br>
+                                    {!!Form::hidden('img_carg','yes')!!}
+                                    {!!Form::hidden('img_','yes')!!}
+                                    {!!Form::hidden('cortar','yes')!!}
+                                    {!!Form::hidden('dir',$ruta)!!}
+                                    <img src="{{$ruta}}" id="imagen_cortada" width="150" height="150"><br><br>
+                                    <a class="btn btn-success btn-xs" href="{{URL::to('/')}}/webinars/imagen">Cambiar</a>
+                                @endif
+                            @endif
+                        @endif
                     </div>
                 </div>
+                <img class="" id="imagen2" src="" alt="">
                 <div class="form-group" id="descripcion_carrusel">
                     {!!Form::label('desc_carrusel', 'Titulo de la imagen en el carrusel:',  array( 'class' => 'col-md-4'))!!}
                     <div class="col-sm-8">
@@ -102,5 +102,46 @@
             </div>
         @endif
     </div>
+
+    {{--Modal edición imagen de carrusel--}}
+    <div class="modal fade" id="imagenModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <a href="{{URL::to('/')}}/webinars/create" class="pull-right"> <span class="glyphicon glyphicon-remove" style="color: #333;"></span> </a>
+                    <h4> Edición de imagen</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="content2 esconder" id="" style="display: none; ">
+                        <div class="component ">
+                            <div class="overlay ">
+                                <div class="overlay-inner ">
+                                </div>
+                            </div>
+                            <img class="resize-image" id="imagen" src="" alt="image for resizing">
+                        </div>
+
+                    </div>
+                    <div id="pepe">
+                    </div>
+                    <br>
+                    <div style="text-align: center">
+                        <button class="btn js-crop" type="button"><i class="fa fa-crop"></i> Cortar </button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-default pull-left" href="{{URL::to('/')}}/webinars/create"><span class="glyphicon glyphicon-remove"></span> Cancelar</a>
+                    {!!Form::open(['url' => 'webinars/procesar',  "method" => "post", "id" => ""])!!}
+                    <input type="hidden" class="" id="rutas" name="rutas">
+                    <button type="submit" class="btn btn-success btn-success pull-right" id="aceptar" ><span class="glyphicon glyphicon-ok"></span> Aceptar</button>
+                    {!! Form::close() !!}
+
+                </div>
+            </div>
+        </div>
+    </div>
+    {{--Fin Modal--}}
 
 @stop

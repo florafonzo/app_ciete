@@ -33,12 +33,12 @@ class RolesController extends Controller {
 
             if($usuario_actual->can('ver_roles')) {    // Si el usuario posee los permisos necesarios continua con la acción
                 $data['errores'] = '';
+                $data['busq'] = false;
+                $data['busq_'] = false;
                 $data['roles'] = Role::orderBy('name')->get();   // Se obtienen todos los roles
-
                 foreach ($data['roles'] as $rol) {
                     $rol['permisos'] = $rol->perms()->get();    //Se obtienen los permisos asociados a cada rol
                 }
-
                 return view('roles.roles', $data);  // Se muestra la lista de roles
 
             }else{  // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
@@ -53,6 +53,68 @@ class RolesController extends Controller {
 			return view('errors.error')->with('error',$e->getMessage());
 		}
 	}
+
+    /**
+     * Permite la busqueda segun los paraemetros dados por el usuario.
+     *
+     * @return Retorna la vista de la lista de webinars activos deseados.
+     */
+    public function buscar() {
+        try{
+            //Verificación de los permisos del usuario para poder realizar esta acción
+            $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
+            if($usuario_actual->can('ver_webinars')) {   // Si el usuario posee los permisos necesarios continua con la acción
+                $data['roles'] = '';
+                $data['errores'] = '';
+                $data['busq'] = true;
+                $data['busq_'] = true;
+                $param = Input::get('parametro');
+                if($param == '0'){
+                    $data['roles'] = Role::orderBy('name')->get();
+                    foreach ($data['roles'] as $rol) {
+                        $rol['permisos'] = $rol->perms()->get();    //Se obtienen los permisos asociados a cada rol
+                    }
+                    Session::set('error', 'Debe seleccionar el parametro por el cual desea buscar');
+                    return view('roles.roles', $data);
+                }
+                if ($param == 'name'){
+                    if (empty(Input::get('busqueda'))) {
+                        $data['roles'] = Role::orderBy('name')->get();
+                        foreach ($data['roles'] as $rol) {
+                            $rol['permisos'] = $rol->perms()->get();    //Se obtienen los permisos asociados a cada rol
+                        }
+                        Session::set('error', 'Coloque el elemento que desea buscar');
+                        return view('roles.roles', $data);
+                    }else{
+                        $busq = Input::get('busqueda');
+                    }
+                }
+                if(($param == 'name')){
+                    $data['roles'] = Role::where($param, 'ilike', '%'.$busq.'%')
+                        ->orderBy('name')->get();
+                    foreach ($data['roles'] as $rol) {
+                        $rol['permisos'] = $rol->perms()->get();    //Se obtienen los permisos asociados a cada rol
+                    }
+                }
+
+                return view('roles.roles', $data);
+
+            }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
+                return view('errors.sin_permiso');
+            }
+        }
+        catch (Exception $e) {
+
+            return view('errors.error')->with('error',$e->getMessage());
+        }
+
+    }
+
 
     /**
      * Muestra el formulario para crear un nuevo rol si posee los permisos necesarios.
@@ -323,7 +385,9 @@ class RolesController extends Controller {
 
             if($usuario_actual->can('eliminar_roles')) {    // Si el usuario posee los permisos necesarios continua con la acción
                 $rol = Role::find($id);
-                $permisos = $rol->perms()->get();
+//                $permisos = $rol->perms()->get();
+                $data['busq'] = false;
+                $data['busq_'] = false;
 
                 if (($rol->name) == 'admin') {
                     $data['errores'] = "El rol Administrador no puede ser eliminado";

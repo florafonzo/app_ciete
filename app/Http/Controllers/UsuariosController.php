@@ -45,14 +45,23 @@ class UsuariosController extends Controller {
             }
 
             if($usuario_actual->can('ver_usuarios')) {   // Si el usuario posee los permisos necesarios continua con la acción
-
                 $data['usuarios'] = User::orderBy('id')->get();
                 $data['errores'] = '';
+                $data['roles'] = Role::all()->lists('display_name', 'id');
+                $data['busq'] = false;
+                $data['busq_'] = false;
 
                 foreach ($data['usuarios'] as $usuario) { //se asocian los roles a cada usuario
                     $usuario['roles'] = $usuario->roles()->get();
-                    //                dd($usuario['rol']);
+                    $ci = Participante::where('id_usuario', '=', $usuario->id)->get();
+                    if($ci->count()){
+                        $usuario['doc_id'] = $ci[0]->documento_identidad;
+                    }else{
+                        $ci = Profesor::where('id_usuario', '=', $usuario->id)->get();
+                        $usuario['doc_id'] = $ci[0]->documento_identidad;
+                    }
                 }
+
                 return view('usuarios.usuarios', $data);
             }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
 
@@ -65,6 +74,163 @@ class UsuariosController extends Controller {
         }
 			
 	}
+
+    //    Funcion para ordenar por apellido arreglos de objetos
+    public function cmp($a, $b) {
+        return strcmp($a[0]->id, $b[0]->id);
+    }
+
+    /**
+     * Permite la busqueda segun los paraemetros dados por el usuario.
+     *
+     * @return Retorna la vista de la lista de usuarios deseados.
+     */
+    public function buscar() {
+        try{
+            //Verificación de los permisos del usuario para poder realizar esta acción
+            $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
+            if($usuario_actual->can('ver_usuarios')) {   // Si el usuario posee los permisos necesarios continua con la acción
+                $data['roles'] = Role::all()->lists('display_name', 'id');
+                $param = Input::get('parametro');
+                $data['busq_'] = true;
+
+                if($param == '0'){
+                    $data['usuarios'] = User::orderBy('id')->get();
+                    $data['errores'] = '';
+                    $data['roles'] = Role::all()->lists('display_name', 'id');
+                    $data['busq'] = false;
+
+                    foreach ($data['usuarios'] as $usuario) { //se asocian los roles a cada usuario
+                        $usuario['roles'] = $usuario->roles()->get();
+                        $ci = Participante::where('id_usuario', '=', $usuario->id)->get();
+                        if($ci->count()){
+                            $usuario['doc_id'] = $ci[0]->documento_identidad;
+                        }else{
+                            $ci = Profesor::where('id_usuario', '=', $usuario->id)->get();
+                            $usuario['doc_id'] = $ci[0]->documento_identidad;
+                        }
+                    }
+                    Session::set('error', 'Debe seleccionar el parametro por el cual desea buscar');
+                    return view('usuarios.usuarios', $data);
+                }
+
+                if ($param != 'rol'){
+                    if (empty(Input::get('busqueda'))) {
+                        $data['usuarios'] = User::orderBy('id')->get();
+                        $data['errores'] = '';
+                        $data['roles'] = Role::all()->lists('display_name', 'id');
+                        $data['busq'] = false;
+
+                        foreach ($data['usuarios'] as $usuario) { //se asocian los roles a cada usuario
+                            $usuario['roles'] = $usuario->roles()->get();
+                            $ci = Participante::where('id_usuario', '=', $usuario->id)->get();
+                            if($ci->count()){
+                                $usuario['doc_id'] = $ci[0]->documento_identidad;
+                            }else{
+                                $ci = Profesor::where('id_usuario', '=', $usuario->id)->get();
+                                $usuario['doc_id'] = $ci[0]->documento_identidad;
+                            }
+                        }
+
+                        Session::set('error', 'Coloque el elemento que desea buscar');
+                        return view('usuarios.usuarios', $data);
+                    }else{
+                        $busq = Input::get('busqueda');
+                    }
+                }else{
+                    $busq = Input::get('busqu');
+                }
+
+                $data['errores'] = '';
+                $usuarios = [];
+                if(($param != 'documento_identidad') && ($param != 'rol')){
+                    $data['busq'] = false;
+                    $data['usuarios'] = User::where($param, 'ilike', '%'.$busq.'%')->orderBy($param)->get();
+                    foreach ($data['usuarios'] as $usuario) { //se asocian los roles a cada usuario
+                        $usuario['roles'] = $usuario->roles()->get();
+                        $ci = Participante::where('id_usuario', '=', $usuario->id)->get();
+                        if($ci->count()){
+                            $usuario['doc_id'] = $ci[0]->documento_identidad;
+                        }else{
+                            $ci = Profesor::where('id_usuario', '=', $usuario->id)->get();
+                            $usuario['doc_id'] = $ci[0]->documento_identidad;
+                        }
+                    }
+                }elseif($param == 'documento_identidad'){
+                    $data['busq'] = true;
+                    $data['usuarios'] = [];
+                    $parts = Participante::where('documento_identidad' ,'like', '%'.$busq.'%')->get();//->select('id_usuario');
+                    $profs = Profesor::where('documento_identidad' ,'like', '%'.$busq.'%')->get();
+                    if($parts->count()){
+                        foreach ($parts as $index => $part){
+                            $usuarios[$index] = User::where('id', '=', $part->id_usuario)->get();
+                        }
+                    }
+                    if($profs->count()){
+                        $index2 = count($usuarios);
+                        foreach ($profs as $prof){
+                            $usuarios[$index2] = User::where('id', '=', $prof->id_usuario)->get();
+                            $index2 ++;
+                        }
+                    }
+                    usort($usuarios, array($this, "cmp")); //Ordenar por id
+                    $data['usuarios'] = $usuarios;
+                    foreach ($data['usuarios'] as $usuario) { //se asocian los roles a cada usuario
+                        $usuario['roles'] = $usuario[0]->roles()->get();
+                        $ci = Participante::where('id_usuario', '=', $usuario->id)->get();
+                        if($ci->count()){
+                            $usuario['doc_id'] = $ci[0]->documento_identidad;
+                        }else{
+                            $ci = Profesor::where('id_usuario', '=', $usuario->id)->get();
+                            $usuario['doc_id'] = $ci[0]->documento_identidad;
+                        }
+                    }
+                }elseif($param == 'rol'){
+                    $data['busq'] = true;
+                    $rol = Role::where('id', '=', $busq)->get();
+                    if($rol->count()){
+                        $users = DB::table('role_user')->where('role_id', '=', $rol[0]->id)->get();
+                        $users = array($users);
+                        if($users[0] != null) {
+                            foreach ($users[0] as $index => $user) {
+                                $usuarios[$index] = User::where('id', '=', $user->user_id)->get();
+                            }
+                        }
+                    }
+                    if($usuarios != null) {
+                        $usuarios = array($usuarios);
+                        $data['usuarios'] = $usuarios[0];
+                        foreach ($data['usuarios'] as $usuario) { //se asocian los roles a cada usuario
+                            $usuario['roles'] = $usuario[0]->roles()->get();
+                            $ci = Participante::where('id_usuario', '=', $usuario[0]->id)->get();
+                            if($ci->count()){
+                                $usuario['doc_id'] = $ci[0]->documento_identidad;
+                            }else{
+                                $ci = Profesor::where('id_usuario', '=', $usuario[0]->id)->get();
+                                $usuario['doc_id'] = $ci[0]->documento_identidad;
+                            }
+                        }
+                    }else{
+                        $data['usuarios'] = '';
+                    }
+                }
+                return view('usuarios.usuarios', $data);
+
+            }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
+                return view('errors.sin_permiso');
+            }
+        }
+        catch (Exception $e) {
+
+            return view('errors.error')->with('error',$e->getMessage());
+        }
+
+    }
 
     /**
      * Muestra el formulario para crear un nuevo usuario si posee los permisos necesarios.
@@ -585,6 +751,7 @@ class UsuariosController extends Controller {
 
                 // Se obtienen los datos del usuario que se desea eliminar al igual que los roles que posee
                 $usuario = User::find($id);
+                $data['busq_'] = false;
 //                dd($usuario->id);
                 $roles = $usuario->roles()->get();
 

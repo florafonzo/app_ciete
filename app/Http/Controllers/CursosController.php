@@ -51,6 +51,8 @@ class CursosController extends Controller {
             if($usuario_actual->can('ver_lista_cursos')) {    // Si el usuario posee los permisos necesarios continua con la acción
                 $data['errores'] = '';
                 $data['cursos'] = Curso::orderBy('created_at')->get(); // Se obtienen todos los cursos con sus datos
+                $data['tipos'] = TipoCurso::all()->lists('nombre', 'id');
+                $data['busq_'] = false;
 
                 foreach ($data['cursos'] as $curso) {   // Se asocia el tipo a cada curso (Cápsulo o Diplomado)
                     $tipo = TipoCurso::where('id', '=', $curso->id_tipo)->get();
@@ -72,6 +74,185 @@ class CursosController extends Controller {
 			return view('errors.error')->with('error',$e->getMessage());
 		}
 	}
+
+    /**
+     * Permite la busqueda segun los paraemetros dados por el usuario.
+     *
+     * @return Retorna la vista de la lista de cursos activos deseados.
+     */
+    public function buscar() {
+        try{
+            //Verificación de los permisos del usuario para poder realizar esta acción
+            $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
+            if($usuario_actual->can('ver_lista_cursos')) {   // Si el usuario posee los permisos necesarios continua con la acción
+                $data['tipos'] = TipoCurso::all()->lists('nombre', 'id');
+                $data['cursos'] = array([]);
+                $data['errores'] = '';
+                $data['busq_'] = true;
+                $param = Input::get('parametro');
+                if($param == '0'){
+                    $data['cursos'] = Curso::orderBy('created_at')->get(); // Se obtienen todos los cursos con sus datos
+                    foreach ($data['cursos'] as $curso) {   // Se asocia el tipo a cada curso (Cápsulo o Diplomado)
+                        $tipo = TipoCurso::where('id', '=', $curso->id_tipo)->get();
+                        $curso['tipo_curso'] = $tipo[0]->nombre;
+                        $curso['inicio'] = new DateTime($curso->fecha_inicio);
+                        $curso['fin'] = new DateTime($curso->fecha_fin);
+
+                    }
+                    Session::set('error', 'Debe seleccionar el parametro por el cual desea buscar');
+                    return view('cursos.cursos', $data);
+                }
+                if ($param != 'tipo'){
+                    if (empty(Input::get('busqueda'))) {
+                        $data['cursos'] = Curso::orderBy('created_at')->get(); // Se obtienen todos los cursos con sus datos
+                        foreach ($data['cursos'] as $curso) {   // Se asocia el tipo a cada curso (Cápsulo o Diplomado)
+                            $tipo = TipoCurso::where('id', '=', $curso->id_tipo)->get();
+                            $curso['tipo_curso'] = $tipo[0]->nombre;
+                            $curso['inicio'] = new DateTime($curso->fecha_inicio);
+                            $curso['fin'] = new DateTime($curso->fecha_fin);
+
+                        }
+                        Session::set('error', 'Coloque el elemento que desea buscar');
+                        return view('cursos.cursos', $data);
+                    }else{
+                        $busq = Input::get('busqueda');
+                    }
+                }else{
+                    $busq = Input::get('busqu');
+                }
+                if(($param != 'tipo')){
+                    $data['cursos'] = Curso::where($param, 'ilike', '%'.$busq.'%')
+                        ->where('curso_activo', '=', 'true')
+                        ->orderBy('created_at')->get();
+//                    dd($data['cursos']);
+                    if($data['cursos']->count()) {
+                        foreach ($data['cursos'] as $curso) {   // Se asocia el tipo a cada curso (Cápsulo o Diplomado)
+                            $tipo = TipoCurso::where('id', '=', $curso->id_tipo)->get();
+                            $curso['tipo_curso'] = $tipo[0]->nombre;
+                            $curso['inicio'] = new DateTime($curso->fecha_inicio);
+                            $curso['fin'] = new DateTime($curso->fecha_fin);
+                        }
+                    }
+                }elseif($param == 'tipo'){
+                    $data['cursos'] = Curso::where('id_tipo', '=', $busq)
+                        ->where('curso_activo', '=', 'true')
+                        ->orderBy('created_at')->get();
+                    if($data['cursos']->count()) {
+                        foreach ($data['cursos'] as $curso) {   // Se asocia el tipo a cada curso (Cápsulo o Diplomado)
+                            $tipo = TipoCurso::where('id', '=', $curso->id_tipo)->get();
+                            $curso['tipo_curso'] = $tipo[0]->nombre;
+                            $curso['inicio'] = new DateTime($curso->fecha_inicio);
+                            $curso['fin'] = new DateTime($curso->fecha_fin);
+                        }
+                    }
+                }
+                return view('cursos.cursos', $data);
+
+            }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
+                return view('errors.sin_permiso');
+            }
+        }
+        catch (Exception $e) {
+
+            return view('errors.error')->with('error',$e->getMessage());
+        }
+
+    }
+
+    /**
+     * Permite la busqueda segun los paraemetros dados por el usuario.
+     *
+     * @return Retorna la vista de la lista de cursos desactivados deseados.
+     */
+    public function buscar2() {
+        try{
+            //Verificación de los permisos del usuario para poder realizar esta acción
+            $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
+            if($usuario_actual->can('ver_lista_cursos')) {   // Si el usuario posee los permisos necesarios continua con la acción
+                $data['tipos'] = TipoCurso::all()->lists('nombre', 'id');
+                $data['cursos'] = array([]);
+                $data['errores'] = '';
+                $data['busq_'] = true;
+                $param = Input::get('parametro');
+                if($param == '0'){
+                    $data['cursos'] = Curso::orderBy('created_at')->get(); // Se obtienen todos los cursos con sus datos
+                    foreach ($data['cursos'] as $curso) {   // Se asocia el tipo a cada curso (Cápsulo o Diplomado)
+                        $tipo = TipoCurso::where('id', '=', $curso->id_tipo)->get();
+                        $curso['tipo_curso'] = $tipo[0]->nombre;
+                        $curso['inicio'] = new DateTime($curso->fecha_inicio);
+                        $curso['fin'] = new DateTime($curso->fecha_fin);
+
+                    }
+                    Session::set('error', 'Debe seleccionar el parametro por el cual desea buscar');
+                    return view('cursos.desactivados', $data);
+                }
+                if ($param != 'tipo'){
+                    if (empty(Input::get('busqueda'))) {
+                        $data['cursos'] = Curso::orderBy('created_at')->get(); // Se obtienen todos los cursos con sus datos
+                        foreach ($data['cursos'] as $curso) {   // Se asocia el tipo a cada curso (Cápsulo o Diplomado)
+                            $tipo = TipoCurso::where('id', '=', $curso->id_tipo)->get();
+                            $curso['tipo_curso'] = $tipo[0]->nombre;
+                            $curso['inicio'] = new DateTime($curso->fecha_inicio);
+                            $curso['fin'] = new DateTime($curso->fecha_fin);
+
+                        }
+                        Session::set('error', 'Coloque el elemento que desea buscar');
+                        return view('cursos.desactivados', $data);
+                    }else{
+                        $busq = Input::get('busqueda');
+                    }
+                }else{
+                    $busq = Input::get('busqu');
+                }
+//                dd($busq);
+                if(($param != 'tipo')){
+                    $data['cursos'] = Curso::where($param, 'ilike', '%'.$busq.'%')
+                        ->where('curso_activo', '=', 'false')
+                        ->orderBy('created_at')->get();
+//                    dd($data['cursos']);
+                    if($data['cursos']->count()) {
+                        foreach ($data['cursos'] as $curso) {   // Se asocia el tipo a cada curso (Cápsulo o Diplomado)
+                            $tipo = TipoCurso::where('id', '=', $curso->id_tipo)->get();
+                            $curso['tipo_curso'] = $tipo[0]->nombre;
+                            $curso['inicio'] = new DateTime($curso->fecha_inicio);
+                            $curso['fin'] = new DateTime($curso->fecha_fin);
+                        }
+                    }
+                }elseif($param == 'tipo'){
+                    $data['cursos'] = Curso::where('id_tipo', '=', $busq)
+                        ->where('curso_activo', '=', 'false')
+                        ->orderBy('created_at')->get();
+                    if($data['cursos']->count()) {
+                        foreach ($data['cursos'] as $curso) {   // Se asocia el tipo a cada curso (Cápsulo o Diplomado)
+                            $tipo = TipoCurso::where('id', '=', $curso->id_tipo)->get();
+                            $curso['tipo_curso'] = $tipo[0]->nombre;
+                            $curso['inicio'] = new DateTime($curso->fecha_inicio);
+                            $curso['fin'] = new DateTime($curso->fecha_fin);
+                        }
+                    }
+                }
+                return view('cursos.desactivados', $data);
+
+            }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
+                return view('errors.sin_permiso');
+            }
+        }
+        catch (Exception $e) {
+
+            return view('errors.error')->with('error',$e->getMessage());
+        }
+
+    }
 
 	/**
 	 * Muestra el formulario para crear un nuevo curso si posee los permisos necesarios.
@@ -296,6 +477,7 @@ class CursosController extends Controller {
             }
 
             if($usuario_actual->can('editar_cursos')) {   // Si el usuario posee los permisos necesarios continua con la acción
+//                dd('edittt');
                 $data['errores'] = '';
                 $data['cursos'] = Curso::find($id); // Se obtiene la información del curso seleccionado
                 $data['activo_'] =  $data['cursos']->activo_carrusel;
@@ -354,6 +536,7 @@ class CursosController extends Controller {
             }
 
             if($usuario_actual->can('editar_cursos')) {    // Si el usuario posee los permisos necesarios continua con la acción
+//                dd('update');
                 $data['errores'] = '';
                 $cursos = Curso::find($id);
                 $img_nueva = Input::get('cortar');
@@ -505,6 +688,8 @@ class CursosController extends Controller {
 
             if($usuario_actual->can('eliminar_cursos')) {  // Si el usuario posee los permisos necesarios continua con la acción
                 // Se obtienen los datos del curso que se desea eliminar
+                $data['tipos'] = TipoCurso::all()->lists('nombre', 'id');
+                $data['busq_'] = false;
                 $curso = Curso::find($id);
                 //Se desactiva el curso
                 $curso->curso_activo = false;
@@ -546,9 +731,11 @@ class CursosController extends Controller {
             }
 
             if($usuario_actual->can('ver_lista_cursos')) {   // Si el usuario posee los permisos necesarios continua con la acción
-
+                $data['tipos'] = TipoCurso::all()->lists('nombre', 'id');
                 $data['errores'] = '';
-                $data['cursos'] = Curso::orderBy('created_at')->get(); // Se obtienen todos los cursos con sus datos
+                $data['busq_'] = false;
+                $data['cursos'] = Curso::where('curso_activo', '=', 'false')
+                                        ->orderBy('created_at')->get(); // Se obtienen todos los cursos con sus datos
 
                 foreach ($data['cursos'] as $curso) {   // Se asocia el tipo a cada curso (Cápsulo o Diplomado)
                     $tipo = TipoCurso::where('id', '=', $curso->id_tipo)->get();
@@ -582,17 +769,22 @@ class CursosController extends Controller {
 
             if($usuario_actual->can('activar_cursos')) {  // Si el usuario posee los permisos necesarios continua con la acción
                 // Se obtienen los datos del curso que se desea activar
+                $data['tipos'] = TipoCurso::all()->lists('nombre', 'id');
                 $curso = Curso::find($id);
+                $data['busq_'] = false;
                 //Se activa el curso
                 $curso->curso_activo = true;
                 $curso->save(); // se guarda
 
                 // Se redirige al usuario a la lista de cursos actualizada
                 $data['errores'] = '';
-                $data['cursos'] = Curso::orderBy('created_at')->get();
+                $data['cursos'] = Curso::where('curso_activo', '=', 'false')
+                                        ->orderBy('created_at')->get();
                 foreach ($data['cursos'] as $curso) {
                     $tipo = TipoCurso::where('id', '=', $curso->id_tipo)->get();
                     $curso['tipo_curso'] = $tipo[0]->nombre;
+                    $curso['inicio'] = new DateTime($curso->fecha_inicio);
+                    $curso['fin'] = new DateTime($curso->fecha_fin);
                 }
 
                 return view('cursos.desactivados', $data);
@@ -620,7 +812,7 @@ class CursosController extends Controller {
 
             if($usuario_actual->can('crear_cursos')) {  // Si el usuario posee los permisos necesarios continua con la acción
                 $data['errores'] = '';
-                dd(Input::get('nombre'));
+//                dd(Input::get('nombre'));
                 //Se obtienen todos los tipos de cursos, modalidades de pago y modalidades de curso.
                 $data['tipos'] = TipoCurso::all()->lists('nombre', 'id');
                 $data['modalidad_pago'] = ModalidadPago::all()->lists('nombre', 'id');
@@ -629,29 +821,6 @@ class CursosController extends Controller {
                 Session::flash('imagen', 'yes');
                 Session::flash('img_carg', 'yes');
 
-//                $data['errores'] = '';
-//                $data['cursos'] = Curso::find($id); // Se obtiene la información del curso seleccionado
-//                //Se obtienen todos los tipos de cursos, modalidades de pago y modalidades de curso.
-//                $data['tipo'] = $data['cursos']->id_tipo;
-//                $data['modalidad_pago'] = ModalidadPago::all()->lists('nombre', 'id');
-//                $data['modalidades_curso'] = ModalidadCurso::all()->lists('nombre', 'id');
-//                $data['modalidad_curso'] = $data['cursos']->id_modalidad_curso;
-//                $data['tipos'] = TipoCurso::all()->lists('nombre', 'id');
-//                $data['inicio'] = new DateTime($data['cursos']->fecha_inicio);
-//                $data['fin'] = new DateTime($data['cursos']->fecha_fin);
-//
-//                $arr = [];
-//                foreach ($data['modalidad_pago'] as $index => $mod) {
-//                    $arr[$index] = false;
-//                }
-//
-//                $pagos = CursoModalidadPago::where('id_curso', '=', $id)->orderBy('id_modalidad_pago')->get();
-//                foreach ($pagos as $index => $pago) {
-//                    //if($pago->id_modalidad_pago == ($index + 1)){
-//                    $arr[$pago->id_modalidad_pago] = true;
-//                    //}
-//                }
-//                $data['pagos'] = $arr;
                 return view('cursos.crear', $data);
 
             }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
@@ -687,31 +856,6 @@ class CursosController extends Controller {
                 Session::flash('imagen', null);
                 Session::flash('cortar', 'yes');
                 Session::flash('img_carg', 'yes');
-//                dd(Session::get('cortar'));
-
-//                $data['errores'] = '';
-//                $data['cursos'] = Curso::find($id); // Se obtiene la información del curso seleccionado
-//                //Se obtienen todos los tipos de cursos, modalidades de pago y modalidades de curso.
-//                $data['tipo'] = $data['cursos']->id_tipo;
-//                $data['modalidad_pago'] = ModalidadPago::all()->lists('nombre', 'id');
-//                $data['modalidades_curso'] = ModalidadCurso::all()->lists('nombre', 'id');
-//                $data['modalidad_curso'] = $data['cursos']->id_modalidad_curso;
-//                $data['tipos'] = TipoCurso::all()->lists('nombre', 'id');
-//                $data['inicio'] = new DateTime($data['cursos']->fecha_inicio);
-//                $data['fin'] = new DateTime($data['cursos']->fecha_fin);
-//
-//                $arr = [];
-//                foreach ($data['modalidad_pago'] as $index => $mod) {
-//                    $arr[$index] = false;
-//                }
-//
-//                $pagos = CursoModalidadPago::where('id_curso', '=', $id)->orderBy('id_modalidad_pago')->get();
-//                foreach ($pagos as $index => $pago) {
-//                    //if($pago->id_modalidad_pago == ($index + 1)){
-//                    $arr[$pago->id_modalidad_pago] = true;
-//                    //}
-//                }
-//                $data['pagos'] = $arr;
 
                 return view('cursos.crear', $data);
 
@@ -887,6 +1031,7 @@ class CursosController extends Controller {
 
             if($usuario_actual->can('participantes_curso')) {  // Si el usuario posee los permisos necesarios continua con la acción
                 $data['errores'] = '';
+                $data['busq'] = false;
                 $data['participantes'] = [];
                 $data['curso'] = Curso::find($id_curso);
                 $data['seccion'] = $seccion;
@@ -896,9 +1041,6 @@ class CursosController extends Controller {
                     foreach ($curso_part as $index => $curso) {
                         $data['participantes'][$index] = Participante::where('id', '=', $curso->id_participante)->orderBy('apellido')->get();
                     }
-//                    $data['participantes'] = array($data['participantes']);
-//                    usort($data['participantes'], array($this, "cmp"));
-//                    $data['participantes'] = $data['participantes'][0];
                 }
 
                 return view('cursos.participantes.participantes', $data);
@@ -912,6 +1054,80 @@ class CursosController extends Controller {
             return view('errors.error')->with('error',$e->getMessage());
         }
     }
+
+    /**
+     * Permite la busqueda segun los paraemetros dados por el usuario.
+     *
+     * @return Retorna la vista de la lista de participantes deseados.
+     */
+    public function buscarParticipante($id_curso, $seccion) {
+        try{
+            //Verificación de los permisos del usuario para poder realizar esta acción
+            $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
+            if($usuario_actual->can('ver_usuarios')) {   // Si el usuario posee los permisos necesarios continua con la acción
+                $data['errores'] = '';
+                $data['curso'] = Curso::find($id_curso);
+                $data['seccion'] = $seccion;
+                $data['participantes'] = '';
+                $seccion = str_replace(' ', '', $seccion);
+                $param = Input::get('parametro');
+                $data['busq_'] = true;
+                $data['busq'] = true;
+                if($param == '0'){
+                    $data['busq'] = false;
+                    $participantes = ParticipanteCurso::where('id_curso', '=', $id_curso)->where('seccion', '=', $seccion)->select('id_participante')->get();
+                    if($participantes != null) {
+                        foreach ($participantes as $index => $part) {
+                            $data['participantes'][$index] = Participante::where('id', '=', $part->id_participante)->get();
+                        }
+                    }
+                    Session::set('error', 'Debe seleccionar el parametro por el cual desea buscar');
+                    return view('cursos.participantes.participantes', $data);
+                }
+                if (empty(Input::get('busqueda'))) {
+                    $data['busq'] = false;
+                    $participantes = ParticipanteCurso::where('id_curso', '=', $id_curso)->where('seccion', '=', $seccion)->select('id_participante')->get();
+                    if($participantes != null) {
+                        foreach ($participantes as $index => $part) {
+                            $data['participantes'][$index] = Participante::where('id', '=', $part->id_participante)->get();
+                        }
+                    }
+                    Session::set('error', 'Coloque el elemento que desea buscar');
+                    return view('cursos.participantes.participantes', $data);
+                }else{
+                    $busq = Input::get('busqueda');
+                }
+
+                $participantes = Participante::where($param, 'ilike', '%'.$busq.'%')->orderBy($param)->get();
+                if($participantes != null) {
+                    foreach ($participantes as $index => $part) {
+                        $existe = ParticipanteCurso::where('id_curso', '=', $id_curso)
+                            ->where('seccion', '=', $seccion)
+                            ->where('id_participante', '=', $part->id)->get();
+                        if($existe->count()) {
+                            $data['participantes'][$index] = $part;
+                        }
+                    }
+                }
+
+                return view('cursos.participantes.participantes', $data);
+
+            }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
+                return view('errors.sin_permiso');
+            }
+        }
+        catch (Exception $e) {
+
+            return view('errors.error')->with('error',$e->getMessage());
+        }
+
+    }
+
 
     public function cursoParticipantesAgregar($id_curso, $seccion) {
         try{
@@ -1149,6 +1365,8 @@ class CursosController extends Controller {
 
             if($usuario_actual->can('profesores_curso')) {  // Si el usuario posee los permisos necesarios continua con la acción
                 $data['errores'] = '';
+                $data['busq_'] = false;
+                $data['busq'] = false;
                 $data['profesores'] = [];
                 $data['curso'] = Curso::find($id_curso);
                 $data['seccion'] = $seccion;
@@ -1175,6 +1393,79 @@ class CursosController extends Controller {
         }
     }
 
+    /**
+     * Permite la busqueda segun los paraemetros dados por el usuario.
+     *
+     * @return Retorna la vista de la lista de profesores deseados.
+     */
+    public function buscarProfesor($id_curso, $seccion) {
+        try{
+            //Verificación de los permisos del usuario para poder realizar esta acción
+            $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
+            if($usuario_actual->can('ver_usuarios')) {   // Si el usuario posee los permisos necesarios continua con la acción
+                $data['errores'] = '';
+                $data['curso'] = Curso::find($id_curso);
+                $data['seccion'] = $seccion;
+                $data['profesores'] = '';
+                $seccion = str_replace(' ', '', $seccion);
+                $param = Input::get('parametro');
+                $data['busq_'] = true;
+                $data['busq'] = true;
+                if($param == '0'){
+                    $data['busq'] = false;
+                    $profesores = ProfesorCurso::where('id_curso', '=', $id_curso)->where('seccion', '=', $seccion)->select('id_profesor')->get();
+                    if($profesores != null) {
+                        foreach ($profesores as $index => $prof) {
+                            $data['profesores'][$index] = Profesor::where('id', '=', $prof->id_profesor)->get();
+                        }
+                    }
+                    Session::set('error', 'Debe seleccionar el parametro por el cual desea buscar');
+                    return view('cursos.profesores.profesores', $data);
+                }
+                if (empty(Input::get('busqueda'))) {
+                    $data['busq'] = false;
+                    $profesores = ProfesorCurso::where('id_curso', '=', $id_curso)->where('seccion', '=', $seccion)->select('id_profesor')->get();
+                    if($profesores != null) {
+                        foreach ($profesores as $index => $prof) {
+                            $data['profesores'][$index] = Profesor::where('id', '=', $prof->id_profesor)->get();
+                        }
+                    }
+                    Session::set('error', 'Coloque el elemento que desea buscar');
+                    return view('cursos.profesores.profesores', $data);
+                }else{
+                    $busq = Input::get('busqueda');
+                }
+
+                $profesores = Profesor::where($param, 'ilike', '%'.$busq.'%')->orderBy($param)->get();
+                if($profesores != null) {
+                    foreach ($profesores as $index => $prof) {
+                        $existe = ProfesorCurso::where('id_curso', '=', $id_curso)
+                            ->where('seccion', '=', $seccion)
+                            ->where('id_profesor', '=', $prof->id)->get();
+                        if($existe->count()) {
+                            $data['profesores'][$index] = $prof;
+                        }
+                    }
+                }
+
+                return view('cursos.profesores.profesores', $data);
+
+            }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
+                return view('errors.sin_permiso');
+            }
+        }
+        catch (Exception $e) {
+
+            return view('errors.error')->with('error',$e->getMessage());
+        }
+
+    }
+
     public function cursoProfesoresAgregar($id_curso, $seccion) {
         try{
             //Verificación de los permisos del usuario para poder realizar esta acción
@@ -1187,6 +1478,8 @@ class CursosController extends Controller {
 
             if($usuario_actual->can('agregar_prof_curso')) {  // Si el usuario posee los permisos necesarios continua con la acción
                 $data['errores'] = '';
+                $data['busq_'] = true;
+                $data['busq'] = true;
                 $data['curso'] = Curso::find($id_curso);
                 $data['seccion'] = $seccion;
                 $seccion = str_replace(' ', '', $seccion);
@@ -1257,6 +1550,66 @@ class CursosController extends Controller {
         }
     }
 
+    /**
+     * Permite la busqueda segun los paraemetros dados por el usuario.
+     *
+     * @return Retorna la vista de la lista de profesores deseados.
+     */
+    public function buscarProfesorAgregar($id_curso, $seccion) {
+        try{
+            //Verificación de los permisos del usuario para poder realizar esta acción
+            $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
+            if($usuario_actual->can('ver_usuarios')) {   // Si el usuario posee los permisos necesarios continua con la acción
+                $data['errores'] = '';
+                $data['curso'] = Curso::find($id_curso);
+                $data['seccion'] = $seccion;
+                $data['profesores'] = '';
+                $seccion = str_replace(' ', '', $seccion);
+                $param = Input::get('parametro');
+                $data['busq_'] = true;
+                $data['busq'] = true;
+                if($param == '0'){
+                    Session::set('error', 'Debe seleccionar el parametro por el cual desea buscar');
+                    return $this->cursoProfesoresAgregar($id_curso, $seccion);
+                }
+                if (empty(Input::get('busqueda'))) {
+                    Session::set('error', 'Coloque el elemento que desea buscar');
+                    return $this->cursoProfesoresAgregar($id_curso, $seccion);
+                }else{
+                    $busq = Input::get('busqueda');
+                }
+
+                $profesores = Profesor::where($param, 'ilike', '%'.$busq.'%')->orderBy($param)->get();
+                if($profesores != null) {
+                    foreach ($profesores as $index => $prof) {
+                        $existe = ProfesorCurso::where('id_curso', '=', $id_curso)
+                            ->where('seccion', '=', $seccion)
+                            ->where('id_profesor', '=', $prof->id)->get();
+                        if($existe->count()) {
+                            $data['profesores'][$index] = $prof;
+                        }
+                    }
+                }
+
+                return view('cursos.profesores.profesores', $data);
+
+            }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
+                return view('errors.sin_permiso');
+            }
+        }
+        catch (Exception $e) {
+
+            return view('errors.error')->with('error',$e->getMessage());
+        }
+
+    }
+
+
     public function cursoProfesoresGuardar($id_curso, $seccion, $id_profesor) {
         try{
             //Verificación de los permisos del usuario para poder realizar esta acción
@@ -1279,14 +1632,14 @@ class CursosController extends Controller {
                     Session::set('error', 'Ya existe el registro en la base de datos');
                     return $this->cursoProfesoresAgregar($id_curso, $seccion);
                 }else{
-                    $max = $curso->max;
-                    $cuantos = ProfesorCurso::where('seccion', '=', $seccion)->where('id_curso', '=', $id_curso)->get();
-                    $cuantos = count($cuantos);
-                    if($cuantos >= $max){
-                        Session::set('error', 'La seccion no tiene cupos disponibles');
-                        return $this->cursoProfesoresAgregar($id_curso, $seccion);
-                    }
-                    else {
+//                    $max = $curso->max;
+//                    $cuantos = ProfesorCurso::where('seccion', '=', $seccion)->where('id_curso', '=', $id_curso)->get();
+//                    $cuantos = count($cuantos);
+//                    if($cuantos >= $max){
+//                        Session::set('error', 'La seccion no tiene cupos disponibles');
+//                        return $this->cursoProfesoresAgregar($id_curso, $seccion);
+//                    }
+//                    else {
                         if ($curso != null || $profesor != null) {
                             $prof_curso = ProfesorCurso::create([
                                 'id_profesor' => $id_profesor,
@@ -1306,7 +1659,7 @@ class CursosController extends Controller {
                             Session::set('error', 'Ha ocurrido un error inesperado');
                             return $this->index();
                         }
-                    }
+//                    }
                 }
 
 

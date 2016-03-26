@@ -323,8 +323,10 @@ class ProfesoresController extends Controller {
             }
 
             if($usuario_actual->can('ver_cursos_profe')) {// Si el usuario posee los permisos necesarios continua con la acción
-
+                $data['tipos'] = TipoCurso::all()->lists('nombre', 'id');
                 $data['errores'] = '';
+                $data['busq'] = false;
+                $data['busq_'] = false;
                 $data['cursos'] = [];
                 $data['fechas'] = [];
                 $profesor = Profesor::where('id_usuario', '=', $usuario_actual->id)->get();
@@ -356,6 +358,122 @@ class ProfesoresController extends Controller {
         }
     }
 
+    /**
+     * Permite la busqueda segun los paraemetros dados por el usuario.
+     *
+     * @return Retorna la vista de la lista de cursos deseados, dictados por el profesor.
+     */
+    public function buscarCurso() {
+        try{
+            //Verificación de los permisos del usuario para poder realizar esta acción
+            $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
+            if($usuario_actual->can('ver_cursos_profe')) {   // Si el usuario posee los permisos necesarios continua con la acción
+                $data['tipos'] = TipoCurso::all()->lists('nombre', 'id');
+                $data['errores'] = '';
+                $data['busq'] = true;
+                $data['busq_'] = true;
+                $data['cursos'] = [];
+                $data['fechas'] = [];
+                $profesor = Profesor::where('id_usuario', '=', $usuario_actual->id)->get();
+                $cursos_ = ProfesorCurso::where('id_profesor', '=', $profesor[0]->id)->get();
+                $param = Input::get('parametro');
+                if($param == '0'){
+                    $data['busq'] = false;
+                    if ($cursos_->count()) {
+                        foreach ($cursos_ as $index => $curso) {
+                            $cursos  = Curso::where('id', '=', $curso->id_curso)->get();
+                            $data['cursos'][$index] = $cursos;
+                            $data['inicio'][$index] = new DateTime($cursos[0]->fecha_inicio);
+                            $data['fin'][$index] = new DateTime($cursos[0]->fecha_fin);
+                            $data['seccion'][$index] = $curso->seccion;
+                            $tipos = TipoCurso::where('id', '=', $cursos[0]->id_tipo)->get();
+                            $data['tipo_curso'][$index] = $tipos[0]->nombre;
+                        }
+                    }
+                    Session::set('error', 'Debe seleccionar el parametro por el cual desea buscar');
+                    return view('profesores.cursos.cursos', $data);
+                }
+                if ($param != 'tipo'){
+                    if (empty(Input::get('busqueda'))) {
+                        $data['busq'] = false;
+                        if ($data['cursos_']->count()) {
+                            foreach ($data['cursos_'] as $index => $curso) {
+                                $cursos  = Curso::where('id', '=', $curso->id_curso)->get();
+                                $data['cursos'][$index] = $cursos;
+                                $data['inicio'][$index] = new DateTime($cursos[0]->fecha_inicio);
+                                $data['fin'][$index] = new DateTime($cursos[0]->fecha_fin);
+                                $data['seccion'][$index] = $curso->seccion;
+                                $tipos = TipoCurso::where('id', '=', $cursos[0]->id_tipo)->get();
+                                $data['tipo_curso'][$index] = $tipos[0]->nombre;
+                            }
+                        }
+                        Session::set('error', 'Coloque el elemento que desea buscar');
+                        return view('profesores.cursos.cursos', $data);
+                    }else{
+                        $busq = Input::get('busqueda');
+                    }
+                }else{
+                    $busq = Input::get('busqu');
+                }
+                if(($param != 'tipo')){
+                    $cursos = Curso::where($param, 'ilike', '%'.$busq.'%')
+                        ->where('curso_activo', '=', 'true')
+                        ->orderBy('created_at')->get();
+                    if($cursos->count()) {
+                        foreach ($cursos as $index => $curso) {
+                            $dicta = ProfesorCurso::where('id_profesor','=', $profesor[0]->id)
+                                                    ->where('id_curso', '=', $curso->id)->get();
+                            if($dicta->count()){
+                                $data['cursos'][$index] = $curso;
+                            }
+                        }
+                        foreach ($data['cursos'] as $index => $curso) {
+                            $data['inicio'][$index] = new DateTime($curso->fecha_inicio);
+                            $data['fin'][$index] = new DateTime($curso->fecha_fin);
+                            $data['seccion'][$index] = $curso->seccion;
+                            $tipos = TipoCurso::where('id', '=', $curso->id_tipo)->get();
+                            $data['tipo_curso'][$index] = $tipos[0]->nombre;
+                        }
+//                        dd($data['cursos']);
+                    }
+                }elseif($param == 'tipo'){
+                    $cursos = Curso::where('id_tipo', '=', $busq)
+                        ->where('curso_activo', '=', 'true')
+                        ->orderBy('created_at')->get();
+                    if($cursos->count()) {
+                        foreach ($cursos as $index => $curso) {
+                            $dicta = ProfesorCurso::where('id_profesor','=', $profesor[0]->id)
+                                ->where('id_curso', '=', $curso->id)->get();
+                            if($dicta->count()){
+                                $data['cursos'][$index] = $curso;
+                            }
+                        }
+                        foreach ($data['cursos'] as $index => $curso) {
+                            $data['inicio'][$index] = new DateTime($curso->fecha_inicio);
+                            $data['fin'][$index] = new DateTime($curso->fecha_fin);
+                            $data['seccion'][$index] = $curso->seccion;
+                            $tipos = TipoCurso::where('id', '=', $curso->id_tipo)->get();
+                            $data['tipo_curso'][$index] = $tipos[0]->nombre;
+                        }
+                    }
+                }
+                return view('profesores.cursos.cursos', $data);
+
+            }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
+                return view('errors.sin_permiso');
+            }
+        }
+        catch (Exception $e) {
+
+            return view('errors.error')->with('error',$e->getMessage());
+        }
+
+    }
 
     public function verSeccionesCurso($id_curso)
     {
@@ -407,6 +525,8 @@ class ProfesoresController extends Controller {
 
             if($usuario_actual->can('ver_notas_profe')) {// Si el usuario posee los permisos necesarios continua con la acción
                 $data['errores'] = '';
+                $data['busq'] = false;
+                $data['busq_'] = false;
                 $data['curso'] = Curso::find($id_curso);
                 $data['seccion'] = $seccion;
                 $seccion = str_replace(' ', '', $seccion);
@@ -434,6 +554,78 @@ class ProfesoresController extends Controller {
         }
     }
 
+    /**
+     * Permite la busqueda segun los paraemetros dados por el usuario.
+     *
+     * @return Retorna la vista de la lista de participantes deseados.
+     */
+    public function buscarParticipante($id_curso, $seccion) {
+        try{
+            //Verificación de los permisos del usuario para poder realizar esta acción
+            $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
+            if($usuario_actual->can('ver_usuarios')) {   // Si el usuario posee los permisos necesarios continua con la acción
+                $data['errores'] = '';
+                $data['curso'] = Curso::find($id_curso);
+                $data['seccion'] = $seccion;
+                $data['participantes'] = '';
+                $seccion = str_replace(' ', '', $seccion);
+                $param = Input::get('parametro');
+                $data['busq_'] = true;
+                $data['busq'] = true;
+                if($param == '0'){
+                    $data['busq'] = false;
+                    $participantes = ParticipanteCurso::where('id_curso', '=', $id_curso)->where('seccion', '=', $seccion)->select('id_participante')->get();
+                    if($participantes != null) {
+                        foreach ($participantes as $index => $part) {
+                            $data['participantes'][$index] = Participante::where('id', '=', $part->id_participante)->get();
+                        }
+                    }
+                    Session::set('error', 'Debe seleccionar el parametro por el cual desea buscar');
+                    return view('profesores.cursos.participantes', $data);
+                }
+                if (empty(Input::get('busqueda'))) {
+                    $data['busq'] = false;
+                    $participantes = ParticipanteCurso::where('id_curso', '=', $id_curso)->where('seccion', '=', $seccion)->select('id_participante')->get();
+                    if($participantes != null) {
+                        foreach ($participantes as $index => $part) {
+                            $data['participantes'][$index] = Participante::where('id', '=', $part->id_participante)->get();
+                        }
+                    }
+                    Session::set('error', 'Coloque el elemento que desea buscar');
+                    return view('profesores.cursos.participantes', $data);
+                }else{
+                    $busq = Input::get('busqueda');
+                }
+
+                $participantes = Participante::where($param, 'ilike', '%'.$busq.'%')->orderBy($param)->get();
+                if($participantes != null) {
+                    foreach ($participantes as $index => $part) {
+                        $existe = ParticipanteCurso::where('id_curso', '=', $id_curso)
+                                                    ->where('seccion', '=', $seccion)
+                                                    ->where('id_participante', '=', $part->id)->get();
+                        if($existe->count()) {
+                            $data['participantes'][$index] = $part;
+                        }
+                    }
+                }
+
+                return view('profesores.cursos.participantes', $data);
+
+            }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
+                return view('errors.sin_permiso');
+            }
+        }
+        catch (Exception $e) {
+
+            return view('errors.error')->with('error',$e->getMessage());
+        }
+
+    }
 
     public function verNotasParticipante($id_curso, $seccion, $id_part)
     {
@@ -611,8 +803,9 @@ class ProfesoresController extends Controller {
             }
 
             if($usuario_actual->can('ver_cursos_profe')) {// Si el usuario posee los permisos necesarios continua con la acción
-
                 $data['errores'] = '';
+                $data['busq_'] = false;
+                $data['busq'] = false;
                 $data['webinars'] = [];
                 $data['fechas'] = [];
                 $profesor = Profesor::where('id_usuario', '=', $usuario_actual->id)->get();
@@ -639,6 +832,94 @@ class ProfesoresController extends Controller {
 
             return view('errors.error')->with('error',$e->getMessage());
         }
+    }
+
+    /**
+     * Permite la busqueda segun los paraemetros dados por el usuario.
+     *
+     * @return Retorna la vista de la lista de cursos deseados, dictados por el profesor.
+     */
+    public function buscarWebinar() {
+        try{
+            //Verificación de los permisos del usuario para poder realizar esta acción
+            $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
+            if($usuario_actual->can('ver_cursos_profe')) {   // Si el usuario posee los permisos necesarios continua con la acción
+                $data['errores'] = '';
+                $data['busq'] = true;
+                $data['busq_'] = true;
+                $data['webinars'] = '';
+                $data['fechas'] = [];
+                $profesor = Profesor::where('id_usuario', '=', $usuario_actual->id)->get();
+                $param = Input::get('parametro');
+                if($param == '0'){
+                    $data['busq'] = false;
+                    $data['webinars_'] = ProfesorWebinar::where('id_profesor', '=', $profesor[0]->id)->get();
+                    if ($data['webinars_']->count()) {
+                        foreach ($data['webinars_'] as $index => $web) {
+                            $webinars  = Webinar::where('id', '=', $web->id_webinar)->get();
+                            $data['webinars'][$index] = $webinars;
+                            $data['inicio'][$index] = new DateTime($webinars[0]->fecha_inicio);
+                            $data['fin'][$index] = new DateTime($webinars[0]->fecha_fin);
+                            $data['seccion'][$index] = $web->seccion;
+                        }
+                    }
+                    Session::set('error', 'Debe seleccionar el parametro por el cual desea buscar');
+                    return view('profesores.webinars.webinars', $data);
+                }
+
+                if (empty(Input::get('busqueda'))) {
+                    $data['busq'] = false;
+                    $data['webinars_'] = ProfesorWebinar::where('id_profesor', '=', $profesor[0]->id)->get();
+                    if ($data['webinars_']->count()) {
+                        foreach ($data['webinars_'] as $index => $web) {
+                            $webinars  = Webinar::where('id', '=', $web->id_webinar)->get();
+                            $data['webinars'][$index] = $webinars;
+                            $data['inicio'][$index] = new DateTime($webinars[0]->fecha_inicio);
+                            $data['fin'][$index] = new DateTime($webinars[0]->fecha_fin);
+                            $data['seccion'][$index] = $web->seccion;
+                        }
+                    }
+                    Session::set('error', 'Coloque el elemento que desea buscar');
+                    return view('profesores.webinars.webinars', $data);
+
+                }else{
+                    $busq = Input::get('busqueda');
+                }
+
+                $webinars = Webinar::where($param, 'ilike', '%'.$busq.'%')
+                                    ->where('webinar_activo', '=', 'true')
+                                    ->orderBy('created_at')->get();
+                if($webinars->count()) {
+                    foreach ($webinars as $index => $web) {
+                        $dicta = ProfesorWebinar::where('id_profesor','=', $profesor[0]->id)
+                                                ->where('id_webinar', '=', $web->id)->get();
+                        if($dicta->count()){
+                            $data['webinars'][$index] = $web;
+                        }
+                    }
+                    foreach ($data['webinars'] as $index => $web) {
+                        $data['inicio'][$index] = new DateTime($web->fecha_inicio);
+                        $data['fin'][$index] = new DateTime($web->fecha_fin);
+                        $data['seccion'][$index] = $web->seccion;
+                    }
+//                        dd($data['cursos']);
+                }
+                return view('profesores.webinars.webinars', $data);
+
+            }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
+                return view('errors.sin_permiso');
+            }
+        }
+        catch (Exception $e) {
+
+            return view('errors.error')->with('error',$e->getMessage());
+        }
+
     }
 
 
@@ -692,6 +973,8 @@ class ProfesoresController extends Controller {
 
             if($usuario_actual->can('ver_notas_profe')) {// Si el usuario posee los permisos necesarios continua con la acción
                 $data['errores'] = '';
+                $data['busq'] = false;
+                $data['busq_'] = false;
                 $data['webinar'] = Webinar::find($id);
                 $data['seccion'] = $seccion;
                 $seccion = str_replace(' ', '', $seccion);
@@ -716,6 +999,79 @@ class ProfesoresController extends Controller {
 
             return view('errors.error')->with('error',$e->getMessage());
         }
+    }
+
+    /**
+     * Permite la busqueda segun los paraemetros dados por el usuario.
+     *
+     * @return Retorna la vista de la lista de participantes deseados.
+     */
+    public function buscarParticipanteW($id, $seccion) {
+        try{
+            //Verificación de los permisos del usuario para poder realizar esta acción
+            $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
+            if($usuario_actual->can('ver_usuarios')) {   // Si el usuario posee los permisos necesarios continua con la acción
+                $data['errores'] = '';
+                $data['webinar'] = Webinar::find($id);
+                $data['seccion'] = $seccion;
+                $data['participantes'] = '';
+                $seccion = str_replace(' ', '', $seccion);
+                $param = Input::get('parametro');
+                $data['busq_'] = true;
+                $data['busq'] = true;
+                if($param == '0'){
+                    $data['busq'] = false;
+                    $participantes = ParticipanteWebinar::where('id_webinar', '=', $id)->where('seccion', '=', $seccion)->select('id_participante')->get();
+                    if($participantes != null) {
+                        foreach ($participantes as $index => $part) {
+                            $data['participantes'][$index] = Participante::where('id', '=', $part->id_participante)->get();
+                        }
+                    }
+                    Session::set('error', 'Debe seleccionar el parametro por el cual desea buscar');
+                    return view('profesores.webinars.participantes', $data);
+                }
+                if (empty(Input::get('busqueda'))) {
+                    $data['busq'] = false;
+                    $participantes = ParticipanteWebinar::where('id_webinar', '=', $id)->where('seccion', '=', $seccion)->select('id_participante')->get();
+                    if($participantes != null) {
+                        foreach ($participantes as $index => $part) {
+                            $data['participantes'][$index] = Participante::where('id', '=', $part->id_participante)->get();
+                        }
+                    }
+                    Session::set('error', 'Coloque el elemento que desea buscar');
+                    return view('profesores.webinars.participantes', $data);
+                }else{
+                    $busq = Input::get('busqueda');
+                }
+
+                $participantes = Participante::where($param, 'ilike', '%'.$busq.'%')->orderBy($param)->get();
+                if($participantes != null) {
+                    foreach ($participantes as $index => $part) {
+                        $existe = ParticipanteWebinar::where('id_webinar', '=', $id)
+                            ->where('seccion', '=', $seccion)
+                            ->where('id_participante', '=', $part->id)->get();
+                        if($existe->count()) {
+                            $data['participantes'][$index] = $part;
+                        }
+                    }
+                }
+
+                return view('profesores.webinars.participantes', $data);
+
+            }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
+                return view('errors.sin_permiso');
+            }
+        }
+        catch (Exception $e) {
+
+            return view('errors.error')->with('error',$e->getMessage());
+        }
+
     }
 
 //-------------------------------------------------------------------------------------------
@@ -749,7 +1105,7 @@ class ProfesoresController extends Controller {
                 }
 
                 $pdf = PDF::loadView('profesores.cursos.lista',$data);
-                return $pdf->stream("Listado curso - ".$data['curso']->nombre." - seccion ".$seccion.".pdf");
+                return $pdf->stream("Listado curso - ".$data['curso']->nombre." - seccion ".$seccion.".pdf", array('Attachment'=>0));
 
             }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
 

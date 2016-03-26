@@ -107,7 +107,7 @@
                             @else
                                 @if (Session::has('imagen'))
                                     {!!Form::file('file_perfil',['id' => 'file_perfil', 'accept' => 'image/jpeg'])!!}
-                                    {!!Form::hidden('img_carg','yes',['id' => 'oculto'])!!}
+                                    {!!Form::hidden('img_carg','yes')!!}
                                     {!!Form::hidden('img_',null)!!}
                                     {!!Form::hidden('file_viejo',$cursos->imagen_carrusel)!!}
                                 @else
@@ -155,7 +155,7 @@
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
-                    <a href="{{URL::to('/')}}/cursos/edit/{{$cursos->id}}" class="pull-right"> <span class="glyphicon glyphicon-remove" style="color: #333;"></span> </a>
+                    <a href="{{URL::to('/')}}/cursos/{{$cursos->id}}/edit" class="pull-right"> <span class="glyphicon glyphicon-remove" style="color: #333;"></span> </a>
                     <h4> Edición de imagen</h4>
                 </div>
                 <div class="modal-body">
@@ -178,7 +178,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <a class="btn btn-default pull-left" href="{{URL::to('/')}}/cursos/edit/{{$cursos->id}}"><span class="glyphicon glyphicon-remove"></span> Cancelar</a>
+                    <a class="btn btn-default pull-left" href="{{URL::to('/')}}/cursos/{{$cursos->id}}/edit"><span class="glyphicon glyphicon-remove"></span> Cancelar</a>
                     {!!Form::open(['url' => 'cursos/procesar/'.$cursos->id,  "method" => "post", "id" => "form_imagen"])!!}
                     <input type="hidden" class="" id="rutas" name="rutas">
                     <button type="submit" class="btn btn-success btn-success pull-right" id="aceptar" ><span class="glyphicon glyphicon-ok"></span> Aceptar</button>

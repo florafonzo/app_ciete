@@ -24,6 +24,11 @@ header .container{
     height: 200px !important;
 }
 
+/*Buscador*/
+.buscador {
+    display: inline-flex;
+}
+
 .logo_princ img{
     vertical-align: middle;
     width: 180px;

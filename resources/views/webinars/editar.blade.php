@@ -55,42 +55,54 @@
                         {!!Form::label('especif', 'Especificaciones:',  array( 'class' => 'label_esp'))!!}
                         {!!Form::textarea('especificaciones', $webinars->especificaciones ,array('required','class' => 'form-control ckeditor'))!!}
                     </div>
-                    {{--<div class="form-group">--}}
-                        {{--{!!Form::label('duracion_l', 'Duracion del curso en horas: ', array( 'class' => 'col-md-4 control-label')) !!}--}}
-                        {{--<div class="col-sm-8">--}}
-                            {{--{!!Form::text('duracion',$webinars->duracion ,array('required', 'class' => 'form-control')) !!}--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                    {{--<div class="form-group">--}}
-                        {{--{!!Form::label('lugar_l', 'Lugar:',  array( 'class' => 'col-md-4 control-label'))!!}--}}
-                        {{--<div class="col-sm-8">--}}
-                            {{--{!!Form::text('lugar', $webinars->lugar ,array('required','class' => 'form-control'))!!}--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                    {{--<div class="form-group">--}}
-                        {{--{!!Form::label('desc_l', 'Descripción:',  array( 'class' => 'col-md-4 control-label'))!!}--}}
-                        {{--<div class="col-sm-8">--}}
-                            {{--{!!Form::textarea('descripcion', $webinars->descripcion ,array('required','class' => 'form-control'))!!}--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                    {{--<div class="form-group">--}}
-                        {{--{!!Form::label('link_l', 'Url:',  array( 'class' => 'col-md-4 control-label'))!!}--}}
-                        {{--<div class="col-sm-8">--}}
-                            {{--{!! Form::text('link', $webinars->link, array('required','class' => 'form-control'))!!}--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
                     <div class="form-group">
                         {!!Form::label('activo_carrusel', 'Webinar activo en el carrusel?:',  array( 'class' => 'col-md-4'))!!}
                         <div class="col-sm-8">
-                            {!! Form::checkbox('activo_carrusel',null, $webinars->activo_carrusel)!!}
+                            @if($activo_)
+                                {!! Form::checkbox('activo_carrusel',null, true)!!}
+                            @else
+                                {!! Form::checkbox('activo_carrusel',null, $webinars->activo_carrusel)!!}
+                            @endif
                         </div>
                     </div>
                     <div class="form-group" id="imagen_carrusel">
-                        {!!Form::label('imagen_carrusel_l', 'Imagen carrusel:',  array( 'class' => 'col-md-4'))!!}
-                        <div class="col-sm-8">
-                            {!! Form::file('imagen_carrusel', $webinars->imagen_carrusel, array('class' => 'form-control'))!!}
+                        {!!Form::label('imagen_perfil', 'Imagen de Perfil: ',  array( 'class' => 'col-md-4 '))!!}
+                        <div class="col-sm-8" id="borde">
+                            @if($webinars->imagen_carrusel == null && !(Session::has('img_carg')))
+                                {!!Form::file('file_perfil',['id' => 'file_perfil', 'accept' => 'image/jpeg'])!!}
+                                {!!Form::hidden('img_carg',null)!!}
+                                {!!Form::hidden('img_',null)!!}
+                                {!!Form::hidden('file_viejo',$webinars->imagen_carrusel)!!}
+                            @else
+                                @if (Session::has('imagen'))
+                                    {!!Form::file('file_perfil',['id' => 'file_perfil', 'accept' => 'image/jpeg'])!!}
+                                    {!!Form::hidden('img_carg','yes',['id' => 'oculto'])!!}
+                                    {!!Form::hidden('img_',null)!!}
+                                    {!!Form::hidden('file_viejo',$webinars->imagen_carrusel)!!}
+                                @else
+                                    @if (Session::get('cortar') == "yes")
+                                        <br>
+                                        {!!Form::hidden('img_carg','yes')!!}
+                                        {!!Form::hidden('img_','yes')!!}
+                                        {!!Form::hidden('cortar','yes')!!}
+                                        {!!Form::hidden('dir',$ruta)!!}
+                                        {!!Form::hidden('file_viejo',$webinars->imagen_carrusel)!!}
+                                        <img src="{{$ruta}}" id="imagen_cortada" width="150" height="150"><br><br>
+                                        <a class="btn btn-success btn-xs" href="{{URL::to('/')}}/webinars/imagen/{{$webinars->id}}">Cambiar</a>
+                                    @else
+                                        <br>
+                                        {!!Form::hidden('img_carg','yes')!!}
+                                        {!!Form::hidden('img_','yes')!!}
+                                        {!!Form::hidden('cortar',null)!!}
+                                        <img src="{{URL::to('/')}}/images/images_carrusel/webinars/{{$webinars->imagen_carrusel}}" id="imagen_cortada" width="150" height="150"><br><br>
+                                        <a class="btn btn-warning btn-sm" href="{{URL::to('/')}}/wbinars/imagen/{{$webinars->id}}" title="Cambiar foto" data-toggle="tooltip" data-placement="bottom" aria-hidden="true" style="text-decoration: none">Cambiar</a>
+                                    @endif
+                                @endif
+                            @endif
                         </div>
                     </div>
+                    <img class="" id="imagen2" src="" alt="">
+                    {!!Form::hidden('file_viejo',$webinars->imagen_carrusel)!!}
                     <div class="form-group" id="descripcion_carrusel">
                         {!!Form::label('desc_carrusel_l', 'Titulo de la imagen en el carrusel:',  array( 'class' => 'col-md-4'))!!}
                         <div class="col-sm-8">
@@ -106,5 +118,46 @@
             </div>
         @endif
     </div>
+
+    {{--Modal edición imagen de perfil--}}
+    <div class="modal fade" id="imagenModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <a href="{{URL::to('/')}}/webinars/{{$webinars->id}}/edit" class="pull-right"> <span class="glyphicon glyphicon-remove" style="color: #333;"></span> </a>
+                    <h4> Edición de imagen</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="content2 esconder" id="" style="display: none; ">
+                        <div class="component ">
+                            <div class="overlay ">
+                                <div class="overlay-inner ">
+                                </div>
+                            </div>
+                            <img class="resize-image" id="imagen" src="" alt="image for resizing">
+                        </div>
+
+                    </div>
+                    <div id="pepe">
+                    </div>
+                    <br>
+                    <div style="text-align: center">
+                        <button class="btn js-crop" type="button"><i class="fa fa-crop"></i> Cortar </button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-default pull-left" href="{{URL::to('/')}}/webinars//{{$webinars->id}}edit"><span class="glyphicon glyphicon-remove"></span> Cancelar</a>
+                    {!!Form::open(['url' => 'webinars/procesar/'.$webinars->id,  "method" => "post", "id" => "form_imagen"])!!}
+                    <input type="hidden" class="" id="rutas" name="rutas">
+                    <button type="submit" class="btn btn-success btn-success pull-right" id="aceptar" ><span class="glyphicon glyphicon-ok"></span> Aceptar</button>
+                    {!! Form::close() !!}
+
+                </div>
+            </div>
+        </div>
+    </div>
+    {{--Fin Modal--}}
 
 @stop

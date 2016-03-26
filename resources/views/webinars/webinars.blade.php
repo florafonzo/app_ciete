@@ -13,9 +13,24 @@
             @include('partials.menu_usuarios')
             <div class="col-md-8 col-sm-8 opciones_part2">
                 @include('partials.mensajes')
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-6">
+                        {!! Form::open(array('method' => 'get', 'route' => array('webinars.buscar'))) !!}
+                        <div class="buscador">
+                            <select class="form-control " name="parametro">
+                                <option value="0"  selected="selected"> Buscar por</option>
+                                <option value="nombre"  > Nombre</option>
+                            </select>
+                            {!!Form::text('busqueda', null,array( 'placeholder' => 'Escriba su busqueda...','class' => 'form-control'))!!}
+                            <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" ></span> </button>
+                        </div>
+                        {!! Form::close() !!}
+                    </div>
+                </div>
                 <table class="table table-hover">
                     <thead>
                     <tr>
+                        <th>#</th>
                         <th>Nombre</th>
                         <th>Fecha inicio</th>
                         <th>Fecha fin</th>
@@ -28,9 +43,10 @@
                     </thead>
                     @if($webinars->count())
                         <tbody>
-                        @foreach($webinars as $webinar)
+                        @foreach($webinars as $index => $webinar)
                             @if($webinar->webinar_activo)
                                 <tr>
+                                    <td>{{ $index + 1 }}</td>
                                     <td>{{ $webinar->nombre }}</td>
                                     <td>{{ $webinar->inicio->format('d-m-Y') }} </td>
                                     <td>{{ $webinar->fin->format('d-m-Y') }} </td>
@@ -73,6 +89,14 @@
                             @endif
                         @endforeach
                         </tbody>
+                    @else
+                        @if($busq_)
+                            <td></td>
+                            <td> 0 resultados de la busqueda</td>
+                        @else
+                            <td></td>
+                            <td>No existen cursos activos</td>
+                        @endif
                     @endif
                 </table>
                 @if(Entrust::can('crear_webinars'))

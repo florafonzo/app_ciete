@@ -13,7 +13,24 @@
             @include('partials.menu_usuarios')
             <div class="col-md-8 col-sm-8 opciones_part2">
                 @include('partials.mensajes'){{--Errores--}}
-                Seleccione los profesores que desee que dicten el curso:
+                {{--Seleccione los profesores que desee que dicten el curso:--}}
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-6">
+                        {!!Form::open(["url"=>"cursos/".$curso->id."/secciones/".$seccion."/profesores/agregar/buscar",  "method" => "GET" ])!!}
+                        {{--{!! Form::open(array('method' => 'get', 'route' => array('usuarios.buscar'), 'id' => 'form_busq')) !!}--}}
+                        <div class="buscador">
+                            <select class="form-control " name="parametro">
+                                <option value="0"  selected="selected">Buscar por</option>
+                                <option value="nombre">Nombre</option>
+                                <option value="apellido">Apellido</option>
+                                <option value="documento_identidad">Dcocumento de identidad</option>
+                            </select>
+                            {!!Form::text('busqueda', null,array('placeholder' => 'Escriba su busqueda...','class' => 'form-control bus'))!!}
+                            <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" ></span> </button>
+                        </div>
+                        {!! Form::close() !!}
+                    </div>
+                </div>
                 <table class="table table-hover">
                     <thead>
                     <tr>

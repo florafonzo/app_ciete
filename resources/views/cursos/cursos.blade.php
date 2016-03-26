@@ -13,24 +13,39 @@
             @include('partials.menu_usuarios')
             <div class="col-md-8 col-sm-8 opciones_part2">
                 @include('partials.mensajes'){{--Errores--}}
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-6">
+                        {!! Form::open(array('method' => 'get', 'route' => array('cursos.buscar'))) !!}
+                        <div class="buscador">
+                            <select class="form-control " id="param1" name="parametro">
+                                <option value="0"  selected="selected"> Buscar por</option>
+                                <option value="nombre"  > Nombre</option>
+                                <option value="tipo"  > Tipo</option>
+                            </select>
+                            {!!Form::text('busqueda', null,array( 'placeholder' => 'Escriba su busqueda...','class' => 'form-control', 'id' => 'busq'))!!}
+                            {!! Form::select('busqu', $tipos, null, array('class' => 'form-control','hidden' => 'true', 'id' => 'busq2')) !!}
+                            <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" ></span> </button>
+                        </div>
+                        {!! Form::close() !!}
+                    </div>
+                </div>
                 <table class="table table-hover">
                     <thead>
                     <tr>
+                        <th>#</th>
                         <th>Nombre</th>
                         <th>Tipo</th>
                         <th>Fecha Inicio</th>
                         <th>Fecha Fin</th>
                         <th>Acciones</th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
                     </tr>
                     </thead>
                     @if($cursos->count())
                         <tbody>
-                        @foreach($cursos as $curso)
+                        @foreach($cursos as $index => $curso)
                             @if($curso->curso_activo)
                                 <tr>
+                                    <td>{{ $index + 1 }}</td>
                                     <td>{{ $curso->nombre }}</td>
                                     <td>{{ $curso->tipo_curso  }}</td>
                                     <td>{{ $curso->inicio->format('d-m-Y') }}</td>
@@ -76,6 +91,14 @@
                             @endif
                         @endforeach
                         </tbody>
+                    @else
+                        @if($busq_)
+                            <td></td>
+                            <td> 0 resultados de la busqueda</td>
+                        @else
+                            <td></td>
+                            <td>No existen cursos activos</td>
+                        @endif
                     @endif
                 </table>
                 @if(Entrust::can('crear_cursos'))
