@@ -34,16 +34,18 @@
                 <table class="table table-hover">
                     <thead>
                     <tr>
+                        <th>#</th>
                         <th>Nombre</th>
                         <th>Apellido</th>
-                        <th>Cédula</th>
+                        <th>Documento de identidad</th>
                         <th>Agregar</th>
                     </tr>
                     </thead>
                     <tbody>
                     @if($profesores != null)
-                        @foreach($profesores as $profesor)
+                        @foreach($profesores as $index => $profesor)
                             <tr>
+                                <td>{{ $index + 1 }}</td>
                                 <td>{{ $profesor->nombre }}</td>
                                 <td>{{ $profesor->apellido  }}</td>
                                 <td>{{ $profesor->documento_identidad }}</td>
@@ -61,11 +63,13 @@
                             </tr>
                         @endforeach
                     @else
-                        <tr>
-                            <td>
-                                <strong> No existen profesores para agregar </strong>
-                            </td>
-                        </tr>
+                        @if($busq_)
+                            <td></td>
+                            <td><strong> 0 resultados de la busqueda </strong></td>
+                        @else
+                            <td></td>
+                            <td> <strong> No existen cursos activos </strong></td>
+                        @endif
                     @endif
                     </tbody>
                 </table>

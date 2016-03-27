@@ -88,10 +88,10 @@
                         @else
                             @if($busq_)
                                 <td></td>
-                                <td> 0 resultados de la busqueda</td>
+                                <td><strong> 0 resultados de la busqueda </strong></td>
                             @else
                                 <td></td>
-                                <td>No existen cursos activos</td>
+                                <td> <strong> No existen cursos activos </strong></td>
                             @endif
                         @endif
                     </tbody>

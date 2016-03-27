@@ -1141,6 +1141,7 @@ class CursosController extends Controller {
 
             if($usuario_actual->can('agregar_part_curso')) {  // Si el usuario posee los permisos necesarios continua con la acción
                 $data['errores'] = '';
+                $data['busq_'] = false;
                 $data['curso'] = Curso::find($id_curso);
                 $data['seccion'] = $seccion;
                 $seccion = str_replace(' ', '', $seccion);
@@ -1209,6 +1210,116 @@ class CursosController extends Controller {
 
             return view('errors.error')->with('error',$e->getMessage());
         }
+    }
+
+    /**
+     * Permite la busqueda segun los paraemetros dados por el usuario.
+     *
+     * @return Retorna la vista de la lista de participantes deseados.
+     */
+    public function buscarParticipanteAgregar($id_curso, $seccion) {
+        try{
+            //Verificación de los permisos del usuario para poder realizar esta acción
+            $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
+            if($usuario_actual->can('ver_usuarios')) {   // Si el usuario posee los permisos necesarios continua con la acción
+                $data['errores'] = '';
+                $data['curso'] = Curso::find($id_curso);
+                $data['seccion'] = $seccion;
+                $data['participantes'] = '';
+                $seccion = str_replace(' ', '', $seccion);
+                $param = Input::get('parametro');
+                $data['busq_'] = true;
+                if($param == '0'){
+                    Session::set('error', 'Debe seleccionar el parametro por el cual desea buscar');
+                    return $this->buscarParticipanteAgregar($id_curso, $seccion);
+                }
+                if (empty(Input::get('busqueda'))) {
+                    Session::set('error', 'Coloque el elemento que desea buscar');
+                    return $this->buscarParticipanteAgregar($id_curso, $seccion);
+                }else{
+                    $busq = Input::get('busqueda');
+                }
+
+                $arr = [];
+                $todos = DB::table('participante_cursos')->select('id_participante')->get();
+                foreach ($todos as $index => $todo) {
+                    $arr[$index] = $todo->id_participante;
+                }
+                $no_estan = DB::table('participantes')->whereNotIn('id',$arr)->get();
+                $arr = [];
+
+                $existe =  ParticipanteCurso::all();
+                if($existe->count()) {
+                    $noParticipantes = ParticipanteCurso::where('id_curso', '=', $id_curso)->orderBy('id_participante')->select('id_participante')->get();
+
+                    if ($noParticipantes->count()) {
+                        foreach ($noParticipantes as $index => $todo) {
+                            $arr[$index] = $todo->id_participante;
+                        }
+
+                        $participantes = ParticipanteCurso::where('id_curso', '!=', $id_curso)
+                            ->whereNotIn('id_participante', $arr)
+                            ->select('id_participante')
+                            ->orderBy('id_participante')
+                            ->get();
+                        $arr = [];
+                        foreach ($participantes as $index => $todo) {
+                            $arr[$index] = $todo->id_participante;
+                        }
+                        $parts = array_unique($arr);
+
+                        if($parts != null) {
+                            foreach ($parts as $index => $id_part) {
+                                $data['parts'][$index] = Participante::find($id_part);
+                            }
+                        }else{
+                            $data['parts'] = '';
+                        }
+                        if ($no_estan != null) {
+                            $tam = count($data['parts']);
+                            foreach ($no_estan as $datos) {
+                                $data['parts'][$tam] = $datos;
+                                $tam++;
+                            }
+                        }
+
+                        if($data['parts'] != '') {
+                            usort($data['parts'], array($this, "cmp")); //Ordenar por orden alfabetico segun el apellido
+                        }
+
+                    }else{
+                        $data['parts'] = Participante::orderBy('apellido')->get();
+                    }
+                }else{
+                    $data['parts'] = Participante::orderBy('apellido')->get();
+                }
+//                $participantes = Participante::where($param, 'ilike', '%'.$busq.'%')->orderBy($param)->get();
+                if($data['parts'] != null) {
+                    foreach ($data['parts'] as $index => $part) {
+                        $existe = Participante::where('id', '=', $part->id)
+                            ->where($param, 'ilike', '%'.$busq.'%')->get();
+                        if($existe->count()) {
+                            $data['participantes'][$index] = $part;
+                        }
+                    }
+                }
+
+                return view('cursos.participantes.agregar', $data);
+
+            }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
+                return view('errors.sin_permiso');
+            }
+        }
+        catch (Exception $e) {
+
+            return view('errors.error')->with('error',$e->getMessage());
+        }
+
     }
 
     public function cursoParticipantesGuardar($id_curso, $seccion, $id_part) {
@@ -1478,8 +1589,7 @@ class CursosController extends Controller {
 
             if($usuario_actual->can('agregar_prof_curso')) {  // Si el usuario posee los permisos necesarios continua con la acción
                 $data['errores'] = '';
-                $data['busq_'] = true;
-                $data['busq'] = true;
+                $data['busq_'] = false;
                 $data['curso'] = Curso::find($id_curso);
                 $data['seccion'] = $seccion;
                 $seccion = str_replace(' ', '', $seccion);
@@ -1584,19 +1694,70 @@ class CursosController extends Controller {
                     $busq = Input::get('busqueda');
                 }
 
-                $profesores = Profesor::where($param, 'ilike', '%'.$busq.'%')->orderBy($param)->get();
-                if($profesores != null) {
-                    foreach ($profesores as $index => $prof) {
-                        $existe = ProfesorCurso::where('id_curso', '=', $id_curso)
-                            ->where('seccion', '=', $seccion)
-                            ->where('id_profesor', '=', $prof->id)->get();
+                $arr = [];
+                $todos = DB::table('profesor_cursos')->select('id_profesor')->get();
+                foreach ($todos as $index => $todo) {
+                    $arr[$index] = $todo->id_profesor;
+                }
+                $no_estan = DB::table('profesores')->whereNotIn('id',$arr)->get();
+                $arr = [];
+
+                $existe =  ProfesorCurso::all();
+                if($existe->count()) {
+                    $noProfesor = ProfesorCurso::where('id_curso', '=', $id_curso)->orderBy('id_profesor')->select('id_profesor')->get();
+
+                    if ($noProfesor->count()) {
+                        foreach ($noProfesor as $index => $todo) {
+                            $arr[$index] = $todo->id_profesor;
+                        }
+
+                        $profesores = ProfesorCurso::where('id_curso', '!=', $id_curso)
+                            ->whereNotIn('id_profesor', $arr)
+                            ->select('id_profesor')
+                            ->orderBy('id_profesor')
+                            ->get();
+                        $arr = [];
+                        foreach ($profesores as $index => $todo) {
+                            $arr[$index] = $todo->id_profesor;
+                        }
+                        $profes = array_unique($arr);
+
+                        if($profes != null) {
+                            foreach ($profes as $index => $id_prof) {
+                                $data['profes'][$index] = Profesor::find($id_prof);
+                            }
+                        }else{
+                            $data['profes'] = '';
+                        }
+                        if ($no_estan != null) {
+                            $tam = count($data['profes']);
+                            foreach ($no_estan as $datos) {
+                                $data['profes'][$tam] = $datos;
+                                $tam++;
+                            }
+                        }
+
+                        if($data['profes'] != '') {
+                            usort($data['profes'], array($this, "cmp")); //Ordenar por orden alfabetico segun el apellido
+                        }
+
+                    }else{
+                        $data['profes'] = Profesor::orderBy('apellido')->get();
+                    }
+                }else{
+                    $data['profes'] = Profesor::orderBy('apellido')->get();
+                }
+//                $profesores = Profesor::where($param, 'ilike', '%'.$busq.'%')->orderBy($param)->get();
+                if( $data['profes'] != null) {
+                    foreach ( $data['profes'] as $index => $prof) {
+                        $existe = Profesor::where('id', '=', $prof->id)->where($param, 'ilike', '%'.$busq.'%')->get();
                         if($existe->count()) {
                             $data['profesores'][$index] = $prof;
                         }
                     }
                 }
 
-                return view('cursos.profesores.profesores', $data);
+                return view('cursos.profesores.agregar', $data);
 
             }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
                 return view('errors.sin_permiso');

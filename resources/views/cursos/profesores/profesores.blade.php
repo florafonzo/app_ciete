@@ -36,6 +36,7 @@
                         <th>#</th>
                         <th>Nombre</th>
                         <th>Apellido</th>
+                        <th>Documento de identidad</th>
                         <th>Acciones</th>
                     </tr>
                     </thead>
@@ -47,6 +48,7 @@
                                     <td>{{ $index + 1 }}</td>
                                     <td>{{ $profesor->nombre }}</td>
                                     <td>{{ $profesor->apellido  }}</td>
+                                    <td>{{ $profesor->documento_identidad }}</td>
                                     <td>
                                         @if(Entrust::can('eliminar_prof_curso'))
                                             {!!Form::open(["url"=>"cursos/".$curso->id."/secciones/".$seccion."/profesores/".$profesor->id."/eliminar",  "method" => "delete", "id" => "form_eliminar_prof".$profesor->id ])!!}
@@ -62,6 +64,7 @@
                                     <td>{{ $index + 1 }}</td>
                                     <td>{{ $profesor[0]->nombre }}</td>
                                     <td>{{ $profesor[0]->apellido  }}</td>
+                                    <td>{{ $profesor[0]->documento_identidad }}</td>
                                     <td>
                                         @if(Entrust::can('eliminar_prof_curso'))
                                             {!!Form::open(["url"=>"cursos/".$curso->id."/secciones/".$seccion."/profesores/".$profesor[0]->id."/eliminar",  "method" => "delete", "id" => "form_eliminar_prof".$profesor[0]->id ])!!}
