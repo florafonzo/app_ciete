@@ -15,7 +15,7 @@
                     </li>
                 @endif
                 @if(Entrust::can('ver_lista_cursos'))
-                    <li class="menu_usuarios @if(Request::is('cursos') or Request::is('cursos/*')) active @endif">
+                    <li class="menu_usuarios @if(Request::is('cursos') or (!(Request::is('cursos/desactivados*')) and Request::is('cursos/*'))) active @endif">
                         <a style="text-decoration:none;" href="{{URL::to('/cursos')}}"> Cursos </a>
                     </li>
                 @endif
@@ -30,7 +30,7 @@
                     </li>
                 @endif
                 @if(Entrust::can('ver_webinars'))
-                    <li class="menu_usuarios @if(Request::is('webinars*')) active @endif">
+                    <li class="menu_usuarios @if(Request::is('webinars') or (!(Request::is('webinars/desactivados*')) and Request::is('webinars/*'))) active @endif">
                         <a style="text-decoration:none;" href="{{URL::to('/webinars')}}"> Webinars </a>
                     </li>
                 @endif
