@@ -606,6 +606,8 @@ class CursosController extends Controller {
                     }
                 }
 
+
+
                 $modalidades = Input::get('modalidades_pago');  // Se obtienen las modalidades de pago seleccionadas
 
                 // Se actualizan los datos del curso seleccionado
@@ -619,10 +621,9 @@ class CursosController extends Controller {
                 $cursos->fecha_fin = $request->fecha_fin;
                 $cursos->especificaciones = $request->especificaciones;
                 $cursos->costo = $request->costo;
-                $cursos->descripcion_carrusel = $request->descripcion_carrusel;
                 $cursos->activo_carrusel = $activo_carrusel;
 
-                if($img_nueva == 'yes'){
+                if(($img_nueva == 'yes') && ($activo_carrusel)){
                     $file = Input::get('dir');
                     if($cursos->imagen_carrusel != null){
                         Storage::delete('/images/images_carrusel/cursos/' . $request->file_viejo);
@@ -630,6 +631,7 @@ class CursosController extends Controller {
                     $file = str_replace('data:image/png;base64,', '', $file);
                     $nombreTemporal = 'imagen_curso_' . date('dmY') . '_' . date('His') . ".jpg";
                     $cursos->imagen_carrusel = $nombreTemporal;
+                    $cursos->descripcion_carrusel = $request->descripcion_carrusel;
 
                     $imagen = Image::make($file);
                     $payload = (string)$imagen->encode();
@@ -638,6 +640,7 @@ class CursosController extends Controller {
                         $payload
                     );
                 }else{
+                    $cursos->descripcion_carrusel = '';
                     $cursos->imagen_carrusel = '';
                 }
 

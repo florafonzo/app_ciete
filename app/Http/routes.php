@@ -33,6 +33,7 @@ Route::post('Contacto','InformacionController@postContacto');
 
 //Ruta prenscripcion
 Route::get('/preinscripcion/principal', 'PreinscripcionController@mostrarPreinscripcion');
+Route::post('preinscripcion/principal/cursos','PreinscripcionController@storePreinscripcion');
 
 //Rutas Loggin y recuperación de contraseñas
 Route::controllers([
@@ -166,16 +167,16 @@ Route::group([
     Route::get('/preinscripcion','PreinscripcionController@index');
     Route::post('/preinscripcion/principal', 'PreinscripcionController@mostrar');
     Route::get('/preinscripcion/activar/{id}',[
-    'as' => 'preinscripcion.activar',
-    'uses' => 'PreinscripcionController@activarPreinscripcion'
+        'as' => 'preinscripcion.activar',
+        'uses' => 'PreinscripcionController@activarPreinscripcion'
     ]);
     Route::get('/preinscripcion/desactivar/{id}',[
-    'as' => 'preinscripcion.desactivar',
-    'uses' => 'PreinscripcionController@desactivarPreinscripcion'
+        'as' => 'preinscripcion.desactivar',
+        'uses' => 'PreinscripcionController@desactivarPreinscripcion'
     ]);
 
 
-    //Rutas profesores
+        //Rutas profesores
     Route::get('profesor/perfil','ProfesoresController@verPerfil');
     Route::get('profesor/perfil/{id}/editar','ProfesoresController@editarPerfil');
     Route::get('profesor/perfil/imagen','ProfesoresController@cambiarImagen');

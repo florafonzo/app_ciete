@@ -217,6 +217,22 @@ class PermisionsSeeder extends Seeder {
         $eliminar_profW->name = 'eliminar_prof_webinar';
         $eliminar_profW->display_name = 'eliminar profesor de un webinar';
         $eliminar_profW->save();
+
+        $activar_preinscripcion = new Permission();
+        $activar_preinscripcion->name = 'activar_preinscripcion';
+        $activar_preinscripcion->display_name = 'activar preinscripcion';
+        $activar_preinscripcion->save();
+
+        $desactivar_preinscripcion = new Permission();
+        $desactivar_preinscripcion->name = 'desactivar_preinscripcion';
+        $desactivar_preinscripcion->display_name = 'desactivar preinscripcion';
+        $desactivar_preinscripcion->save();
+
+        $activar_inscripcion = new Permission();
+        $activar_inscripcion->name = 'activar_inscripcion';
+        $activar_inscripcion->display_name = 'activar inscripcion para personas preinscritas';
+        $activar_inscripcion->save();
     }
+
 
 }

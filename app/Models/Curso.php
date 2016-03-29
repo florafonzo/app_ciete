@@ -1,6 +1,7 @@
 <?php namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use DB;
 
 class Curso extends Model {
 
@@ -16,7 +17,7 @@ class Curso extends Model {
      *
      * @var array
      */
-    protected $fillable = ['id_tipo','id_modalidad_pago','id_modalidad_curso','curso_activo','cupos','nombre','fecha_inicio','fecha_fin','duracion', 'lugar', 'descripcion', 'area', 'dirigido_a', 'propositos', 'modalidad_estrategias', 'acreditacion', 'perfil','requerimientos_tec', 'perfil_egresado', 'instituciones_aval', 'aliados', 'plan_estudio','costo' , 'imagen_carrusel', 'descripcion_carrusel', 'activo_carrusel'];
+    protected $fillable = ['id_tipo','id_modalidad_pago','id_modalidad_curso','curso_activo','cupos','nombre','fecha_inicio','fecha_fin', 'especificaciones','costo' , 'imagen_carrusel', 'descripcion_carrusel', 'activo_carrusel'];
 
     public function tipo_curso(){
         return $this->belongsTo('App\Models\TipoCurso','id_tipo');
@@ -42,5 +43,35 @@ class Curso extends Model {
         return $this->belongsToMany('App\Models\ModalidadPago','curso_modalidad_pago');
     }
 
+    public function maxCuposCurso ($id){
+
+        $secciones=  $this->where('id', '=',$id)
+            ->pluck('secciones');
+
+        $max= $this->where('id', '=', $id)
+            ->pluck('max');
+
+        return $secciones*$max;
+    }
+
+    function getDiplos(){
+        $diplo = DB::table('cursos')
+            ->join('tipo_cursos', 'cursos.id_tipo', '=', 'tipo_cursos.id')
+            ->where('tipo_cursos.nombre', '=', 'Diplomado')
+            ->where('cursos.activo_carrusel', '=', true)
+            ->get();
+
+        return $diplo;
+    }
+
+    function getCaps(){
+        $caps = DB::table('cursos')
+            ->join('tipo_cursos', 'cursos.id_tipo', '=', 'tipo_cursos.id')
+            ->where('tipo_cursos.nombre', '=', 'Cápsula')
+            ->where('cursos.activo_carrusel', '=', true)
+            ->get();
+
+        return $caps;
+    }
 
 }

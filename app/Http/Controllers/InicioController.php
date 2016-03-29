@@ -2,6 +2,8 @@
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Models\Curso;
+use App\Models\Webinar;
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\Request;
@@ -26,6 +28,12 @@ class InicioController extends Controller {
 					$data['foto'] = 'foto_participante.png';
 				}
 			}
+
+			$curso = new curso;
+			$data['diplomados'] = $curso->getDiplos();
+			$data['capsulas'] = $curso->getCaps();
+			$data['webinars'] = Webinar::where('activo_carrusel','=', true)->get();
+
 			return view('inicio', $data);
 		}
 		catch (Exception $e) {

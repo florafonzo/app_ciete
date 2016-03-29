@@ -18,7 +18,9 @@ class CreatePreinscripcionsTable extends Migration {
 			$table->integer('id_curso')->unsigned();
 			$table->string('nombre');
 			$table->string('apellido');
-			$table->string('email')->unique();
+			$table->string('email');
+			$table->string('cedula');
+			$table->string('titulo');
 			$table->timestamps();
 
 

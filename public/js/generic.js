@@ -350,7 +350,7 @@ $(document).ready(function() {
                 var source = imagee.attr('src');
                 $('#imagen').attr('src', source);
                 $('.esconder').show();
-                $("#imagenModal").modal({backdrop: 'static', keyboard: false});
+                jQuery("#imagenModal").modal({backdrop: 'static', keyboard: false});
                 resizeableImage($('.resize-image'));
             }, 50);
             $('#nombre_hidden').val($('#nombre').val());

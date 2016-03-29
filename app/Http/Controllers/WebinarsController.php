@@ -8,13 +8,15 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\WebinarRequest;
-use App\Http\Requests\WebinarEditarRequest;
 use DateTime;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\ImageManagerStatic as Image;
 
 use App\Models\Webinar;
 use App\Models\ParticipanteWebinar;
 use App\Models\Participante;
+use App\Http\Requests\WebinarRequest;
+use App\Http\Requests\WebinarEditarRequest;
 
 use Illuminate\Http\Request;
 

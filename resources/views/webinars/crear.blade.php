@@ -14,46 +14,6 @@
                 {!! Form::open(array('method' => 'POST', 'action' => 'WebinarsController@store', 'class' => 'form-horizontal col-md-10')) !!}
 
                 <div class="form-group">
-                    {!!Form::label('nombre', 'Nombre:', array( 'class' => 'col-md-4')) !!}
-                    <div class="col-sm-8">
-                        {!!Form::text('nombre', Session::get('nombre') ,array('required', 'class' => 'form-control')) !!}
-                    </div>
-                </div>
-                <div class="form-group">
-                    {!!Form::label('fecha_inicio', 'Fecha inicio:',  array( 'class' => 'col-md-4'))!!}
-                    <div class="col-sm-8">
-                        {!!Form::input('date', 'fecha_inicio', Session::get('fecha_inicio') ,array('required','class' => 'form-control'))!!}
-                    </div>
-                </div>
-                <div class="form-group">
-                    {!!Form::label('fecha_fin', 'Fecha fin:',  array( 'class' => 'col-md-4'))!!}
-                    <div class="col-sm-8">
-                        {!!Form::input('date', 'fecha_fin', Session::get('fecha_fin') ,array('required','class' => 'form-control'))!!}
-                    </div>
-                </div>
-                <div class="form-group">
-                    {!!Form::label('secciones', 'Cantidad de secciones:',  array( 'class' => 'col-md-4'))!!}
-                    <div class="col-sm-8">
-                        {!!Form::text('secciones', Session::get('secciones') ,array('required','class' => 'form-control'))!!}
-                    </div>
-                </div>
-                <div class="form-group">
-                    {!!Form::label('mini', 'Cantidad de cupos MIN:',  array( 'class' => 'col-md-4'))!!}
-                    <div class="col-sm-8">
-                        {!!Form::text('mini', Session::get('min') ,array('required','class' => 'form-control'))!!}
-                    </div>
-                </div>
-                <div class="form-group">
-                    {!!Form::label('maxi', 'Cantidad de cupos MAX:',  array( 'class' => 'col-md-4'))!!}
-                    <div class="col-sm-8">
-                        {!!Form::text('maxi', Session::get('max') ,array('required','class' => 'form-control'))!!}
-                    </div>
-                </div>
-                <div class="form-group">
-                    {!!Form::label('especif', 'Especificaciones:',  array( 'class' => 'label_esp'))!!}
-                    {!!Form::textarea('especificaciones', Session::get('especificaciones') ,array('required','class' => 'form-control ckeditor'))!!}
-                </div>
-                <div class="form-group">
                     {!!Form::label('activo_carrusel', 'Webinar activo en el carrusel?:',  array( 'class' => 'col-md-4'))!!}
                     <div class="col-sm-8">
                         @if($activo_)
@@ -95,7 +55,46 @@
                         {!! Form::text('descripcion_carrusel', Session::get('descripcion_carrusel'), array('class' => 'form-control'))!!}
                     </div>
                 </div>
-
+                <div class="form-group">
+                    {!!Form::label('nombre', 'Nombre:', array( 'class' => 'col-md-4')) !!}
+                    <div class="col-sm-8">
+                        {!!Form::text('nombre', Session::get('nombre') ,array('required', 'class' => 'form-control')) !!}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {!!Form::label('fecha_inicio', 'Fecha inicio:',  array( 'class' => 'col-md-4'))!!}
+                    <div class="col-sm-8">
+                        {!!Form::input('date', 'fecha_inicio', Session::get('fecha_inicio') ,array('required','class' => 'form-control'))!!}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {!!Form::label('fecha_fin', 'Fecha fin:',  array( 'class' => 'col-md-4'))!!}
+                    <div class="col-sm-8">
+                        {!!Form::input('date', 'fecha_fin', Session::get('fecha_fin') ,array('required','class' => 'form-control'))!!}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {!!Form::label('secciones', 'Cantidad de secciones:',  array( 'class' => 'col-md-4'))!!}
+                    <div class="col-sm-8">
+                        {!!Form::text('secciones', Session::get('secciones') ,array('required','class' => 'form-control'))!!}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {!!Form::label('mini', 'Cantidad de cupos MIN:',  array( 'class' => 'col-md-4'))!!}
+                    <div class="col-sm-8">
+                        {!!Form::text('mini', Session::get('min') ,array('required','class' => 'form-control'))!!}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {!!Form::label('maxi', 'Cantidad de cupos MAX:',  array( 'class' => 'col-md-4'))!!}
+                    <div class="col-sm-8">
+                        {!!Form::text('maxi', Session::get('max') ,array('required','class' => 'form-control'))!!}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {!!Form::label('especif', 'Especificaciones:',  array( 'class' => 'label_esp'))!!}
+                    {!!Form::textarea('especificaciones', Session::get('especificaciones') ,array('required','class' => 'form-control ckeditor'))!!}
+                </div>
                 <a href="{{URL::to("/")}}/webinars" class="btn btn-default text-right"><span class="glyphicon glyphicon-remove"></span> Cancelar</a>
                 <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-save" ></span> Crear </button>
                 {!! Form::close() !!}

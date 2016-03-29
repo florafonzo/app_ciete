@@ -6,6 +6,32 @@ a{
     text-decoration: none !important;
 }
 
+/**/
+h2.titre {
+    /*font-family: freight-sans-pro, sans-serif;*/
+    font-weight: 900;
+    /*background-color: #fff;*/
+    color: #1968b3;
+    /*text-shadow:*/
+    /*0 1px #808d93,*/
+    /*-1px 0 #cdd2d5,*/
+    /*-1px 2px #808d93,*/
+    /*-2px 1px #cdd2d5,*/
+    /*-2px 3px #808d93,*/
+    /*-3px 2px #cdd2d5,*/
+    /*-3px 4px #808d93,*/
+    /*-4px 3px #cdd2d5,*/
+    /*-4px 5px #808d93,*/
+    /*-5px 4px #cdd2d5,*/
+    /*-5px 6px #808d93,*/
+    /*-6px 5px #cdd2d5,*/
+    /*-6px 7px #808d93,*/
+    /*-7px 6px #cdd2d5,*/
+    /*-7px 8px #808d93,*/
+    /*-8px 7px #cdd2d5;*/
+}
+/**/
+
 .label_esp{
     padding-left: 15px;
 }
@@ -239,12 +265,13 @@ header .container{
     /*background-color: #97a0b3;*/
 }
 
-#myCarousel{
+.myCarousel{
     height: 300px;
 }
 
-#myCarousel img{
-    height: 300px;
+.imgCarousel{
+    width: auto!important;
+    height: 300px !important;
 }
 
 .flechas a  {
@@ -269,6 +296,26 @@ header .container{
 }
 
 /* Fin Twitter*/
+
+/*Instagram*/
+.insta{
+    background-color: #292F33;
+    border:none;
+    /*overflow:hidden;*/
+    height: 305px;
+    width: auto;
+
+    /*padding-left: 9%;*/
+
+}
+iframe.fondo_{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    /*height: 305px;*/
+    /*width: auto;*/
+}
+/***********/
 
 /* Pie de página (footer) */
 .pie-pag{
