@@ -57,8 +57,10 @@ class Curso extends Model {
     function getDiplos(){
         $diplo = DB::table('cursos')
             ->join('tipo_cursos', 'cursos.id_tipo', '=', 'tipo_cursos.id')
+            ->select('cursos.id', 'cursos.descripcion_carrusel', 'cursos.imagen_carrusel')
             ->where('tipo_cursos.nombre', '=', 'Diplomado')
             ->where('cursos.activo_carrusel', '=', true)
+            ->where('cursos.curso_activo', '=', true)
             ->get();
 
         return $diplo;
@@ -67,8 +69,10 @@ class Curso extends Model {
     function getCaps(){
         $caps = DB::table('cursos')
             ->join('tipo_cursos', 'cursos.id_tipo', '=', 'tipo_cursos.id')
+            ->select('cursos.id', 'cursos.descripcion_carrusel', 'cursos.imagen_carrusel')
             ->where('tipo_cursos.nombre', '=', 'Cápsula')
             ->where('cursos.activo_carrusel', '=', true)
+            ->where('cursos.curso_activo', '=', true)
             ->get();
 
         return $caps;

@@ -31,48 +31,50 @@
                         {!! Form::close() !!}
                     </div>
                 </div>
-                <table class="table table-hover">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Nombre</th>
-                        <th>Apellido</th>
-                        <th>Cédula</th>
-                        <th>Agregar</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                        @if($participantes != null)
-                            @foreach($participantes as $index => $partici)
-                                <tr>
-                                    <td>{{ $index + 1 }}</td>
-                                    <td>{{ $partici->nombre }}</td>
-                                    <td>{{ $partici->apellido  }}</td>
-                                    <td>{{ $partici->documento_identidad }}</td>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Cédula</th>
+                            <th>Agregar</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            @if($participantes != null)
+                                @foreach($participantes as $index => $partici)
+                                    <tr>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ $partici->nombre }}</td>
+                                        <td>{{ $partici->apellido  }}</td>
+                                        <td>{{ $partici->documento_identidad }}</td>
 
-                                    <td class="">
-                                        @if(Entrust::can('agregar_part_curso'))
-                                            {!!Form::open(["url"=>"cursos/".$curso->id."/secciones/".$seccion."/participantes/".$partici->id."/agregar",  "method" => "GET", 'id' => 'part_agregar'.$partici->id] )!!}
-                                                <button type="button" onclick="agregarPart('{{$partici->id}}')" class="btn btn-info" title="Agregar participante al curso" data-toggle="tooltip" data-placement="bottom" aria-hidden="true">
-                                                    <span class="glyphicon glyphicon-plus"></span>
-                                                </button>
-                                            {!!Form::close()!!}
-                                            {{--{!! Form::checkbox('agregar[]',null, null)!!}--}}
-                                        @endif
-                                    </td>
-                                </tr>
-                            @endforeach
-                        @else
-                            @if($busq_)
-                                <td></td>
-                                <td><strong> 0 resultados de la busqueda </strong></td>
+                                        <td class="">
+                                            @if(Entrust::can('agregar_part_curso'))
+                                                {!!Form::open(["url"=>"cursos/".$curso->id."/secciones/".$seccion."/participantes/".$partici->id."/agregar",  "method" => "GET", 'id' => 'part_agregar'.$partici->id] )!!}
+                                                    <button type="button" onclick="agregarPart('{{$partici->id}}')" class="btn btn-info" title="Agregar participante al curso" data-toggle="tooltip" data-placement="bottom" aria-hidden="true">
+                                                        <span class="glyphicon glyphicon-plus"></span>
+                                                    </button>
+                                                {!!Form::close()!!}
+                                                {{--{!! Form::checkbox('agregar[]',null, null)!!}--}}
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
                             @else
-                                <td></td>
-                                <td> <strong> No existen cursos activos </strong></td>
+                                @if($busq_)
+                                    <td></td>
+                                    <td><strong> 0 resultados de la busqueda </strong></td>
+                                @else
+                                    <td></td>
+                                    <td> <strong> No existen cursos activos </strong></td>
+                                @endif
                             @endif
-                        @endif
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
                 <div class="col-md-2 " style="">
                     @if(Entrust::can('participantes_curso'))
                         <a href="{{URL::to('/')}}/cursos/{{$curso->id}}/secciones/{{$seccion}}/participantes" type="button" class="btn btn-default" style="text-decoration: none"> <span class="glyphicon glyphicon-chevron-left"></span> Volver </a>

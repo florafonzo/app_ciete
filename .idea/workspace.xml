@@ -1,30 +1,184 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="14a630ad-b55a-45db-8476-afdb9026383c" name="Default" comment="crop webinars - union preinscripcion - comienzo pagina principal">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/Http/Requests/PreinscripcionRequest.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/views/emails/preinscripcion.blade.php" />
-      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\images\images_carrusel\cursos\imagen_curso_18032016_153354.jpg" afterPath="" />
-      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\images\images_perfil\perfil_10032016_150949.jpg" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/migrations/2015_12_02_163411_create_preinscripcions_table.php" afterPath="$PROJECT_DIR$/database/migrations/2015_12_02_163411_create_preinscripcions_table.php" />
+    <list default="true" id="14a630ad-b55a-45db-8476-afdb9026383c" name="Default" comment="Arreglos en buscadores webinar - carrusel dinamicos y desc cursos - creacion archivo moodle">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/plugins/ckeditor/skins/office2013/images/arrow.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/plugins/ckeditor/skins/office2013/images/close.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/plugins/ckeditor/skins/office2013/images/hidpi/close.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/plugins/ckeditor/skins/office2013/icons.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/plugins/ckeditor/skins/office2013/icons_hidpi.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/images_carrusel/cursos/imagen_curso_30032016_141455.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/images_carrusel/cursos/imagen_curso_30032016_141532.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/images_carrusel/cursos/imagen_curso_30032016_141604.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/images_carrusel/cursos/imagen_curso_30032016_141652.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/images_carrusel/cursos/imagen_curso_30032016_141727.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/images_carrusel/cursos/imagen_curso_30032016_141750.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/images_carrusel/cursos/imagen_curso_30032016_191355.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/images_carrusel/cursos/imagen_curso_30032016_202924.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/images_carrusel/webinars/imagen_webinar_28032016_213143.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/images_carrusel/webinars/imagen_webinar_29032016_150610.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/images_carrusel/webinars/imagen_webinar_30032016_142515.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/images_carrusel/webinars/imagen_webinar_30032016_142553.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/plugins/ckeditor/skins/office2013/images/lock-open.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/plugins/ckeditor/skins/office2013/images/hidpi/lock-open.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/plugins/ckeditor/skins/office2013/images/lock.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/plugins/ckeditor/skins/office2013/images/hidpi/lock.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/plugins/ckeditor/skins/office2013/images/refresh.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/plugins/ckeditor/skins/office2013/images/hidpi/refresh.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/plugins/ckeditor/plugins/SimpleLink/LICENSE" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/plugins/ckeditor/plugins/SimpleLink/README.md" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/views/descripcion-curso.blade.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/views/descripcion-webinar.blade.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/plugins/ckeditor/skins/office2013/dialog.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/plugins/ckeditor/skins/office2013/editor.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/config/excel.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/views/cursos/moodle/secciones.blade.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/views/webinars/moodle/secciones.blade.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/views/webinars/participantes/secciones.blade.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/views/webinars/profesores/secciones.blade.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/plugins/ckeditor/plugins/SimpleLink/dialogs/simplelink.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/plugins/ckeditor/plugins/tliyoutube/dialogs/tliyoutube.js" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\images\images_carrusel\cursos\imagen_curso_17032016_213932.jpg" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\images\images_carrusel\cursos\imagen_curso_17032016_220811.jpg" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\images\images_carrusel\cursos\imagen_curso_17032016_221545.jpg" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\images\images_carrusel\cursos\imagen_curso_18032016_140551.jpg" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\images\images_carrusel\cursos\imagen_curso_18032016_151415.jpg" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\images\images_carrusel\cursos\imagen_curso_18032016_162332.jpg" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\af.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\ar.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\bg.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\bn.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\bs.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\ca.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\cs.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\cy.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\da.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\de-ch.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\de.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\el.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\en-au.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\en-ca.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\en-gb.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\eo.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\et.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\eu.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\fa.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\fi.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\fo.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\fr-ca.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\fr.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\gl.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\gu.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\he.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\hi.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\hr.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\hu.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\id.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\is.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\it.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\ja.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\ka.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\km.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\ko.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\ku.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\lt.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\lv.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\mk.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\mn.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\ms.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\nb.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\nl.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\no.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\pl.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\pt-br.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\pt.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\ro.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\ru.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\si.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\sk.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\sl.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\sq.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\sr-latn.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\sr.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\sv.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\th.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\tr.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\tt.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\ug.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\uk.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\vi.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\zh-cn.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\lang\zh.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\skins\moono\dialog.css" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\skins\moono\dialog_ie.css" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\skins\moono\dialog_ie7.css" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\skins\moono\dialog_ie8.css" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\skins\moono\dialog_iequirks.css" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\skins\moono\editor.css" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\skins\moono\editor_gecko.css" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\skins\moono\editor_ie.css" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\skins\moono\editor_ie7.css" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\skins\moono\editor_ie8.css" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\skins\moono\editor_iequirks.css" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\skins\moono\icons.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\skins\moono\icons_hidpi.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\skins\moono\images\arrow.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\skins\moono\images\close.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\skins\moono\images\hidpi\close.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\skins\moono\images\hidpi\lock-open.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\skins\moono\images\hidpi\lock.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\skins\moono\images\hidpi\refresh.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\skins\moono\images\lock-open.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\skins\moono\images\lock.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\skins\moono\images\refresh.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\skins\moono\images\spinner.gif" afterPath="" />
+      <change type="DELETED" beforePath="C:\laragon\www\app_ciete\public\plugins\ckeditor\skins\moono\readme.md" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/plugins/ckeditor/plugins/icons.png" afterPath="$PROJECT_DIR$/public/plugins/ckeditor/plugins/icons.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/plugins/ckeditor/plugins/icons_hidpi.png" afterPath="$PROJECT_DIR$/public/plugins/ckeditor/plugins/icons_hidpi.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Models/Curso.php" afterPath="$PROJECT_DIR$/app/Models/Curso.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/CursosController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/CursosController.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/InicioController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/InicioController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/seeds/PermissionsSeeder.php" afterPath="$PROJECT_DIR$/database/seeds/PermissionsSeeder.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Models/Preinscripcion.php" afterPath="$PROJECT_DIR$/app/Models/Preinscripcion.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/PreinscripcionController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/PreinscripcionController.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/WebinarsController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/WebinarsController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/cursos/crear.blade.php" afterPath="$PROJECT_DIR$/resources/views/cursos/crear.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/webinars/crear.blade.php" afterPath="$PROJECT_DIR$/resources/views/webinars/crear.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/cursos/editar.blade.php" afterPath="$PROJECT_DIR$/resources/views/cursos/editar.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/cursos/participantes/agregar.blade.php" afterPath="$PROJECT_DIR$/resources/views/cursos/participantes/agregar.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/cursos/profesores/agregar.blade.php" afterPath="$PROJECT_DIR$/resources/views/cursos/profesores/agregar.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/webinars/participantes/agregar.blade.php" afterPath="$PROJECT_DIR$/resources/views/webinars/participantes/agregar.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/webinars/profesores/agregar.blade.php" afterPath="$PROJECT_DIR$/resources/views/webinars/profesores/agregar.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/app.php" afterPath="$PROJECT_DIR$/config/app.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/plugins/ckeditor/build-config.js" afterPath="$PROJECT_DIR$/public/plugins/ckeditor/build-config.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/plugins/ckeditor/ckeditor.js" afterPath="$PROJECT_DIR$/public/plugins/ckeditor/ckeditor.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/composer.json" afterPath="$PROJECT_DIR$/composer.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/composer.lock" afterPath="$PROJECT_DIR$/composer.lock" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/cursos/cursos.blade.php" afterPath="$PROJECT_DIR$/resources/views/cursos/cursos.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/profesores/cursos/cursos.blade.php" afterPath="$PROJECT_DIR$/resources/views/profesores/cursos/cursos.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/cursos/desactivados.blade.php" afterPath="$PROJECT_DIR$/resources/views/cursos/desactivados.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/webinars/desactivados.blade.php" afterPath="$PROJECT_DIR$/resources/views/webinars/desactivados.blade.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/webinars/editar.blade.php" afterPath="$PROJECT_DIR$/resources/views/webinars/editar.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/generic.js" afterPath="$PROJECT_DIR$/public/js/generic.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/plugins/ckeditor/lang/en.js" afterPath="$PROJECT_DIR$/public/plugins/ckeditor/lang/en.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/plugins/ckeditor/lang/es.js" afterPath="$PROJECT_DIR$/public/plugins/ckeditor/lang/es.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/inicio.blade.php" afterPath="$PROJECT_DIR$/resources/views/inicio.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/layouts/layout.blade.php" afterPath="$PROJECT_DIR$/resources/views/layouts/layout.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/informacion/mision_vision.blade.php" afterPath="$PROJECT_DIR$/resources/views/informacion/mision_vision.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/participantes/notas.blade.php" afterPath="$PROJECT_DIR$/resources/views/participantes/notas.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/profesores/cursos/notas.blade.php" afterPath="$PROJECT_DIR$/resources/views/profesores/cursos/notas.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/cursos/participantes/participantes.blade.php" afterPath="$PROJECT_DIR$/resources/views/cursos/participantes/participantes.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/profesores/cursos/participantes.blade.php" afterPath="$PROJECT_DIR$/resources/views/profesores/cursos/participantes.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/profesores/webinars/participantes.blade.php" afterPath="$PROJECT_DIR$/resources/views/profesores/webinars/participantes.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/webinars/participantes/participantes.blade.php" afterPath="$PROJECT_DIR$/resources/views/webinars/participantes/participantes.blade.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/preinscripcion/preinscripcion.blade.php" afterPath="$PROJECT_DIR$/resources/views/preinscripcion/preinscripcion.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/preinscripcion/principal.blade.php" afterPath="$PROJECT_DIR$/resources/views/preinscripcion/principal.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/usuarios/principal.blade.php" afterPath="$PROJECT_DIR$/resources/views/usuarios/principal.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/cursos/profesores/profesores.blade.php" afterPath="$PROJECT_DIR$/resources/views/cursos/profesores/profesores.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/webinars/profesores/profesores.blade.php" afterPath="$PROJECT_DIR$/resources/views/webinars/profesores/profesores.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/roles/roles.blade.php" afterPath="$PROJECT_DIR$/resources/views/roles/roles.blade.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/routes.php" afterPath="$PROJECT_DIR$/app/Http/routes.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/cursos/participantes/secciones.blade.php" afterPath="$PROJECT_DIR$/resources/views/cursos/participantes/secciones.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/cursos/profesores/secciones.blade.php" afterPath="$PROJECT_DIR$/resources/views/cursos/profesores/secciones.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/profesores/cursos/secciones.blade.php" afterPath="$PROJECT_DIR$/resources/views/profesores/cursos/secciones.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/profesores/webinars/secciones.blade.php" afterPath="$PROJECT_DIR$/resources/views/profesores/webinars/secciones.blade.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/css/style.css" afterPath="$PROJECT_DIR$/public/css/style.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/usuarios/usuarios.blade.php" afterPath="$PROJECT_DIR$/resources/views/usuarios/usuarios.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/participantes/ver-cursos.blade.php" afterPath="$PROJECT_DIR$/resources/views/participantes/ver-cursos.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/participantes/ver-webinars.blade.php" afterPath="$PROJECT_DIR$/resources/views/participantes/ver-webinars.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/profesores/webinars/webinars.blade.php" afterPath="$PROJECT_DIR$/resources/views/profesores/webinars/webinars.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/webinars/webinars.blade.php" afterPath="$PROJECT_DIR$/resources/views/webinars/webinars.blade.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="app_ciete.iws" />
@@ -53,21 +207,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="CursosController.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="CursosController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/CursosController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.33333334">
-              <caret line="357" column="45" selection-start-line="357" selection-start-column="44" selection-end-line="357" selection-end-column="45" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="InicioController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/InicioController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-8.075472">
-              <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
+            <state vertical-scroll-proportion="-0.0">
+              <caret line="1979" column="0" selection-start-line="1881" selection-start-column="0" selection-end-line="1979" selection-end-column="0" />
               <folding>
                 <element signature="e#39#61#0#PHP" expanded="true" />
               </folding>
@@ -75,11 +219,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="inicio.blade.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/inicio.blade.php">
+      <file leaf-file-name="secciones.blade.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/resources/views/cursos/moodle/secciones.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-6.5384617">
-              <caret line="133" column="38" selection-start-line="133" selection-start-column="38" selection-end-line="133" selection-end-column="38" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="19" column="53" selection-start-line="19" selection-start-column="53" selection-end-line="19" selection-end-column="53" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="WebinarsController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/WebinarsController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="14" column="45" selection-start-line="14" selection-start-column="45" selection-end-line="14" selection-end-column="45" />
               <folding />
             </state>
           </provider>
@@ -88,38 +242,18 @@
       <file leaf-file-name="style.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/css/style.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-15.586206">
-              <caret line="310" column="6" selection-start-line="310" selection-start-column="6" selection-end-line="310" selection-end-column="6" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="31" column="13" selection-start-line="31" selection-start-column="13" selection-end-line="31" selection-end-column="13" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="preinscripcion.blade.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/preinscripcion/preinscripcion.blade.php">
+      <file leaf-file-name="routes.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-20.115385">
-              <caret line="51" column="88" selection-start-line="51" selection-start-column="88" selection-end-line="51" selection-end-column="88" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PreinscripcionController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/PreinscripcionController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.8846154">
-              <caret line="34" column="90" selection-start-line="34" selection-start-column="90" selection-end-line="34" selection-end-column="90" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="menu_usuarios.blade.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/partials/menu_usuarios.blade.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-3.2">
-              <caret line="64" column="56" selection-start-line="64" selection-start-column="34" selection-end-line="64" selection-end-column="56" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="151" column="46" selection-start-line="151" selection-start-column="21" selection-end-line="151" selection-end-column="46" />
               <folding />
             </state>
           </provider>
@@ -128,23 +262,19 @@
       <file leaf-file-name="webinars.blade.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resources/views/webinars/webinars.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.576923">
-              <caret line="43" column="43" selection-start-line="43" selection-start-column="20" selection-end-line="43" selection-end-column="43" />
-              <folding>
-                <marker date="1459171647510" expanded="true" signature="2843:3042" placeholder="..." />
-              </folding>
+            <state vertical-scroll-proportion="0.0">
+              <caret line="91" column="86" selection-start-line="91" selection-start-column="86" selection-end-line="91" selection-end-column="86" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Curso.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Models/Curso.php">
+      <file leaf-file-name="cursos.blade.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/resources/views/cursos/cursos.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-43.807693">
-              <caret line="70" column="56" selection-start-line="70" selection-start-column="56" selection-end-line="70" selection-end-column="56" />
-              <folding>
-                <element signature="e#29#68#0#PHP" expanded="true" />
-              </folding>
+            <state vertical-scroll-proportion="0.0">
+              <caret line="103" column="45" selection-start-line="95" selection-start-column="40" selection-end-line="103" selection-end-column="45" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -162,57 +292,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/resources/views/cursos/participantes/secciones.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/cursos/participantes/participantes.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/webinars/crear.blade.php" />
+        <option value="$PROJECT_DIR$/public/js/generic.js" />
+        <option value="$PROJECT_DIR$/database/migrations/2015_12_02_163411_create_preinscripcions_table.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/PreinscripcionController.php" />
+        <option value="$PROJECT_DIR$/resources/views/webinars/editar.blade.php" />
+        <option value="$PROJECT_DIR$/app/Models/Preinscripcion.php" />
+        <option value="$PROJECT_DIR$/app/Models/Curso.php" />
+        <option value="$PROJECT_DIR$/resources/views/informacion/mision_vision.blade.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/InicioController.php" />
+        <option value="$PROJECT_DIR$/resources/views/descripcion-curso.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/descripcion-webinar.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/usuarios/principal.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/cursos/participantes/agregar.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/cursos/profesores/secciones.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/cursos/participantes/participantes.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/cursos/profesores/agregar.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/cursos/profesores/profesores.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/cursos/desactivados.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/participantes/notas.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/participantes/ver-cursos.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/participantes/ver-webinars.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/preinscripcion/preinscripcion.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/profesores/cursos/cursos.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/profesores/cursos/notas.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/profesores/cursos/participantes.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/profesores/cursos/secciones.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/profesores/webinars/participantes.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/profesores/webinars/secciones.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/profesores/webinars/webinars.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/roles/roles.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/usuarios/usuarios.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/inicio.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/webinars/desactivados.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/webinars/participantes/participantes.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/webinars/participantes/agregar.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/webinars/profesores/profesores.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/webinars/profesores/agregar.blade.php" />
+        <option value="$PROJECT_DIR$/public/css/style.css" />
+        <option value="$PROJECT_DIR$/resources/views/cursos/cursos.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/cursos/moodle/secciones.blade.php" />
         <option value="$PROJECT_DIR$/composer.json" />
         <option value="$PROJECT_DIR$/config/app.php" />
-        <option value="$PROJECT_DIR$/resources/views/lista.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/webinars/webinars.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/profesores/webinars/lista.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/profesores/cursos/participantes.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/profesores/webinars/participantes.blade.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/ProfesoresController.php" />
-        <option value="$PROJECT_DIR$/resources/views/profesores/webinars/secciones.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/profesores/cursos/secciones.blade.php" />
-        <option value="$PROJECT_DIR$/app/Http/Requests/UsuarioEditarRequest.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/UsuariosController.php" />
-        <option value="$PROJECT_DIR$/resources/views/cursos/desactivados.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/cursos/cursos.blade.php" />
-        <option value="$PROJECT_DIR$/public/.htaccess" />
-        <option value="$PROJECT_DIR$/resources/views/participantes/editar-perfil.blade.php" />
-        <option value="$PROJECT_DIR$/app/Http/Requests/CursoEditRequest.php" />
-        <option value="$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Foundation/Auth/AuthenticatesAndRegistersUsers.php" />
-        <option value="$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Foundation/Auth/ResetsPasswords.php" />
-        <option value="$PROJECT_DIR$/public/js/component.js" />
-        <option value="$PROJECT_DIR$/app/Http/Requests/CursoRequest.php" />
-        <option value="$PROJECT_DIR$/resources/views/webinars/desactivados.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/partials/menu_usuarios.blade.php" />
-        <option value="$PROJECT_DIR$/database/seeds/PermissionsSeeder.php" />
-        <option value="$PROJECT_DIR$/app/Http/Requests/PreinscripcionRequest.php" />
-        <option value="$PROJECT_DIR$/resources/views/preinscripcion/principal.blade.php" />
         <option value="$PROJECT_DIR$/app/Http/routes.php" />
-        <option value="$PROJECT_DIR$/app/Models/Preinscripcion.php" />
-        <option value="$PROJECT_DIR$/resources/views/emails/preinscripcion.blade.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/WebinarsController.php" />
+        <option value="$PROJECT_DIR$/config/excel.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/CursosController.php" />
-        <option value="$PROJECT_DIR$/resources/views/layouts/layout.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/cursos/editar.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/cursos/crear.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/webinars/crear.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/webinars/editar.blade.php" />
-        <option value="$PROJECT_DIR$/public/js/generic.js" />
-        <option value="$PROJECT_DIR$/app/Models/Curso.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/InicioController.php" />
-        <option value="$PROJECT_DIR$/resources/views/inicio.blade.php" />
-        <option value="$PROJECT_DIR$/public/css/style.css" />
-        <option value="$PROJECT_DIR$/database/migrations/2015_12_02_163411_create_preinscripcions_table.php" />
-        <option value="$PROJECT_DIR$/resources/views/preinscripcion/preinscripcion.blade.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/PreinscripcionController.php" />
+        <option value="$PROJECT_DIR$/resources/views/webinars/webinars.blade.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/WebinarsController.php" />
+        <option value="$PROJECT_DIR$/resources/views/webinars/moodle/secciones.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/webinars/participantes/secciones.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/webinars/profesores/secciones.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/cursos/participantes/secciones.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/cursos/profesores/secciones.blade.php" />
       </list>
     </option>
   </component>
@@ -261,7 +391,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -370,7 +499,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="preinscripcion" />
+              <option name="myItemId" value="webinars" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="profesores" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -392,7 +525,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="partials" />
+              <option name="myItemId" value="webinars" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="participantes" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -414,29 +551,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="layouts" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app_ciete" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app_ciete" />
+              <option name="myItemId" value="webinars" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="resources" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="emails" />
+              <option name="myItemId" value="moodle" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -475,36 +594,16 @@
               <option name="myItemId" value="resources" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-          </PATH>
-          <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="app_ciete" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app_ciete" />
+              <option name="myItemId" value="views" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app_ciete" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app_ciete" />
+              <option name="myItemId" value="cursos" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="css" />
+              <option name="myItemId" value="profesores" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -518,7 +617,19 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="database" />
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cursos" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="participantes" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -532,11 +643,47 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="database" />
+              <option name="myItemId" value="resources" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="migrations" />
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cursos" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="moodle" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app_ciete" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app_ciete" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app_ciete" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app_ciete" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="config" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -655,6 +802,7 @@
         </subPane>
       </pane>
       <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -844,7 +992,13 @@
       <option name="project" value="LOCAL" />
       <updated>1458254030169</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="crop webinars - union preinscripcion con arreglitos - comienzo pagina principal">
+      <created>1459286068900</created>
+      <option name="number" value="00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1459286068900</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TodoView">
@@ -861,13 +1015,12 @@
     <editor active="true" />
     <layout>
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19375" sideWeight="0.49527666" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17430556" sideWeight="0.49527666" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32928476" sideWeight="0.49713466" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32853404" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32853404" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32853404" sideWeight="0.5028653" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32916668" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.526178" sideWeight="0.49713466" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32853404" sideWeight="0.49713466" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.34008098" sideWeight="0.49426934" order="7" side_tool="false" content_ui="tabs" />
@@ -879,6 +1032,7 @@
       <window_info id="Command Line Tools Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32928476" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.526178" sideWeight="0.49713466" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
@@ -941,7 +1095,9 @@
     <MESSAGE value="crop para cursos" />
     <MESSAGE value="crop para cursos - 2" />
     <MESSAGE value="crop webinars - union preinscripcion - comienzo pagina principal" />
-    <option name="LAST_COMMIT_MESSAGE" value="crop webinars - union preinscripcion - comienzo pagina principal" />
+    <MESSAGE value="crop webinars - union preinscripcion con arreglitos - comienzo pagina principal" />
+    <MESSAGE value="Arreglos en buscadores webinar - carrusel dinamicos y desc cursos - creacion archivo moodle" />
+    <option name="LAST_COMMIT_MESSAGE" value="Arreglos en buscadores webinar - carrusel dinamicos y desc cursos - creacion archivo moodle" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -950,407 +1106,377 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/public/css/AdminLTE.min.css">
+    <entry file="file://$PROJECT_DIR$/public/plugins/ckeditor/ckeditor.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33235294">
-          <caret line="6" column="2380" selection-start-line="6" selection-start-column="2352" selection-end-line="6" selection-end-column="2380" />
-          <folding />
+        <state vertical-scroll-proportion="0.33239037">
+          <caret line="707" column="99" selection-start-line="707" selection-start-column="93" selection-end-line="707" selection-end-column="99" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/css/bootstrap.css">
+    <entry file="file://$PROJECT_DIR$/resources/views/descripcion-webinar.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.6153846">
+          <caret line="4" column="41" selection-start-line="4" selection-start-column="41" selection-end-line="4" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/cursos/falta.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="39" column="59" selection-start-line="39" selection-start-column="15" selection-end-line="39" selection-end-column="59" />
-          <folding />
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/emails/contacto.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/participantes/notas.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7605634">
+          <caret line="47" column="22" selection-start-line="47" selection-start-column="22" selection-end-line="47" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/participantes/ver-cursos.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.83239436">
+          <caret line="51" column="22" selection-start-line="51" selection-start-column="22" selection-end-line="51" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/participantes/ver-perfil.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.36056337">
+          <caret line="16" column="102" selection-start-line="16" selection-start-column="100" selection-end-line="16" selection-end-column="102" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/participantes/ver-webinars.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.856338">
+          <caret line="49" column="22" selection-start-line="49" selection-start-column="22" selection-end-line="49" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/preinscripcion/principal.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.09577465">
+          <caret line="14" column="53" selection-start-line="14" selection-start-column="53" selection-end-line="14" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/preinscripcion/preinscripcion.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.856338">
+          <caret line="64" column="22" selection-start-line="64" selection-start-column="22" selection-end-line="64" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/profesores/cursos/cursos.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.9521127">
+          <caret line="99" column="22" selection-start-line="99" selection-start-column="22" selection-end-line="99" selection-end-column="22" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/profesores/cursos/lista.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.423077">
-          <caret line="19" column="27" selection-start-line="0" selection-start-column="0" selection-end-line="67" selection-end-column="0" />
+        <state vertical-scroll-proportion="-0.07183099">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Requests/UsuarioEditarRequest.php">
+    <entry file="file://$PROJECT_DIR$/resources/views/profesores/cursos/notas.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8380282">
-          <caret line="37" column="27" selection-start-line="37" selection-start-column="27" selection-end-line="37" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/images/images_perfil/perfil_14032016_150916.jpg">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/UsuariosController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.79014087">
-          <caret line="57" column="0" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/profesores/cursos/secciones.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.89295775">
-          <caret line="51" column="53" selection-start-line="51" selection-start-column="53" selection-end-line="51" selection-end-column="53" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/profesores/webinars/lista.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6943662">
-          <caret line="35" column="33" selection-start-line="35" selection-start-column="33" selection-end-line="35" selection-end-column="33" />
+        <state vertical-scroll-proportion="0.9521127">
+          <caret line="67" column="22" selection-start-line="67" selection-start-column="22" selection-end-line="67" selection-end-column="22" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/profesores/cursos/participantes.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7859155">
-          <caret line="49" column="74" selection-start-line="49" selection-start-column="74" selection-end-line="49" selection-end-column="74" />
-          <folding />
+        <state vertical-scroll-proportion="0.90422535">
+          <caret line="92" column="22" selection-start-line="92" selection-start-column="22" selection-end-line="92" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/profesores/cursos/secciones.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.83239436">
+          <caret line="52" column="22" selection-start-line="52" selection-start-column="22" selection-end-line="52" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/profesores/webinars/lista.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/profesores/webinars/participantes.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4492958">
-          <caret line="30" column="84" selection-start-line="30" selection-start-column="84" selection-end-line="30" selection-end-column="84" />
-          <folding />
+        <state vertical-scroll-proportion="0.90422535">
+          <caret line="73" column="22" selection-start-line="73" selection-start-column="22" selection-end-line="73" selection-end-column="22" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/profesores/webinars/secciones.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.49718308">
-          <caret line="39" column="169" selection-start-line="39" selection-start-column="169" selection-end-line="39" selection-end-column="169" />
+        <state vertical-scroll-proportion="0.7366197">
+          <caret line="54" column="22" selection-start-line="54" selection-start-column="22" selection-end-line="54" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/profesores/webinars/webinars.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.90422535">
+          <caret line="94" column="22" selection-start-line="94" selection-start-column="22" selection-end-line="94" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/profesores/editar-perfil.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/profesores/ver-perfil.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/roles/roles.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.2394366">
+          <caret line="135" column="22" selection-start-line="135" selection-start-column="22" selection-end-line="135" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/usuarios/principal.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.23380281">
+          <caret line="133" column="57" selection-start-line="133" selection-start-column="57" selection-end-line="133" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/webinars/desactivados.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.35915494">
+          <caret line="15" column="33" selection-start-line="15" selection-start-column="33" selection-end-line="15" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/inicio.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.42535213">
+          <caret line="60" column="42" selection-start-line="60" selection-start-column="42" selection-end-line="60" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/cursos/participantes/participantes.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-10.653846">
+          <caret line="95" column="38" selection-start-line="89" selection-start-column="32" selection-end-line="95" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/cursos/profesores/profesores.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.74225354">
+          <caret line="31" column="22" selection-start-line="15" selection-start-column="16" selection-end-line="31" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/webinars/participantes/participantes.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.47323942">
+          <caret line="93" column="73" selection-start-line="93" selection-start-column="73" selection-end-line="93" selection-end-column="73" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/webinars/participantes/agregar.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7183099">
+          <caret line="78" column="99" selection-start-line="78" selection-start-column="99" selection-end-line="78" selection-end-column="99" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/cursos/participantes/agregar.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8450704">
+          <caret line="64" column="43" selection-start-line="64" selection-start-column="43" selection-end-line="64" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/cursos/profesores/agregar.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-14.230769">
+          <caret line="72" column="34" selection-start-line="66" selection-start-column="28" selection-end-line="72" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/webinars/profesores/profesores.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-36.46154">
+          <caret line="87" column="34" selection-start-line="87" selection-start-column="34" selection-end-line="87" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/css/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="31" column="13" selection-start-line="31" selection-start-column="13" selection-end-line="31" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ProfesoresController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4492958">
-          <caret line="792" column="113" selection-start-line="792" selection-start-column="113" selection-end-line="792" selection-end-column="113" />
+        <state vertical-scroll-proportion="0.5007342">
+          <caret line="1111" column="34" selection-start-line="1111" selection-start-column="34" selection-end-line="1111" selection-end-column="34" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/.htaccess">
+    <entry file="file://$PROJECT_DIR$/resources/views/webinars/profesores/agregar.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.98169017">
+          <caret line="41" column="44" selection-start-line="41" selection-start-column="44" selection-end-line="41" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/app.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7366197">
+          <caret line="216" column="20" selection-start-line="216" selection-start-column="20" selection-end-line="216" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/composer.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33521128">
+          <caret line="14" column="8" selection-start-line="14" selection-start-column="8" selection-end-line="14" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/excel.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8154929">
+          <caret line="303" column="60" selection-start-line="303" selection-start-column="60" selection-end-line="303" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="10" column="24" selection-start-line="10" selection-start-column="24" selection-end-line="10" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/participantes/editar-perfil.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-49.03846">
-          <caret line="75" column="67" selection-start-line="75" selection-start-column="63" selection-end-line="75" selection-end-column="67" />
+          <caret line="151" column="46" selection-start-line="151" selection-start-column="21" selection-end-line="151" selection-end-column="46" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/cursos/cursos.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.1272726">
-          <caret line="20" column="40" selection-start-line="20" selection-start-column="34" selection-end-line="20" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/storage/framework/views/08a9ea25e99876e599710069aff4cd2a">
-      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.47100425">
-          <caret line="84" column="0" selection-start-line="84" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/partials/mensajes.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ParticipantesController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.769231">
-          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Requests/CursoEditRequest.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-15.615385">
-          <caret line="40" column="29" selection-start-line="40" selection-start-column="29" selection-end-line="40" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/cursos/desactivados.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.9615384">
-          <caret line="30" column="15" selection-start-line="30" selection-start-column="15" selection-end-line="30" selection-end-column="15" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Foundation/Auth/AuthenticatesAndRegistersUsers.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-13.346154">
-          <caret line="124" column="76" selection-start-line="124" selection-start-column="76" selection-end-line="124" selection-end-column="76" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Foundation/Auth/ResetsPasswords.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-14.961538">
-          <caret line="135" column="76" selection-start-line="135" selection-start-column="76" selection-end-line="135" selection-end-column="76" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/symfony/http-foundation/Symfony/Component/HttpFoundation/Tests/RequestTest.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.5">
-          <caret line="1442" column="17" selection-start-line="1442" selection-start-column="17" selection-end-line="1442" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/component.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4918478">
-          <caret line="197" column="33" selection-start-line="197" selection-start-column="33" selection-end-line="197" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Requests/CursoRequest.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.39014083">
-          <caret line="40" column="29" selection-start-line="40" selection-start-column="29" selection-end-line="40" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/webinars/desactivados.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.65051395">
-          <caret line="53" column="115" selection-start-line="53" selection-start-column="112" selection-end-line="53" selection-end-column="115" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/database/seeds/PermissionsSeeder.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.9521127">
-          <caret line="233" column="37" selection-start-line="233" selection-start-column="37" selection-end-line="233" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/preinscripcion/principal.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.153846">
-          <caret line="14" column="53" selection-start-line="14" selection-start-column="53" selection-end-line="14" selection-end-column="53" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/database/migrations/2015_12_02_163359_create_cursos_table.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.14366198">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/emails/preinscripcion.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.6153846">
-          <caret line="4" column="103" selection-start-line="4" selection-start-column="103" selection-end-line="4" selection-end-column="103" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Requests/PreinscripcionRequest.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-24.192308">
-          <caret line="39" column="0" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/layouts/layout.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.79014087">
-          <caret line="42" column="17" selection-start-line="42" selection-start-column="17" selection-end-line="42" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/generic.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5247525">
-          <caret line="360" column="7" selection-start-line="360" selection-start-column="7" selection-end-line="360" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/webinars/crear.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.9521127">
-          <caret line="56" column="22" selection-start-line="56" selection-start-column="22" selection-end-line="56" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/cursos/crear.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.42535213">
-          <caret line="123" column="22" selection-start-line="123" selection-start-column="22" selection-end-line="123" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/cursos/editar.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.0">
-          <caret line="140" column="26" selection-start-line="140" selection-start-column="26" selection-end-line="140" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/WebinarsController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.42957747">
-          <caret line="18" column="43" selection-start-line="18" selection-start-column="43" selection-end-line="18" selection-end-column="43" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.2633803">
-          <caret line="34" column="90" selection-start-line="34" selection-start-column="90" selection-end-line="34" selection-end-column="90" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/layouts/menu_usuarios.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Models/Preinscripcion.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6169014">
-          <caret line="33" column="28" selection-start-line="33" selection-start-column="28" selection-end-line="33" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Models/Curso.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-43.807693">
-          <caret line="70" column="56" selection-start-line="70" selection-start-column="56" selection-end-line="70" selection-end-column="56" />
-          <folding>
-            <element signature="e#29#68#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/InicioController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.075472">
-          <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
-          <folding>
-            <element signature="e#39#61#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/inicio.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.5384617">
-          <caret line="133" column="38" selection-start-line="133" selection-start-column="38" selection-end-line="133" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/database/migrations/2015_12_02_163411_create_preinscripcions_table.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.36619717">
-          <caret line="20" column="35" selection-start-line="20" selection-start-column="35" selection-end-line="20" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/css/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-15.586206">
-          <caret line="310" column="6" selection-start-line="310" selection-start-column="6" selection-end-line="310" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/webinars/editar.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.2140845">
-          <caret line="56" column="129" selection-start-line="56" selection-start-column="50" selection-end-line="56" selection-end-column="129" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/partials/menu_usuarios.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.2">
-          <caret line="64" column="56" selection-start-line="64" selection-start-column="34" selection-end-line="64" selection-end-column="56" />
+          <caret line="103" column="45" selection-start-line="95" selection-start-column="40" selection-end-line="103" selection-end-column="45" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/webinars/webinars.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.576923">
-          <caret line="43" column="43" selection-start-line="43" selection-start-column="20" selection-end-line="43" selection-end-column="43" />
-          <folding>
-            <marker date="1459171647510" expanded="true" signature="2843:3042" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/preinscripcion/preinscripcion.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-20.115385">
-          <caret line="51" column="88" selection-start-line="51" selection-start-column="88" selection-end-line="51" selection-end-column="88" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/PreinscripcionController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.8846154">
-          <caret line="34" column="90" selection-start-line="34" selection-start-column="90" selection-end-line="34" selection-end-column="90" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="91" column="86" selection-start-line="91" selection-start-column="86" selection-end-line="91" selection-end-column="86" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/CursosController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33333334">
-          <caret line="357" column="45" selection-start-line="357" selection-start-column="44" selection-end-line="357" selection-end-column="45" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1979" column="0" selection-start-line="1881" selection-start-column="0" selection-end-line="1979" selection-end-column="0" />
+          <folding>
+            <element signature="e#39#61#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/WebinarsController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="14" column="45" selection-start-line="14" selection-start-column="45" selection-end-line="14" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/webinars/profesores/secciones.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7704225">
+          <caret line="42" column="67" selection-start-line="42" selection-start-column="67" selection-end-line="42" selection-end-column="67" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/webinars/participantes/secciones.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6549296">
+          <caret line="42" column="84" selection-start-line="42" selection-start-column="84" selection-end-line="42" selection-end-column="84" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/cursos/profesores/secciones.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.76197183">
+          <caret line="42" column="67" selection-start-line="42" selection-start-column="67" selection-end-line="42" selection-end-column="67" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/cursos/participantes/secciones.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8802817">
+          <caret line="42" column="84" selection-start-line="42" selection-start-column="84" selection-end-line="42" selection-end-column="84" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/webinars/moodle/secciones.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6647887">
+          <caret line="45" column="75" selection-start-line="45" selection-start-column="75" selection-end-line="45" selection-end-column="75" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/cursos/desactivados.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.0174292">
+          <caret line="66" column="42" selection-start-line="66" selection-start-column="42" selection-end-line="66" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/usuarios/usuarios.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="2.3333333">
+          <caret line="141" column="54" selection-start-line="141" selection-start-column="54" selection-end-line="141" selection-end-column="54" />
+          <folding>
+            <marker date="1459376222435" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1459376222435" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1459376222435" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1459376222435" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1459376222435" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1459376222435" expanded="true" signature="-1:-1" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/cursos/moodle/secciones.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="19" column="53" selection-start-line="19" selection-start-column="53" selection-end-line="19" selection-end-column="53" />
           <folding />
         </state>
       </provider>

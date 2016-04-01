@@ -13,49 +13,91 @@
             @include('partials.menu_usuarios')
             <div class="col-md-8 col-sm-8 opciones_part2">
                 @include('partials.mensajes'){{--Errores--}}
-                <table class="table table-hover">
-                    <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Apellido</th>
-                        <th>Acciones</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @if($profesores != null)
-
-                        @foreach($profesores as $profesor)
-                            <tr>
-                                <td>{{ $profesor[0]->nombre }}</td>
-                                <td>{{ $profesor[0]->apellido  }}</td>
-                                <td>
-                                    @if(Entrust::can('eliminar_prof_webinar'))
-                                        {!!Form::open(["url"=>"webinars/".$webinar->id."/profesores/".$profesor[0]->id."/eliminar",  "method" => "delete", "id" => "eliminar_prof_web".$profesor[0]->id ])!!}
-                                        <button type="button" onclick="eliminarProfW('{{$profesor[0]->id}}')" class='btn btn-danger' data-toggle='tooltip' data-placement="bottom" title="Eliminar">
-                                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                        </button>
-                                        {!! Form::close() !!}
-                                    @endif
-                                </td>
-                            </tr>
-                        @endforeach
-                    @else
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-6">
+                        {!!Form::open(["url"=>"webinars/".$webinar->id."/secciones/".$seccion."/profesores/buscar",  "method" => "GET" ])!!}
+                        {{--{!! Form::open(array('method' => 'get', 'route' => array('usuarios.buscar'), 'id' => 'form_busq')) !!}--}}
+                        <div class="buscador">
+                            <select class="form-control " name="parametro">
+                                <option value="0"  selected="selected">Buscar por</option>
+                                <option value="nombre">Nombre</option>
+                                <option value="apellido">Apellido</option>
+                                <option value="documento_identidad">Dcocumento de identidad</option>
+                            </select>
+                            {!!Form::text('busqueda', null,array('placeholder' => 'Escriba su busqueda...','class' => 'form-control bus'))!!}
+                            <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" ></span> </button>
+                        </div>
+                        {!! Form::close() !!}
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
                         <tr>
-                            <td>
-                                <strong> No existen profesores que dicten este webinar </strong>
-                            </td>
+                            <th>#</th>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Documento de identidad</th>
+                            <th>Acciones</th>
                         </tr>
-                    @endif
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        @if($profesores != null)
+                            @foreach($profesores as $index => $profesor)
+                                @if($busq)
+                                    <tr>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ $profesor->nombre }}</td>
+                                        <td>{{ $profesor->apellido  }}</td>
+                                        <td>{{ $profesor->documento_identidad  }}</td>
+                                        <td>
+                                            @if(Entrust::can('eliminar_prof_webinar'))
+                                                {!!Form::open(["url"=>"webinars/".$webinar->id."/secciones/".$seccion."profesores/".$profesor->id."/eliminar",  "method" => "delete", "id" => "eliminar_prof_web".$profesor->id ])!!}
+                                                <button type="button" onclick="eliminarProfW('{{$profesor->id}}')" class='btn btn-danger' data-toggle='tooltip' data-placement="bottom" title="Eliminar">
+                                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                                </button>
+                                                {!! Form::close() !!}
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @else
+                                    <tr>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ $profesor[0]->nombre }}</td>
+                                        <td>{{ $profesor[0]->apellido  }}</td>
+                                        <td>{{ $profesor[0]->documento_identidad  }}</td>
+                                        <td>
+                                            @if(Entrust::can('eliminar_prof_webinar'))
+                                                {!!Form::open(["url"=>"webinars/".$webinar->id."/secciones/".$seccion."profesores/".$profesor[0]->id."/eliminar",  "method" => "delete", "id" => "eliminar_prof_web".$profesor[0]->id ])!!}
+                                                <button type="button" onclick="eliminarProfW('{{$profesor[0]->id}}')" class='btn btn-danger' data-toggle='tooltip' data-placement="bottom" title="Eliminar">
+                                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                                </button>
+                                                {!! Form::close() !!}
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endif
+                            @endforeach
+                        @else
+                            @if($busq_)
+                                <td></td>
+                                <td><strong> 0 resultados de la busqueda </strong></td>
+                            @else
+                                <td></td>
+                                <td> <strong> No existen cursos activos </strong></td>
+                            @endif
+                        @endif
+                        </tbody>
+                    </table>
+                </div>
                 <div class="col-md-2 " style="">
                     @if(Entrust::can('ver_webinars'))
-                        <a href="{{URL::to('/')}}/webinars" type="button" class="btn btn-default" style="text-decoration: none"><span class="glyphicon glyphicon-remove"></span> Cancelar </a>
+                        <a href="{{URL::to('/')}}/webinars/{{$webinar->id}}/secciones/profesores" type="button" class="btn btn-default" style="text-decoration: none"><span class="glyphicon glyphicon-remove"></span> Cancelar </a>
                     @endif
                 </div>
                 <div class="col-md-2 " style="">
                     @if(Entrust::can('agregar_prof_webinar'))
-                        {!!Form::open(["url"=>"webinars/".$webinar->id."/profesores/agregar",  "method" => "GET" ])!!}
+                        {!!Form::open(["url"=>"webinars/".$webinar->id."/secciones/".$seccion."/profesores/agregar",  "method" => "GET" ])!!}
                         <button type="submit" class="btn btn-success" data-toggle="tooltip" data-placement="bottom" title="Agregar profesor al webinar" >
                             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Agregar
                         </button>

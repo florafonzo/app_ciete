@@ -13,37 +13,39 @@
             @include('partials.menu_usuarios')
             <div class="col-md-8 col-sm-8 opciones_part2">
                 @include('partials.mensajes')
-                <table class="table table-hover">
-                    <thead>
-                    <tr>
-                        <th>Evaluación</th>
-                        <th>Valor</th>
-                        <th>Nota</th>
-                    </tr>
-                    <tbody>
-                    @if($notas->count())
-                        @foreach($notas as $index => $nota)
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>Evaluación</th>
+                            <th>Valor</th>
+                            <th>Nota</th>
+                        </tr>
+                        <tbody>
+                        @if($notas->count())
+                            @foreach($notas as $index => $nota)
+                                <tr>
+                                    <td>{{ $nota->evaluacion  }}</td>
+                                    <td>{{ $nota->porcentaje  }}%</td>
+                                    <td>{{ $nota->nota  }}</td>
+                                </tr>
+                            @endforeach
                             <tr>
-                                <td>{{ $nota->evaluacion  }}</td>
-                                <td>{{ $nota->porcentaje  }}%</td>
-                                <td>{{ $nota->nota  }}</td>
+                                <td style="font-weight: bold">Nota Final</td>
+                                <td></td>
+                                <td>{{$promedio}}</td>
                             </tr>
-                        @endforeach
-                        <tr>
-                            <td style="font-weight: bold">Nota Final</td>
-                            <td></td>
-                            <td>{{$promedio}}</td>
-                        </tr>
-                        <tr>
-                             <td>Queda por evaluar {{$porcentaje}}%</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    @else
-                        <td>No posee calificaciones por los momentos</td>
-                    @endif
-                    </tbody>
-                </table>
+                            <tr>
+                                 <td>Queda por evaluar {{$porcentaje}}%</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        @else
+                            <td>No posee calificaciones por los momentos</td>
+                        @endif
+                        </tbody>
+                    </table>
+                </div>
                 @if(Entrust::can('ver_cursos_part'))
                     <div style="text-align: center;">
                         <a href="{{URL::to("/")}}/participante/cursos" class="btn btn-default text-right"><span class="glyphicon glyphicon-chevron-left"></span> Regresar</a>

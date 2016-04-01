@@ -16,12 +16,14 @@ use App\Models\TipoCurso;
 use App\Models\Profesor;
 use App\Models\ProfesorCurso;
 
+use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManagerStatic as Image;
+use Maatwebsite\Excel\Facades\Excel as Excel;
 use DateTime;
 use Exception;
 
@@ -1239,11 +1241,11 @@ class CursosController extends Controller {
                 $data['busq_'] = true;
                 if($param == '0'){
                     Session::set('error', 'Debe seleccionar el parametro por el cual desea buscar');
-                    return $this->buscarParticipanteAgregar($id_curso, $seccion);
+                    return $this->cursoParticipantesAgregar($id_curso, $seccion);
                 }
                 if (empty(Input::get('busqueda'))) {
                     Session::set('error', 'Coloque el elemento que desea buscar');
-                    return $this->buscarParticipanteAgregar($id_curso, $seccion);
+                    return $this->cursoParticipantesAgregar($id_curso, $seccion);
                 }else{
                     $busq = Input::get('busqueda');
                 }
@@ -1877,4 +1879,105 @@ class CursosController extends Controller {
         }
     }
 //-----------------------------------------------------------------------------------------------
+//-------------------------------Moodle----------------------------------------------------------
+
+    public function seccionesMoodle($id) {
+        try{
+            //Verificación de los permisos del usuario para poder realizar esta acción
+            $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
+
+            if($usuario_actual->can('participantes_curso')) {  // Si el usuario posee los permisos necesarios continua con la acción
+                $data['errores'] = '';
+                $data['curso'] = Curso::find($id);
+                $arr = [];
+                $secciones = ParticipanteCurso::where('id_curso', '=', $id)->select('seccion')->get();
+                foreach ($secciones as $index => $seccion) {
+                    $arr[$index] = $seccion->seccion;
+                }
+                sort($arr);
+                $data['secciones'] = array_unique($arr);
+
+                return view('cursos.moodle.secciones', $data);
+            }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
+
+                return view('errors.sin_permiso');
+            }
+        }
+        catch (Exception $e) {
+
+            return view('errors.error')->with('error',$e->getMessage());
+        }
+    }
+
+
+    public function listaMoodle($id, $seccion) {
+        try {
+
+            $usuario_actual = Auth::user();
+            if($usuario_actual->foto != null) {
+                $data['foto'] = $usuario_actual->foto;
+            }else{
+                $data['foto'] = 'foto_participante.png';
+            }
+
+            if($usuario_actual->can('listar_alumnos')) {// Si el usuario posee los permisos necesarios continua con la acción
+                $cursos = Curso::find($id);
+                $seccion = str_replace(' ', '', $seccion);
+                $curso_part = ParticipanteCurso::where('id_curso', '=', $id)->where('seccion', '=', $seccion)->get();
+                $participante = [];
+                if($curso_part->count()){
+                    foreach ($curso_part as $index => $curso) {
+                        $part = Participante::where('id', '=', $curso->id_participante)->get();
+                        $usuario = User::where('id', '=', $part[0]->id_usuario)->get();
+                        $username = explode("@", $usuario[0]->email);
+                        $participante[$index][0] = $username[0];
+                        $participante[$index][1] = $part[0]->documento_identidad;
+                        $participante[$index][2] = $usuario[0]->nombre;
+                        $participante[$index][3] = $usuario[0]->apellido;
+                        $participante[$index][4] = $usuario[0]->email;
+                        $participante[$index][5] = $cursos->nombre;
+                    }
+                }
+
+//                dd($participantes);
+//                $data = $participantes;
+
+                Excel::create('Curso_'.$cursos->nombre.'_seccion_'.$seccion, function($excel) use($participante){
+                    $excel->sheet('Sheetname', function($sheet) use($participante) {
+                        $datos = ['username','password','firstname','lastname','email','course'];
+                        $data = array(
+                            array('data1', 'data2'),
+                            array('data3', 'data4')
+                        );
+                        $data[0] = $datos;
+                        foreach ($participante as $index => $part) {
+                            $data[$index+1] = $part;
+                        }
+
+                        $sheet->fromArray($data, null, 'A1' , false, false);
+
+                    });
+
+                })->download('csv');
+
+//                return ;
+
+            }else{ // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error
+
+                return view('errors.sin_permiso');
+            }
+        }
+        catch(Exception $e){
+            return view('errors.error')->with('error',$e->getMessage());
+        }
+    }
+//-----------------------------------------------------------------------------------------------
+
+
+
 }

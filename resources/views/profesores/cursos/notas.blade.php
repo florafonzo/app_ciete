@@ -12,58 +12,60 @@
             @include('partials.menu_usuarios')
             <div class="col-md-8 col-sm-8 opciones_part2">
                 @include('partials.mensajes')
-                <table class="table table-hover">
-                    <thead>
-                    <tr>
-                        <th>Evaluación</th>
-                        <th>Valor</th>
-                        <th>Nota</th>
-                        <th>Acciones</th>
-                    </tr>
-                    <tbody>
-                    @if($notas->count())
-                        @foreach($notas as $index => $nota)
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>Evaluación</th>
+                            <th>Valor</th>
+                            <th>Nota</th>
+                            <th>Acciones</th>
+                        </tr>
+                        <tbody>
+                        @if($notas->count())
+                            @foreach($notas as $index => $nota)
+                                <tr>
+                                    <td>{{ $nota->evaluacion  }}</td>
+                                    <td>{{ $nota->porcentaje  }}%</td>
+                                    <td>{{ $nota->nota  }}</td>
+                                    <td>
+                                        @if(Entrust::can('editar_notas'))
+                                            <button type="button" data-toggle="modal" data-id="{{$nota->id}}" data-curso="{{$curso->id}}" data-seccion="{{$seccion}}" data-part="{{$participante->id}}" class='btn btn-info edit_nota' data-toggle='tooltip' data-placement="bottom" title="Editar" aria-hidden="true">
+                                                <span class="glyphicon glyphicon-pencil" ></span>
+                                            </button>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if(Entrust::can('eliminar_notas'))
+                                            {!!Form::open(["url"=>"profesor/cursos/".$curso->id."/secciones/".$seccion."/participantes/".$participante->id."/notas/".$nota->id,  "method" => "DELETE", "id" => "form_eliminar".$nota->id ])!!}
+                                            <button type="button" onclick="mostrarModal('{{$nota->id}}')" class='btn btn-danger' data-toggle='tooltip' data-placement="bottom" title="Eliminar" aria-hidden="true">
+                                                <span class="glyphicon glyphicon-trash" ></span>
+                                            </button>
+                                            {!! Form::close() !!}
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
                             <tr>
-                                <td>{{ $nota->evaluacion  }}</td>
-                                <td>{{ $nota->porcentaje  }}%</td>
-                                <td>{{ $nota->nota  }}</td>
-                                <td>
-                                    @if(Entrust::can('editar_notas'))
-                                        <button type="button" data-toggle="modal" data-id="{{$nota->id}}" data-curso="{{$curso->id}}" data-seccion="{{$seccion}}" data-part="{{$participante->id}}" class='btn btn-info edit_nota' data-toggle='tooltip' data-placement="bottom" title="Editar" aria-hidden="true">
-                                            <span class="glyphicon glyphicon-pencil" ></span>
-                                        </button>
-                                    @endif
-                                </td>
-                                <td>
-                                    @if(Entrust::can('eliminar_notas'))
-                                        {!!Form::open(["url"=>"profesor/cursos/".$curso->id."/secciones/".$seccion."/participantes/".$participante->id."/notas/".$nota->id,  "method" => "DELETE", "id" => "form_eliminar".$nota->id ])!!}
-                                        <button type="button" onclick="mostrarModal('{{$nota->id}}')" class='btn btn-danger' data-toggle='tooltip' data-placement="bottom" title="Eliminar" aria-hidden="true">
-                                            <span class="glyphicon glyphicon-trash" ></span>
-                                        </button>
-                                        {!! Form::close() !!}
-                                    @endif
-                                </td>
+                                <td style="font-weight: bold">Nota Final</td>
+                                <td></td>
+                                <td><strong>{{$promedio}}</strong></td>
+                                <td></td>
+                                <td></td>
                             </tr>
-                        @endforeach
-                        <tr>
-                            <td style="font-weight: bold">Nota Final</td>
-                            <td></td>
-                            <td><strong>{{$promedio}}</strong></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>Queda por evaluar {{$porcentaje}}%</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    @else
-                        <td>El participante no posee calificaciones por los momentos</td>
-                    @endif
-                    </tbody>
-                </table>
+                            <tr>
+                                <td>Queda por evaluar {{$porcentaje}}%</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        @else
+                            <td>El participante no posee calificaciones por los momentos</td>
+                        @endif
+                        </tbody>
+                    </table>
+                </div>
                 @if(Entrust::can('ver_notas_profe'))
                     <a href="{{URL::to("/")}}/profesor/cursos/{{$curso->id}}/secciones/{{$seccion}}/participantes" class="btn btn-default text-right"><span class="glyphicon glyphicon-chevron-left"></span> Regresar</a>
                 @endif

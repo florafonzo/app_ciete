@@ -30,46 +30,48 @@
                         {!! Form::close() !!}
                     </div>
                 </div>
-                <table class="table table-hover">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Nombre</th>
-                        <th>Apellido</th>
-                        <th>Documento de identidad</th>
-                        {{--<th>Acciones</th>--}}
-                    </tr>
-                    </thead>
-                    @if($participantes != null)
-                        <tbody>
-                        @foreach($participantes as $index => $participante)
-                            @if($busq)
-                                <tr>
-                                    <td>{{ $index + 1 }}</td>
-                                    <td>{{ $participante->nombre }}</td>
-                                    <td>{{ $participante->apellido }}</td>
-                                    <td>{{ $participante->documento_identidad }}</td>
-                                </tr>
-                            @else
-                                <tr>
-                                    <td>{{ $index + 1 }}</td>
-                                    <td>{{ $participante[0]->nombre }}</td>
-                                    <td>{{ $participante[0]->apellido }}</td>
-                                    <td>{{ $participante[0]->documento_identidad }}</td>
-                                </tr>
-                            @endif
-                        @endforeach
-                        </tbody>
-                    @else
-                        @if($busq_)
-                            <td></td>
-                            <td> 0 resultados de la busqueda</td>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Documento de identidad</th>
+                            {{--<th>Acciones</th>--}}
+                        </tr>
+                        </thead>
+                        @if($participantes != null)
+                            <tbody>
+                            @foreach($participantes as $index => $participante)
+                                @if($busq)
+                                    <tr>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ $participante->nombre }}</td>
+                                        <td>{{ $participante->apellido }}</td>
+                                        <td>{{ $participante->documento_identidad }}</td>
+                                    </tr>
+                                @else
+                                    <tr>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ $participante[0]->nombre }}</td>
+                                        <td>{{ $participante[0]->apellido }}</td>
+                                        <td>{{ $participante[0]->documento_identidad }}</td>
+                                    </tr>
+                                @endif
+                            @endforeach
+                            </tbody>
                         @else
-                            <td></td>
-                            <td>No existen cursos activos</td>
+                            @if($busq_)
+                                <td></td>
+                                <td> 0 resultados de la busqueda</td>
+                            @else
+                                <td></td>
+                                <td>No existen cursos activos</td>
+                            @endif
                         @endif
-                    @endif
-                </table>
+                    </table>
+                </div>
                 @if(Entrust::can('ver_perfil_prof'))
                     <a href="{{URL::to("/")}}/profesor/webinars/{{$webinar->id}}/secciones" class="btn btn-default text-right"><span class="glyphicon glyphicon-remove"></span> Volver</a>
                 @endif

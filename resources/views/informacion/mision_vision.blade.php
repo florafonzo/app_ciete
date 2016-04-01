@@ -4,7 +4,7 @@
     <div class="row" xmlns="http://www.w3.org/1999/html"> <!--Sección del cuerpo-->
         <div class="col-md-12 col-sm-12">
             <div class="row">
-                <div class="col-md-12 col-sm-12 descripcion_princ">
+                <div class="col-md-12 col-xs-12 descripcion_princ">
                     <h3>
                         ¿ Quiénes somos ?
                     </h3>

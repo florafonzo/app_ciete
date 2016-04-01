@@ -31,48 +31,50 @@
                         {!! Form::close() !!}
                     </div>
                 </div>
-                <table class="table table-hover">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Nombre</th>
-                        <th>Apellido</th>
-                        <th>Documento de identidad</th>
-                        <th>Agregar</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @if($profesores != null)
-                        @foreach($profesores as $index => $profesor)
-                            <tr>
-                                <td>{{ $index + 1 }}</td>
-                                <td>{{ $profesor->nombre }}</td>
-                                <td>{{ $profesor->apellido  }}</td>
-                                <td>{{ $profesor->documento_identidad }}</td>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Documento de identidad</th>
+                            <th>Agregar</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @if($profesores != null)
+                            @foreach($profesores as $index => $profesor)
+                                <tr>
+                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ $profesor->nombre }}</td>
+                                    <td>{{ $profesor->apellido  }}</td>
+                                    <td>{{ $profesor->documento_identidad }}</td>
 
-                                <td class="">
-                                    @if(Entrust::can('agregar_prof_curso'))
-                                        {!!Form::open(["url"=>"cursos/".$curso->id."/secciones/".$seccion."/profesores/".$profesor->id."/agregar",  "method" => "GET", 'id' => 'prof_agregar'.$profesor->id] )!!}
-                                        <button type="button" onclick="agregarProf('{{$profesor->id}}')" class="btn btn-info" title="Agregar profesor al curso" data-toggle="tooltip" data-placement="bottom" aria-hidden="true">
-                                            <span class="glyphicon glyphicon-plus"></span>
-                                        </button>
-                                        {!!Form::close()!!}
-                                        {{--{!! Form::checkbox('agregar[]',null, null)!!}--}}
-                                    @endif
-                                </td>
-                            </tr>
-                        @endforeach
-                    @else
-                        @if($busq_)
-                            <td></td>
-                            <td><strong> 0 resultados de la busqueda </strong></td>
+                                    <td class="">
+                                        @if(Entrust::can('agregar_prof_curso'))
+                                            {!!Form::open(["url"=>"cursos/".$curso->id."/secciones/".$seccion."/profesores/".$profesor->id."/agregar",  "method" => "GET", 'id' => 'prof_agregar'.$profesor->id] )!!}
+                                            <button type="button" onclick="agregarProf('{{$profesor->id}}')" class="btn btn-info" title="Agregar profesor al curso" data-toggle="tooltip" data-placement="bottom" aria-hidden="true">
+                                                <span class="glyphicon glyphicon-plus"></span>
+                                            </button>
+                                            {!!Form::close()!!}
+                                            {{--{!! Form::checkbox('agregar[]',null, null)!!}--}}
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
                         @else
-                            <td></td>
-                            <td> <strong> No existen cursos activos </strong></td>
+                            @if($busq_)
+                                <td></td>
+                                <td><strong> 0 resultados de la busqueda </strong></td>
+                            @else
+                                <td></td>
+                                <td> <strong> No existen cursos activos </strong></td>
+                            @endif
                         @endif
-                    @endif
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
                 <div class="col-md-2 " style="">
                     @if(Entrust::can('profesores_curso'))
                         <a href="{{URL::to('/')}}/cursos/{{$curso->id}}/secciones/{{$seccion}}/profesores" type="button" class="btn btn-default" style="text-decoration: none"> <span class="glyphicon glyphicon-chevron-left"></span> Volver </a>

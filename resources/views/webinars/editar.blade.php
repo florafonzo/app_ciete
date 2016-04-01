@@ -55,7 +55,7 @@
                                         {!!Form::hidden('img_','yes')!!}
                                         {!!Form::hidden('cortar',null)!!}
                                         <img src="{{URL::to('/')}}/images/images_carrusel/webinars/{{$webinars->imagen_carrusel}}" id="imagen_cortada" width="150" height="150"><br><br>
-                                        <a class="btn btn-warning btn-sm" href="{{URL::to('/')}}/wbinars/imagen/{{$webinars->id}}" title="Cambiar foto" data-toggle="tooltip" data-placement="bottom" aria-hidden="true" style="text-decoration: none">Cambiar</a>
+                                        <a class="btn btn-warning btn-sm" href="{{URL::to('/')}}/webinars/imagen/{{$webinars->id}}" title="Cambiar foto" data-toggle="tooltip" data-placement="bottom" aria-hidden="true" style="text-decoration: none">Cambiar</a>
                                     @endif
                                 @endif
                             @endif

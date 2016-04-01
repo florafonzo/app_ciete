@@ -27,111 +27,113 @@
                         {!! Form::close() !!}
                     </div>
                 </div>
-                <table class="table table-hover">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Nombre</th>
-                        <th>Permisos</th>
-                        <th>Acciones</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @if($busq)
-                        @if($roles != null)
-                            @foreach($roles as $index => $rol)
-                                <tr>
-                                    <td>{{ $index + 1 }}</td>
-                                    <td>{{ $rol->display_name }}</td>
-                                    <td>
-                                        @foreach($rol->permisos as $permiso)
-                                            {{ $permiso->display_name }} <br/>
-                                        @endforeach
-                                    </td>
-                                    <td>
-                                        @if(Entrust::can('editar_roles'))
-                                            {{--<button><span class="glyphicon glyphicon-pencil" data-toggle="tooltip" data-placement="bottom" title="Editar" aria-hidden="true"></span></button>--}}
-                                            {!! Form::open(array('method' => 'GET','route' => array('roles.edit', $rol->id))) !!}
-                                            {!! Form::button('<span class="glyphicon glyphicon-pencil" data-toggle="tooltip" data-placement="bottom" title="Editar" aria-hidden="true"></span>', array('type' => 'submit', 'class' => 'btn btn-info'))!!}
-                                            {!! Form::close() !!}
-                                        @endif
-                                    </td>
-                                    <td>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nombre</th>
+                            <th>Permisos</th>
+                            <th>Acciones</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @if($busq)
+                            @if($roles != null)
+                                @foreach($roles as $index => $rol)
+                                    <tr>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ $rol->display_name }}</td>
+                                        <td>
+                                            @foreach($rol->permisos as $permiso)
+                                                {{ $permiso->display_name }} <br/>
+                                            @endforeach
+                                        </td>
+                                        <td>
+                                            @if(Entrust::can('editar_roles'))
+                                                {{--<button><span class="glyphicon glyphicon-pencil" data-toggle="tooltip" data-placement="bottom" title="Editar" aria-hidden="true"></span></button>--}}
+                                                {!! Form::open(array('method' => 'GET','route' => array('roles.edit', $rol->id))) !!}
+                                                {!! Form::button('<span class="glyphicon glyphicon-pencil" data-toggle="tooltip" data-placement="bottom" title="Editar" aria-hidden="true"></span>', array('type' => 'submit', 'class' => 'btn btn-info'))!!}
+                                                {!! Form::close() !!}
+                                            @endif
+                                        </td>
+                                        <td>
 
-                                        {{--{{ $rol->display_name }} <br/>--}}
-                                        @if(($rol->name == 'admin') or ($rol->name == 'coordinador') or ($rol->name == 'participante') or ($rol->name == 'profesor'))
-                                            {!! Form::open(array('')) !!}
-                                            {!! Form::button('<span class="glyphicon glyphicon-trash" data-toggle="tooltip" data-placement="bottom" title="Eliminar" aria-hidden="true"></span>', array('type' => 'button','class' => 'btn btn-danger', 'disabled'))!!}
-                                            {!! Form::close() !!}
-                                        @else
-                                            {!! Form::open(array('method' => 'DELETE', 'route' => array('roles.destroy', $rol->id), 'id' => 'form_eliminar'.$rol->id)) !!}
-                                            {{--{!! Form::button('<span class="glyphicon glyphicon-trash" id="{{$rol->id}}" data-toggle="tooltip" data-placement="bottom" title="Eliminar" aria-hidden="true"></span>', array('type' => 'button', 'data-toggle' => 'modal', 'data-target' => '#modal_eliminar_rol','class' => 'btn btn-danger'))!!}--}}
-                                            <button type="button" onclick="mostrarModal('{{$rol->id}}')" class='btn btn-danger' data-toggle='tooltip' data-placement="bottom" title="Eliminar" aria-hidden="true">
-                                                <span class="glyphicon glyphicon-trash" ></span>
-                                            </button>
-                                            {!! Form::close() !!}
-                                        @endif
-                                    </td>
-                                </tr>
-                            @endforeach
-                        @else
-                            @if($busq_)
-                                <td></td>
-                                <td> 0 resultados de la busqueda</td>
-                            @else
-                                <td></td>
-                                <td>No existen cursos activos</td>
-                            @endif
-                        @endif
-                    @else
-                        @if($roles->count())
-                            @foreach($roles as $index => $rol)
-                                <tr>
-                                    <td>{{ $index + 1 }}</td>
-                                    <td>{{ $rol->display_name }}</td>
-                                    <td>
-                                        @foreach($rol->permisos as $permiso)
-                                            {{ $permiso->display_name }} <br/>
-                                        @endforeach
-                                    </td>
-                                    <td>
-                                        @if(Entrust::can('editar_roles'))
-                                            {{--<button><span class="glyphicon glyphicon-pencil" data-toggle="tooltip" data-placement="bottom" title="Editar" aria-hidden="true"></span></button>--}}
-                                            {!! Form::open(array('method' => 'GET','route' => array('roles.edit', $rol->id))) !!}
-                                            {!! Form::button('<span class="glyphicon glyphicon-pencil" data-toggle="tooltip" data-placement="bottom" title="Editar" aria-hidden="true"></span>', array('type' => 'submit', 'class' => 'btn btn-info'))!!}
-                                            {!! Form::close() !!}
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if(($rol->name == 'admin') or ($rol->name == 'coordinador') or ($rol->name == 'participante') or ($rol->name == 'profesor'))
-                                            {!! Form::open(array('')) !!}
-                                            {!! Form::button('<span class="glyphicon glyphicon-trash" data-toggle="tooltip" data-placement="bottom" title="Eliminar" aria-hidden="true"></span>', array('type' => 'button','class' => 'btn btn-danger', 'disabled'))!!}
-                                            {!! Form::close() !!}
-                                        @else
-                                            {!! Form::open(array('method' => 'DELETE', 'route' => array('roles.destroy', $rol->id), 'id' => 'form_eliminar'.$rol->id)) !!}
+                                            {{--{{ $rol->display_name }} <br/>--}}
+                                            @if(($rol->name == 'admin') or ($rol->name == 'coordinador') or ($rol->name == 'participante') or ($rol->name == 'profesor'))
+                                                {!! Form::open(array('')) !!}
+                                                {!! Form::button('<span class="glyphicon glyphicon-trash" data-toggle="tooltip" data-placement="bottom" title="Eliminar" aria-hidden="true"></span>', array('type' => 'button','class' => 'btn btn-danger', 'disabled'))!!}
+                                                {!! Form::close() !!}
+                                            @else
+                                                {!! Form::open(array('method' => 'DELETE', 'route' => array('roles.destroy', $rol->id), 'id' => 'form_eliminar'.$rol->id)) !!}
                                                 {{--{!! Form::button('<span class="glyphicon glyphicon-trash" id="{{$rol->id}}" data-toggle="tooltip" data-placement="bottom" title="Eliminar" aria-hidden="true"></span>', array('type' => 'button', 'data-toggle' => 'modal', 'data-target' => '#modal_eliminar_rol','class' => 'btn btn-danger'))!!}--}}
                                                 <button type="button" onclick="mostrarModal('{{$rol->id}}')" class='btn btn-danger' data-toggle='tooltip' data-placement="bottom" title="Eliminar" aria-hidden="true">
                                                     <span class="glyphicon glyphicon-trash" ></span>
                                                 </button>
-                                            {!! Form::close() !!}
-                                        @endif
-                                    </td>
-                                </tr>
-                            @endforeach
-
-                        @else
-                            @if($busq_)
-                                <td></td>
-                                <td> 0 resultados de la busqueda</td>
+                                                {!! Form::close() !!}
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
                             @else
-                                <td></td>
-                                <td>No existen cursos activos</td>
+                                @if($busq_)
+                                    <td></td>
+                                    <td> 0 resultados de la busqueda</td>
+                                @else
+                                    <td></td>
+                                    <td>No existen cursos activos</td>
+                                @endif
+                            @endif
+                        @else
+                            @if($roles->count())
+                                @foreach($roles as $index => $rol)
+                                    <tr>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ $rol->display_name }}</td>
+                                        <td>
+                                            @foreach($rol->permisos as $permiso)
+                                                {{ $permiso->display_name }} <br/>
+                                            @endforeach
+                                        </td>
+                                        <td>
+                                            @if(Entrust::can('editar_roles'))
+                                                {{--<button><span class="glyphicon glyphicon-pencil" data-toggle="tooltip" data-placement="bottom" title="Editar" aria-hidden="true"></span></button>--}}
+                                                {!! Form::open(array('method' => 'GET','route' => array('roles.edit', $rol->id))) !!}
+                                                {!! Form::button('<span class="glyphicon glyphicon-pencil" data-toggle="tooltip" data-placement="bottom" title="Editar" aria-hidden="true"></span>', array('type' => 'submit', 'class' => 'btn btn-info'))!!}
+                                                {!! Form::close() !!}
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if(($rol->name == 'admin') or ($rol->name == 'coordinador') or ($rol->name == 'participante') or ($rol->name == 'profesor'))
+                                                {!! Form::open(array('')) !!}
+                                                {!! Form::button('<span class="glyphicon glyphicon-trash" data-toggle="tooltip" data-placement="bottom" title="Eliminar" aria-hidden="true"></span>', array('type' => 'button','class' => 'btn btn-danger', 'disabled'))!!}
+                                                {!! Form::close() !!}
+                                            @else
+                                                {!! Form::open(array('method' => 'DELETE', 'route' => array('roles.destroy', $rol->id), 'id' => 'form_eliminar'.$rol->id)) !!}
+                                                    {{--{!! Form::button('<span class="glyphicon glyphicon-trash" id="{{$rol->id}}" data-toggle="tooltip" data-placement="bottom" title="Eliminar" aria-hidden="true"></span>', array('type' => 'button', 'data-toggle' => 'modal', 'data-target' => '#modal_eliminar_rol','class' => 'btn btn-danger'))!!}--}}
+                                                    <button type="button" onclick="mostrarModal('{{$rol->id}}')" class='btn btn-danger' data-toggle='tooltip' data-placement="bottom" title="Eliminar" aria-hidden="true">
+                                                        <span class="glyphicon glyphicon-trash" ></span>
+                                                    </button>
+                                                {!! Form::close() !!}
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+
+                            @else
+                                @if($busq_)
+                                    <td></td>
+                                    <td> 0 resultados de la busqueda</td>
+                                @else
+                                    <td></td>
+                                    <td>No existen cursos activos</td>
+                                @endif
                             @endif
                         @endif
-                    @endif
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
                 @if(Entrust::can('crear_roles'))
                     <div class="" style="text-align: center;">
                         <a href="{{URL::to('/')}}/roles/create" type="button" class="btn btn-success" >Crear Rol </a>

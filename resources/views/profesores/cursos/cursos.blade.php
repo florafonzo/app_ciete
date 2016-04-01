@@ -29,73 +29,75 @@
                         {!! Form::close() !!}
                     </div>
                 </div>
-                <table class="table table-hover">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Nombre</th>
-                        <th>Tipo</th>
-                        <th>Seccion</th>
-                        <th>Fecha inicio</th>
-                        <th>Fecha fin</th>
-                        <th>Acciones</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    @if($cursos != null)
-                        <tbody>
-                        @if($busq)
-                            @foreach($cursos as $index => $curso)
-                                <tr>
-                                    <td>{{ $index + 1 }}</td>
-                                    <td>{{ $curso->nombre }}</td>
-                                    <td>{{ $tipo_curso[$index] }}</td>
-                                    <td>{{ $curso->seccion  }}</td>
-                                    <td>{{ $inicio[$index]->format('d-m-Y')  }}</td>
-                                    <td>{{ $fin[$index]->format('d-m-Y')  }}</td>
-                                    <td>
-                                        @if(Entrust::can('ver_notas_profe'))
-                                            {!!Form::open(["url"=>"profesor/cursos/".$curso->id."/secciones",  "method" => "GET" ])!!}
-                                            <button type="submit" class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="Secciones">
-                                                <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
-                                            </button>
-                                            {!! Form::close() !!}
-                                        @endif
-                                    </td>
-                                </tr>
-                            @endforeach
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nombre</th>
+                            <th>Tipo</th>
+                            <th>Seccion</th>
+                            <th>Fecha inicio</th>
+                            <th>Fecha fin</th>
+                            <th>Acciones</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        @if($cursos != null)
+                            <tbody>
+                            @if($busq)
+                                @foreach($cursos as $index => $curso)
+                                    <tr>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ $curso->nombre }}</td>
+                                        <td>{{ $tipo_curso[$index] }}</td>
+                                        <td>{{ $curso->seccion  }}</td>
+                                        <td>{{ $inicio[$index]->format('d-m-Y')  }}</td>
+                                        <td>{{ $fin[$index]->format('d-m-Y')  }}</td>
+                                        <td>
+                                            @if(Entrust::can('ver_notas_profe'))
+                                                {!!Form::open(["url"=>"profesor/cursos/".$curso->id."/secciones",  "method" => "GET" ])!!}
+                                                <button type="submit" class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="Secciones">
+                                                    <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                                                </button>
+                                                {!! Form::close() !!}
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                @foreach($cursos as $index => $curso)
+                                    <tr>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ $curso[0]->nombre }}</td>
+                                        <td>{{ $tipo_curso[$index] }}</td>
+                                        <td>{{ $curso[0]->seccion  }}</td>
+                                        <td>{{ $inicio[$index]->format('d-m-Y')  }}</td>
+                                        <td>{{ $fin[$index]->format('d-m-Y')  }}</td>
+                                        <td>
+                                            @if(Entrust::can('ver_notas_profe'))
+                                                {!!Form::open(["url"=>"profesor/cursos/".$curso[0]->id."/secciones",  "method" => "GET" ])!!}
+                                                <button type="submit" class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="Secciones">
+                                                    <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                                                </button>
+                                                {!! Form::close() !!}
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @endif
+                            </tbody>
                         @else
-                            @foreach($cursos as $index => $curso)
-                                <tr>
-                                    <td>{{ $index + 1 }}</td>
-                                    <td>{{ $curso[0]->nombre }}</td>
-                                    <td>{{ $tipo_curso[$index] }}</td>
-                                    <td>{{ $curso[0]->seccion  }}</td>
-                                    <td>{{ $inicio[$index]->format('d-m-Y')  }}</td>
-                                    <td>{{ $fin[$index]->format('d-m-Y')  }}</td>
-                                    <td>
-                                        @if(Entrust::can('ver_notas_profe'))
-                                            {!!Form::open(["url"=>"profesor/cursos/".$curso[0]->id."/secciones",  "method" => "GET" ])!!}
-                                            <button type="submit" class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="Secciones">
-                                                <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
-                                            </button>
-                                            {!! Form::close() !!}
-                                        @endif
-                                    </td>
-                                </tr>
-                            @endforeach
+                            @if($busq_)
+                                <td></td>
+                                <td> 0 resultados de la busqueda</td>
+                            @else
+                                <td></td>
+                                <td>No existen cursos activos</td>
+                            @endif
                         @endif
-                        </tbody>
-                    @else
-                        @if($busq_)
-                            <td></td>
-                            <td> 0 resultados de la busqueda</td>
-                        @else
-                            <td></td>
-                            <td>No existen cursos activos</td>
-                        @endif
-                    @endif
-                </table>
+                    </table>
+                </div>
                 @if(Entrust::can('ver_perfil_prof'))
                     <a href="{{URL::to("/")}}" class="btn btn-default text-right"><span class="glyphicon glyphicon-remove"></span> Cancelar</a>
                 @endif

@@ -29,54 +29,56 @@
                         {!! Form::close() !!}
                     </div>
                 </div>
-                <table class="table table-hover">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Nombre</th>
-                        <th>Tipo</th>
-                        <th>Fecha Inicio</th>
-                        <th>Fecha Fin</th>
-                        <th>Acciones</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    @if($cursos->count())
-                        <tbody>
-                        @foreach($cursos as $index => $curso)
-                            @if(!($curso->curso_activo))
-                                <tr>
-                                    <td>{{ $index + 1 }}</td>
-                                    <td>{{ $curso->nombre }}</td>
-                                    <td>{{ $curso->tipo_curso  }}</td>
-                                    <td>{{ $curso->inicio->format('d-m-Y')  }}</td>
-                                    <td>{{ $curso->fin->format('d-m-Y')  }}</td>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nombre</th>
+                            <th>Tipo</th>
+                            <th>Fecha Inicio</th>
+                            <th>Fecha Fin</th>
+                            <th>Acciones</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        @if($cursos->count())
+                            <tbody>
+                            @foreach($cursos as $index => $curso)
+                                @if(!($curso->curso_activo))
+                                    <tr>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ $curso->nombre }}</td>
+                                        <td>{{ $curso->tipo_curso  }}</td>
+                                        <td>{{ $curso->inicio->format('d-m-Y')  }}</td>
+                                        <td>{{ $curso->fin->format('d-m-Y')  }}</td>
 
-                                    <td>
-                                        @if(Entrust::can('activar_cursos'))
-                                            {!!Form::open(["url"=>"cursos/desactivados/activar/".$curso->id,  "method" => "GET", 'id' => 'form_activar'.$curso->id] )!!}
-                                             <button type="button" onclick="activarCurso('{{$curso->id}}')" class="btn btn-success" title="Activar" data-toggle="tooltip" data-placement="bottom" aria-hidden="true">
-                                                 <span class="glyphicon glyphicon-ok"></span>
-                                             </button>
-                                            {!!Form::close()!!}
-                                        @endif
-                                    </td>
-                                </tr>
-                            @else
-                                <?php continue; ?>
-                            @endif
-                        @endforeach
-                        </tbody>
-                    @else
-                        @if($busq_)
-                            <td></td>
-                            <td> 0 resultados de la busqueda</td>
+                                        <td>
+                                            @if(Entrust::can('activar_cursos'))
+                                                {!!Form::open(["url"=>"cursos/desactivados/activar/".$curso->id,  "method" => "GET", 'id' => 'form_activar'.$curso->id] )!!}
+                                                 <button type="button" onclick="activarCurso('{{$curso->id}}')" class="btn btn-success" title="Activar" data-toggle="tooltip" data-placement="bottom" aria-hidden="true">
+                                                     <span class="glyphicon glyphicon-ok"></span>
+                                                 </button>
+                                                {!!Form::close()!!}
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @else
+                                    <?php continue; ?>
+                                @endif
+                            @endforeach
+                            </tbody>
                         @else
-                            <td></td>
-                            <td>No existen cursos desactivados</td>
+                            @if($busq_)
+                                <td></td>
+                                <td> 0 resultados de la busqueda</td>
+                            @else
+                                <td></td>
+                                <td>No existen cursos desactivados</td>
+                            @endif
                         @endif
-                    @endif
-                </table>
+                    </table>
+                </div>
                 @if(Entrust::can('ver_lista_cursos'))
                     <div class="" style="text-align: center;">
                         <a href="{{URL::to('/')}}/cursos" type="button" class="btn btn-success" >Ver cursos activos </a>

@@ -30,72 +30,74 @@
                         {!! Form::close() !!}
                     </div>
                 </div>
-                <table class="table table-hover">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Nombre</th>
-                        <th>Apellido</th>
-                        <th>Documento de identidad</th>
-                        {{--<th>Fecha Inicio</th>--}}
-                        {{--<th>Fecha Fin</th>--}}
-                        <th>Acciones</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                        @if($participantes != null)
-                            @foreach($participantes as $index => $participante)
-                                @if($busq)
-                                    <tr>
-                                        <td>{{ $index + 1 }}</td>
-                                        <td>{{ $participante->nombre }}</td>
-                                        <td>{{ $participante->apellido  }}</td>
-                                        <td>{{ $participante->documento_identidad  }}</td>
-                                        {{--<td>{{ $participantes->fecha_inicio  }}</td>--}}
-                                        {{--<td>{{ $participantes->fecha_fin  }}</td>--}}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Documento de identidad</th>
+                            {{--<th>Fecha Inicio</th>--}}
+                            {{--<th>Fecha Fin</th>--}}
+                            <th>Acciones</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            @if($participantes != null)
+                                @foreach($participantes as $index => $participante)
+                                    @if($busq)
+                                        <tr>
+                                            <td>{{ $index + 1 }}</td>
+                                            <td>{{ $participante->nombre }}</td>
+                                            <td>{{ $participante->apellido  }}</td>
+                                            <td>{{ $participante->documento_identidad  }}</td>
+                                            {{--<td>{{ $participantes->fecha_inicio  }}</td>--}}
+                                            {{--<td>{{ $participantes->fecha_fin  }}</td>--}}
 
-                                        <td>
-                                            @if(Entrust::can('eliminar_part_curso'))
-                                                {!!Form::open(["url"=>"cursos/".$curso->id."/secciones/".$seccion."/participantes/".$participante->id."/eliminar",  "method" => "delete", "id" => "form_eliminar_part".$participante->id ])!!}
-                                                <button type="button" onclick="eliminarPart('{{$participante->id}}')" class='btn btn-danger' data-toggle='tooltip' data-placement="bottom" title="Eliminar">
-                                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                                </button>
-                                                {!! Form::close() !!}
-                                            @endif
-                                        </td>
-                                    </tr>
-                                @else
-                                    <tr>
-                                        <td>{{ $index + 1 }}</td>
-                                        <td>{{ $participante[0]->nombre }}</td>
-                                        <td>{{ $participante[0]->apellido  }}</td>
-                                        <td>{{ $participante[0]->documento_identidad  }}</td>
-                                        {{--<td>{{ $participantes->fecha_inicio  }}</td>--}}
-                                        {{--<td>{{ $participantes->fecha_fin  }}</td>--}}
+                                            <td>
+                                                @if(Entrust::can('eliminar_part_curso'))
+                                                    {!!Form::open(["url"=>"cursos/".$curso->id."/secciones/".$seccion."/participantes/".$participante->id."/eliminar",  "method" => "delete", "id" => "form_eliminar_part".$participante->id ])!!}
+                                                    <button type="button" onclick="eliminarPart('{{$participante->id}}')" class='btn btn-danger' data-toggle='tooltip' data-placement="bottom" title="Eliminar">
+                                                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                                    </button>
+                                                    {!! Form::close() !!}
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    @else
+                                        <tr>
+                                            <td>{{ $index + 1 }}</td>
+                                            <td>{{ $participante[0]->nombre }}</td>
+                                            <td>{{ $participante[0]->apellido  }}</td>
+                                            <td>{{ $participante[0]->documento_identidad  }}</td>
+                                            {{--<td>{{ $participantes->fecha_inicio  }}</td>--}}
+                                            {{--<td>{{ $participantes->fecha_fin  }}</td>--}}
 
-                                        <td>
-                                            @if(Entrust::can('eliminar_part_curso'))
-                                                {!!Form::open(["url"=>"cursos/".$curso->id."/secciones/".$seccion."/participantes/".$participante[0]->id."/eliminar",  "method" => "delete", "id" => "form_eliminar_part".$participante[0]->id ])!!}
-                                                <button type="button" onclick="eliminarPart('{{$participante[0]->id}}')" class='btn btn-danger' data-toggle='tooltip' data-placement="bottom" title="Eliminar">
-                                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                                </button>
-                                                {!! Form::close() !!}
-                                            @endif
-                                        </td>
-                                    </tr>
-                                @endif
-                            @endforeach
-                        @else
-                            @if($busq_)
-                                <td></td>
-                                <td><strong> 0 resultados de la busqueda </strong></td>
+                                            <td>
+                                                @if(Entrust::can('eliminar_part_curso'))
+                                                    {!!Form::open(["url"=>"cursos/".$curso->id."/secciones/".$seccion."/participantes/".$participante[0]->id."/eliminar",  "method" => "delete", "id" => "form_eliminar_part".$participante[0]->id ])!!}
+                                                    <button type="button" onclick="eliminarPart('{{$participante[0]->id}}')" class='btn btn-danger' data-toggle='tooltip' data-placement="bottom" title="Eliminar">
+                                                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                                    </button>
+                                                    {!! Form::close() !!}
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    @endif
+                                @endforeach
                             @else
-                                <td></td>
-                                <td> <strong> No existen cursos activos </strong></td>
+                                @if($busq_)
+                                    <td></td>
+                                    <td><strong> 0 resultados de la busqueda </strong></td>
+                                @else
+                                    <td></td>
+                                    <td> <strong> No existen cursos activos </strong></td>
+                                @endif
                             @endif
-                        @endif
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
                 <div class="col-md-2 " style="">
                     @if(Entrust::can('ver_lista_cursos'))
                         <a href="{{URL::to('/')}}/cursos" type="button" class="btn btn-default" style="text-decoration: none"><span class="glyphicon glyphicon-remove"></span> Cancelar </a>

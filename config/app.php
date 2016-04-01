@@ -158,6 +158,9 @@ return [
 		//PDF
 		'Barryvdh\DomPDF\ServiceProvider',
 
+		//Excel
+		'Maatwebsite\Excel\ExcelServiceProvider',
+
 	],
 
 	/*
@@ -209,8 +212,9 @@ return [
         'Entrust' 	=> 'Zizaco\Entrust\EntrustFacade',
 		'Form'		=> 'Illuminate\Html\FormFacade',
 		'HTML'		=> 'Illuminate\Html\HtmlFacade',
-        'Image' => 'Intervention\Image\Facades\Image',
-		'PDF' => 'Barryvdh\DomPDF\Facade',
+        'Image'		=> 'Intervention\Image\Facades\Image',
+		'PDF' 		=> 'Barryvdh\DomPDF\Facade',
+		'Excel' 	=> 'Maatwebsite\Excel\Facades\Excel',
 
 	],
 

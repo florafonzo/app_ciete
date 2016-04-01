@@ -30,64 +30,66 @@
                         {!! Form::close() !!}
                     </div>
                 </div>
-                <table class="table table-hover">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Nombre</th>
-                        <th>Apellido</th>
-                        <th>Documento de identidad</th>
-                        <th>Acciones</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @if($profesores != null)
-                        @foreach($profesores as $index => $profesor)
-                            @if($busq_)
-                                <tr>
-                                    <td>{{ $index + 1 }}</td>
-                                    <td>{{ $profesor->nombre }}</td>
-                                    <td>{{ $profesor->apellido  }}</td>
-                                    <td>{{ $profesor->documento_identidad }}</td>
-                                    <td>
-                                        @if(Entrust::can('eliminar_prof_curso'))
-                                            {!!Form::open(["url"=>"cursos/".$curso->id."/secciones/".$seccion."/profesores/".$profesor->id."/eliminar",  "method" => "delete", "id" => "form_eliminar_prof".$profesor->id ])!!}
-                                            <button type="button" onclick="eliminarProf('{{$profesor->id}}')" class='btn btn-danger' data-toggle='tooltip' data-placement="bottom" title="Eliminar">
-                                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                            </button>
-                                            {!! Form::close() !!}
-                                        @endif
-                                    </td>
-                                </tr>
-                            @else
-                                <tr>
-                                    <td>{{ $index + 1 }}</td>
-                                    <td>{{ $profesor[0]->nombre }}</td>
-                                    <td>{{ $profesor[0]->apellido  }}</td>
-                                    <td>{{ $profesor[0]->documento_identidad }}</td>
-                                    <td>
-                                        @if(Entrust::can('eliminar_prof_curso'))
-                                            {!!Form::open(["url"=>"cursos/".$curso->id."/secciones/".$seccion."/profesores/".$profesor[0]->id."/eliminar",  "method" => "delete", "id" => "form_eliminar_prof".$profesor[0]->id ])!!}
-                                            <button type="button" onclick="eliminarProf('{{$profesor[0]->id}}')" class='btn btn-danger' data-toggle='tooltip' data-placement="bottom" title="Eliminar">
-                                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                            </button>
-                                            {!! Form::close() !!}
-                                        @endif
-                                    </td>
-                                </tr>
-                            @endif
-                        @endforeach
-                    @else
-                        @if($busq_)
-                            <td></td>
-                            <td><strong> 0 resultados de la busqueda </strong></td>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Documento de identidad</th>
+                            <th>Acciones</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @if($profesores != null)
+                            @foreach($profesores as $index => $profesor)
+                                @if($busq_)
+                                    <tr>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ $profesor->nombre }}</td>
+                                        <td>{{ $profesor->apellido  }}</td>
+                                        <td>{{ $profesor->documento_identidad }}</td>
+                                        <td>
+                                            @if(Entrust::can('eliminar_prof_curso'))
+                                                {!!Form::open(["url"=>"cursos/".$curso->id."/secciones/".$seccion."/profesores/".$profesor->id."/eliminar",  "method" => "delete", "id" => "form_eliminar_prof".$profesor->id ])!!}
+                                                <button type="button" onclick="eliminarProf('{{$profesor->id}}')" class='btn btn-danger' data-toggle='tooltip' data-placement="bottom" title="Eliminar">
+                                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                                </button>
+                                                {!! Form::close() !!}
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @else
+                                    <tr>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ $profesor[0]->nombre }}</td>
+                                        <td>{{ $profesor[0]->apellido  }}</td>
+                                        <td>{{ $profesor[0]->documento_identidad }}</td>
+                                        <td>
+                                            @if(Entrust::can('eliminar_prof_curso'))
+                                                {!!Form::open(["url"=>"cursos/".$curso->id."/secciones/".$seccion."/profesores/".$profesor[0]->id."/eliminar",  "method" => "delete", "id" => "form_eliminar_prof".$profesor[0]->id ])!!}
+                                                <button type="button" onclick="eliminarProf('{{$profesor[0]->id}}')" class='btn btn-danger' data-toggle='tooltip' data-placement="bottom" title="Eliminar">
+                                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                                </button>
+                                                {!! Form::close() !!}
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endif
+                            @endforeach
                         @else
-                            <td></td>
-                            <td> <strong> No existen cursos activos </strong></td>
+                            @if($busq_)
+                                <td></td>
+                                <td><strong> 0 resultados de la busqueda </strong></td>
+                            @else
+                                <td></td>
+                                <td> <strong> No existen cursos activos </strong></td>
+                            @endif
                         @endif
-                    @endif
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
                 <div class="col-md-2 " style="">
                     @if(Entrust::can('ver_lista_cursos'))
                         <a href="{{URL::to('/')}}/cursos" type="button" class="btn btn-default" style="text-decoration: none"><span class="glyphicon glyphicon-remove"></span> Cancelar </a>
