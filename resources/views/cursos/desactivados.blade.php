@@ -45,27 +45,23 @@
                         @if($cursos->count())
                             <tbody>
                             @foreach($cursos as $index => $curso)
-                                @if(!($curso->curso_activo))
-                                    <tr>
-                                        <td>{{ $index + 1 }}</td>
-                                        <td>{{ $curso->nombre }}</td>
-                                        <td>{{ $curso->tipo_curso  }}</td>
-                                        <td>{{ $curso->inicio->format('d-m-Y')  }}</td>
-                                        <td>{{ $curso->fin->format('d-m-Y')  }}</td>
+                                <tr>
+                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ $curso->nombre }}</td>
+                                    <td>{{ $curso->tipo_curso  }}</td>
+                                    <td>{{ $curso->inicio->format('d-m-Y')  }}</td>
+                                    <td>{{ $curso->fin->format('d-m-Y')  }}</td>
 
-                                        <td>
-                                            @if(Entrust::can('activar_cursos'))
-                                                {!!Form::open(["url"=>"cursos/desactivados/activar/".$curso->id,  "method" => "GET", 'id' => 'form_activar'.$curso->id] )!!}
-                                                 <button type="button" onclick="activarCurso('{{$curso->id}}')" class="btn btn-success" title="Activar" data-toggle="tooltip" data-placement="bottom" aria-hidden="true">
-                                                     <span class="glyphicon glyphicon-ok"></span>
-                                                 </button>
-                                                {!!Form::close()!!}
-                                            @endif
-                                        </td>
-                                    </tr>
-                                @else
-                                    <?php continue; ?>
-                                @endif
+                                    <td>
+                                        @if(Entrust::can('activar_cursos'))
+                                            {!!Form::open(["url"=>"cursos/desactivados/activar/".$curso->id,  "method" => "GET", 'id' => 'form_activar'.$curso->id] )!!}
+                                             <button type="button" onclick="activarCurso('{{$curso->id}}')" class="btn btn-success" title="Activar" data-toggle="tooltip" data-placement="bottom" aria-hidden="true">
+                                                 <span class="glyphicon glyphicon-ok"></span>
+                                             </button>
+                                            {!!Form::close()!!}
+                                        @endif
+                                    </td>
+                                </tr>
                             @endforeach
                             </tbody>
                         @else
