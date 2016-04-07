@@ -4309,7 +4309,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
   }
 }
 .navbar-collapse {
-  max-height: 340px;
+  /*max-height: 340px;*/
   overflow-x: visible;
   padding-right: 0px;
   padding-left: 0px;

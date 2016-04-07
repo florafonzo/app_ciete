@@ -177,23 +177,24 @@ Route::group([
     });
 
     //Rutas participante
-    Route::get('/participante/perfil','ParticipantesController@verPerfil');
-    Route::get('/participante/perfil/{id}/editar','ParticipantesController@editarPerfil');
+    Route::get('participante/perfil','ParticipantesController@verPerfil');
+    Route::get('participante/perfil/{id}/editar','ParticipantesController@editarPerfil');
     Route::get('participante/perfil/imagen','ParticipantesController@cambiarImagen');
     Route::post('participante/perfil/procesar','ParticipantesController@procesarImagen');
-    Route::get('/participante/cursos','ParticipantesController@verCursos');
-    Route::get('/participante/cursos/{id}/notas','ParticipantesController@verNotasCurso');
-    Route::get('/participante/webinars','ParticipantesController@verWebinars');
-    Route::resource('/participante','ParticipantesController');
+//    Route::patch('participante/perfil/{id}','ParticipantesController@update');
+    Route::get('participante/cursos','ParticipantesController@verCursos');
+    Route::get('participante/cursos/{id}/notas','ParticipantesController@verNotasCurso');
+    Route::get('participante/webinars','ParticipantesController@verWebinars');
+    Route::resource('participante','ParticipantesController');
 
         //Rutas preinscripción
-    Route::get('/preinscripcion','PreinscripcionController@index');
-    Route::post('/preinscripcion/principal', 'PreinscripcionController@mostrar');
-    Route::get('/preinscripcion/activar/{id}',[
+    Route::get('preinscripcion','PreinscripcionController@index');
+    Route::post('preinscripcion/principal', 'PreinscripcionController@mostrar');
+    Route::get('preinscripcion/activar/{id}',[
         'as' => 'preinscripcion.activar',
         'uses' => 'PreinscripcionController@activarPreinscripcion'
     ]);
-    Route::get('/preinscripcion/desactivar/{id}',[
+    Route::get('preinscripcion/desactivar/{id}',[
         'as' => 'preinscripcion.desactivar',
         'uses' => 'PreinscripcionController@desactivarPreinscripcion'
     ]);

@@ -25,7 +25,7 @@
         {{--Contenedor--}}
 		<div class="container">
             {{--Menú--}}
-            @include('layouts.menu')
+            @include('layouts.menu', ['menu'=>\App\Models\Curso::getCursos()])
             {{--Fin Menú--}}
 
             {{--Contenido Principal--}}

@@ -78,4 +78,25 @@ class Curso extends Model {
         return $caps;
     }
 
+    public static function getCursos(){
+        $data['caps'] = [];
+        $data['diplos'] = [];
+        $data['webis'] = [];
+
+        $data['cursos'] = DB::table('cursos')
+            ->select('id', 'nombre')
+            ->where('curso_activo', '=', true)
+            ->orderBy('nombre')
+            ->get();
+
+        $data['webis'] = DB::table('webinars')
+            ->select('id', 'nombre')
+            ->where('activo_carrusel', '=', true)
+            ->where('webinar_activo', '=', true)
+            ->orderBy('nombre')
+            ->get();
+
+        return $data;
+    }
+
 }

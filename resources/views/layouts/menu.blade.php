@@ -1,7 +1,7 @@
 <nav class="navbar">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
+        <div class="navbar-header nav-barra">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
@@ -27,43 +27,23 @@
                     </ul>
                 </li>
                 <li class="dropdown fondo">
-                    <a class="lista-menu dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Diplomados <span class="caret"></span></a>
+                    <a class="lista-menu dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Cursos <span class="caret"></span></a>
                     <ul class="dropdown-menu menu_bajo">
-                        <li>
-                            <a href="#"> Información General</a>
-                        </li>
-                        <li>
-                            <a href="#"> Gestón Efectiva de Medios Digitales</a>
-                        </li>
-                        <li>
-                            <a href="#">Producción de Contenidos para Radio y Medios Digitales</a>
-                        </li>
-                        <li>
-                            <a href="#"> Diseño y Prudcción de Contenidos Multimedia para la Web</a>
-                        </li>
-                        <li>
-                            <a class="lista-menu" href="#">¿Cómo inscribirse?</a>
-                        </li>
+                        @foreach($menu['cursos'] as $curso)
+                            <li>
+                                <a href="{{URL::to('/')}}/descripcion/curso/{{$curso->id}}"> {{$curso->nombre}}</a>
+                            </li>
+                        @endforeach
                     </ul>
                 </li>
                 <li class="dropdown fondo">
-                    <a class="lista-menu dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Capsulas <span class="caret"></span></a>
+                    <a class="lista-menu dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Webinars <span class="caret"></span></a>
                     <ul class="dropdown-menu menu_bajo">
-                        <li>
-                            <a href="#"> Información General</a>
-                        </li>
-                        <li>
-                            <a href="#"> Presentación Multimedia para la Web</a>
-                        </li>
-                        <li>
-                            <a href="#"> Mapas Gráficos Interactivos</a>
-                        </li>
-                        <li>
-                            <a href="#"> Portafolios Digitales</a>
-                        </li>
-                        <li>
-                            <a class="lista-menu" href="#">¿Cómo inscribirse?</a>
-                        </li>
+                        @foreach($menu['webis'] as $web)
+                            <li>
+                                <a href="{{URL::to('/')}}/descripcion/webinar/{{$web->id}}"> {{$web->nombre}}</a>
+                            </li>
+                        @endforeach
                     </ul>
                 </li>
                 <li class="fondo">

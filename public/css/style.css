@@ -183,19 +183,19 @@ header .container{
     /*background-color: #ffffff;*/
 }
 
-.navbar-header .navbar-toggle {
+.nav-barra .navbar-toggle {
     border-color: #ddd;
     background-color: #ffffff;
     /*border-color: rgb(0, 42, 98);*/
     /*background-color: rgb(0, 42, 98);*/
 }
 
-.navbar-header .navbar-toggle:hover{
+.nav-barra .navbar-toggle:hover{
     background-color: #ddd;
 
 }
 
-.navbar-header{
+.nav-barra  {
     background-color: #1968b3;
 }
 
@@ -545,6 +545,13 @@ img.insta{
 
 .menu_usuarios > a{
     text-decoration: none;
+    font-weight: bold;
+}
+
+.menu_usu:hover{
+    background-color: #1968b3 !important;
+    color: white;
+    font-weight: bold;
 }
 
 /* Modal Crop Imagen perfil*/
