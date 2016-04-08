@@ -87,15 +87,6 @@
                                             {!! Form::close() !!}
                                         @endif
                                     </td>
-                                    <td class="boton_">
-                                        @if(Entrust::can('lista_moodle'))
-                                            {!!Form::open(["url"=>"webinars/".$webinar->id."/secciones",  "method" => "GET" ])!!}
-                                            <button type="submit" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="Lista Moodle">
-                                                <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-                                            </button>
-                                            {!! Form::close() !!}
-                                        @endif
-                                    </td>
                                 </tr>
                             @endforeach
                             </tbody>

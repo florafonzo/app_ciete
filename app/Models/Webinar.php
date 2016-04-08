@@ -32,4 +32,15 @@ class Webinar extends Model {
 //        return $this->hasMany('App\Models\Preinscripcion','id');
 //    }
 
+    public function maxCuposWeb($id){
+
+        $secciones=  $this->where('id', '=',$id)
+            ->pluck('secciones');
+
+        $max= $this->where('id', '=', $id)
+            ->pluck('max');
+
+        return $secciones*$max;
+    }
+
 }

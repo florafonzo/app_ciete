@@ -26,11 +26,12 @@ class PreinscripcionRequest extends Request {
     public function rules()
     {
         return [
-            'id_curso' => 'required',
+            'curso' => 'required',
             'nombre' => 'required|max:255|min:3',
             'apellido' => 'required|max:255|min:4',
             'cedula' => 'mimes:pdf|max:1024',
             'titulo' => 'mimes:pdf|max:1024',
+            'recibo' => 'mimes:pdf|max:1024',
             'email' => 'required|email|max:255'
         ];
     }

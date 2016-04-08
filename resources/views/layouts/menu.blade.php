@@ -46,6 +46,20 @@
                         @endforeach
                     </ul>
                 </li>
+                {{--<li class="fondo ">--}}
+                    {{--<a class="lista-menu" href="">Preinscripción</a>--}}
+                {{--</li>--}}
+                <li class="fondo">
+                    <a class="lista-menu dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Preinscripciones <span class="caret"></span></a>
+                    <ul class="dropdown-menu menu_bajo">
+                        <li >
+                            <a href="{{URL::to('/')}}/preinscripcion/cursos">Cápsulas y Diplomados</a>
+                        </li>
+                        <li>
+                            <a href="{{URL::to('/')}}/preinscripcion/webinars"> Webinars </a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="fondo">
                     <a class="lista-menu dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Aulas Virtuales <span class="caret"></span></a>
                     <ul class="dropdown-menu menu_bajo">
@@ -57,11 +71,8 @@
                         </li>
                     </ul>
                 </li>
-                <li class="fondo ">
-                    <a class="lista-menu" href="/Créditos">Créditos</a>
-                </li>
                 <li class="fondo borde_no">
-                    <a class="lista-menu" href="/preinscripcion/principal">Preinscripción</a>
+                    <a class="lista-menu" href="/Créditos">Créditos</a>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
