@@ -55,6 +55,7 @@ class CursosController extends Controller {
                 $data['cursos'] = Curso::orderBy('created_at')->get(); // Se obtienen todos los cursos con sus datos
                 $data['tipos'] = TipoCurso::all()->lists('nombre', 'id');
                 $data['busq_'] = false;
+                $data['busq'] = false;
 
                 foreach ($data['cursos'] as $curso) {   // Se asocia el tipo a cada curso (Cápsulo o Diplomado)
                     $tipo = TipoCurso::where('id', '=', $curso->id_tipo)->get();
@@ -1147,6 +1148,7 @@ class CursosController extends Controller {
             if($usuario_actual->can('agregar_part_curso')) {  // Si el usuario posee los permisos necesarios continua con la acción
                 $data['errores'] = '';
                 $data['busq_'] = false;
+                $data['busq'] = false;
                 $data['curso'] = Curso::find($id_curso);
                 $data['seccion'] = $seccion;
                 $seccion = str_replace(' ', '', $seccion);
@@ -1339,6 +1341,8 @@ class CursosController extends Controller {
 
             if($usuario_actual->can('agregar_part_curso')) {  // Si el usuario posee los permisos necesarios continua con la acción
                 $data['errores'] = '';
+                $data['busq_'] = false;
+                $data['busq'] = false;
                 $curso = Curso::find($id_curso);
                 $data['seccion'] = $seccion;
                 $seccion = str_replace(' ', '', $seccion);
@@ -1404,6 +1408,8 @@ class CursosController extends Controller {
             if($usuario_actual->can('eliminar_part_curso')) {  // Si el usuario posee los permisos necesarios continua con la acción
                 $data['errores'] = '';
                 $data['seccion'] = $seccion;
+                $data['busq_'] = false;
+                $data['busq'] = false;
 //                $curso = Curso::find($id_curso);
 //                $participante = Participante::find($id_part);
 
@@ -1451,7 +1457,7 @@ class CursosController extends Controller {
                 $data['errores'] = '';
                 $data['curso'] = Curso::find($id);
                 $arr = [];
-                $secciones = ProfesorCurso::where('id_curso', '=', $id)->select('seccion')->get();
+                $secciones = ParticipanteCurso::where('id_curso', '=', $id)->select('seccion')->get();
                 foreach ($secciones as $index => $seccion) {
                     $arr[$index] = $seccion->seccion;
                 }
@@ -1595,6 +1601,7 @@ class CursosController extends Controller {
             if($usuario_actual->can('agregar_prof_curso')) {  // Si el usuario posee los permisos necesarios continua con la acción
                 $data['errores'] = '';
                 $data['busq_'] = false;
+                $data['busq'] = false;
                 $data['curso'] = Curso::find($id_curso);
                 $data['seccion'] = $seccion;
                 $seccion = str_replace(' ', '', $seccion);
@@ -1790,7 +1797,10 @@ class CursosController extends Controller {
                 $data['errores'] = '';
                 $curso = Curso::find($id_curso);
                 $data['seccion'] = $seccion;
+                $data['busq_'] = false;
+                $data['busq'] = false;
                 $seccion = str_replace(' ', '', $seccion);
+//                dd($seccion);
                 $profesor = Profesor::find($id_profesor);
                 $existe = ProfesorCurso::where('id_profesor', '=', $id_profesor)->where('id_curso', '=', $id_curso)->get();
 
@@ -1798,34 +1808,26 @@ class CursosController extends Controller {
                     Session::set('error', 'Ya existe el registro en la base de datos');
                     return $this->cursoProfesoresAgregar($id_curso, $seccion);
                 }else{
-//                    $max = $curso->max;
-//                    $cuantos = ProfesorCurso::where('seccion', '=', $seccion)->where('id_curso', '=', $id_curso)->get();
-//                    $cuantos = count($cuantos);
-//                    if($cuantos >= $max){
-//                        Session::set('error', 'La seccion no tiene cupos disponibles');
-//                        return $this->cursoProfesoresAgregar($id_curso, $seccion);
-//                    }
-//                    else {
-                        if ($curso != null || $profesor != null) {
-                            $prof_curso = ProfesorCurso::create([
-                                'id_profesor' => $id_profesor,
-                                'id_curso' => $id_curso,
-                                'seccion' => $seccion
-                            ]);
-                            $prof_curso->save();
+                    if ($curso != null || $profesor != null) {
+                        $prof_curso = ProfesorCurso::create([
+                            'id_profesor' => $id_profesor,
+                            'id_curso' => $id_curso,
+                            'seccion' => $seccion
+                        ]);
+                        dd($prof_curso);
+                        $prof_curso->save();
 
-                            if ($prof_curso->save()) {
-                                Session::set('mensaje', 'Profesor agregado con éxito');
-                                return $this->cursoProfesoresAgregar($id_curso, $seccion);
-                            } else {
-                                Session::set('error', 'Ha ocurrido un error inesperado');
-                                return $this->cursoProfesoresAgregar($id_curso, $seccion);
-                            }
+                        if ($prof_curso->save()) {
+                            Session::set('mensaje', 'Profesor agregado con éxito');
+                            return $this->cursoProfesoresAgregar($id_curso, $seccion);
                         } else {
                             Session::set('error', 'Ha ocurrido un error inesperado');
-                            return $this->index();
+                            return $this->cursoProfesoresAgregar($id_curso, $seccion);
                         }
-//                    }
+                    } else {
+                        Session::set('error', 'Ha ocurrido un error inesperado');
+                        return $this->index();
+                    }
                 }
 
 
@@ -1853,6 +1855,8 @@ class CursosController extends Controller {
             if($usuario_actual->can('eliminar_prof_curso')) {  // Si el usuario posee los permisos necesarios continua con la acción
                 $data['errores'] = '';
                 $data['seccion'] = $seccion;
+                $data['busq_'] = false;
+                $data['busq'] = false;
                 $prof_curso = ProfesorCurso::where('id_curso', '=', $id_curso)->where('id_profesor', '=', $id_profesor)->first();
 
                 DB::table('profesor_cursos')->where('id', '=', $prof_curso->id)->delete();

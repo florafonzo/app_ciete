@@ -69,7 +69,7 @@
                                     <td><strong> 0 resultados de la busqueda </strong></td>
                                 @else
                                     <td></td>
-                                    <td> <strong> No existen cursos activos </strong></td>
+                                    <td> <strong> No existen participantes para agregar </strong></td>
                                 @endif
                             @endif
                         </tbody>

@@ -19,11 +19,11 @@
                 <li class="dropdown fondo">
                     <a class="lista-menu" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Nosotros <span class="caret"></span></a>
                     <ul class="dropdown-menu menu_bajo">
-                        <li><a href="/Misión-y-Visión">¿Quiénes somos?</a></li>
-                        <li><a href="/Estructura">Estructura</a></li>
-                        <li><a href="/Servicios">Servicios</a></li>
-                        <li><a href="/Equipo">Equipo</a></li>
-                        <li><a href="/Contacto">Contacto</a></li>
+                        <li><a href="{{URL::to('/')}}/Misión-y-Visión">¿Quiénes somos?</a></li>
+                        <li><a href="{{URL::to('/')}}/Estructura">Estructura</a></li>
+                        <li><a href="{{URL::to('/')}}/Servicios">Servicios</a></li>
+                        <li><a href="{{URL::to('/')}}/Equipo">Equipo</a></li>
+                        <li><a href="{{URL::to('/')}}/Contacto">Contacto</a></li>
                     </ul>
                 </li>
                 <li class="dropdown fondo">
@@ -72,7 +72,7 @@
                     </ul>
                 </li>
                 <li class="fondo borde_no">
-                    <a class="lista-menu" href="/Créditos">Créditos</a>
+                    <a class="lista-menu" href="{{URL::to('/')}}{{URL::to('/')}}/Créditos">Créditos</a>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">

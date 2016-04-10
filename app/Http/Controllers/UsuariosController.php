@@ -752,8 +752,10 @@ class UsuariosController extends Controller {
                 // Se obtienen los datos del usuario que se desea eliminar al igual que los roles que posee
                 $usuario = User::find($id);
                 $data['busq_'] = false;
+                $data['busq'] = false;
 //                dd($usuario->id);
                 $roles = $usuario->roles()->get();
+                $data['roles'] = Role::all()->lists('display_name', 'id');
 
                 // Se verifica los roles que posee el usuario que se desea eliminar
                 foreach ($roles as $role) {
@@ -794,7 +796,7 @@ class UsuariosController extends Controller {
                     $usuario['rol'] = $usuario->roles()->first();
 
                 }
-
+                Session::set('mensaje', 'Usuario eliminado con éxito');
                 return view('usuarios.usuarios', $data);
 
             }else{   // Si el usuario no posee los permisos necesarios se le mostrará un mensaje de error

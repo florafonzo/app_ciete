@@ -211,6 +211,14 @@ Route::group([
         'uses' => 'PreinscripcionController@desactivarPreinscripcionWeb'
     ]);
 
+    //Rutas inscripcion
+        Route::get('inscripcion/procesar','InscripcionController@indexCurso');
+        Route::get('inscripcion/procesar/buscar', [
+            'as' => 'inscripcion.buscar', 'uses' => 'InscripcionController@buscarInscripcion'
+        ]);
+
+
+
 
 
         //Rutas profesores

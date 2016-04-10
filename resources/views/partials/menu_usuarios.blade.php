@@ -81,14 +81,14 @@
                     @endif
                     @if(Entrust::can('activar_preinscripcion'))
                         <li class="menu_usuarios @if(Request::is('')) active @endif">
-                            <a class="menu_usu" href="{{URL::to('/')}}"> Gestión Inscripciones Cursos </a>
+                            <a class="menu_usu" href="{{URL::to('/')}}/inscripcion/procesar"> Gestión Inscripciones </a>
                         </li>
                     @endif
-                    @if(Entrust::can('activar_preinscripcion'))
-                        <li class="menu_usuarios @if(Request::is('')) active @endif">
-                            <a class="menu_usu" href="{{URL::to('/')}}">  Gestión Inscripciones Webinars </a>
-                        </li>
-                    @endif
+                    {{--@if(Entrust::can('activar_preinscripcion'))--}}
+                        {{--<li class="menu_usuarios @if(Request::is('')) active @endif">--}}
+                            {{--<a class="menu_usu" href="{{URL::to('/')}}">  Gestión Inscripciones Webinars </a>--}}
+                        {{--</li>--}}
+                    {{--@endif--}}
                     @if(Entrust::can('ver_cursos_profe'))
                         <li class="menu_usuarios @if(Request::is('profesor/cursos*')) active @endif">
                             <a class="menu_usu" href="{{URL::to('/profesor/cursos')}}"> Cursos dictados</a>
